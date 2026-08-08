@@ -820,7 +820,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
               setModalStartStep(1);
               setIsBookingModalOpen(true);
             }} 
-            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-accent hover:bg-accent-hover text-primary'}`}
+            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
           >
             {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
           </button>

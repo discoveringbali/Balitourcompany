@@ -150,26 +150,15 @@ export default function SplashScreen({ children }) {
             </div>
 
             {/* Logo container */}
-            <motion.div
-              initial={{ scale: 0.85, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 flex flex-col items-center"
-            >
+            <div className="relative z-10 flex flex-col items-center">
               <div className="relative mb-8">
-                <motion.div
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: [0, 1.3, 1], opacity: [0, 0.15, 0] }}
-                  transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 0.5 }}
-                  className="absolute inset-[-16px] rounded-full border-2 border-white/30"
-                />
                 <img
                   src="/balance_island_logo.png"
                   alt="Balance Island"
                   className="w-auto max-w-[240px] h-[80px] rounded-[24px] shadow-[0_12px_40px_rgba(255,255,255,0.05)] object-contain"
                 />
               </div>
-            </motion.div>
+            </div>
 
             {/* Progress section */}
             <motion.div
