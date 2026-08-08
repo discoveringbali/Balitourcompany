@@ -205,7 +205,7 @@ export default function ListingCard({ item, linkTo }) {
               </span>
             </div>
           </div>
-          <button className="text-[13px] font-extrabold text-primary bg-accent px-4 py-2 rounded-xl shrink-0 shadow-sm transition-transform active:scale-95 group-hover:scale-105">
+          <button className="text-[13px] font-extrabold text-white bg-black px-4 py-2 rounded-xl shrink-0 shadow-sm transition-transform active:scale-95 group-hover:scale-105">
             Book
           </button>
         </div>

@@ -716,7 +716,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                    setModalStartStep(2);
                    setIsBookingModalOpen(true);
                  }} 
-                 className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-accent hover:bg-accent-hover text-primary'}`}
+                 className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
                >
                  Check availability
                </button>

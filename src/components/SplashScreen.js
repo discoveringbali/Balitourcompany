@@ -140,13 +140,13 @@ export default function SplashScreen({ children }) {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white"
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black"
             style={{ touchAction: "none" }}
           >
             {/* Soft ambient gradient */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-black text-white/8 blur-[120px]" />
-              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gray-200/20 blur-[100px]" />
+              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-white text-black/8 blur-[120px] opacity-10" />
+              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gray-200/20 blur-[100px] opacity-10" />
             </div>
 
             {/* Logo container */}
@@ -161,32 +161,14 @@ export default function SplashScreen({ children }) {
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: [0, 1.3, 1], opacity: [0, 0.15, 0] }}
                   transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 0.5 }}
-                  className="absolute inset-[-16px] rounded-full border-2 border-black/30"
+                  className="absolute inset-[-16px] rounded-full border-2 border-white/30"
                 />
                 <img
-                  src="/icon.jpg"
+                  src="/balance_island_logo.png"
                   alt="Balance Island"
-                  className="w-[88px] h-[88px] rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.08)] object-contain"
+                  className="w-auto max-w-[240px] h-[80px] rounded-[24px] shadow-[0_12px_40px_rgba(255,255,255,0.05)] object-contain"
                 />
               </div>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[#1c1c1c] text-[22px] font-black tracking-tight mb-1.5"
-              >
-                Balance Island
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 0.45, y: 0 }}
-                transition={{ delay: 0.55, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.25em] uppercase"
-              >
-                Premium Bali Tours
-              </motion.p>
             </motion.div>
 
             {/* Progress section */}
@@ -196,23 +178,23 @@ export default function SplashScreen({ children }) {
               transition={{ delay: 0.7, duration: 0.4 }}
               className="absolute bottom-[14%] flex flex-col items-center gap-3 w-[200px]"
             >
-              <div className="w-full h-[3px] bg-black/5 rounded-full overflow-hidden">
+              <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-black text-white rounded-full transition-none"
+                  className="h-full bg-white rounded-full transition-none"
                   style={{ width: `${progress}%` }}
                 />
               </div>
 
-              <span className="text-[#1c1c1c]/40 text-[11px] font-bold tabular-nums tracking-wide">
+              <span className="text-white/60 text-[11px] font-bold tabular-nums tracking-wide">
                 {Math.round(progress)}%
               </span>
             </motion.div>
 
             <motion.p
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.2 }}
+              animate={{ opacity: 0.4 }}
               transition={{ delay: 1.2, duration: 0.5 }}
-              className="absolute bottom-[6%] text-[#1c1c1c] text-[10px] font-semibold tracking-[0.15em] uppercase"
+              className="absolute bottom-[6%] text-white text-[10px] font-semibold tracking-[0.15em] uppercase"
             >
               Bali, Indonesia
             </motion.p>
