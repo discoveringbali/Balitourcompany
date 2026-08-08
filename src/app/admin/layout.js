@@ -32,7 +32,7 @@ function AdminLoginScreen({ onLogin }) {
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-[#eaeaea]">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-[#1c1c1c] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <span className="text-[#dcdcdc] font-black text-2xl tracking-tighter">DB</span>
+            <span className="text-[#dcdcdc] font-black text-2xl tracking-tighter">BI</span>
           </div>
           <h1 className="text-2xl font-black text-[#1c1c1c]">Admin Portal</h1>
           <p className="text-sm font-bold text-gray-500 mt-1">Secure login required</p>
@@ -381,7 +381,7 @@ export default function AdminLayout({ children }) {
                <div className="flex items-center gap-4 bg-[#f9f9f9] p-4 rounded-2xl border border-[#eaeaea]">
                  <img src="/icon.jpg" alt="Logo" className="w-12 h-12 rounded-xl object-cover shadow-sm" />
                  <div>
-                   <p className="text-sm font-black text-[#1c1c1c]">MyBaliDriver Admin</p>
+                   <p className="text-sm font-black text-[#1c1c1c]">Balance Island Admin</p>
                    <p className="text-[11px] font-bold text-gray-500">Add to Home Screen</p>
                  </div>
                </div>

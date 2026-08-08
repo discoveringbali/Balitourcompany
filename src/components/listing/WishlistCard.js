@@ -1,8 +1,18 @@
+"use client";
+
 import React from "react";
 import { Heart, Star, MapPin, Bookmark } from "lucide-react";
 import Link from "next/link";
+import { removeSavedTrip } from "@/lib/favorites";
 
 export default function WishlistCard({ item, linkTo }) {
+  const handleRemove = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (item?.id) {
+      removeSavedTrip(item.id);
+    }
+  };
   let basePriceToUse = item.price;
   if (!basePriceToUse || basePriceToUse == 0) {
       const dataObj = item.data || item || {};
@@ -48,8 +58,12 @@ export default function WishlistCard({ item, linkTo }) {
          )}
 
          {/* Heart Solid Red (Since it's in wishlist) */}
-         <button className="w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-black shadow-sm z-30 transition-all active:scale-90 border border-white/30">
-           <Heart size={20} className="fill-black" />
+         <button 
+           onClick={handleRemove}
+           title="Remove from saved trips"
+           className="w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-black shadow-sm z-30 transition-all active:scale-90 border border-white/30 hover:bg-white hover:text-black"
+         >
+           <Heart size={20} className="fill-black text-black" />
          </button>
       </div>
       

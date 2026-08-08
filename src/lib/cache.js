@@ -1,13 +1,21 @@
 import { unstable_cache } from 'next/cache';
 import { supabase } from './supabase';
+import { FALLBACK_LISTINGS, FALLBACK_BLOGS, FALLBACK_SETTINGS } from './mockData';
 
 export const getHomepageListings = unstable_cache(
   async () => {
-    const { data } = await supabase
-      .from('listings')
-      .select('id, type, title, location, price, duration, category, rating, reviews, status, image, company_name, originalService:data->originalService, isCampaignPinned:data->isCampaignPinned, campaignTitle:data->campaignTitle, campaignDescription:data->campaignDescription, campaignLabel:data->campaignLabel, campaignVideo:data->campaignVideo, campaignYoutubeLink:data->campaignYoutubeLink, campaignRecommendation:data->campaignRecommendation, campaignIgLink:data->campaignIgLink, isBestTripPinned:data->isBestTripPinned, spaSetting:data->spaSetting, tourTiers:data->tourTiers, allInclusiveTiers:data->allInclusiveTiers, allInclusiveSurcharge:data->allInclusiveSurcharge, pricingType:data->pricingType, min60:data->min60, min90:data->min90, min120:data->min120, dailyPrice:data->dailyPrice, weeklyPrice:data->weeklyPrice, monthlyPrice:data->monthlyPrice, badge:data->badge')
-      .eq('status', 'Active');
-    return data || [];
+    try {
+      const { data, error } = await supabase
+        .from('listings')
+        .select('id, type, title, location, price, duration, category, rating, reviews, status, image, company_name, originalService:data->originalService, isCampaignPinned:data->isCampaignPinned, campaignTitle:data->campaignTitle, campaignDescription:data->campaignDescription, campaignLabel:data->campaignLabel, campaignVideo:data->campaignVideo, campaignYoutubeLink:data->campaignYoutubeLink, campaignRecommendation:data->campaignRecommendation, campaignIgLink:data->campaignIgLink, isBestTripPinned:data->isBestTripPinned, spaSetting:data->spaSetting, tourTiers:data->tourTiers, allInclusiveTiers:data->allInclusiveTiers, allInclusiveSurcharge:data->allInclusiveSurcharge, pricingType:data->pricingType, min60:data->min60, min90:data->min90, min120:data->min120, dailyPrice:data->dailyPrice, weeklyPrice:data->weeklyPrice, monthlyPrice:data->monthlyPrice, badge:data->badge')
+        .eq('status', 'Active');
+      if (error || !data || data.length === 0) {
+        return FALLBACK_LISTINGS;
+      }
+      return data;
+    } catch {
+      return FALLBACK_LISTINGS;
+    }
   },
   ['homepage-listings'],
   { revalidate: 3600, tags: ['listings'] }
@@ -15,8 +23,15 @@ export const getHomepageListings = unstable_cache(
 
 export const getActiveListings = unstable_cache(
   async () => {
-    const { data } = await supabase.from('listings').select('*').eq('status', 'Active');
-    return data || [];
+    try {
+      const { data, error } = await supabase.from('listings').select('*').eq('status', 'Active');
+      if (error || !data || data.length === 0) {
+        return FALLBACK_LISTINGS;
+      }
+      return data;
+    } catch {
+      return FALLBACK_LISTINGS;
+    }
   },
   ['active-listings'],
   { revalidate: 3600, tags: ['listings'] }
@@ -24,13 +39,20 @@ export const getActiveListings = unstable_cache(
 
 export const getPublishedBlogs = unstable_cache(
   async (limit = 4) => {
-    const { data } = await supabase
-      .from('blogs')
-      .select('id, title, slug, image, category')
-      .eq('status', 'Published')
-      .order('created_at', { ascending: false })
-      .limit(limit);
-    return data || [];
+    try {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('id, title, slug, image, category, created_at, meta_description, content')
+        .eq('status', 'Published')
+        .order('created_at', { ascending: false })
+        .limit(limit);
+      if (error || !data || data.length === 0) {
+        return FALLBACK_BLOGS.slice(0, limit);
+      }
+      return data;
+    } catch {
+      return FALLBACK_BLOGS.slice(0, limit);
+    }
   },
   ['published-blogs'],
   { revalidate: 3600, tags: ['blogs'] }
@@ -38,12 +60,19 @@ export const getPublishedBlogs = unstable_cache(
 
 export const getHomepageSettings = unstable_cache(
   async () => {
-    const { data } = await supabase
-      .from('homepage_settings')
-      .select('campaign_video, campaign_youtube_link, campaign_recommendation, campaign_ig_link, campaign_recommendation_2, campaign_ig_link_2')
-      .eq('id', 1)
-      .single();
-    return data || null;
+    try {
+      const { data, error } = await supabase
+        .from('homepage_settings')
+        .select('campaign_video, campaign_youtube_link, campaign_recommendation, campaign_ig_link, campaign_recommendation_2, campaign_ig_link_2')
+        .eq('id', 1)
+        .single();
+      if (error || !data) {
+        return FALLBACK_SETTINGS;
+      }
+      return data;
+    } catch {
+      return FALLBACK_SETTINGS;
+    }
   },
   ['homepage-settings'],
   { revalidate: 3600, tags: ['homepage_settings'] }

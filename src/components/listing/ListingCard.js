@@ -4,70 +4,32 @@ import React, { useState, useEffect } from "react";
 import { Heart, Star } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSession, signIn } from "next-auth/react";
-import { supabase } from "@/lib/supabase";
+import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
 
 export default function ListingCard({ item, linkTo }) {
-  const { data: session } = useSession();
   const [isSaved, setIsSaved] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (session?.user?.email && item?.id) {
-       const checkSaved = async () => {
-          const { data } = await supabase
-            .from('bookings')
-            .select('id')
-            .eq('details->>isWishlist', 'true')
-            .eq('details->>customer_email', session.user.email)
-            .eq('details->item->>id', item.id)
-            .single();
-          if (data) setIsSaved(true);
-       };
-       checkSaved();
+    if (item?.id) {
+      setIsSaved(isTripSaved(item.id));
     }
-  }, [session, item]);
 
-  const handleSave = async (e) => {
+    const handleUpdate = (e) => {
+      if (item?.id && e.detail?.id === item.id) {
+        setIsSaved(e.detail.isSaved);
+      }
+    };
+
+    window.addEventListener("favoritesUpdated", handleUpdate);
+    return () => window.removeEventListener("favoritesUpdated", handleUpdate);
+  }, [item?.id]);
+
+  const handleSave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    if (!session?.user) {
-      signIn('google');
-      return;
-    }
-    
-    if (isSaving || !item) return;
-    setIsSaving(true);
-    
-    try {
-      if (isSaved) {
-        await supabase
-          .from('bookings')
-          .delete()
-          .eq('details->>isWishlist', 'true')
-          .eq('details->>customer_email', session.user.email)
-          .eq('details->item->>id', item.id);
-        setIsSaved(false);
-      } else {
-        await supabase.from('bookings').insert({
-          id: `FAV-${Date.now()}`,
-          customer_name: session.user.name || session.user.email,
-          contact_info: session.user.email,
-          service_name: item.title,
-          booking_date: new Date().toISOString().split('T')[0],
-          amount: "0",
-          status: 'Pending',
-          category: 'Tour',
-          details: { customer_email: session.user.email, item: item, image: item.image, isWishlist: true }
-        });
-        setIsSaved(true);
-      }
-    } catch (err) {
-      console.error("Save failed", err);
-    } finally {
-      setIsSaving(false);
-    }
+    if (!item) return;
+    const newState = toggleSaveTrip(item);
+    setIsSaved(newState);
   };
 
   const getFormattedPrice = (rawPrice) => {

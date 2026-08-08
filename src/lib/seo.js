@@ -3,7 +3,7 @@ import { generateSlug } from "./utils";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bobbybaliguide.com';
 
 export function getSeoDescription(text, maxLength = 160) {
-  if (!text) return "Book your premium Bali experience with Discovering Bali.";
+  if (!text) return "Book your premium Bali experience with Balance Island.";
   // Strip HTML
   let cleanText = text.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
   if (cleanText.length <= maxLength) return cleanText;
@@ -30,7 +30,7 @@ export function generateTourJsonLd(tour) {
     ],
     'provider': {
       '@type': 'LocalBusiness',
-      'name': 'Discovering Bali',
+      'name': 'Balance Island',
       'url': BASE_URL
     },
     'offers': {
@@ -63,11 +63,11 @@ export function generateBlogJsonLd(blog) {
     'dateModified': blog.updated_at || blog.created_at,
     'author': {
       '@type': 'Person',
-      'name': blog.author || 'Discovering Bali Team'
+      'name': blog.author || 'Balance Island Team'
     },
     'publisher': {
       '@type': 'Organization',
-      'name': 'Discovering Bali',
+      'name': 'Balance Island',
       'logo': {
         '@type': 'ImageObject',
         'url': `${BASE_URL}/logo.png`

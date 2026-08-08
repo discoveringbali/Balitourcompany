@@ -73,12 +73,12 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     e.preventDefault();
     
     // Generate Random Booking ID
-    const bookingId = `DB-${Math.floor(100000 + Math.random() * 900000)}`;
+    const bookingId = `BI-${Math.floor(100000 + Math.random() * 900000)}`;
     const sType = serviceData?.type?.toUpperCase() || "SERVICE";
     const sTitle = serviceData?.title?.toUpperCase() || "UNKNOWN";
     const divider = "━━━━━━━━━━━━━━━━━━━━━━";
     
-    let messageDetails = `*MYBALIDRIVER BOOKING*\n${divider}\n*BOOKING ID:* #${bookingId}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*WHATSAPP:* ${formData.phone}\n*DATE:* ${formData.date}`;
+    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*BOOKING ID:* #${bookingId}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*WHATSAPP:* ${formData.phone}\n*DATE:* ${formData.date}`;
     
     if (serviceData?.type === "tour" || serviceData?.type === "activities") {
       messageDetails += `\n*PACKAGE:* ${localPackage}`;

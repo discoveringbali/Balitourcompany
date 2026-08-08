@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
                   
   if (!listing) {
     return {
-      title: "Tour Not Found | Discovering Bali",
+      title: "Tour Not Found | Balance Island",
       description: "This tour could not be found."
     };
   }
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
   const optimizedDescription = getSeoDescription(listing.data?.description || listing.data?.highlights || "");
 
   return {
-    title: `${listing.title} | Discovering Bali`,
+    title: `${listing.title} | Balance Island`,
     description: optimizedDescription,
     openGraph: {
       title: listing.title,

@@ -10,6 +10,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateSlug } from "@/lib/utils";
+import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
 
 const InstagramIcon = ({ size = 24, className = "", strokeWidth = 2 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -107,7 +108,60 @@ const campaigns = [
 
 const popularTrips = [];
 
+function PopularTripCard({ trip }) {
+  const [isSaved, setIsSaved] = useState(false);
 
+  useEffect(() => {
+    if (trip?.id) {
+      setIsSaved(isTripSaved(trip.id));
+    }
+    const handleUpdate = (e) => {
+      if (trip?.id && e.detail?.id === trip.id) {
+        setIsSaved(e.detail.isSaved);
+      }
+    };
+    window.addEventListener("favoritesUpdated", handleUpdate);
+    return () => window.removeEventListener("favoritesUpdated", handleUpdate);
+  }, [trip?.id]);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!trip) return;
+    const newState = toggleSaveTrip(trip);
+    setIsSaved(newState);
+  };
+
+  return (
+    <Link href={`/tours/${generateSlug(trip.title)}`} className="block relative w-[240px] md:w-[280px] aspect-[4/5] rounded-[28px] overflow-hidden shadow-soft shrink-0 snap-start group border border-border bg-white">
+      <Image src={trip.image} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
+
+      {/* Heart Button */}
+      <button 
+        onClick={handleSave}
+        className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110"
+      >
+        <Heart size={16} strokeWidth={2.5} className={isSaved ? "text-black fill-black" : ""} />
+      </button>
+
+      {/* Bottom Overlay Card */}
+      <div className="absolute left-3 right-3 bottom-3 bg-white/95 backdrop-blur-md px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+        <h3 className="font-extrabold text-[15px] leading-snug text-primary line-clamp-2">{trip.title}</h3>
+        <div className="flex justify-between items-end mt-1">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <Star size={12} strokeWidth={2.5} className="fill-black text-black" />
+            <span className="text-[12px] font-bold text-primary">5.0</span>
+          </div>
+          <div className="flex flex-col items-end shrink-0">
+            <span className="font-extrabold text-[15px] text-primary tracking-tight pr-1">
+              IDR {Number(trip.price > 1000 ? trip.price : trip.price * 1000).toLocaleString('id-ID')}
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
 
 export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [] }) {
   const router = useRouter();
@@ -956,30 +1010,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           {/* Horizontal Scroll Area */}
           <div className="flex overflow-x-auto no-scrollbar gap-5 px-6 pb-6 snap-x snap-mandatory hide-scroll">
             {displayPopularTrips.length > 0 ? displayPopularTrips.map((trip) => (
-              <Link href={`/tours/${generateSlug(trip.title)}`} key={trip.id} className="block relative w-[240px] md:w-[280px] aspect-[4/5] rounded-[28px] overflow-hidden shadow-soft shrink-0 snap-start group border border-border bg-white">
-                <Image src={trip.image} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
-
-                {/* Heart Button */}
-                <button className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110">
-                  <Heart size={16} strokeWidth={2.5} />
-                </button>
-
-                {/* Bottom Overlay Card */}
-                <div className="absolute left-3 right-3 bottom-3 bg-white/95 backdrop-blur-md px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
-                  <h3 className="font-extrabold text-[15px] leading-snug text-primary line-clamp-2">{trip.title}</h3>
-                  <div className="flex justify-between items-end mt-1">
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      <Star size={12} strokeWidth={2.5} className="fill-black text-black" />
-                      <span className="text-[12px] font-bold text-primary">5.0</span>
-                    </div>
-                    <div className="flex flex-col items-end shrink-0">
-                      <span className="font-extrabold text-[15px] text-primary tracking-tight pr-1">
-                        IDR {Number(trip.price > 1000 ? trip.price : trip.price * 1000).toLocaleString('id-ID')}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+              <PopularTripCard key={trip.id} trip={trip} />
             )) : (
               <div className="w-full text-center py-6 text-gray-400 font-medium text-sm">
                 No items pinned as Best Trips for this category.

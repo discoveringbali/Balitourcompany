@@ -19,26 +19,26 @@ export const viewport = {
 
 export const metadata = {
   metadataBase: new URL("https://www.bobbybaliguide.com"),
-  applicationName: "MyBaliDriver",
+  applicationName: "Balance Island",
   title: {
-    default: "MyBaliDriver | Best Private Drivers & Premium Tours in Bali",
-    template: "%s | MyBaliDriver"
+    default: "Balance Island | Best Private Drivers & Premium Tours in Bali",
+    template: "%s | Balance Island"
   },
-  description: "Experience the best of Bali and Ubud with MyBaliDriver. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages. Book your unforgettable Bali adventure today!",
+  description: "Experience the best of Bali and Ubud with Balance Island. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages. Book your unforgettable Bali adventure today!",
   keywords: ["Bali Private Driver", "Hire Driver in Bali", "Bali Car Charter", "Premium Bali Tours", "Ubud Day Tour", "Nusa Penida Tour Package", "Bali Airport Transfer", "Custom Bali Itinerary", "Local Bali Guide", "Best Driver in Ubud"],
-  authors: [{ name: "MyBaliDriver" }],
-  creator: "MyBaliDriver",
-  publisher: "MyBaliDriver",
+  authors: [{ name: "Balance Island" }],
+  creator: "Balance Island",
+  publisher: "Balance Island",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   openGraph: {
-    title: "MyBaliDriver | Best Private Drivers & Premium Tours in Bali",
-    description: "Experience the best of Bali and Ubud with MyBaliDriver. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages.",
+    title: "Balance Island | Best Private Drivers & Premium Tours in Bali",
+    description: "Experience the best of Bali and Ubud with Balance Island. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages.",
     url: "https://www.bobbybaliguide.com",
-    siteName: "MyBaliDriver",
+    siteName: "Balance Island",
     images: [
       {
         url: "/og-image.jpg",
@@ -63,8 +63,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MyBaliDriver | Best Private Drivers & Premium Tours in Bali",
-    description: "Experience the best of Bali and Ubud with MyBaliDriver. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages.",
+    title: "Balance Island | Best Private Drivers & Premium Tours in Bali",
+    description: "Experience the best of Bali and Ubud with Balance Island. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages.",
     images: ["/og-image.jpg"],
   },
 };
@@ -73,8 +73,8 @@ export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "MyBaliDriver",
-    "alternateName": ["My Bali Driver", "Bobby Bali Guide"],
+    "name": "Balance Island",
+    "alternateName": ["Balance Island Bali", "Balance Island Tours"],
     "url": "https://www.bobbybaliguide.com/"
   };
 

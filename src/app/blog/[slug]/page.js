@@ -102,7 +102,7 @@ export async function generateMetadata({ params }) {
 
   if (!post) {
     return {
-      title: "Article Not Found | Discovering Bali",
+      title: "Article Not Found | Balance Island",
       description: "This article could not be found."
     };
   }
@@ -111,7 +111,7 @@ export async function generateMetadata({ params }) {
   const coverImg = post.image || "";
 
   return {
-    title: `${post.title} | Discovering Bali Blog`,
+    title: `${post.title} | Balance Island Blog`,
     description: optimizedDescription,
     openGraph: {
       title: post.title,

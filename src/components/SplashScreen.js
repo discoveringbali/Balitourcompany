@@ -165,7 +165,7 @@ export default function SplashScreen({ children }) {
                 />
                 <img
                   src="/icon.jpg"
-                  alt="MyBaliDriver"
+                  alt="Balance Island"
                   className="w-[88px] h-[88px] rounded-[24px] shadow-[0_12px_40px_rgba(0,0,0,0.08)] object-contain"
                 />
               </div>
@@ -176,7 +176,7 @@ export default function SplashScreen({ children }) {
                 transition={{ delay: 0.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 className="text-[#1c1c1c] text-[22px] font-black tracking-tight mb-1.5"
               >
-                mybalidriver
+                Balance Island
               </motion.h1>
 
               <motion.p
