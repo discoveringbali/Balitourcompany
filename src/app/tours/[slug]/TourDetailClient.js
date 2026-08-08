@@ -55,7 +55,20 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
     }
     
     let basePrice = getMultiplierPrice(tourData.price);
-    if (tourData.pricingType === "Per Person" && tourData.tourTiers) {
+    if (tourData.pricingType === "Per Group") {
+       if (tourData.groupTiers && tourData.groupTiers.length > 0) {
+          const matchedTier = tourData.groupTiers.find(t => {
+             const min = Number(t.minPax || 1);
+             const max = t.maxPax ? Number(t.maxPax) : 999;
+             return desktopPax >= min && desktopPax <= max;
+          }) || tourData.groupTiers[tourData.groupTiers.length - 1];
+          if (matchedTier && matchedTier.price) {
+             basePrice = getMultiplierPrice(matchedTier.price);
+          }
+       } else if (tourData.groupPrice) {
+          basePrice = getMultiplierPrice(tourData.groupPrice);
+       }
+    } else if (tourData.pricingType === "Per Person" && tourData.tourTiers) {
        const sortedTiers = [...tourData.tourTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
        const tier = sortedTiers.find(t => desktopPax >= Number(t.pax));
        if (tier) basePrice = getMultiplierPrice(tier.price);
@@ -688,14 +701,19 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                    />
                  </div>
                </div>
-
+               
                {/* Add Pax Calculator Desktop */}
                <div className="flex items-center justify-between mb-6 bg-[#f4f4f4] p-3 rounded-2xl">
-                 <span className="font-bold text-text-secondary text-[14px] ml-1">{tourData.service === "Scooter" ? "Quantity" : "Number of persons"}</span>
+                 <div>
+                   <span className="font-bold text-text-secondary text-[14px] ml-1 block">{tourData.service === "Scooter" ? "Quantity" : "Number of persons"}</span>
+                   {tourData.pricingType === "Per Group" && tourData.minGroupPax && tourData.minGroupPax > 1 && (
+                     <span className="text-[10px] font-bold text-gray-500 ml-1">Min. {tourData.minGroupPax} persons required</span>
+                   )}
+                 </div>
                  <div className="flex items-center gap-3">
-                   <button onClick={() => setDesktopPax(Math.max(tourData.minPax || 1, desktopPax - 1))} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Minus size={16} strokeWidth={3} /></button>
+                   <button onClick={() => setDesktopPax(Math.max(tourData.minGroupPax || tourData.minPax || 1, desktopPax - 1))} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Minus size={16} strokeWidth={3} /></button>
                    <span className="font-extrabold text-primary text-[15px] w-4 text-center">{desktopPax}</span>
-                   <button onClick={() => setDesktopPax(desktopPax + 1)} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Plus size={16} strokeWidth={3} /></button>
+                   <button onClick={() => setDesktopPax(Math.min(tourData.maxGroupPax || 20, desktopPax + 1))} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Plus size={16} strokeWidth={3} /></button>
                  </div>
                </div>
 
@@ -839,12 +857,17 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
             inclusiveTitle: tourData.inclusiveTitle,
             price: tourData.price, 
             pricingType: tourData.pricingType, // Original pricing type, modal overrides for inclusive
+            groupPricingMode: tourData.groupPricingMode,
+            groupPrice: tourData.groupPrice,
+            groupTiers: tourData.groupTiers,
+            minGroupPax: tourData.minGroupPax || 1,
+            maxGroupPax: tourData.maxGroupPax || 15,
             tourTiers: tourData.tourTiers,
             selectedPackage: (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? selectedPackage : null,
             allInclusiveSurcharge: tourData.allInclusiveSurcharge,
             hasAllInclusive: tourData.hasAllInclusive,
             allInclusiveTiers: tourData.allInclusiveTiers,
-            minPax: tourData.minPax || 1,
+            minPax: tourData.minGroupPax || tourData.minPax || 1,
             image: tourData.images[0]
          }} 
         initialPax={desktopPax}

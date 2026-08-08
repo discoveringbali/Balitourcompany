@@ -198,7 +198,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     const { supabase } = await import('@/lib/supabase');
     const { data, error } = await supabase
       .from('listings')
-      .select('id, type, title, location, price, duration, category, rating, reviews, status, image, company_name, originalService:data->originalService, isCampaignPinned:data->isCampaignPinned, campaignTitle:data->campaignTitle, campaignDescription:data->campaignDescription, campaignLabel:data->campaignLabel, campaignVideo:data->campaignVideo, campaignYoutubeLink:data->campaignYoutubeLink, campaignRecommendation:data->campaignRecommendation, campaignIgLink:data->campaignIgLink, isBestTripPinned:data->isBestTripPinned, spaSetting:data->spaSetting, tourTiers:data->tourTiers, allInclusiveTiers:data->allInclusiveTiers, allInclusiveSurcharge:data->allInclusiveSurcharge, pricingType:data->pricingType, min60:data->min60, min90:data->min90, min120:data->min120, dailyPrice:data->dailyPrice, weeklyPrice:data->weeklyPrice, monthlyPrice:data->monthlyPrice, badge:data->badge')
+      .select('id, type, title, location, price, duration, category, rating, reviews, status, image, company_name, originalService:data->originalService, isCampaignPinned:data->isCampaignPinned, campaignTitle:data->campaignTitle, campaignDescription:data->campaignDescription, campaignLabel:data->campaignLabel, campaignVideo:data->campaignVideo, campaignYoutubeLink:data->campaignYoutubeLink, campaignRecommendation:data->campaignRecommendation, campaignIgLink:data->campaignIgLink, isBestTripPinned:data->isBestTripPinned, spaSetting:data->spaSetting, tourTiers:data->tourTiers, groupTiers:data->groupTiers, minGroupPax:data->minGroupPax, maxGroupPax:data->maxGroupPax, groupPricingMode:data->groupPricingMode, allInclusiveTiers:data->allInclusiveTiers, allInclusiveSurcharge:data->allInclusiveSurcharge, pricingType:data->pricingType, min60:data->min60, min90:data->min90, min120:data->min120, dailyPrice:data->dailyPrice, weeklyPrice:data->weeklyPrice, monthlyPrice:data->monthlyPrice, badge:data->badge')
       .eq('status', 'Active');
 
     if (error) throw error;
@@ -863,12 +863,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Text and right-bottom click icon button */}
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
-                    <div className="flex-1 min-w-0 pr-1.5">
-                      <h3 className="text-[17px] sm:text-[19px] font-extrabold text-white leading-tight mb-1 font-sans tracking-tight line-clamp-1 drop-shadow-md">
+                    <div className="flex-1 min-w-0 pr-2">
+                      <h3 className="text-[20px] sm:text-[23px] font-black uppercase tracking-tight text-white leading-tight mb-1 font-sans drop-shadow-xl line-clamp-1">
                         {camp.title}
                       </h3>
                       {camp.subtitle && (
-                        <p className="text-white/85 text-[11px] sm:text-[12px] font-medium leading-normal line-clamp-1 drop-shadow-sm">
+                        <p className="text-white/90 text-[12px] sm:text-[13px] font-medium leading-normal line-clamp-1 drop-shadow-md">
                           {camp.subtitle}
                         </p>
                       )}
@@ -1001,12 +1001,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
                   {/* Bottom Bar: Title & Subtitle on Left, Click Icon Button on Right */}
                   <div className="absolute bottom-[14%] xl:bottom-[15%] inset-x-[6%] xl:inset-x-[8%] z-20 flex items-end justify-between gap-6 pointer-events-none">
-                    <div className="max-w-[700px] pointer-events-none">
-                      <h2 className="text-[32px] lg:text-[40px] xl:text-[48px] font-extrabold text-white leading-tight tracking-tight drop-shadow-2xl mb-1 font-sans">
+                    <div className="max-w-[760px] pointer-events-none">
+                      <h2 className="text-[38px] lg:text-[48px] xl:text-[56px] font-black uppercase tracking-tight text-white leading-[1.05] drop-shadow-2xl mb-1.5 font-sans">
                         {camp.title}
                       </h2>
                       {camp.subtitle && (
-                        <p className="text-white/85 text-[14px] lg:text-[15px] font-medium leading-normal drop-shadow-md line-clamp-1">
+                        <p className="text-white/90 text-[15px] lg:text-[17px] font-medium leading-normal drop-shadow-lg line-clamp-1">
                           {camp.subtitle}
                         </p>
                       )}

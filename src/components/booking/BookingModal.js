@@ -107,6 +107,19 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
           if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
        }
+    } else if (serviceData?.pricingType === "Per Group") {
+       if (serviceData.groupTiers && serviceData.groupTiers.length > 0) {
+          const matchedTier = serviceData.groupTiers.find(t => {
+             const min = Number(t.minPax || 1);
+             const max = t.maxPax ? Number(t.maxPax) : 999;
+             return pax >= min && pax <= max;
+          }) || serviceData.groupTiers[serviceData.groupTiers.length - 1];
+          if (matchedTier && matchedTier.price) {
+             basePrice = getMultiplierPrice(matchedTier.price);
+          }
+       } else if (serviceData.groupPrice) {
+          basePrice = getMultiplierPrice(serviceData.groupPrice);
+       }
     } else if (serviceData.tourTiers && serviceData.tourTiers.length > 0) {
        let sortedTiers = [...serviceData.tourTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
        let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
@@ -122,11 +135,12 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           } else {
              return basePrice * pax;
           }
+       } else if (serviceData?.pricingType === "Per Group") {
+          return basePrice;
        } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
           return basePrice;
        } else {
-          let isGroupPricing = serviceData?.pricingType === "Per Group";
-          return basePrice * (isGroupPricing ? 1 : pax);
+          return basePrice * pax;
        }
     }
     return basePrice;

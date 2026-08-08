@@ -461,7 +461,13 @@ export default function AdminListings() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {currentListings.map(item => {
               let displayPrice = item.price;
-              if (!displayPrice || Number(String(displayPrice).replace(/[^0-9]/g, '')) === 0) {
+              if (item.pricingType === "Per Group" && item.groupTiers && item.groupTiers.length > 0) {
+                 const validGt = item.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+                 if (validGt.length > 0) {
+                    validGt.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
+                    displayPrice = validGt[0].price;
+                 }
+              } else if (!displayPrice || Number(String(displayPrice).replace(/[^0-9]/g, '')) === 0) {
                  const tiersToUse = (item.tourTiers && item.tourTiers.length > 0) ? item.tourTiers : ((item.allInclusiveTiers && item.allInclusiveTiers.length > 0) ? item.allInclusiveTiers : []);
                  const validTier = tiersToUse.find(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
                  if (validTier) displayPrice = validTier.price;

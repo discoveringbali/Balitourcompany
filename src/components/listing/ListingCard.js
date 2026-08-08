@@ -38,8 +38,14 @@ export default function ListingCard({ item, linkTo }) {
   };
 
   let basePriceToUse = item.price;
-  if (!basePriceToUse || basePriceToUse == 0) {
-      const dataObj = item.data || item || {};
+  const dataObj = item.data || item || {};
+  if (dataObj.pricingType === "Per Group" && dataObj.groupTiers && dataObj.groupTiers.length > 0) {
+      const validGroupTiers = dataObj.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+      if (validGroupTiers.length > 0) {
+          validGroupTiers.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
+          basePriceToUse = Number(String(validGroupTiers[0].price).replace(/[^0-9]/g, ''));
+      }
+  } else if (!basePriceToUse || basePriceToUse == 0) {
       const tiersToUse = (dataObj.tourTiers && dataObj.tourTiers.length > 0) ? dataObj.tourTiers : ((dataObj.allInclusiveTiers && dataObj.allInclusiveTiers.length > 0) ? dataObj.allInclusiveTiers : []);
       const validTiers = tiersToUse.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
       if (validTiers.length > 0) {
