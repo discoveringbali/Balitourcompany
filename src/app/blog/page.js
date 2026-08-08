@@ -79,7 +79,7 @@ export default async function Blog() {
               
               <div className="md:w-2/5 p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-white relative">
                 <span className="text-accent font-extrabold text-sm tracking-widest uppercase mb-4">{articles[0].category || 'Guides'}</span>
-                <h2 className="text-3xl lg:text-5xl font-black mb-6 text-primary group-hover:text-amber-500 transition-colors leading-[1.1]">{articles[0].title}</h2>
+                <h2 className="text-3xl lg:text-5xl font-black mb-6 text-primary group-hover:text-black transition-colors leading-[1.1]">{articles[0].title}</h2>
                 <p className="text-gray-600 text-lg mb-8 leading-relaxed line-clamp-4 font-medium">{articles[0].meta_description || getExcerpt(articles[0].content)}</p>
                 <div className="flex items-center justify-between text-sm font-bold mt-auto pt-6 border-t border-gray-100">
                   <span className="flex items-center gap-2 text-gray-400"><Calendar size={18}/> {new Date(articles[0].created_at).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
@@ -110,7 +110,7 @@ export default async function Blog() {
                       </div>
                       
                       <div className="p-6 lg:p-8 flex flex-col flex-1 bg-white relative">
-                        <h3 className="text-2xl font-black mb-3 line-clamp-2 text-primary group-hover:text-amber-500 transition-colors leading-[1.2]">{article.title}</h3>
+                        <h3 className="text-2xl font-black mb-3 line-clamp-2 text-primary group-hover:text-black transition-colors leading-[1.2]">{article.title}</h3>
                         <p className="text-sm font-medium text-gray-500 mb-8 line-clamp-3 leading-relaxed">{article.meta_description || getExcerpt(article.content)}</p>
                         
                         <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between text-sm">

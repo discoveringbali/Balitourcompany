@@ -121,13 +121,13 @@ export default function HeroSettingsModal({ onClose }) {
              <div>
                 <label className="text-xs font-bold text-gray-500 mb-1.5 block">YouTube Link (Takes Priority, Includes Audio)</label>
                 <div className="relative">
-                   <Video className="absolute left-3 top-1/2 -translate-y-1/2 text-red-500" size={16} />
+                   <Video className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
                    <input 
                      type="text" 
                      placeholder="e.g. https://www.youtube.com/watch?v=..." 
                      value={settings.campaignYoutubeLink} 
                      onChange={(e) => setSettings({...settings, campaignYoutubeLink: e.target.value})} 
-                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors" 
+                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
                    />
                 </div>
              </div>
@@ -142,10 +142,10 @@ export default function HeroSettingsModal({ onClose }) {
                 <label className="text-xs font-bold text-gray-500 mb-1.5 block">Direct Video Upload (Muted Loop)</label>
                 {settings.campaignVideo ? (
                    <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200">
-                      <span className="text-xs text-primary font-bold truncate pr-4 text-green-600 flex items-center gap-2">
-                         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div> Video Uploaded
+                      <span className="text-xs text-primary font-bold truncate pr-4 text-black flex items-center gap-2">
+                         <div className="w-2 h-2 rounded-full bg-gray-800 text-white animate-pulse"></div> Video Uploaded
                       </span>
-                      <button onClick={() => setSettings({...settings, campaignVideo: ""})} className="text-red-500 hover:bg-red-50 p-1.5 rounded-md transition-colors"><Trash2 size={16}/></button>
+                      <button onClick={() => setSettings({...settings, campaignVideo: ""})} className="text-black hover:bg-gray-50 p-1.5 rounded-md transition-colors"><Trash2 size={16}/></button>
                    </div>
                 ) : (
                    <div className="relative overflow-hidden">
@@ -161,7 +161,7 @@ export default function HeroSettingsModal({ onClose }) {
 
           <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
              <h3 className="font-extrabold text-primary text-sm uppercase tracking-widest flex items-center gap-2 mb-4">
-                <Star size={18} className="text-[#cce823] fill-[#cce823]" /> Endorsement Badge
+                <Star size={18} className="text-black fill-[#c9c9c9]" /> Endorsement Badge
              </h3>
              
              <div>
@@ -171,20 +171,20 @@ export default function HeroSettingsModal({ onClose }) {
                   placeholder="e.g. Highly Recommended by Zondela" 
                   value={settings.campaignRecommendation} 
                   onChange={(e) => setSettings({...settings, campaignRecommendation: e.target.value})} 
-                  className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors" 
+                  className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
                 />
              </div>
 
              <div>
                 <label className="text-xs font-bold text-gray-500 mb-1.5 block">Instagram / Profile Link</label>
                 <div className="relative">
-                   <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-pink-500" size={16} />
+                   <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
                    <input 
                      type="text" 
                      placeholder="e.g. https://instagram.com/zondela" 
                      value={settings.campaignIgLink} 
                      onChange={(e) => setSettings({...settings, campaignIgLink: e.target.value})} 
-                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors" 
+                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
                    />
                  </div>
               </div>
@@ -196,20 +196,20 @@ export default function HeroSettingsModal({ onClose }) {
                   placeholder="e.g. Featured on Travel Bali" 
                   value={settings.campaignRecommendation2 || ""} 
                   onChange={(e) => setSettings({...settings, campaignRecommendation2: e.target.value})} 
-                  className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors" 
+                  className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
                 />
              </div>
 
              <div>
                 <label className="text-xs font-bold text-gray-500 mb-1.5 block">Second Instagram Link (Optional)</label>
                 <div className="relative">
-                   <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-500" size={16} />
+                   <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
                    <input 
                      type="text" 
                      placeholder="e.g. https://instagram.com/travelbali" 
                      value={settings.campaignIgLink2 || ""} 
                      onChange={(e) => setSettings({...settings, campaignIgLink2: e.target.value})} 
-                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors" 
+                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
                    />
                 </div>
              </div>

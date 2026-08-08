@@ -38,7 +38,7 @@ export default function BottomNav() {
 
   return (
     <div className="md:hidden fixed bottom-6 left-0 right-0 z-50 flex justify-center px-6">
-      <div className="bg-[#1C1C1E]/60 backdrop-blur-2xl rounded-[32px] py-4 px-6 flex justify-between items-center w-full max-w-sm shadow-[0_8px_32px_rgba(0,0,0,0.25)] border border-white/10">
+      <div className="bg-[#1c1c1c]/60 backdrop-blur-2xl rounded-[32px] py-4 px-6 flex justify-between items-center w-full max-w-sm shadow-[0_8px_32px_rgba(0,0,0,0.25)] border border-white/10">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;

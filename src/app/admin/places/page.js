@@ -257,7 +257,7 @@ export default function SEOPlacesManagement() {
              <div key={i} className="bg-white rounded-[24px] border border-gray-100 shadow-sm overflow-hidden flex flex-col group relative">
                 
                 <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
-                   <span className={`px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md border ${article.status === 'Published' ? 'bg-green-500/90 text-white border-green-400' : 'bg-gray-800/80 text-white border-gray-600'}`}>
+                   <span className={`px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md border ${article.status === 'Published' ? 'bg-gray-800 text-white/90 text-white border-black' : 'bg-gray-800/80 text-white border-gray-600'}`}>
                       {article.status}
                    </span>
                    <div className="relative">
@@ -268,11 +268,11 @@ export default function SEOPlacesManagement() {
                        <div className="absolute right-0 top-10 mt-1 w-40 bg-white shadow-xl border border-gray-100 rounded-xl overflow-hidden z-20">
                           <button onClick={() => openEditModal(article)} className="w-full text-left px-4 py-2 text-xs font-bold text-gray-700 hover:bg-gray-50 border-b border-gray-50 flex items-center gap-2"><Edit2 size={12}/> Edit Article</button>
                           {(article.status === 'Draft') ? (
-                            <button onClick={() => handleStatusChange(article.id, 'Published')} className="w-full text-left px-4 py-2 text-xs font-bold text-green-600 hover:bg-green-50 border-b border-gray-50 flex items-center gap-2"><Globe size={12}/> Publish Post</button>
+                            <button onClick={() => handleStatusChange(article.id, 'Published')} className="w-full text-left px-4 py-2 text-xs font-bold text-black hover:bg-gray-50 border-b border-gray-50 flex items-center gap-2"><Globe size={12}/> Publish Post</button>
                           ) : (
-                            <button onClick={() => handleStatusChange(article.id, 'Draft')} className="w-full text-left px-4 py-2 text-xs font-bold text-amber-600 hover:bg-amber-50 border-b border-gray-50 flex items-center gap-2"><EyeOff size={12}/> Unpublish</button>
+                            <button onClick={() => handleStatusChange(article.id, 'Draft')} className="w-full text-left px-4 py-2 text-xs font-bold text-black hover:bg-gray-50 border-b border-gray-50 flex items-center gap-2"><EyeOff size={12}/> Unpublish</button>
                           )}
-                          <button onClick={() => handleDelete(article.id)} className="w-full text-left px-4 py-2 text-xs font-bold text-red-500 hover:bg-red-50 flex items-center gap-2"><Trash2 size={12}/> Delete Article</button>
+                          <button onClick={() => handleDelete(article.id)} className="w-full text-left px-4 py-2 text-xs font-bold text-black hover:bg-gray-50 flex items-center gap-2"><Trash2 size={12}/> Delete Article</button>
                        </div>
                      )}
                    </div>
@@ -294,7 +294,7 @@ export default function SEOPlacesManagement() {
                      <span className="text-[10px] font-bold text-white bg-black px-2.5 py-1 rounded-md uppercase tracking-wider">{article.category}</span>
                      <span className="text-xs font-bold text-gray-400 flex items-center gap-1"><MapPin size={12}/> {article.location}</span>
                    </div>
-                   <h3 className="font-bold text-lg text-primary leading-tight mb-2 group-hover:text-amber-500 transition-colors line-clamp-2">{article.title}</h3>
+                   <h3 className="font-bold text-lg text-primary leading-tight mb-2 group-hover:text-black transition-colors line-clamp-2">{article.title}</h3>
                    <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between text-xs font-medium text-gray-500">
                       <span className="font-mono bg-gray-50 px-2 py-1 rounded-md">{article.slug}</span>
                       <strong className="text-primary">{article.views} Views</strong>
@@ -354,7 +354,7 @@ export default function SEOPlacesManagement() {
                                 <img src={img} className="w-full h-full object-cover" />
                                 <button 
                                   onClick={() => setFormData(p => ({...p, images: p.images.filter((_, i) => i !== idx)}))} 
-                                  className="absolute top-1 right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                  className="absolute top-1 right-1 w-5 h-5 bg-gray-800 text-white text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                                 >
                                   <Trash2 size={10} />
                                 </button>
@@ -396,7 +396,7 @@ export default function SEOPlacesManagement() {
                 </div>
 
                 <div className="border-t border-gray-100 pt-6">
-                   <h4 className="text-sm font-extrabold text-primary mb-4 flex items-center gap-2"><Newspaper size={16} className="text-amber-500" /> Article Content</h4>
+                   <h4 className="text-sm font-extrabold text-primary mb-4 flex items-center gap-2"><Newspaper size={16} className="text-black" /> Article Content</h4>
                    
                    <div className="w-full h-[300px] bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm flex flex-col mb-6">
                       {/* Rich Text Editor Toolbar Mock */}
@@ -417,7 +417,7 @@ export default function SEOPlacesManagement() {
                       
                       <textarea 
                          ref={textareaRef}
-                         className="flex-1 w-full p-4 resize-none outline-none text-[13px] text-gray-700 font-medium leading-relaxed font-sans placeholder:text-gray-400 focus:bg-[#FAFAFA]"
+                         className="flex-1 w-full p-4 resize-none outline-none text-[13px] text-gray-700 font-medium leading-relaxed font-sans placeholder:text-gray-400 focus:bg-[#fafafa]"
                          placeholder="Write your article body here... Select text and use the toolbar to format."
                          value={formData.content || ''}
                          onChange={(e) => setFormData(prev => ({...prev, content: e.target.value}))}
@@ -426,7 +426,7 @@ export default function SEOPlacesManagement() {
                 </div>
 
                 <div className="border-t border-gray-100 pt-6">
-                   <h4 className="text-sm font-extrabold text-primary mb-4 flex items-center gap-2"><Globe size={16} className="text-blue-500" /> SEO Configuration</h4>
+                   <h4 className="text-sm font-extrabold text-primary mb-4 flex items-center gap-2"><Globe size={16} className="text-black" /> SEO Configuration</h4>
                    
                    <div className="space-y-4">
                       <div>

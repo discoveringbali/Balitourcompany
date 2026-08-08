@@ -48,8 +48,8 @@ export default function WishlistCard({ item, linkTo }) {
          )}
 
          {/* Heart Solid Red (Since it's in wishlist) */}
-         <button className="w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-red-500 shadow-sm z-30 transition-all active:scale-90 border border-white/30">
-           <Heart size={20} className="fill-red-500" />
+         <button className="w-10 h-10 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center text-black shadow-sm z-30 transition-all active:scale-90 border border-white/30">
+           <Heart size={20} className="fill-black" />
          </button>
       </div>
       
@@ -58,7 +58,7 @@ export default function WishlistCard({ item, linkTo }) {
         
         {/* Title & Info */}
         <div className="mb-3">
-          <h3 className="font-black text-[16px] leading-[1.25] text-[#1C1C1E] line-clamp-2 mb-2">
+          <h3 className="font-black text-[16px] leading-[1.25] text-[#1c1c1c] line-clamp-2 mb-2">
             {item.title}
           </h3>
           <div className="flex items-center justify-between">
@@ -67,9 +67,9 @@ export default function WishlistCard({ item, linkTo }) {
                <span className="text-[11px] font-extrabold uppercase tracking-widest">{item.location}</span>
              </div>
              
-             <div className="flex items-center gap-1 bg-[#F8F9FA] px-2.5 py-1 rounded-lg border border-white">
-               <Star size={11} strokeWidth={3} className="fill-[#F59E0B] text-[#F59E0B]" />
-               <span className="text-[11px] font-black text-[#1C1C1E]">{item.rating || 4.8}</span>
+             <div className="flex items-center gap-1 bg-[#f9f9f9] px-2.5 py-1 rounded-lg border border-white">
+               <Star size={11} strokeWidth={3} className="fill-black text-black" />
+               <span className="text-[11px] font-black text-[#1c1c1c]">{item.rating || 4.8}</span>
                <span className="text-[10px] font-bold text-gray-400">({item.reviews || 0})</span>
              </div>
           </div>
@@ -79,12 +79,12 @@ export default function WishlistCard({ item, linkTo }) {
         <div className="pt-3 border-t border-gray-200/50 flex items-center justify-between">
            <div>
              <span className="text-[9px] font-extrabold text-gray-400 uppercase tracking-widest">Base Rate</span>
-             <div className="font-black text-[15px] text-[#1C1C1E] tracking-tight leading-none mt-0.5">
+             <div className="font-black text-[15px] text-[#1c1c1c] tracking-tight leading-none mt-0.5">
                {formattedPrice}
              </div>
            </div>
            
-           <div className="w-8 h-8 rounded-full bg-[#D9FB41] flex items-center justify-center text-[#1C1C1E] scale-90 group-hover:scale-100 transition-transform">
+           <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-[#1c1c1c] scale-90 group-hover:scale-100 transition-transform">
              <Bookmark size={14} fill="currentColor" />
            </div>
         </div>

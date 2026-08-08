@@ -104,12 +104,12 @@ export default function EditCompanyModal({ item, onClose, onSave }) {
             {/* Verification and Badges */}
             <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm flex items-center justify-between">
                <div>
-                 <div className="flex items-center gap-2 text-sm font-extrabold text-primary"><CheckCircle2 size={16} className="text-green-500"/> Verified Partner Badge</div>
+                 <div className="flex items-center gap-2 text-sm font-extrabold text-primary"><CheckCircle2 size={16} className="text-black"/> Verified Partner Badge</div>
                  <p className="text-[11px] font-semibold text-gray-500">Shows a green mark next to the company name</p>
                </div>
                <div 
                  onClick={() => setFormData({...formData, verified: !formData.verified})}
-                 className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${formData.verified ? 'bg-green-500' : 'bg-gray-200'}`}>
+                 className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${formData.verified ? 'bg-gray-800 text-white' : 'bg-gray-200'}`}>
                  <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${formData.verified ? 'translate-x-6' : ''}`} />
                </div>
             </div>

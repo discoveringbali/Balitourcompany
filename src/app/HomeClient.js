@@ -470,7 +470,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <div className="md:hidden relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-[#cce823] rounded-[32px] p-1.5 shadow-[0_4px_20px_rgba(204,232,35,0.3)] mb-4">
+          <div className="bg-black rounded-[32px] p-1.5 shadow-md mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -492,9 +492,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {/* Text Label or Icon */}
                     <div className="relative z-10 flex items-center justify-center">
                       {loc === "All Bali" ? (
-                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-[#1C1C1E]' : 'text-[#1C1C1E]/60 hover:text-[#1C1C1E]'}`} />
+                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} />
                       ) : (
-                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1C1C1E] font-extrabold' : 'text-[#1C1C1E]/70 font-bold hover:text-[#1C1C1E]'}`}>
+                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
                           {loc}
                         </span>
                       )}
@@ -681,7 +681,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 ) : camp.image ? (
                   <Image src={camp.image} alt={camp.badge || "Campaign Image"} priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 ) : null}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1C1C1E] via-[#1C1C1E]/40 to-transparent z-0 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/40 to-transparent z-0 pointer-events-none" />
 
                 <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
                   {!camp.isHeroSlide && camp.badge && (
@@ -704,9 +704,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           <a
                             href={camp.campaignIgLink || "#"}
                             target="_blank" rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 bg-[#cce823] text-[#1C1C1E] px-4 py-2 rounded-md shadow-[0_8px_30px_rgba(204,232,35,0.3)] hover:scale-105 transition-transform pointer-events-auto max-w-full"
+                            className="inline-flex items-center justify-center gap-2 bg-black text-[#1c1c1c] px-4 py-2 rounded-md shadow-md hover:scale-105 transition-transform pointer-events-auto max-w-full"
                           >
-                            <InstagramIcon size={14} className="text-[#1C1C1E] shrink-0 mt-0.5" strokeWidth={2} />
+                            <InstagramIcon size={14} className="text-[#1c1c1c] shrink-0 mt-0.5" strokeWidth={2} />
                             <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-center whitespace-normal leading-tight line-clamp-2">{camp.campaignRecommendation}</span>
                           </a>
                         </motion.div>
@@ -725,9 +725,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           <a
                             href={camp.campaignIgLink2 || "#"}
                             target="_blank" rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 bg-[#1C1C1E]/95 backdrop-blur-md border-l-4 border-[#cce823] text-[#cce823] px-4 py-2 rounded-md shadow-2xl hover:scale-105 transition-transform pointer-events-auto max-w-full"
+                            className="inline-flex items-center justify-center gap-2 bg-[#1c1c1c]/95 backdrop-blur-md border-l-4 border-black text-black px-4 py-2 rounded-md shadow-2xl hover:scale-105 transition-transform pointer-events-auto max-w-full"
                           >
-                            <InstagramIcon size={14} className="text-[#cce823] shrink-0 mt-0.5" strokeWidth={2} />
+                            <InstagramIcon size={14} className="text-black shrink-0 mt-0.5" strokeWidth={2} />
                             <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-center whitespace-normal leading-tight line-clamp-2">{camp.campaignRecommendation2}</span>
                           </a>
                         </motion.div>
@@ -823,8 +823,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               {/* Left Recommendation Label (Under Text) */}
               {camp.isHeroSlide && camp.campaignRecommendation && (
                 <div className="absolute bottom-[18%] left-[4%] z-20 pointer-events-none">
-                  <a href={camp.campaignIgLink || "#"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-[#cce823] text-[#1C1C1E] px-6 py-3 rounded-md shadow-[0_8px_30px_rgba(204,232,35,0.3)] hover:scale-105 transition-transform duration-300 pointer-events-auto max-w-max">
-                    <InstagramIcon size={18} className="text-[#1C1C1E] shrink-0 mt-0.5" strokeWidth={2} />
+                  <a href={camp.campaignIgLink || "#"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-black text-[#1c1c1c] px-6 py-3 rounded-md shadow-md hover:scale-105 transition-transform duration-300 pointer-events-auto max-w-max">
+                    <InstagramIcon size={18} className="text-[#1c1c1c] shrink-0 mt-0.5" strokeWidth={2} />
                     <span className="text-[12px] xl:text-[14px] font-black uppercase tracking-widest drop-shadow-sm whitespace-nowrap">{camp.campaignRecommendation}</span>
                   </a>
                 </div>
@@ -833,8 +833,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               {/* Right Recommendation Label (Above Numbers) */}
               {camp.isHeroSlide && camp.campaignRecommendation2 && (
                 <div className="absolute bottom-[18%] right-[4%] z-20 pointer-events-none">
-                  <a href={camp.campaignIgLink2 || "#"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-[#1C1C1E]/95 backdrop-blur-md border-l-4 border-[#cce823] text-[#cce823] px-6 py-3 rounded-md shadow-2xl hover:scale-105 transition-transform duration-300 pointer-events-auto max-w-max">
-                    <InstagramIcon size={18} className="text-[#cce823] shrink-0 mt-0.5" strokeWidth={2} />
+                  <a href={camp.campaignIgLink2 || "#"} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 bg-[#1c1c1c]/95 backdrop-blur-md border-l-4 border-black text-black px-6 py-3 rounded-md shadow-2xl hover:scale-105 transition-transform duration-300 pointer-events-auto max-w-max">
+                    <InstagramIcon size={18} className="text-black shrink-0 mt-0.5" strokeWidth={2} />
                     <span className="text-[12px] xl:text-[14px] font-black uppercase tracking-widest drop-shadow-sm whitespace-nowrap">{camp.campaignRecommendation2}</span>
                   </a>
                 </div>
@@ -960,7 +960,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <Image src={trip.image} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
 
                 {/* Heart Button */}
-                <button className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-red-500 hover:scale-110">
+                <button className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110">
                   <Heart size={16} strokeWidth={2.5} />
                 </button>
 
@@ -969,7 +969,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <h3 className="font-extrabold text-[15px] leading-snug text-primary line-clamp-2">{trip.title}</h3>
                   <div className="flex justify-between items-end mt-1">
                     <div className="flex items-center gap-1.5 shrink-0">
-                      <Star size={12} strokeWidth={2.5} className="fill-[#F59E0B] text-[#F59E0B]" />
+                      <Star size={12} strokeWidth={2.5} className="fill-black text-black" />
                       <span className="text-[12px] font-bold text-primary">5.0</span>
                     </div>
                     <div className="flex flex-col items-end shrink-0">
@@ -996,7 +996,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             <Link href={activeService === "Tour" ? "/tours" : activeService === "Transport" ? "/map" : "/esim"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
           </div>
           <div className="flex justify-center w-full overflow-hidden">
-            <div className="bg-[#cce823] rounded-[32px] p-1.5 shadow-[0_4px_20px_rgba(204,232,35,0.3)] w-fit max-w-full mx-auto">
+            <div className="bg-black rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">
               <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {currentCategories.map((c) => {
                   const Icon = c.icon;
@@ -1015,8 +1015,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                         />
                       )}
                       <div className="relative z-10 flex items-center justify-center gap-1.5">
-                        {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#1C1C1E]' : 'text-[#1C1C1E]/60 hover:text-[#1C1C1E]'}`} strokeWidth={2} />}
-                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1C1C1E] font-extrabold' : 'text-[#1C1C1E]/70 font-bold hover:text-[#1C1C1E]'}`}>
+                        {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
+                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
                           {c.id}
                         </span>
                       </div>

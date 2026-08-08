@@ -235,13 +235,13 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                <div className="flex-1 flex flex-col justify-center">
                  <div className="flex items-center justify-between">
                    <div>
-                     <div className="flex items-center gap-2 text-sm font-extrabold text-primary"><Target size={16} className="text-[#cce823]"/> Pin to Campaign</div>
+                     <div className="flex items-center gap-2 text-sm font-extrabold text-primary"><Target size={16} className="text-black"/> Pin to Campaign</div>
                      <p className="text-[11px] font-semibold text-gray-500">Feature this in massive homepage hero slider</p>
                    </div>
                    {/* Apple Toggle */}
                    <div 
                      onClick={() => setPins({...pins, isCampaignPinned: !pins.isCampaignPinned})}
-                     className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${pins.isCampaignPinned ? 'bg-[#cce823]' : 'bg-gray-200'}`}>
+                     className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${pins.isCampaignPinned ? 'bg-black text-white' : 'bg-gray-200'}`}>
                      <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${pins.isCampaignPinned ? 'translate-x-6' : ''}`} />
                    </div>
                  </div>
@@ -252,18 +252,18 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                        placeholder="Campaign Title (e.g. Best Deals this Summer!)" 
                        value={pins.campaignTitle} 
                        onChange={(e) => setPins({...pins, campaignTitle: e.target.value})} 
-                       className="w-full bg-gray-50 text-xs font-bold text-primary rounded-xl px-3 py-2 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors" 
+                       className="w-full bg-gray-50 text-xs font-bold text-primary rounded-xl px-3 py-2 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
                      />
                      <textarea
                        placeholder="Campaign Description..."
                        value={pins.campaignDescription}
                        onChange={(e) => setPins({...pins, campaignDescription: e.target.value})}
-                       className="w-full bg-gray-50 text-xs font-medium text-primary rounded-xl px-3 py-2 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors h-16"
+                       className="w-full bg-gray-50 text-xs font-medium text-primary rounded-xl px-3 py-2 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors h-16"
                      ></textarea>
                      <select
                        value={pins.campaignLabel}
                        onChange={(e) => setPins({...pins, campaignLabel: e.target.value})}
-                       className="w-full bg-gray-50 text-xs font-bold text-primary rounded-xl px-3 py-2 border border-gray-200 focus:border-[#cce823] focus:ring-1 focus:ring-[#cce823] outline-none transition-colors appearance-none"
+                       className="w-full bg-gray-50 text-xs font-bold text-primary rounded-xl px-3 py-2 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors appearance-none"
                      >
                         <option value="">No Label</option>
                         <option value="Exclusive">Exclusive</option>
@@ -280,13 +280,13 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
 
                <div className="flex-1 flex items-center justify-between">
                   <div>
-                    <div className="flex items-center gap-2 text-sm font-extrabold text-primary"><Star size={16} className="text-yellow-500"/> Best Trips Label</div>
+                    <div className="flex items-center gap-2 text-sm font-extrabold text-primary"><Star size={16} className="text-black"/> Best Trips Label</div>
                     <p className="text-[11px] font-semibold text-gray-500">Show inside the Best Recommended section</p>
                   </div>
                   {/* Apple Toggle */}
                   <div 
                     onClick={() => setPins({...pins, isBestTripPinned: !pins.isBestTripPinned})}
-                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${pins.isBestTripPinned ? 'bg-yellow-500' : 'bg-gray-200'}`}>
+                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${pins.isBestTripPinned ? 'bg-gray-800 text-white' : 'bg-gray-200'}`}>
                     <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${pins.isBestTripPinned ? 'translate-x-6' : ''}`} />
                   </div>
                </div>
@@ -339,7 +339,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                          <button
                            type="button"
                            onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
-                           className="w-full bg-white text-sm font-semibold text-primary rounded-xl px-4 py-2 border border-[#cce823] hover:bg-gray-50 transition-colors focus:ring-1 focus:ring-[#cce823] outline-none flex items-center justify-between"
+                           className="w-full bg-white text-sm font-semibold text-primary rounded-xl px-4 py-2 border border-black hover:bg-gray-50 transition-colors focus:ring-1 focus:ring-[#c9c9c9] outline-none flex items-center justify-between"
                          >
                            <div className="flex items-center gap-2">
                               {formData.category ? (
@@ -395,7 +395,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
               
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <CheckCircle2 size={18} className="text-green-500 mt-0.5 shrink-0" />
+                  <CheckCircle2 size={18} className="text-black mt-0.5 shrink-0" />
                   <div>
                      <p className="text-xs font-bold text-primary">Free cancellation</p>
                      <p className="text-[11px] font-semibold text-gray-500 mt-0.5">Cancel up to 24 hours in advance for a full refund</p>
@@ -456,7 +456,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
             {/* Dynamic Pricing Engine */}
             <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm">
                <div className="flex items-center gap-2 mb-4">
-                  <DollarSign size={20} className="text-green-500" />
+                  <DollarSign size={20} className="text-black" />
                   <h3 className="font-extrabold text-primary text-sm uppercase tracking-widest">Pricing Configuration</h3>
                </div>
 
@@ -491,7 +491,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                                       className="w-full bg-white text-sm font-extrabold text-primary rounded-xl pl-10 pr-4 py-2 border border-gray-200 focus:border-accent outline-none" 
                                />
                              </div>
-                             <button onClick={() => setTourTiers(tourTiers.filter((_, i) => i !== index))} className="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100">
+                             <button onClick={() => setTourTiers(tourTiers.filter((_, i) => i !== index))} className="w-8 h-8 rounded-full bg-gray-50 text-black flex items-center justify-center hover:bg-gray-100">
                                 <Trash2 size={14} />
                              </button>
                            </div>
@@ -507,7 +507,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                               <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block">Enable All-Inclusive Package</label>
                               <p className="text-[11px] text-gray-400 font-medium mt-1">Allows customers to choose an "All-Inclusive" package that covers everything.</p>
                            </div>
-                           <div onClick={() => setHasAllInclusive(!hasAllInclusive)} className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${hasAllInclusive ? 'bg-[#cce823]' : 'bg-gray-200'}`}>
+                           <div onClick={() => setHasAllInclusive(!hasAllInclusive)} className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ${hasAllInclusive ? 'bg-black text-white' : 'bg-gray-200'}`}>
                              <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${hasAllInclusive ? 'translate-x-6' : ''}`} />
                            </div>
                         </div>
@@ -532,7 +532,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                                                 className="w-full bg-white text-sm font-extrabold text-primary rounded-xl pl-10 pr-4 py-2 border border-gray-200 focus:border-accent outline-none" 
                                          />
                                        </div>
-                                       <button onClick={() => setAllInclusiveTiers(allInclusiveTiers.filter((_, i) => i !== index))} className="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100">
+                                       <button onClick={() => setAllInclusiveTiers(allInclusiveTiers.filter((_, i) => i !== index))} className="w-8 h-8 rounded-full bg-gray-50 text-black flex items-center justify-center hover:bg-gray-100">
                                           <Trash2 size={14} />
                                        </button>
                                      </div>
@@ -651,7 +651,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                     <div className="space-y-3 relative before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-gray-200 before:to-transparent">
                       {itinerary.map((item, index) => (
                         <div key={index} className="relative flex items-start gap-4">
-                          <div className="w-6 h-6 rounded-full bg-[#cce823] flex items-center justify-center font-bold text-[10px] text-primary shrink-0 z-10 mt-1">{index + 1}</div>
+                          <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center font-bold text-[10px] text-primary shrink-0 z-10 mt-1">{index + 1}</div>
                           <div className="flex-1 bg-gray-50 p-3 rounded-xl border border-gray-200">
                              <input type="text" placeholder="Title (e.g. 08:00 AM - Hotel Pickup)" value={item.title} onChange={(e) => {
                                const newItin = [...itinerary]; newItin[index].title = e.target.value; setItinerary(newItin);
@@ -660,7 +660,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                                const newItin = [...itinerary]; newItin[index].description = e.target.value; setItinerary(newItin);
                              }} className="w-full bg-white text-sm font-medium text-gray-600 rounded-lg px-3 py-1.5 border border-gray-200 outline-none focus:border-accent"></textarea>
                           </div>
-                          <button onClick={() => setItinerary(itinerary.filter((_, i) => i !== index))} className="w-8 h-8 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 mt-1 shrink-0">
+                          <button onClick={() => setItinerary(itinerary.filter((_, i) => i !== index))} className="w-8 h-8 rounded-full bg-gray-50 text-black flex items-center justify-center hover:bg-gray-100 mt-1 shrink-0">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -753,7 +753,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                                <Camera size={14} />
                                <input type="file" accept="image/*" onChange={handleImageUpload} disabled={isUploading} className="absolute inset-0 opacity-0 cursor-pointer" />
                              </div>
-                             <button onClick={() => setFormData({...formData, image: ""})} className="w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-red-50 hover:text-red-500 text-gray-600 transition-colors">
+                             <button onClick={() => setFormData({...formData, image: ""})} className="w-8 h-8 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-md cursor-pointer hover:bg-gray-50 hover:text-black text-gray-600 transition-colors">
                                <Trash2 size={14} />
                              </button>
                           </div>
@@ -779,7 +779,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                              const newG = [...gallery];
                              newG[index] = "";
                              setGallery(newG);
-                          }} className="absolute top-2 right-2 w-7 h-7 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-sm cursor-pointer hover:bg-red-50 hover:text-red-500 text-gray-600 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100">
+                          }} className="absolute top-2 right-2 w-7 h-7 bg-white/90 backdrop-blur rounded-full flex items-center justify-center shadow-sm cursor-pointer hover:bg-gray-50 hover:text-black text-gray-600 opacity-0 group-hover:opacity-100 transition-all scale-90 group-hover:scale-100">
                              <Trash2 size={12} />
                           </button>
                        </div>

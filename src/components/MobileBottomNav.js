@@ -32,7 +32,7 @@ export default function MobileBottomNav() {
                   isActive ? "text-accent" : "text-text-secondary hover:text-primary"
                 }`}
               >
-                <Icon size={26} strokeWidth={isActive ? 2.5 : 1.5} className={isActive ? "fill-blue-50" : "fill-transparent"} />
+                <Icon size={26} strokeWidth={isActive ? 2.5 : 1.5} className={isActive ? "fill-black" : "fill-transparent"} />
                 <span className={`text-[10px] mt-1 font-medium ${isActive ? "text-primary" : "text-text-secondary"}`}>{item.id}</span>
               </div>
             </Link>

@@ -17,12 +17,12 @@ export default function ProfilePage() {
   ];
 
   if (status === "loading") {
-    return <div className="min-h-[100dvh] bg-[#F8FAFC] flex items-center justify-center font-bold text-primary animate-pulse">Loading...</div>;
+    return <div className="min-h-[100dvh] bg-[#fafafa] flex items-center justify-center font-bold text-primary animate-pulse">Loading...</div>;
   }
 
   if (!session) {
     return (
-      <div className="min-h-[100dvh] bg-[#F8FAFC] pb-32 font-sans font-medium flex flex-col items-center justify-center px-6 text-center">
+      <div className="min-h-[100dvh] bg-[#fafafa] pb-32 font-sans font-medium flex flex-col items-center justify-center px-6 text-center">
         <CircleUser size={64} className="text-gray-300 mb-6" />
         <h1 className="text-2xl font-extrabold text-primary mb-3">Profile</h1>
         <p className="text-text-secondary text-sm mb-8">Sign in to view your profile, manage bookings, and access your wishlist.</p>
@@ -34,7 +34,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-[#F8FAFC] pb-32 font-sans font-medium">
+    <div className="min-h-[100dvh] bg-[#fafafa] pb-32 font-sans font-medium">
       <div className="px-6 pt-16 pb-8 bg-white shadow-sm border-b border-border">
         <h1 className="text-2xl font-extrabold text-primary mb-8">Profile</h1>
         
@@ -64,7 +64,7 @@ export default function ProfilePage() {
                 className={`items-center justify-between p-5 transition-colors hover:bg-gray-50 cursor-pointer border-b border-border last:border-b-0 ${item.mobileHide ? 'hidden md:flex' : item.desktopHide ? 'flex md:hidden' : 'flex'}`}
               >
                 <div className="flex items-center gap-4 text-primary">
-                  <div className="w-10 h-10 rounded-full bg-[#F1F5F9] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-[#f4f4f4] flex items-center justify-center">
                     <Icon size={20} className="text-primary" />
                   </div>
                   <span className="font-bold text-[15px]">{item.label}</span>
@@ -75,7 +75,7 @@ export default function ProfilePage() {
           })}
         </div>
 
-        <button onClick={() => signOut()} className="w-full mt-8 flex items-center justify-center gap-2 p-5 bg-white text-red-500 font-bold rounded-3xl shadow-sm border border-border transition-colors hover:bg-red-50 active:bg-red-100">
+        <button onClick={() => signOut()} className="w-full mt-8 flex items-center justify-center gap-2 p-5 bg-white text-black font-bold rounded-3xl shadow-sm border border-border transition-colors hover:bg-gray-50 active:bg-gray-100">
           <LogOut size={20} />
           <span>Log Out</span>
         </button>

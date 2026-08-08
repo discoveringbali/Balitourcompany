@@ -50,7 +50,7 @@ const UniversalSearchBar = () => {
           Desktop: Single row pill
           Mobile: Stacked cards with thin internal dividers
         */}
-        <div className="flex flex-col md:flex-row bg-white md:bg-[#F7F7F7] md:border border-gray-200 md:rounded-full rounded-2xl gap-3 md:gap-0 lg:p-0">
+        <div className="flex flex-col md:flex-row bg-white md:bg-[#f7f7f7] md:border border-gray-200 md:rounded-full rounded-2xl gap-3 md:gap-0 lg:p-0">
           
           {/* Location Input */}
           {activeService !== "esim" && (

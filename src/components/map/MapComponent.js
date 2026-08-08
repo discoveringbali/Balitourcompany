@@ -42,7 +42,7 @@ function DirectionsEngine({ routeInfo, setRouteStats }) {
     setDirectionsRenderer(new routesLib.DirectionsRenderer({ 
       map,
       suppressMarkers: false,
-      polylineOptions: { strokeColor: "#1E1E24", strokeWeight: 4 }
+      polylineOptions: { strokeColor: "#1f1f1f", strokeWeight: 4 }
     }));
   }, [routesLib, map]);
 
@@ -109,7 +109,7 @@ function PlaceAutocompleteInput({ placeholder, onPlaceSelect, value, onChange, i
   }, [onPlaceSelect, placeAutocomplete]);
 
   return (
-    <div className="flex gap-3 items-center bg-[#F4F4F6] px-4 py-3 rounded-xl border border-border/50">
+    <div className="flex gap-3 items-center bg-[#f4f4f4] px-4 py-3 rounded-xl border border-border/50">
       {Icon ? <Icon size={14} className="text-secondary stroke-[3]" /> : <div className="w-2.5 h-2.5 rounded-full bg-accent relative after:absolute after:w-0.5 after:h-5 after:bg-border after:top-2.5 after:left-1"></div>}
       <input 
         ref={inputRef}
@@ -315,7 +315,7 @@ function MapInterface() {
         {activeRouteInfo && <DirectionsEngine routeInfo={activeRouteInfo} setRouteStats={setRouteStats} />}
       </Map>
 
-      {!mapLoaded && <div className="absolute inset-0 bg-[#E8EAED] animate-pulse flex items-center justify-center -z-10"></div>}
+      {!mapLoaded && <div className="absolute inset-0 bg-[#eaeaea] animate-pulse flex items-center justify-center -z-10"></div>}
 
       {/* OVERLAY UI */}
       <div className="absolute top-0 left-0 right-0 p-6 md:p-8 z-10 pt-12 md:pt-14 flex flex-col items-center gap-3 pointer-events-none">
@@ -332,7 +332,7 @@ function MapInterface() {
                 <span className="text-text-secondary/60">→</span> 
                 <span className="truncate max-w-[40%]">{dropoff.split(',')[0]}</span>
               </div>
-              <div className="w-8 h-8 rounded-full bg-[#F4F4F6] flex justify-center items-center group-hover:bg-gray-200 transition-colors shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#f4f4f4] flex justify-center items-center group-hover:bg-gray-200 transition-colors shrink-0">
                 <Search size={14} className="text-primary" />
               </div>
             </button>
@@ -350,7 +350,7 @@ function MapInterface() {
             {filterOpen && (
               <div className="flex gap-2 pb-2 overflow-x-auto no-scrollbar">
                 {CATEGORIES.map(cat => (
-                  <button key={cat} onClick={() => { setActiveMode(cat); setActiveRouteInfo(null); setFilterOpen(false); }} className="px-4 py-1.5 rounded-full font-bold text-[12px] bg-[#F4F4F6] text-text-secondary active:scale-95">{cat}</button>
+                  <button key={cat} onClick={() => { setActiveMode(cat); setActiveRouteInfo(null); setFilterOpen(false); }} className="px-4 py-1.5 rounded-full font-bold text-[12px] bg-[#f4f4f4] text-text-secondary active:scale-95">{cat}</button>
                 ))}
               </div>
             )}

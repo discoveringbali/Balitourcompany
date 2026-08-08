@@ -145,8 +145,8 @@ export default function SplashScreen({ children }) {
           >
             {/* Soft ambient gradient */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-[#cce823]/8 blur-[120px]" />
-              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-sky-200/20 blur-[100px]" />
+              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-black text-white/8 blur-[120px]" />
+              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gray-200/20 blur-[100px]" />
             </div>
 
             {/* Logo container */}
@@ -161,7 +161,7 @@ export default function SplashScreen({ children }) {
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: [0, 1.3, 1], opacity: [0, 0.15, 0] }}
                   transition={{ duration: 2, ease: "easeOut", repeat: Infinity, repeatDelay: 0.5 }}
-                  className="absolute inset-[-16px] rounded-full border-2 border-[#cce823]/30"
+                  className="absolute inset-[-16px] rounded-full border-2 border-black/30"
                 />
                 <img
                   src="/icon.jpg"
@@ -174,7 +174,7 @@ export default function SplashScreen({ children }) {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[#1C1C1E] text-[22px] font-black tracking-tight mb-1.5"
+                className="text-[#1c1c1c] text-[22px] font-black tracking-tight mb-1.5"
               >
                 mybalidriver
               </motion.h1>
@@ -183,7 +183,7 @@ export default function SplashScreen({ children }) {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 0.45, y: 0 }}
                 transition={{ delay: 0.55, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="text-[#1C1C1E] text-[11px] font-semibold tracking-[0.25em] uppercase"
+                className="text-[#1c1c1c] text-[11px] font-semibold tracking-[0.25em] uppercase"
               >
                 Premium Bali Tours
               </motion.p>
@@ -198,12 +198,12 @@ export default function SplashScreen({ children }) {
             >
               <div className="w-full h-[3px] bg-black/5 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#cce823] rounded-full transition-none"
+                  className="h-full bg-black text-white rounded-full transition-none"
                   style={{ width: `${progress}%` }}
                 />
               </div>
 
-              <span className="text-[#1C1C1E]/40 text-[11px] font-bold tabular-nums tracking-wide">
+              <span className="text-[#1c1c1c]/40 text-[11px] font-bold tabular-nums tracking-wide">
                 {Math.round(progress)}%
               </span>
             </motion.div>
@@ -212,7 +212,7 @@ export default function SplashScreen({ children }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.2 }}
               transition={{ delay: 1.2, duration: 0.5 }}
-              className="absolute bottom-[6%] text-[#1C1C1E] text-[10px] font-semibold tracking-[0.15em] uppercase"
+              className="absolute bottom-[6%] text-[#1c1c1c] text-[10px] font-semibold tracking-[0.15em] uppercase"
             >
               Bali, Indonesia
             </motion.p>

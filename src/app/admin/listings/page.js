@@ -298,10 +298,10 @@ export default function AdminListings() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-             <button onClick={() => setIsHeroModalOpen(true)} className="hidden sm:flex items-center justify-center gap-2 px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all bg-[#1C1C1E] text-[#D9FB41] hover:bg-black">
+             <button onClick={() => setIsHeroModalOpen(true)} className="hidden sm:flex items-center justify-center gap-2 px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all bg-[#1c1c1c] text-[#dcdcdc] hover:bg-black">
                 Edit Homepage Hero
              </button>
-             <button onClick={handleCreateNew} className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all text-white ${(activeTab === "Scooter" || activeTab === "Spa") ? 'bg-gray-800 hover:bg-gray-900' : 'bg-[#FF5533] hover:bg-[#E64A2E]'}`}>
+             <button onClick={handleCreateNew} className={`flex items-center justify-center gap-2 px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all text-white ${(activeTab === "Scooter" || activeTab === "Spa") ? 'bg-gray-800 hover:bg-gray-900' : 'bg-[#848484] hover:bg-[#757575]'}`}>
                <Plus size={18} strokeWidth={2.5} />
                {(activeTab === "Scooter" || activeTab === "Spa") ? "Add Company" : "Create Product"}
              </button>
@@ -354,15 +354,15 @@ export default function AdminListings() {
                        <div className="flex flex-wrap items-center gap-3">
                          <h3 className="font-extrabold text-[18px] sm:text-[20px] text-gray-900 uppercase tracking-tight">{company.name}</h3>
                          {company.verified && (
-                           <span className="bg-blue-50 text-[10px] font-extrabold text-blue-600 px-3 py-1 rounded-full uppercase tracking-widest">VERIFIED</span>
+                           <span className="bg-gray-50 text-[10px] font-extrabold text-black px-3 py-1 rounded-full uppercase tracking-widest">VERIFIED</span>
                          )}
                        </div>
                        <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-[13px] font-medium text-gray-500">
                          <div className="flex items-center gap-1.5"><MapPin size={15} className="text-gray-400" /> {company.location}</div>
                          <div className="flex items-center gap-1.5"><Link2 size={15} className="text-gray-400" /> Joined {company.joined_year || company.joined || "2024"}</div>
                          <div className="font-bold text-gray-800 bg-gray-50 px-3 py-1.5 rounded-xl border border-gray-100">{companyItems.length} {activeTab}s</div>
-                         <div className="flex items-center gap-1.5 bg-[#E8F8EE] text-[#1EB652] px-3 py-1.5 rounded-xl font-bold">
-                           <MessageCircle size={15} className="fill-[#1EB652] text-white" /> {company.phone}
+                         <div className="flex items-center gap-1.5 bg-[#f2f2f2] text-[#7d7d7d] px-3 py-1.5 rounded-xl font-bold">
+                           <MessageCircle size={15} className="fill-[#7d7d7d] text-white" /> {company.phone}
                          </div>
                        </div>
                     </div>
@@ -391,7 +391,7 @@ export default function AdminListings() {
                          <button onClick={() => setEditingCompany(company)} className="w-12 h-12 rounded-2xl sm:rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-gray-600 transition-colors">
                             <Edit2 size={16} />
                          </button>
-                         <button onClick={() => {if(confirm("Are you sure you want to remove this partner company?")) alert("Company Removed!")}} className="w-12 h-12 rounded-2xl sm:rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 transition-colors">
+                         <button onClick={() => {if(confirm("Are you sure you want to remove this partner company?")) alert("Company Removed!")}} className="w-12 h-12 rounded-2xl sm:rounded-full bg-gray-50 text-black flex items-center justify-center hover:bg-gray-100 transition-colors">
                             <Trash2 size={16} />
                          </button>
                          <button onClick={() => toggleCompany(company.id)} className={`w-12 h-12 rounded-2xl sm:rounded-full flex items-center justify-center text-gray-900 transition-colors ml-1 ${isExpanded ? 'bg-gray-200' : 'bg-gray-100 hover:bg-gray-200'}`}>
@@ -428,9 +428,9 @@ export default function AdminListings() {
                                 </div>
                              </div>
                              <div className="flex flex-wrap items-center justify-between sm:justify-end gap-3 sm:gap-4 w-full sm:w-auto border-t sm:border-t-0 border-gray-50 pt-4 sm:pt-0 mt-1 sm:mt-0">
-                                <div className={`text-[11px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider ${item.status==='Active'?'bg-[#E8F8EE] text-[#1EB652]':'bg-amber-100 text-amber-700'}`}>{item.status}</div>
+                                <div className={`text-[11px] font-bold px-3 py-1.5 rounded-lg uppercase tracking-wider ${item.status==='Active'?'bg-[#f2f2f2] text-[#7d7d7d]':'bg-gray-100 text-black'}`}>{item.status}</div>
                                  <div className="flex items-center gap-1.5">
-                                   <button onClick={() => setReviewingItem(item)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-colors">
+                                   <button onClick={() => setReviewingItem(item)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-50 text-black flex items-center justify-center hover:bg-gray-100 transition-colors">
                                       <MessageSquare size={14} />
                                    </button>
                                    <button onClick={() => handlePreview(item)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors">
@@ -442,7 +442,7 @@ export default function AdminListings() {
                                    <button onClick={() => handleEdit(item)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-50 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors">
                                       <Edit2 size={14} />
                                    </button>
-                                   <button onClick={() => handleDelete(item)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 transition-colors">
+                                   <button onClick={() => handleDelete(item)} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-50 text-black flex items-center justify-center hover:bg-gray-100 transition-colors">
                                       <Trash2 size={14} />
                                    </button>
                                  </div>
@@ -474,7 +474,7 @@ export default function AdminListings() {
               <div className="relative h-48 w-full overflow-hidden shrink-0">
                 <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 
-                <div className={`absolute top-3 left-3 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm ${item.status === 'Active' ? 'bg-[#1DBB67] text-white' : 'bg-gray-500 text-white'}`}>
+                <div className={`absolute top-3 left-3 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm ${item.status === 'Active' ? 'bg-[#828282] text-white' : 'bg-gray-500 text-white'}`}>
                   {item.status === 'Active' ? 'PUBLISHED' : 'DRAFT'}
                 </div>
                 
@@ -482,14 +482,14 @@ export default function AdminListings() {
                    <select 
                       value={item.category} 
                       onChange={(e) => handleChangeCategory(item, e.target.value)}
-                      className="appearance-none bg-white font-extrabold text-[#F9703E] text-[10px] pl-3 pr-7 py-1.5 uppercase tracking-wider outline-none cursor-pointer focus:ring-0"
+                      className="appearance-none bg-white font-extrabold text-[#939393] text-[10px] pl-3 pr-7 py-1.5 uppercase tracking-wider outline-none cursor-pointer focus:ring-0"
                    >
                       <option value="Adventure">ADVENTURE</option>
                       <option value="Water">WATER</option>
                       <option value="Nature">NATURE</option>
                       <option value="Culture">CULTURE</option>
                    </select>
-                   <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#F9703E]">
+                   <div className="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-[#939393]">
                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                    </div>
                 </div>
@@ -506,7 +506,7 @@ export default function AdminListings() {
                 <div className="flex items-center flex-wrap gap-x-2 gap-y-1 text-xs font-bold text-gray-400 mb-4">
                   <span>{item.duration || 'Full Day'}</span>
                   <span>·</span>
-                  <span className="flex items-center gap-1 text-yellow-400"><Star size={12} className="fill-yellow-400 text-yellow-400" /> {item.rating}</span>
+                  <span className="flex items-center gap-1 text-gray-700"><Star size={12} className="fill-black text-gray-700" /> {item.rating}</span>
                   <span>·</span>
                   <span>{item.reviews} reviews</span>
                 </div>
@@ -530,7 +530,7 @@ export default function AdminListings() {
                   <div className="flex flex-wrap items-center gap-2 sm:gap-1 w-full sm:w-auto justify-end">
                     <button 
                       onClick={() => setReviewingItem(item)}
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-blue-500 hover:bg-blue-50 hover:shadow-sm transition-all focus:outline-none" title="Messages">
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-black hover:bg-gray-50 hover:shadow-sm transition-all focus:outline-none" title="Messages">
                       <MessageSquare size={14} strokeWidth={2.5} />
                     </button>
                     <button 
@@ -540,7 +540,7 @@ export default function AdminListings() {
                     </button>
                     <button 
                       onClick={() => handleToggleStatus(item)}
-                      className={`w-8 h-8 rounded-full flex items-center justify-center ${item.status === 'Draft' ? 'bg-amber-100 text-amber-600' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-50'} hover:shadow-sm transition-all focus:outline-none`} title="Toggle Visibility">
+                      className={`w-8 h-8 rounded-full flex items-center justify-center ${item.status === 'Draft' ? 'bg-gray-100 text-black' : 'text-gray-400 hover:text-gray-700 hover:bg-gray-50'} hover:shadow-sm transition-all focus:outline-none`} title="Toggle Visibility">
                       <EyeOff size={14} strokeWidth={2.5} />
                     </button>
                     <button 
@@ -550,7 +550,7 @@ export default function AdminListings() {
                     </button>
                     <button 
                       onClick={() => handleDelete(item)}
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-red-400 hover:text-red-500 hover:bg-red-50 hover:shadow-sm transition-all focus:outline-none" title="Delete Listing">
+                      className="w-8 h-8 rounded-full flex items-center justify-center text-gray-700 hover:text-black hover:bg-gray-50 hover:shadow-sm transition-all focus:outline-none" title="Delete Listing">
                       <Trash2 size={14} strokeWidth={2.5} />
                     </button>
                   </div>

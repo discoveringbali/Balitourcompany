@@ -24,15 +24,15 @@ export default function Esim() {
             
             <div className="flex flex-col gap-4 mt-4">
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-green-50 flex-shrink-0 text-green-600 flex items-center justify-center"><Check size={18} /></div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex-shrink-0 text-black flex items-center justify-center"><Check size={18} /></div>
                 <span className="font-semibold text-text-primary text-lg">Keep your WhatsApp number active</span>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-green-50 flex-shrink-0 text-green-600 flex items-center justify-center"><Check size={18} /></div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex-shrink-0 text-black flex items-center justify-center"><Check size={18} /></div>
                 <span className="font-semibold text-text-primary text-lg">Instant QR code delivery via email</span>
               </div>
               <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-full bg-green-50 flex-shrink-0 text-green-600 flex items-center justify-center"><Check size={18} /></div>
+                <div className="w-8 h-8 rounded-full bg-gray-50 flex-shrink-0 text-black flex items-center justify-center"><Check size={18} /></div>
                 <span className="font-semibold text-text-primary text-lg">Top-up online anytime</span>
               </div>
             </div>

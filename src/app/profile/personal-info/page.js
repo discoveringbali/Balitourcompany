@@ -26,7 +26,7 @@ export default function PersonalInfoPage() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[#F8FAFC] pb-32 font-sans font-medium">
+    <div className="min-h-[100dvh] bg-[#fafafa] pb-32 font-sans font-medium">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-border px-6 pt-12 pb-4">
         <div className="flex items-center justify-between">
@@ -41,11 +41,11 @@ export default function PersonalInfoPage() {
       </div>
 
       {/* Security Notice */}
-      <div className="px-6 py-6 bg-emerald-50/50 border-b border-emerald-100 flex gap-4 items-start">
-        <ShieldCheck size={24} className="text-emerald-500 shrink-0 mt-0.5" />
+      <div className="px-6 py-6 bg-gray-50/50 border-b border-gray-300 flex gap-4 items-start">
+        <ShieldCheck size={24} className="text-black shrink-0 mt-0.5" />
         <div>
-          <p className="text-[13px] font-bold text-emerald-800">Secure & Confidential</p>
-          <p className="text-[12px] font-medium text-emerald-600/80 mt-1 leading-relaxed">
+          <p className="text-[13px] font-bold text-black">Secure & Confidential</p>
+          <p className="text-[12px] font-medium text-black/80 mt-1 leading-relaxed">
             This information is securely auto-filled for faster checkouts. Your data is automatically purged 7 days after your tour ends for your privacy.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function PersonalInfoPage() {
                 <input 
                   type="text" 
                   defaultValue={firstName}
-                  className="w-full bg-[#F8FAFC] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
+                  className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                   placeholder="e.g. John" 
                 />
               </div>
@@ -73,7 +73,7 @@ export default function PersonalInfoPage() {
                 <input 
                   type="text" 
                   defaultValue={lastName}
-                  className="w-full bg-[#F8FAFC] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
+                  className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                   placeholder="e.g. Doe" 
                 />
               </div>
@@ -94,12 +94,12 @@ export default function PersonalInfoPage() {
               <div className="flex flex-col gap-2 flex-1">
                 <label className="text-[13px] font-bold text-text-secondary pl-1">Phone Number (WhatsApp)</label>
                 <div className="flex">
-                  <div className="flex items-center justify-center px-4 bg-[#F1F5F9] border border-border border-r-0 rounded-l-xl text-text-secondary font-bold text-[15px]">
+                  <div className="flex items-center justify-center px-4 bg-[#f4f4f4] border border-border border-r-0 rounded-l-xl text-text-secondary font-bold text-[15px]">
                     +
                   </div>
                   <input 
                     type="tel" 
-                    className="w-full bg-[#F8FAFC] border border-border rounded-r-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
+                    className="w-full bg-[#fafafa] border border-border rounded-r-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                     placeholder="123 456 7890" 
                   />
                 </div>
@@ -109,7 +109,7 @@ export default function PersonalInfoPage() {
                 <label className="text-[13px] font-bold text-text-secondary pl-1">Nationality</label>
                 <input 
                   type="text" 
-                  className="w-full bg-[#F8FAFC] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
+                  className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                   placeholder="e.g. Australian" 
                 />
               </div>
@@ -124,7 +124,7 @@ export default function PersonalInfoPage() {
               <label className="text-[13px] font-bold text-text-secondary pl-1">Contact Name & Relationship</label>
               <input 
                 type="text" 
-                className="w-full bg-[#F8FAFC] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
+                className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                 placeholder="e.g. Jane Doe (Wife)" 
               />
             </div>
@@ -133,7 +133,7 @@ export default function PersonalInfoPage() {
               <label className="text-[13px] font-bold text-text-secondary pl-1">Contact Phone Number</label>
               <input 
                 type="tel" 
-                className="w-full bg-[#F8FAFC] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
+                className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                 placeholder="Include country code" 
               />
             </div>

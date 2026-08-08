@@ -47,20 +47,20 @@ export default function FavoritesPage() {
   };
 
   if (status === "loading" || loading) {
-     return <div className="min-h-[100dvh] flex items-center justify-center bg-[#F8FAFC]"><div className="w-8 h-8 rounded-full border-4 border-gray-200 border-t-primary animate-spin"></div></div>;
+     return <div className="min-h-[100dvh] flex items-center justify-center bg-[#fafafa]"><div className="w-8 h-8 rounded-full border-4 border-gray-200 border-t-primary animate-spin"></div></div>;
   }
 
   return (
-    <div className="min-h-[100dvh] bg-[#F8FAFC] pb-32 font-sans">
+    <div className="min-h-[100dvh] bg-[#fafafa] pb-32 font-sans">
       <div className="px-6 pt-12 pb-6">
-        <h1 className="text-3xl font-black text-[#1C1C1E] mb-6 tracking-tight">Saved Trips</h1>
+        <h1 className="text-3xl font-black text-[#1c1c1c] mb-6 tracking-tight">Saved Trips</h1>
         
-        <div className="bg-white rounded-2xl flex gap-3 items-center px-5 py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-[#E8EAEF] mb-8">
+        <div className="bg-white rounded-2xl flex gap-3 items-center px-5 py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-[#eaeaea] mb-8">
           <Search size={20} className="text-gray-400" />
           <input 
             type="text" 
             placeholder="Search your favorites..." 
-            className="flex-1 outline-none font-bold text-[14px] bg-transparent text-[#1C1C1E] placeholder:text-gray-400 placeholder:font-medium"
+            className="flex-1 outline-none font-bold text-[14px] bg-transparent text-[#1c1c1c] placeholder:text-gray-400 placeholder:font-medium"
           />
         </div>
 

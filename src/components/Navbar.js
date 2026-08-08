@@ -98,7 +98,7 @@ export default function Navbar() {
               <>
                 <span className="text-xs text-text-secondary font-medium">Hey, <span className="text-text-primary font-bold">{session.user.name?.split(' ')[0]} 👋</span></span>
                 <div className="flex items-center gap-1 text-[10px] text-text-secondary mt-0.5">
-                  <span className="text-[#25D366] font-bold">Verified</span>
+                  <span className="text-[#939393] font-bold">Verified</span>
                 </div>
               </>
             ) : (
@@ -136,7 +136,7 @@ export default function Navbar() {
       <div className="hidden md:flex container mx-auto px-6 w-full items-center justify-between">
         
         {/* Logo */}
-        <Link href="/" className={`font-black tracking-[0.1em] flex-1 flex items-center text-xl md:text-[22px] transition-colors duration-500 ${isScrolled ? 'text-[#1C1C1E]' : 'text-white'}`}>
+        <Link href="/" className={`font-black tracking-[0.1em] flex-1 flex items-center text-xl md:text-[22px] transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1c]' : 'text-white'}`}>
           mybalidriver
         </Link>
 

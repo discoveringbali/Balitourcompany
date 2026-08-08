@@ -100,7 +100,7 @@ export default function ReviewModal({ item, onClose }) {
                     </p>
 
                     {review.rating <= 2 && (
-                       <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-red-500 bg-red-50 inline-block px-2 py-1 rounded-md">
+                       <div className="mt-2 flex items-center gap-1.5 text-xs font-bold text-black bg-gray-50 inline-block px-2 py-1 rounded-md">
                          <AlertCircle size={12} /> Low Rating Warning
                        </div>
                     )}
@@ -112,7 +112,7 @@ export default function ReviewModal({ item, onClose }) {
                        onClick={() => handleDelete(review.id)}
                        title="Remove Review"
                        disabled={isDeleting === review.id}
-                       className="w-8 h-8 rounded-full bg-red-50 hover:bg-red-100 flex items-center justify-center text-red-500 transition-colors disabled:opacity-50"
+                       className="w-8 h-8 rounded-full bg-gray-50 hover:bg-gray-100 flex items-center justify-center text-black transition-colors disabled:opacity-50"
                      >
                        <Trash2 size={14} />
                      </button>

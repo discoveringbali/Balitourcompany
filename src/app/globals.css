@@ -1,23 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #1C1C1E;
+  --color-primary: #1c1c1c;
   /* Deep dark grey/black used in the reference UI */
   --color-primary-inverse: #ffffff;
 
   /* Redesign Signature Lime Accent */
-  --color-accent: #D9FB41;
-  --color-accent-hover: #C5E838;
+  --color-accent: #000000;
+  --color-accent-hover: #333333;
 
-  --color-background: #F8F9FA;
+  --color-background: #f9f9f9;
   /* Slightly off-white for contrast with white cards */
-  --color-surface: #FFFFFF;
-  --color-dark-surface: #2D2F33;
+  --color-surface: #ffffff;
+  --color-dark-surface: #2f2f2f;
   /* Dark floating elements */
 
-  --color-text-primary: #1C1C1E;
-  --color-text-secondary: #8A8E9B;
-  --color-border: #E8EAEF;
+  --color-text-primary: #1c1c1c;
+  --color-text-secondary: #8e8e8e;
+  --color-border: #eaeaea;
 
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
   --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -46,7 +46,7 @@
 
   /* Newsletter Article Typography */
   .newsletter-content {
-    @apply text-lg leading-[1.8] text-[#475569] font-serif;
+    @apply text-lg leading-[1.8] text-[#535353] font-serif;
   }
 
   .newsletter-content h1,
@@ -91,7 +91,7 @@
   }
 
   .newsletter-content a {
-    @apply text-[#84a900] underline decoration-2 underline-offset-4 hover:text-[#5c7700] transition-colors font-semibold;
+    @apply text-black underline decoration-2 underline-offset-4 hover:text-gray-700 transition-colors font-semibold;
   }
 
   .newsletter-content blockquote {

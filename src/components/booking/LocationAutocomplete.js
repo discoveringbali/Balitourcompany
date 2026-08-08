@@ -53,7 +53,7 @@ export default function LocationAutocomplete({ value, onChange, placeholder, ico
         value={value} 
         onChange={(e) => onChange({ name: e.target.value, url: "" })} 
         placeholder={placeholder} 
-        className="w-full bg-[#F4F4F6] rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" 
+        className="w-full bg-[#f4f4f4] rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" 
       />
     </div>
   );
