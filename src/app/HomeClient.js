@@ -41,6 +41,7 @@ const BaliGateIcon = ({ className, isActive }) => (
 );
 
 const services = [
+  { id: "Tour", icon: Map },
   { id: "Activities", icon: Sparkles },
   { id: "Scooter", icon: ScooterIcon },
   { id: "Spa", icon: SpaIcon },
@@ -161,7 +162,7 @@ function PopularTripCard({ trip }) {
 export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [] }) {
   const router = useRouter();
   const [activeCat, setActiveCat] = useState("All");
-  const [activeService, setActiveService] = useState("Activities");
+  const [activeService, setActiveService] = useState("Tour");
   const [currentCampIdx, setCurrentCampIdx] = useState(0);
 
   // Custom event listeners to sync with Desktop Navbar.js

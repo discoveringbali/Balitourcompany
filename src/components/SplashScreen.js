@@ -155,7 +155,7 @@ export default function SplashScreen({ children }) {
                 <img
                   src="/balance_island_logo.png"
                   alt="Balance Island"
-                  className="w-auto max-w-[240px] h-[80px] rounded-[24px] shadow-[0_12px_40px_rgba(255,255,255,0.05)] object-contain"
+                  className="w-auto max-w-[320px] h-[120px] rounded-[24px] shadow-[0_0_80px_rgba(255,255,255,0.1)] object-contain"
                 />
               </div>
             </div>
