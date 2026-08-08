@@ -478,10 +478,10 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   const defaultHero = {
     id: 'hero-fallback',
     isHeroSlide: true,
-    campaignYoutubeLink: "https://www.youtube.com/watch?v=uN1A72bE0l4",
-    campaignRecommendation: "Highly Recommended by Zondela",
-    campaignIgLink: "https://instagram.com/zondela",
-    image: ""
+    campaignYoutubeLink: "https://www.youtube.com/watch?v=DFS33aUu67U",
+    campaignRecommendation: "Curated & Highly Recommended by Balance Island",
+    campaignIgLink: "https://instagram.com/balanceisland",
+    image: "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80"
   };
 
   const actualHero = heroSettings ? {
