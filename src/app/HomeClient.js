@@ -754,16 +754,16 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         </AnimatePresence>
 
         {/* Mobile-only Campaign Swipe Carousel */}
-        <section className="md:hidden pt-4 pb-6 relative z-10">
+        <section className="md:hidden pt-3 pb-4 relative z-10">
           <div
-            className="flex overflow-x-auto no-scrollbar gap-4 px-6 snap-x snap-mandatory"
+            className="flex overflow-x-auto no-scrollbar gap-4 px-5 snap-x snap-mandatory"
             onScroll={(e) => {
               const index = Math.round(e.target.scrollLeft / e.target.clientWidth);
               if (index !== currentCampIdx) setCurrentCampIdx(index);
             }}
           >
             {displayCampaigns.map((camp, idx) => (
-              <div key={camp.id} className="relative w-full shrink-0 snap-center aspect-[4/3] rounded-[28px] overflow-hidden shadow-soft border border-border bg-black select-none">
+              <div key={camp.id} className="relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-soft border border-border bg-black select-none">
                 {camp.campaignYoutubeLink && idx === 0 && !isDesktop ? (
                   showVideo ? (
                     <iframe loading="lazy" ref={camp.isHeroSlide ? heroMediaRef : null} src={getYoutubeEmbedUrl(camp.campaignYoutubeLink)} className="absolute inset-0 w-full h-full" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen />
@@ -989,53 +989,50 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 </div>
               )}
 
-              {/* Left Typography */}
+              {/* Desktop Campaign Card Content */}
               {!camp.isHeroSlide && (
-                <div className="absolute bottom-[22%] left-[6%] xl:left-[8%] z-10 w-full max-w-[800px] flex flex-col items-start">
-                  <h2
-                    className={`font-black uppercase tracking-tighter text-white mb-4 drop-shadow-2xl whitespace-pre-line ${camp.title?.length > 20 ? 'text-[50px] lg:text-[70px] xl:text-[90px] leading-[0.9]' :
-                        camp.title?.length > 12 ? 'text-[60px] lg:text-[90px] xl:text-[120px] leading-[0.85]' :
-                          'text-[80px] lg:text-[110px] xl:text-[140px] leading-[0.85]'
-                      }`}
-                  >
-                    {camp.title}
-                  </h2>
-
-                  <span className="block text-white/90 font-bold text-[14px] lg:text-[16px] tracking-[0.3em] uppercase mb-8 drop-shadow-md mt-2">
-                    {camp.location || "BALI, INDONESIA"}
-                  </span>
-
-                  {camp.isExternalCampaign ? (
-                    <a
-                      href={camp.externalUrl || "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 px-8 py-4 rounded-[32px] border border-white/30 bg-black/60 backdrop-blur-md text-white font-black text-[13px] tracking-[0.1em] uppercase hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95 shadow-xl"
-                    >
-                      Book Partner Service <ArrowUpRight size={18} strokeWidth={2.5} />
-                    </a>
-                  ) : (
-                    <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="inline-flex items-center gap-3 px-8 py-4 rounded-[32px] border border-white/30 bg-black/40 backdrop-blur-md text-white font-bold text-[13px] tracking-[0.1em] uppercase hover:bg-white/20 transition-all hover:scale-105 active:scale-95 shadow-xl">
-                      Explore Experience <ArrowUpRight size={18} strokeWidth={2.5} />
-                    </Link>
-                  )}
-                </div>
-              )}
-
-              {/* Right Typography */}
-              {!camp.isHeroSlide && (
-                <div className="absolute bottom-[22%] right-[6%] xl:right-[8%] z-10 w-full max-w-[400px] flex flex-col items-end text-right">
-                  {camp.badge && (
-                    <span className="inline-block mb-4 px-3 py-1.5 bg-white/90 backdrop-blur-md text-black text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px]">
-                      {camp.badge}
+                <>
+                  {/* Top Left Badge */}
+                  <div className="absolute top-[12%] left-[6%] xl:left-[8%] z-20 pointer-events-none">
+                    <span className="inline-block px-4 py-2 bg-white/95 backdrop-blur-md text-black text-[12px] font-black uppercase tracking-wider shadow-md rounded-[10px]">
+                      {camp.badge || "OFFICIAL PARTNER"}
                     </span>
-                  )}
-                  {camp.subtitle && (
-                    <p className="text-white/90 text-[16px] lg:text-[18px] font-medium leading-snug drop-shadow-md">
-                      {camp.subtitle}
-                    </p>
-                  )}
-                </div>
+                  </div>
+
+                  {/* Bottom Bar: Title & Subtitle on Left, Click Icon Button on Right */}
+                  <div className="absolute bottom-[14%] xl:bottom-[15%] inset-x-[6%] xl:inset-x-[8%] z-20 flex items-end justify-between gap-6 pointer-events-none">
+                    <div className="max-w-[700px] pointer-events-none">
+                      <h2 className="text-[32px] lg:text-[40px] xl:text-[48px] font-extrabold text-white leading-tight tracking-tight drop-shadow-2xl mb-1 font-sans">
+                        {camp.title}
+                      </h2>
+                      {camp.subtitle && (
+                        <p className="text-white/85 text-[14px] lg:text-[15px] font-medium leading-normal drop-shadow-md line-clamp-1">
+                          {camp.subtitle}
+                        </p>
+                      )}
+                    </div>
+
+                    {camp.isExternalCampaign ? (
+                      <a
+                        href={camp.externalUrl || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-13 h-13 rounded-full bg-white text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
+                        aria-label="Open partner website"
+                      >
+                        <ArrowUpRight size={22} strokeWidth={2.5} className="text-black" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
+                        className="w-13 h-13 rounded-full bg-white text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
+                        aria-label="View tour details"
+                      >
+                        <ArrowUpRight size={22} strokeWidth={2.5} className="text-black" />
+                      </Link>
+                    )}
+                  </div>
+                </>
               )}
 
             </div>
