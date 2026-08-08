@@ -60,7 +60,7 @@ const UniversalSearchBar = () => {
                 <span className="text-[11px] md:text-xs font-bold text-primary tracking-wider uppercase mb-0.5">Where</span>
                 <input 
                   type="text" 
-                  placeholder={activeService === "scooter" ? "Search pickup location" : "Search destinations"} 
+                  placeholder="Search destinations" 
                   className="bg-transparent border-none outline-none text-[15px] font-medium w-full text-text-secondary placeholder-text-secondary p-0"
                 />
               </div>
@@ -105,7 +105,7 @@ const UniversalSearchBar = () => {
           </div>
 
           {/* Guests Input */}
-          {activeService !== "scooter" && activeService !== "esim" && (
+          {activeService !== "esim" && (
             <div className="flex-1 bg-white md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-gray-200 shadow-sm md:border-none md:shadow-none hover:bg-gray-100 transition-colors cursor-text group relative">
               <Users size={22} className="text-primary md:hidden shrink-0" strokeWidth={2}/>
               <div className="flex flex-col w-full md:pl-4">
@@ -116,21 +116,6 @@ const UniversalSearchBar = () => {
                   min="1"
                   className="bg-transparent border-none outline-none text-[15px] font-medium w-full text-text-secondary placeholder-text-secondary p-0"
                 />
-              </div>
-            </div>
-          )}
-
-          {/* Scooter Delivery Input */}
-          {activeService === "scooter" && (
-            <div className="flex-1 bg-white md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-gray-200 shadow-sm md:border-none md:shadow-none hover:bg-gray-100 transition-colors cursor-text group relative">
-              <CarTaxiFront size={22} className="text-primary md:hidden shrink-0" strokeWidth={2}/>
-              <div className="flex flex-col w-full md:pl-4">
-                <span className="text-[11px] md:text-xs font-bold text-primary tracking-wider uppercase mb-0.5">Delivery</span>
-                <select className="bg-transparent border-none outline-none text-[15px] font-medium w-full text-text-secondary placeholder-text-secondary p-0 appearance-none">
-                  <option value="hotel">Hotel Delivery</option>
-                  <option value="airport">Airport Pickup</option>
-                  <option value="office">Collect at Office</option>
-                </select>
               </div>
             </div>
           )}

@@ -45,8 +45,6 @@ const BaliGateIcon = ({ className, isActive }) => (
 const services = [
   { id: "Tour", icon: Map },
   { id: "Activities", icon: Sparkles },
-  { id: "Scooter", icon: ScooterIcon },
-  { id: "Spa", icon: SpaIcon },
   { id: "eSIM", icon: TowelsIcon },
 ];
 
@@ -59,12 +57,6 @@ const getCategoriesForService = (service) => {
       { id: "Nature", icon: TreePine },
       { id: "Culture", icon: Landmark },
       { id: "Instagram", icon: Camera }
-    ];
-  } else if (service === "Scooter") {
-    return [
-      { id: "All", icon: Wifi },
-      { id: "Daily", icon: MapPin },
-      { id: "Monthly", icon: Map }
     ];
   }
   return [{ id: "All", icon: Compass }];
@@ -483,28 +475,80 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     campaignIgLink: t.campaignIgLink
   }));
 
-  const defaultHero = {
-    id: 'hero-fallback',
-    isHeroSlide: true,
-    campaignYoutubeLink: "https://www.youtube.com/watch?v=DFS33aUu67U",
-    campaignRecommendation: "Curated & Highly Recommended by Balance Island",
-    campaignIgLink: "https://instagram.com/balanceisland",
-    image: "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80"
-  };
+  // 1. Build Partner Campaign Cards (Scooter & Spa)
+  const scooterCard = serviceCampaigns?.scooter?.active !== false ? {
+    id: "campaign-scooter",
+    title: serviceCampaigns?.scooter?.title || DEFAULT_CAMPAIGNS.scooter.title,
+    subtitle: serviceCampaigns?.scooter?.subtitle || DEFAULT_CAMPAIGNS.scooter.subtitle,
+    badge: serviceCampaigns?.scooter?.badge || DEFAULT_CAMPAIGNS.scooter.badge,
+    image: serviceCampaigns?.scooter?.image || DEFAULT_CAMPAIGNS.scooter.image,
+    externalUrl: serviceCampaigns?.scooter?.externalUrl || DEFAULT_CAMPAIGNS.scooter.externalUrl,
+    isExternalCampaign: true,
+    location: "Island-wide Delivery"
+  } : null;
 
-  const actualHero = heroSettings ? {
-    ...defaultHero,
-    id: 'hero-custom',
-    campaignVideo: heroSettings.campaignVideo || "",
-    campaignYoutubeLink: heroSettings.campaignYoutubeLink || "",
-    campaignRecommendation: heroSettings.campaignRecommendation || "",
-    campaignIgLink: heroSettings.campaignIgLink || "",
-    campaignRecommendation2: heroSettings.campaignRecommendation2 || "",
-    campaignIgLink2: heroSettings.campaignIgLink2 || "",
-  } : defaultHero;
+  const spaCard = serviceCampaigns?.spa?.active !== false ? {
+    id: "campaign-spa",
+    title: serviceCampaigns?.spa?.title || DEFAULT_CAMPAIGNS.spa.title,
+    subtitle: serviceCampaigns?.spa?.subtitle || DEFAULT_CAMPAIGNS.spa.subtitle,
+    badge: serviceCampaigns?.spa?.badge || DEFAULT_CAMPAIGNS.spa.badge,
+    image: serviceCampaigns?.spa?.image || DEFAULT_CAMPAIGNS.spa.image,
+    externalUrl: serviceCampaigns?.spa?.externalUrl || DEFAULT_CAMPAIGNS.spa.externalUrl,
+    isExternalCampaign: true,
+    location: "Home Service Spa Bali"
+  } : null;
 
-  const tourCampaigns = pinnedCampaigns.length > 0 ? pinnedCampaigns : campaigns;
-  const displayCampaigns = [actualHero, ...tourCampaigns];
+  const partnerCards = [scooterCard, spaCard].filter(Boolean);
+
+  const defaultTourCampaigns = [
+    {
+      id: 'camp-default-1',
+      title: "Ubud Heritage Tour",
+      subtitle: "Experience the lush green beauty of Tegalalang and sacred temples.",
+      badge: "Exclusive",
+      image: "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80",
+      location: "Ubud, Bali"
+    },
+    {
+      id: 'camp-default-2',
+      title: "Nusa Penida Island Escape",
+      subtitle: "Fast boat & coastal tour package with private driver.",
+      badge: "Best Deal",
+      image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80",
+      location: "Nusa Penida, Bali"
+    }
+  ];
+
+  const tourCampaigns = pinnedCampaigns.length > 0 ? pinnedCampaigns : defaultTourCampaigns;
+
+  // Smart logic: Check if admin has configured a YouTube / Video hero link
+  const hasYoutubeLink = Boolean(heroSettings?.campaignYoutubeLink && heroSettings.campaignYoutubeLink.trim() !== "");
+  const hasDirectVideo = Boolean(heroSettings?.campaignVideo && heroSettings.campaignVideo.trim() !== "");
+  const hasConfiguredHeroMedia = hasYoutubeLink || hasDirectVideo;
+
+  let displayCampaigns = [];
+
+  if (hasConfiguredHeroMedia) {
+    const customHero = {
+      id: 'hero-media-custom',
+      isHeroSlide: true,
+      campaignVideo: heroSettings?.campaignVideo || "",
+      campaignYoutubeLink: heroSettings?.campaignYoutubeLink || "",
+      campaignRecommendation: heroSettings?.campaignRecommendation || "Curated & Highly Recommended by Balance Island",
+      campaignIgLink: heroSettings?.campaignIgLink || "https://instagram.com/balanceisland",
+      campaignRecommendation2: heroSettings?.campaignRecommendation2 || "",
+      campaignIgLink2: heroSettings?.campaignIgLink2 || "",
+      image: "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80"
+    };
+    displayCampaigns = [customHero, ...partnerCards, ...tourCampaigns];
+  } else {
+    // When admin does not set a YouTube link, Scooter & Spa partner campaigns are displayed as #1 and #2, followed by the trip cards!
+    displayCampaigns = [...partnerCards, ...tourCampaigns];
+  }
+
+  if (displayCampaigns.length === 0) {
+    displayCampaigns = defaultTourCampaigns;
+  }
 
   const bestTrips = allListings.filter(t => t.isBestTripPinned && t.service === activeService);
   const displayPopularTrips = bestTrips.length > 0 ? bestTrips : popularTrips;
@@ -520,7 +564,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   const getPopularTripsTitle = () => {
     if (activeService === "Activities") return "Trending Activities";
-    if (activeService === "Scooter") return "Available Scooters";
     return `Top Picks for ${activeService}`;
   };
 
@@ -609,10 +652,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       onClick={() => {
                         if (s.id === "eSIM") {
                           router.push("/esim");
-                        } else if (s.id === "Scooter") {
-                          router.push("/scooter");
-                        } else if (s.id === "Spa") {
-                          router.push("/spa");
                         } else {
                           setActiveService(s.id);
                           setActiveCat("All");
@@ -729,16 +768,16 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   showVideo ? (
                     <iframe loading="lazy" ref={camp.isHeroSlide ? heroMediaRef : null} src={getYoutubeEmbedUrl(camp.campaignYoutubeLink)} className="absolute inset-0 w-full h-full" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen />
                   ) : camp.image ? (
-                    <Image src={camp.image} alt={camp.badge || "Campaign Image"} priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                    <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                   ) : null
                 ) : camp.campaignVideo && idx === 0 && !isDesktop ? (
                   showVideo ? (
                     <video ref={camp.isHeroSlide ? heroMediaRef : null} src={camp.campaignVideo} autoPlay loop playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
                   ) : camp.image ? (
-                    <Image src={camp.image} alt={camp.badge || "Campaign Image"} priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                    <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                   ) : null
                 ) : camp.image ? (
-                  <Image src={camp.image} alt={camp.badge || "Campaign Image"} priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                  <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                 ) : null}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/40 to-transparent z-0 pointer-events-none" />
 
@@ -821,12 +860,23 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Text and button positioned perfectly inside bounds */}
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-5 flex flex-col justify-end items-start pointer-events-none">
-                    <h3 className="text-[26px] sm:text-[32px] font-extrabold text-white leading-[1.05] mb-2 font-sans tracking-tight whitespace-pre-line drop-shadow-lg">{camp.title}</h3>
-                    <p className="text-white/90 text-[13px] sm:text-[15px] font-medium mb-4 leading-snug drop-shadow-md">{camp.subtitle}</p>
+                    <h3 className="text-[22px] sm:text-[26px] font-extrabold text-white leading-[1.1] mb-1.5 font-sans tracking-tight whitespace-pre-line drop-shadow-lg">{camp.title}</h3>
+                    {camp.subtitle && <p className="text-white/90 text-[12px] sm:text-[13px] font-medium mb-3.5 leading-snug drop-shadow-md line-clamp-2">{camp.subtitle}</p>}
 
-                    <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="bg-white text-primary px-6 py-3 rounded-full font-bold text-[14px] shadow-xl active:scale-95 transition-transform flex items-center justify-center pointer-events-auto">
-                      View Detail
-                    </Link>
+                    {camp.isExternalCampaign ? (
+                      <a
+                        href={camp.externalUrl || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-white text-black px-5 py-2.5 rounded-full font-black text-[13px] shadow-xl active:scale-95 transition-all hover:bg-neutral-100 flex items-center justify-center pointer-events-auto gap-1.5"
+                      >
+                        Book Partner Website <ArrowUpRight size={15} strokeWidth={2.5} />
+                      </a>
+                    ) : (
+                      <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="bg-white text-black px-5 py-2.5 rounded-full font-black text-[13px] shadow-xl active:scale-95 transition-all hover:bg-neutral-100 flex items-center justify-center pointer-events-auto gap-1">
+                        View Detail
+                      </Link>
+                    )}
                   </div>
                 )}
               </div>
@@ -835,7 +885,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
           {/* Dot Indicators */}
           <div className="flex justify-center mt-5 gap-2 items-center">
-            {campaigns.map((_, idx) => (
+            {displayCampaigns.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => {
@@ -858,16 +908,16 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 showVideo ? (
                   <iframe loading="lazy" ref={camp.isHeroSlide ? heroMediaRef : null} src={getYoutubeEmbedUrl(camp.campaignYoutubeLink)} className="absolute inset-0 w-full h-full" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen />
                 ) : camp.image ? (
-                  <Image src={camp.image} alt={camp.badge || "Hero Image"} priority={idx === 0} fill sizes="100vw" className={`object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'}`} />
+                  <Image src={camp.image} alt={camp.badge || "Hero Image"} unoptimized priority={idx === 0} fill sizes="100vw" className={`object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'}`} />
                 ) : null
               ) : camp.campaignVideo && idx === 0 && isDesktop ? (
                 showVideo ? (
                   <video ref={camp.isHeroSlide ? heroMediaRef : null} src={camp.campaignVideo} autoPlay loop playsInline className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'} pointer-events-none`} />
                 ) : camp.image ? (
-                  <Image src={camp.image} alt={camp.badge || "Hero Image"} priority={idx === 0} fill sizes="100vw" className={`object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'}`} />
+                  <Image src={camp.image} alt={camp.badge || "Hero Image"} unoptimized priority={idx === 0} fill sizes="100vw" className={`object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'}`} />
                 ) : null
               ) : camp.image ? (
-                <Image src={camp.image} alt={camp.badge || "Hero Image"} priority={idx === 0} fill sizes="100vw" className={`object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'}`} />
+                <Image src={camp.image} alt={camp.badge || "Hero Image"} unoptimized priority={idx === 0} fill sizes="100vw" className={`object-cover transition-transform duration-[20s] ease-linear ${idx === currentCampIdx ? 'scale-110' : 'scale-100'}`} />
               ) : null}
 
               {/* Gradient Overlays */}
@@ -939,9 +989,20 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {camp.location || "BALI, INDONESIA"}
                   </span>
 
-                  <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="inline-flex items-center gap-3 px-8 py-4 rounded-[32px] border border-white/30 bg-black/40 backdrop-blur-md text-white font-bold text-[13px] tracking-[0.1em] uppercase hover:bg-white/20 transition-all hover:scale-105 active:scale-95 shadow-xl">
-                    Explore Experience <ArrowUpRight size={18} strokeWidth={2.5} />
-                  </Link>
+                  {camp.isExternalCampaign ? (
+                    <a
+                      href={camp.externalUrl || "#"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-3 px-8 py-4 rounded-[32px] border border-white/30 bg-black/60 backdrop-blur-md text-white font-black text-[13px] tracking-[0.1em] uppercase hover:bg-white hover:text-black transition-all hover:scale-105 active:scale-95 shadow-xl"
+                    >
+                      Book Partner Service <ArrowUpRight size={18} strokeWidth={2.5} />
+                    </a>
+                  ) : (
+                    <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="inline-flex items-center gap-3 px-8 py-4 rounded-[32px] border border-white/30 bg-black/40 backdrop-blur-md text-white font-bold text-[13px] tracking-[0.1em] uppercase hover:bg-white/20 transition-all hover:scale-105 active:scale-95 shadow-xl">
+                      Explore Experience <ArrowUpRight size={18} strokeWidth={2.5} />
+                    </Link>
+                  )}
                 </div>
               )}
 

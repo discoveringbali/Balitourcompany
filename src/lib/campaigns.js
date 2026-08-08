@@ -2,14 +2,16 @@ export const DEFAULT_CAMPAIGNS = {
   scooter: {
     id: "scooter",
     title: "Scooter Rental Bali",
+    subtitle: "Automatic scooters delivered directly to your villa or hotel across Bali.",
     badge: "Scooter Rental",
     externalUrl: "https://thebikebali.com",
-    image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=1200&q=80",
     active: true
   },
   spa: {
     id: "spa",
     title: "Home Service Spa Bali",
+    subtitle: "Relaxing massage & wellness treatments delivered directly to your villa.",
     badge: "Home Service Spa",
     externalUrl: "https://ubudtranquilityspa.com",
     image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
