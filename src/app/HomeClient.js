@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateSlug } from "@/lib/utils";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
+import { getCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
+import CampaignServiceShowcase from "@/components/campaign/CampaignServiceShowcase";
 
 const InstagramIcon = ({ size = 24, className = "", strokeWidth = 2 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -164,6 +166,16 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   const [activeCat, setActiveCat] = useState("All");
   const [activeService, setActiveService] = useState("Tour");
   const [currentCampIdx, setCurrentCampIdx] = useState(0);
+  const [serviceCampaigns, setServiceCampaigns] = useState(DEFAULT_CAMPAIGNS);
+
+  useEffect(() => {
+    setServiceCampaigns(getCampaignSettings());
+    const handleCampaignsChanged = (e) => {
+      if (e.detail) setServiceCampaigns(e.detail);
+    };
+    window.addEventListener('balance_island_campaigns_changed', handleCampaignsChanged);
+    return () => window.removeEventListener('balance_island_campaigns_changed', handleCampaignsChanged);
+  }, []);
 
   // Custom event listeners to sync with Desktop Navbar.js
   useEffect(() => {
@@ -599,17 +611,14 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           router.push("/esim");
                         } else {
                           setActiveService(s.id);
+                          setActiveCat("All");
+                          setSearchQuery("");
+                          setTimeout(() => {
+                            const el = document.getElementById("showcase-section");
+                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          }, 100);
                         }
                         setIsServiceDropdownOpen(false);
-                        setActiveCat("All");
-                        setSearchQuery("");
-
-                        if (s.id === "Scooter") {
-                          setTimeout(() => {
-                            const el = document.getElementById("categories-section");
-                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }, 50);
-                        }
                       }}
                       className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeService === s.id ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
                     >
@@ -987,90 +996,99 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <div className="hidden md:block w-full h-[100vh]" />
       </div>
 
-      <div className="max-w-[1400px] mx-auto min-h-screen">
+      <div id="showcase-section" className="max-w-[1400px] mx-auto min-h-screen">
 
-        {/* Popular Trips */}
-        <section className="pt-2 mb-8 relative">
-          <div className="px-6 flex justify-between items-end mb-4">
-            <h2 className="text-[20px] font-bold text-primary flex items-center gap-2">
-              {getPopularTripsTitle()}
-            </h2>
-            <Link
-              href={activeService === "Tour" ? "/tours" : activeService === "Activities" ? "/map?service=Activities" : "/esim"}
-              className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors"
-            >
-              See more
-            </Link>
-          </div>
-
-          {/* Horizontal Scroll Area */}
-          <div className="flex overflow-x-auto no-scrollbar gap-5 px-6 pb-6 snap-x snap-mandatory hide-scroll">
-            {displayPopularTrips.length > 0 ? displayPopularTrips.map((trip) => (
-              <PopularTripCard key={trip.id} trip={trip} />
-            )) : (
-              <div className="w-full text-center py-6 text-gray-400 font-medium text-sm">
-                No items pinned as Best Trips for this category.
+        {/* Dedicated eSIM-style Service Showcase for Scooter and Spa */}
+        {(activeService === "Scooter" || activeService === "Spa") ? (
+          <CampaignServiceShowcase 
+            campaign={serviceCampaigns[activeService.toLowerCase()] || (activeService === "Scooter" ? DEFAULT_CAMPAIGNS.scooter : DEFAULT_CAMPAIGNS.spa)} 
+            serviceName={activeService}
+          />
+        ) : (
+          <>
+            {/* Popular Trips */}
+            <section className="pt-2 mb-8 relative">
+              <div className="px-6 flex justify-between items-end mb-4">
+                <h2 className="text-[20px] font-bold text-primary flex items-center gap-2">
+                  {getPopularTripsTitle()}
+                </h2>
+                <Link
+                  href={activeService === "Tour" ? "/tours" : "/map?service=Activities"}
+                  className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors"
+                >
+                  See more
+                </Link>
               </div>
-            )}
-          </div>
-        </section>
 
-
-        {/* Categories */}
-        <section id="categories-section" className="px-6 mb-8 mt-2">
-          <div className="flex justify-between items-end mb-4">
-            <h2 className="text-[20px] font-bold text-primary">Categories</h2>
-            <Link href={activeService === "Tour" ? "/tours" : activeService === "Activities" ? "/map?service=Activities" : "/esim"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
-          </div>
-          <div className="flex justify-center w-full overflow-hidden">
-            <div className="bg-black rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">
-              <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {currentCategories.map((c) => {
-                  const Icon = c.icon;
-                  const isActive = activeCat === c.id;
-                  return (
-                    <button
-                      key={c.id}
-                      onClick={() => setActiveCat(c.id)}
-                      className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
-                    >
-                      {isActive && (
-                        <motion.div
-                          layoutId="categoryActiveIndicator"
-                          className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
-                          transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                        />
-                      )}
-                      <div className="relative z-10 flex items-center justify-center gap-1.5">
-                        {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
-                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
-                          {c.id}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
+              {/* Horizontal Scroll Area */}
+              <div className="flex overflow-x-auto no-scrollbar gap-5 px-6 pb-6 snap-x snap-mandatory hide-scroll">
+                {displayPopularTrips.length > 0 ? displayPopularTrips.map((trip) => (
+                  <PopularTripCard key={trip.id} trip={trip} />
+                )) : (
+                  <div className="w-full text-center py-6 text-gray-400 font-medium text-sm">
+                    No items pinned as Best Trips for this category.
+                  </div>
+                )}
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        {/* Filtered Experiences */}
-        <section className="mt-6 mb-12">
-          <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-5 px-6 pb-8 md:grid md:grid-cols-3 md:px-6 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {filteredTours.length > 0 ? (
-              filteredTours.map(tour => (
-                <div key={tour.id} className="flex-none w-[85vw] sm:w-[300px] snap-center md:w-auto md:snap-align-none animate-in fade-in zoom-in duration-300">
-                  <ListingCard item={tour} linkTo={`/tours/${generateSlug(tour.title)}`} />
+            {/* Categories */}
+            <section id="categories-section" className="px-6 mb-8 mt-2">
+              <div className="flex justify-between items-end mb-4">
+                <h2 className="text-[20px] font-bold text-primary">Categories</h2>
+                <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
+              </div>
+              <div className="flex justify-center w-full overflow-hidden">
+                <div className="bg-black rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">
+                  <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    {currentCategories.map((c) => {
+                      const Icon = c.icon;
+                      const isActive = activeCat === c.id;
+                      return (
+                        <button
+                          key={c.id}
+                          onClick={() => setActiveCat(c.id)}
+                          className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
+                        >
+                          {isActive && (
+                            <motion.div
+                              layoutId="categoryActiveIndicator"
+                              className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
+                              transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                            />
+                          )}
+                          <div className="relative z-10 flex items-center justify-center gap-1.5">
+                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
+                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                              {c.id}
+                            </span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              ))
-            ) : (
-              <div className="w-full text-center py-10 px-6 text-text-secondary font-medium">
-                No tours found for this category currently.
               </div>
-            )}
-          </div>
-        </section>
+            </section>
+
+            {/* Filtered Experiences */}
+            <section className="mt-6 mb-12">
+              <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-5 px-6 pb-8 md:grid md:grid-cols-3 md:px-6 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {filteredTours.length > 0 ? (
+                  filteredTours.map(tour => (
+                    <div key={tour.id} className="flex-none w-[85vw] sm:w-[300px] snap-center md:w-auto md:snap-align-none animate-in fade-in zoom-in duration-300">
+                      <ListingCard item={tour} linkTo={`/tours/${generateSlug(tour.title)}`} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="w-full text-center py-10 px-6 text-text-secondary font-medium">
+                    No tours found for this category currently.
+                  </div>
+                )}
+              </div>
+            </section>
+          </>
+        )}
 
         {/* Recommended Places */}
         <section className="px-6 mb-20">

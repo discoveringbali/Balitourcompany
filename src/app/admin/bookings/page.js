@@ -94,7 +94,7 @@ export default function BookingsManagement() {
 
   if (!isLoaded) return null;
 
-  const tabs = ["Tour", "Activities", "Transport"];
+  const tabs = ["Tour", "Activities"];
   const currentItems = (bookings[activeTab] || []).filter(b => 
     b.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
     b.user.toLowerCase().includes(searchQuery.toLowerCase()) || 

@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Bus, Sparkles, Car } from "lucide-react";
+import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles } from "lucide-react";
+import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
 
 import { useSession, signIn, signOut } from "next-auth/react";
 
@@ -72,6 +73,9 @@ export default function Navbar() {
   const services = [
     { id: "Tour", icon: Map },
     { id: "Activities", icon: Sparkles },
+    { id: "Scooter", icon: ScooterIcon },
+    { id: "Spa", icon: SpaIcon },
+    { id: "eSIM", icon: TowelsIcon },
   ];
 
   // Hide the global Navbar on individual tour detail pages or the map page
@@ -170,18 +174,20 @@ export default function Navbar() {
                     <button 
                       key={s.id} 
                       onClick={() => { 
-                        setActiveService(s.id); 
                         setFilterOpen(false); 
-                        
-                        // Dispatch to page.js
-                        window.dispatchEvent(new CustomEvent('serviceChanged', { detail: s.id }));
-                        
-                        
-                        if (s.id === "Scooter") {
-                           setTimeout(() => {
-                               const el = document.getElementById("categories-section");
-                               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                           }, 50);
+                        if (s.id === "eSIM") {
+                          router.push("/esim");
+                        } else {
+                          setActiveService(s.id); 
+                          if (pathname !== "/") {
+                            router.push(s.id === "Scooter" ? "/scooter" : s.id === "Spa" ? "/spa" : "/");
+                          } else {
+                            window.dispatchEvent(new CustomEvent('serviceChanged', { detail: s.id }));
+                            setTimeout(() => {
+                              const el = document.getElementById("showcase-section");
+                              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 100);
+                          }
                         }
                       }} 
                       className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeService === s.id ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}

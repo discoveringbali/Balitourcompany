@@ -24,11 +24,10 @@ export default function AdminListings() {
 
   const allListings = {
     Tour: [],
-    Activities: [],
-    Transport: []
+    Activities: []
   };
 
-  const tabs = ["Tour", "Activities", "Transport"];
+  const tabs = ["Tour", "Activities"];
   const [listingsData, setListingsData] = useState(allListings);
   const [companiesList, setCompaniesList] = useState([]);
   const [editingCompany, setEditingCompany] = useState(null);

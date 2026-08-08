@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Users, DollarSign, Calendar, MapPin, TrendingUp, ChevronRight, Activity } from "lucide-react";
+import { Users, DollarSign, Calendar, MapPin, TrendingUp, ChevronRight, Activity, ExternalLink, Edit3, Globe, CheckCircle2, ArrowUpRight } from "lucide-react";
 import HeroSettingsModal from "../../components/admin/HeroSettingsModal";
 import DiscountSettingsModal from "../../components/admin/DiscountSettingsModal";
+import CampaignSettingsModal from "../../components/admin/CampaignSettingsModal";
+import { getCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
 import { supabase } from "@/lib/supabase";
 
 const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
@@ -13,11 +15,25 @@ export default function AdminDashboard() {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isHeroModalOpen, setIsHeroModalOpen] = useState(false);
   const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
+  const [selectedCampaignForModal, setSelectedCampaignForModal] = useState(null);
+  const [campaigns, setCampaigns] = useState(DEFAULT_CAMPAIGNS);
   const [allBookings, setAllBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchBookings();
+    setCampaigns(getCampaignSettings());
+
+    const handleCampaignsChange = (e) => {
+      if (e.detail) {
+        setCampaigns(e.detail);
+      } else {
+        setCampaigns(getCampaignSettings());
+      }
+    };
+
+    window.addEventListener('balance_island_campaigns_changed', handleCampaignsChange);
+    return () => window.removeEventListener('balance_island_campaigns_changed', handleCampaignsChange);
   }, []);
 
   const fetchBookings = async () => {
@@ -127,11 +143,6 @@ export default function AdminDashboard() {
             className={`snap-center shrink-0 px-6 h-12 rounded-xl font-extrabold shadow-sm active:scale-95 transition-all text-[13px] tracking-wide ${activeCategory === "Activities" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
             Activities
           </button>
-          <button 
-            onClick={() => setActiveCategory("Transport")}
-            className={`snap-center shrink-0 px-6 h-12 rounded-xl font-extrabold shadow-sm active:scale-95 transition-all text-[13px] tracking-wide ${activeCategory === "Transport" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
-            Transports
-          </button>
       </div>
       
       {/* Soft Stats Grid */}
@@ -144,8 +155,8 @@ export default function AdminDashboard() {
             <div key={i} className="bg-white p-6 rounded-3xl border border-[#eaeaea] shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col group hover:-translate-y-1 transition-transform">
               <div className="flex items-center justify-between mb-4 text-gray-500">
                 <span className="text-xs font-bold uppercase tracking-widest">{stat.label}</span>
-                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${activeCategory === 'Tour' ? 'bg-[#f9f9f9]' : 'bg-[#f9f9f9]'} group-hover:bg-[#1c1c1c] group-hover:text-[#dcdcdc] transition-colors`}>
-                  <Icon size={20} strokeWidth={2.5} className={activeCategory === 'Tour' ? "text-[#1c1c1c] group-hover:text-[#dcdcdc]" : "text-[#1c1c1c] group-hover:text-[#dcdcdc]"} />
+                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#f9f9f9] group-hover:bg-[#1c1c1c] group-hover:text-[#dcdcdc] transition-colors">
+                  <Icon size={20} strokeWidth={2.5} className="text-[#1c1c1c] group-hover:text-[#dcdcdc]" />
                 </div>
               </div>
               <h4 className="text-[26px] font-black text-[#1c1c1c] mb-2 tracking-tight">{stat.value}</h4>
@@ -160,6 +171,218 @@ export default function AdminDashboard() {
             </div>
           )
         })}
+      </div>
+
+      {/* External Service Campaign Cards (Scooter & Spa) */}
+      <div className="space-y-4 pt-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 className="text-lg sm:text-xl font-black text-[#1c1c1c] tracking-tight">External Service Campaigns</h2>
+            <p className="text-xs sm:text-sm text-gray-500 font-medium">Connect and manage external website booking links for Scooter & Spa partner services.</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Scooter Campaign Card */}
+          {campaigns.scooter && (
+            <div className="bg-white rounded-3xl border border-[#eaeaea] shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between overflow-hidden group hover:border-gray-300 transition-all">
+              {/* Campaign Image Banner */}
+              {campaigns.scooter.image && (
+                <div className="relative h-44 w-full bg-gray-100 overflow-hidden">
+                  <img 
+                    src={campaigns.scooter.image} 
+                    alt={campaigns.scooter.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#1c1c1c] shadow-xs">
+                      {campaigns.scooter.type || "Scooter Rental"}
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <span className={`inline-flex items-center gap-1.5 text-[10px] font-extrabold px-2.5 py-1 rounded-full backdrop-blur-md shadow-xs ${
+                      campaigns.scooter.active 
+                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-400/30' 
+                        : 'bg-black/60 text-white/70'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${campaigns.scooter.active ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'}`} />
+                      {campaigns.scooter.active ? 'ACTIVE' : 'PAUSED'}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <h3 className="text-base font-black leading-tight drop-shadow-sm">
+                      {campaigns.scooter.title}
+                    </h3>
+                  </div>
+                </div>
+              )}
+
+              <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                {!campaigns.scooter.image && (
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-black uppercase tracking-wider text-gray-400">
+                      {campaigns.scooter.type || "Scooter Rental"}
+                    </span>
+                    <span className={`inline-flex items-center gap-1.5 text-[11px] font-extrabold px-2.5 py-1 rounded-full ${
+                      campaigns.scooter.active 
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                        : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${campaigns.scooter.active ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+                      {campaigns.scooter.active ? 'ACTIVE' : 'PAUSED'}
+                    </span>
+                  </div>
+                )}
+
+                <div>
+                  {!campaigns.scooter.image && (
+                    <h3 className="text-lg font-black text-[#1c1c1c] tracking-tight">
+                      {campaigns.scooter.title}
+                    </h3>
+                  )}
+                  <p className="text-xs sm:text-sm text-gray-500 font-medium line-clamp-2">
+                    {campaigns.scooter.subtitle}
+                  </p>
+                </div>
+
+                {/* External Link Display Box */}
+                <div className="p-3 bg-[#f9f9f9] rounded-2xl border border-[#eaeaea] flex items-center justify-between gap-2 mt-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Globe size={14} className="text-gray-400 shrink-0" />
+                    <span className="text-xs font-semibold text-[#1c1c1c] truncate">
+                      {campaigns.scooter.externalUrl || "No external URL configured"}
+                    </span>
+                  </div>
+                  {campaigns.scooter.externalUrl && (
+                    <a
+                      href={campaigns.scooter.externalUrl.startsWith('http') ? campaigns.scooter.externalUrl : `https://${campaigns.scooter.externalUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-extrabold text-[#1c1c1c] hover:underline flex items-center gap-1 shrink-0 px-2.5 py-1 bg-white rounded-lg border border-[#eaeaea] shadow-2xs hover:bg-gray-50 active:scale-95 transition-all"
+                    >
+                      Visit <ExternalLink size={12} />
+                    </a>
+                  )}
+                </div>
+
+                {/* Card Footer Actions */}
+                <div className="pt-3 mt-3 border-t border-[#eaeaea] flex items-center justify-between gap-3">
+                  <div className="text-[11px] font-bold text-gray-400">
+                    <span className="text-[#1c1c1c] font-black">{campaigns.scooter.stats?.clicks || 1420}</span> clicks • <span className="text-[#1c1c1c] font-black">{campaigns.scooter.stats?.conversion || '29.2%'}</span> CTR
+                  </div>
+                  <button
+                    onClick={() => setSelectedCampaignForModal(campaigns.scooter)}
+                    className="px-4 py-2 bg-[#1c1c1c] text-white text-xs font-extrabold rounded-xl hover:bg-black active:scale-95 transition-all flex items-center gap-1.5 shadow-sm"
+                  >
+                    <Edit3 size={13} />
+                    <span>Configure & Image</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Spa Campaign Card */}
+          {campaigns.spa && (
+            <div className="bg-white rounded-3xl border border-[#eaeaea] shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col justify-between overflow-hidden group hover:border-gray-300 transition-all">
+              {/* Campaign Image Banner */}
+              {campaigns.spa.image && (
+                <div className="relative h-44 w-full bg-gray-100 overflow-hidden">
+                  <img 
+                    src={campaigns.spa.image} 
+                    alt={campaigns.spa.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                  <div className="absolute top-3 left-3">
+                    <span className="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider bg-white/90 backdrop-blur-md text-[#1c1c1c] shadow-xs">
+                      {campaigns.spa.type || "Spa & Wellness"}
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <span className={`inline-flex items-center gap-1.5 text-[10px] font-extrabold px-2.5 py-1 rounded-full backdrop-blur-md shadow-xs ${
+                      campaigns.spa.active 
+                        ? 'bg-emerald-950/80 text-emerald-300 border border-emerald-400/30' 
+                        : 'bg-black/60 text-white/70'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${campaigns.spa.active ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'}`} />
+                      {campaigns.spa.active ? 'ACTIVE' : 'PAUSED'}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3 text-white">
+                    <h3 className="text-base font-black leading-tight drop-shadow-sm">
+                      {campaigns.spa.title}
+                    </h3>
+                  </div>
+                </div>
+              )}
+
+              <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
+                {!campaigns.spa.image && (
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-black uppercase tracking-wider text-gray-400">
+                      {campaigns.spa.type || "Spa & Wellness"}
+                    </span>
+                    <span className={`inline-flex items-center gap-1.5 text-[11px] font-extrabold px-2.5 py-1 rounded-full ${
+                      campaigns.spa.active 
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                        : 'bg-gray-100 text-gray-500'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${campaigns.spa.active ? 'bg-emerald-500' : 'bg-gray-400'}`} />
+                      {campaigns.spa.active ? 'ACTIVE' : 'PAUSED'}
+                    </span>
+                  </div>
+                )}
+
+                <div>
+                  {!campaigns.spa.image && (
+                    <h3 className="text-lg font-black text-[#1c1c1c] tracking-tight">
+                      {campaigns.spa.title}
+                    </h3>
+                  )}
+                  <p className="text-xs sm:text-sm text-gray-500 font-medium line-clamp-2">
+                    {campaigns.spa.subtitle}
+                  </p>
+                </div>
+
+                {/* External Link Display Box */}
+                <div className="p-3 bg-[#f9f9f9] rounded-2xl border border-[#eaeaea] flex items-center justify-between gap-2 mt-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <Globe size={14} className="text-gray-400 shrink-0" />
+                    <span className="text-xs font-semibold text-[#1c1c1c] truncate">
+                      {campaigns.spa.externalUrl || "No external URL configured"}
+                    </span>
+                  </div>
+                  {campaigns.spa.externalUrl && (
+                    <a
+                      href={campaigns.spa.externalUrl.startsWith('http') ? campaigns.spa.externalUrl : `https://${campaigns.spa.externalUrl}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-extrabold text-[#1c1c1c] hover:underline flex items-center gap-1 shrink-0 px-2.5 py-1 bg-white rounded-lg border border-[#eaeaea] shadow-2xs hover:bg-gray-50 active:scale-95 transition-all"
+                    >
+                      Visit <ExternalLink size={12} />
+                    </a>
+                  )}
+                </div>
+
+                {/* Card Footer Actions */}
+                <div className="pt-3 mt-3 border-t border-[#eaeaea] flex items-center justify-between gap-3">
+                  <div className="text-[11px] font-bold text-gray-400">
+                    <span className="text-[#1c1c1c] font-black">{campaigns.spa.stats?.clicks || 960}</span> clicks • <span className="text-[#1c1c1c] font-black">{campaigns.spa.stats?.conversion || '30.0%'}</span> CTR
+                  </div>
+                  <button
+                    onClick={() => setSelectedCampaignForModal(campaigns.spa)}
+                    className="px-4 py-2 bg-[#1c1c1c] text-white text-xs font-extrabold rounded-xl hover:bg-black active:scale-95 transition-all flex items-center gap-1.5 shadow-sm"
+                  >
+                    <Edit3 size={13} />
+                    <span>Configure & Image</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Modern Bookings Table */}
@@ -316,6 +539,16 @@ export default function AdminDashboard() {
 
       {isHeroModalOpen && <HeroSettingsModal onClose={() => setIsHeroModalOpen(false)} />}
       {isDiscountModalOpen && <DiscountSettingsModal isOpen={isDiscountModalOpen} onClose={() => setIsDiscountModalOpen(false)} />}
+      {selectedCampaignForModal && (
+        <CampaignSettingsModal
+          isOpen={Boolean(selectedCampaignForModal)}
+          campaign={selectedCampaignForModal}
+          onClose={() => setSelectedCampaignForModal(null)}
+          onSaveSuccess={(id, updatedData) => {
+            setCampaigns(prev => ({ ...prev, [id]: { ...prev[id], ...updatedData } }));
+          }}
+        />
+      )}
     </div>
   );
 }
