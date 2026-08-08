@@ -609,14 +609,14 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       onClick={() => {
                         if (s.id === "eSIM") {
                           router.push("/esim");
+                        } else if (s.id === "Scooter") {
+                          router.push("/scooter");
+                        } else if (s.id === "Spa") {
+                          router.push("/spa");
                         } else {
                           setActiveService(s.id);
                           setActiveCat("All");
                           setSearchQuery("");
-                          setTimeout(() => {
-                            const el = document.getElementById("showcase-section");
-                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          }, 100);
                         }
                         setIsServiceDropdownOpen(false);
                       }}
@@ -997,16 +997,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       </div>
 
       <div id="showcase-section" className="max-w-[1400px] mx-auto min-h-screen">
-
-        {/* Dedicated eSIM-style Service Showcase for Scooter and Spa */}
-        {(activeService === "Scooter" || activeService === "Spa") ? (
-          <CampaignServiceShowcase 
-            campaign={serviceCampaigns[activeService.toLowerCase()] || (activeService === "Scooter" ? DEFAULT_CAMPAIGNS.scooter : DEFAULT_CAMPAIGNS.spa)} 
-            serviceName={activeService}
-          />
-        ) : (
-          <>
-            {/* Popular Trips */}
+        {/* Popular Trips */}
             <section className="pt-2 mb-8 relative">
               <div className="px-6 flex justify-between items-end mb-4">
                 <h2 className="text-[20px] font-bold text-primary flex items-center gap-2">
@@ -1087,8 +1078,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 )}
               </div>
             </section>
-          </>
-        )}
 
         {/* Recommended Places */}
         <section className="px-6 mb-20">

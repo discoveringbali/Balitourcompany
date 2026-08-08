@@ -177,16 +177,16 @@ export default function Navbar() {
                         setFilterOpen(false); 
                         if (s.id === "eSIM") {
                           router.push("/esim");
+                        } else if (s.id === "Scooter") {
+                          router.push("/scooter");
+                        } else if (s.id === "Spa") {
+                          router.push("/spa");
                         } else {
                           setActiveService(s.id); 
                           if (pathname !== "/") {
-                            router.push(s.id === "Scooter" ? "/scooter" : s.id === "Spa" ? "/spa" : "/");
+                            router.push("/");
                           } else {
                             window.dispatchEvent(new CustomEvent('serviceChanged', { detail: s.id }));
-                            setTimeout(() => {
-                              const el = document.getElementById("showcase-section");
-                              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }, 100);
                           }
                         }
                       }} 

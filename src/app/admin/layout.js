@@ -386,7 +386,7 @@ export default function AdminLayout({ children }) {
                  <h4 className="font-extrabold text-sm text-[#1c1c1c] mb-2">Account Security</h4>
                  
                  <div className="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-start gap-2">
-                   <span className="text-gray-500 mt-0.5">ℹ️</span>
+                   <span className="text-gray-500 font-bold text-xs">Security:</span>
                    <p className="text-[10px] font-bold text-gray-600 leading-relaxed">
                      Your admin password is hardcoded securely in the application source code for maximum security.
                    </p>
@@ -424,7 +424,7 @@ export default function AdminLayout({ children }) {
 
                <div className="space-y-4">
                   <div>
-                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">🍏 iOS (iPhone & iPad)</h4>
+                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">iOS (iPhone & iPad)</h4>
                     <ol className="text-sm font-bold text-gray-600 space-y-1.5 ml-2 border-l-2 border-[#eaeaea] pl-3">
                       <li>1. Open this page in Safari</li>
                       <li>2. Tap the Share icon <span className="inline-block bg-gray-100 px-1 rounded text-xs leading-none py-0.5">↗</span> at the bottom</li>
@@ -432,7 +432,7 @@ export default function AdminLayout({ children }) {
                     </ol>
                   </div>
                   <div>
-                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5 mt-5">🤖 Android</h4>
+                    <h4 className="text-xs font-black text-gray-400 uppercase tracking-widest mb-2 flex items-center gap-1.5 mt-5">Android</h4>
                     <ol className="text-sm font-bold text-gray-600 space-y-1.5 ml-2 border-l-2 border-[#eaeaea] pl-3">
                       <li>1. Open this page in Chrome</li>
                       <li>2. Tap the 3-dot menu <span className="inline-block bg-gray-100 px-1 rounded text-xs leading-none py-0.5">⋮</span> at the top</li>
