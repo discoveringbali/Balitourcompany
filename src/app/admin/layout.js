@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { 
   Calendar, MapPin, Settings, LogOut, 
-  Briefcase, Users, Newspaper, Home, Menu, X, Bell, Search, ChevronDown, Activity, Smartphone, Tag
+  Briefcase, Users, Newspaper, Home, Menu, X, Bell, Search, ChevronDown, Activity, Smartphone, Tag, Plus
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -36,8 +36,8 @@ function AdminLoginScreen({ onLogin }) {
           <div className="w-16 h-16 bg-[#1c1c1c] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
             <span className="text-[#dcdcdc] font-black text-2xl tracking-tighter">BI</span>
           </div>
-          <h1 className="text-2xl font-black text-[#1c1c1c]">Admin Portal</h1>
-          <p className="text-sm font-bold text-gray-500 mt-1">Secure login required</p>
+          <h1 className="text-2xl font-black text-[#1c1c1c]">Balance Island</h1>
+          <p className="text-sm font-bold text-gray-500 mt-1">Secure administrator login</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -182,7 +182,7 @@ export default function AdminLayout({ children }) {
         <div className="h-20 px-6 border-b border-[#eaeaea] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
              <img src="/balance_island_logo.png" alt="Logo" className="w-8 h-8 rounded-lg object-cover border border-[#eaeaea]" />
-             <span className="font-extrabold text-lg tracking-tight">Admin<span className="font-medium text-gray-500">Portal</span></span>
+             <span className="font-black text-lg tracking-tight">Balance Island</span>
           </div>
           <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden p-1 text-gray-400 hover:text-[#1c1c1c] transition-colors">
             <X size={20} />
@@ -190,9 +190,14 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* Global Action Button */}
-        <div className="p-5 border-b border-[#eaeaea]">
-          <Link href="/admin/listings" className="w-full flex items-center justify-center gap-2 bg-black text-white hover:bg-neutral-800 py-3 rounded-xl font-extrabold text-sm transition-all shadow-sm active:scale-95">
-             Create New Product
+        <div className="p-4 border-b border-[#eaeaea]">
+          <Link 
+            href="/admin/listings" 
+            onClick={() => setIsSidebarOpen(false)}
+            className="w-full flex items-center justify-center gap-2 bg-black text-white hover:bg-neutral-800 py-3 rounded-xl font-black text-xs uppercase tracking-wider transition-all shadow-sm active:scale-95"
+          >
+             <Plus size={16} strokeWidth={3} />
+             <span>Create New Product</span>
           </Link>
         </div>
 

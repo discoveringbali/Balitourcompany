@@ -269,27 +269,9 @@ export default function AdminDashboard() {
   return (
     <div className="w-full min-h-screen bg-[#fafafa] pb-24 font-sans text-[#1c1c1c] space-y-6 sm:space-y-8">
       
-      {/* Top Header & Section Switcher */}
-      <div className="space-y-4 px-4 pt-8 max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-[#1c1c1c]">Admin Workspace</h1>
-            <p className="text-xs sm:text-sm text-gray-500 font-medium mt-1">
-              Select a dedicated private section to manage your business operations.
-            </p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link 
-              href="/admin/listings" 
-              className="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-black text-white hover:bg-neutral-800 transition-all shadow-sm active:scale-95 flex items-center gap-1.5"
-            >
-              <Plus size={15} /> Add Tour / Product
-            </Link>
-          </div>
-        </div>
-
-        {/* Private Section Switcher Pills */}
-        <div className="flex gap-2 overflow-x-auto no-scrollbar pt-2">
+      {/* Private Section Switcher Pills */}
+      <div className="px-4 pt-4 sm:pt-6 max-w-7xl mx-auto">
+        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
           {[
             { id: "overview", label: "Dashboard Overview", icon: Activity },
             { id: "hero", label: "Homepage Hero & Campaigns", icon: Video },
@@ -301,13 +283,13 @@ export default function AdminDashboard() {
               <button
                 key={sec.id}
                 onClick={() => setActiveSection(sec.id)}
-                className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs sm:text-sm font-extrabold transition-all shrink-0 cursor-pointer ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all shrink-0 cursor-pointer ${
                   isSelected 
                     ? "bg-black text-white shadow-sm" 
                     : "bg-white text-gray-600 hover:text-black border border-[#eaeaea] hover:border-gray-300"
                 }`}
               >
-                <Icon size={16} strokeWidth={isSelected ? 2.5 : 2} />
+                <Icon size={15} strokeWidth={isSelected ? 2.5 : 2} />
                 <span>{sec.label}</span>
               </button>
             );
