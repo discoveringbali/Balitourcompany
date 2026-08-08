@@ -41,9 +41,10 @@ const BaliGateIcon = ({ className, isActive }) => (
 );
 
 const services = [
-  { id: "Tour", icon: Map },
-  { id: "Transport", icon: Bus },
   { id: "Activities", icon: Sparkles },
+  { id: "Scooter", icon: ScooterIcon },
+  { id: "Spa", icon: SpaIcon },
+  { id: "eSIM", icon: TowelsIcon },
 ];
 
 const getCategoriesForService = (service) => {
@@ -56,13 +57,7 @@ const getCategoriesForService = (service) => {
       { id: "Culture", icon: Landmark },
       { id: "Instagram", icon: Camera }
     ];
-  } else if (service === "Transport") {
-    return [
-      { id: "All", icon: Compass },
-      { id: "Airport", icon: Plane },
-      { id: "Daily", icon: Car }
-    ];
-  } else if (service === "Esim") {
+  } else if (service === "Scooter") {
     return [
       { id: "All", icon: Wifi },
       { id: "Daily", icon: MapPin },
@@ -166,7 +161,7 @@ function PopularTripCard({ trip }) {
 export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [] }) {
   const router = useRouter();
   const [activeCat, setActiveCat] = useState("All");
-  const [activeService, setActiveService] = useState("Tour");
+  const [activeService, setActiveService] = useState("Activities");
   const [currentCampIdx, setCurrentCampIdx] = useState(0);
 
   // Custom event listeners to sync with Desktop Navbar.js
@@ -511,8 +506,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     .slice(0, 5);
 
   const getPopularTripsTitle = () => {
-    if (activeService === "Tour") return "Featured Tours";
-    if (activeService === "Transport") return "Premium Fleet";
+    if (activeService === "Activities") return "Trending Activities";
+    if (activeService === "Scooter") return "Available Scooters";
     return `Top Picks for ${activeService}`;
   };
 
@@ -599,11 +594,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     <button
                       key={s.id}
                       onClick={() => {
-                        if (s.id === "Transport" || s.id === "Car Rental") {
-                          router.push(`/map?service=${s.id === "Car Rental" ? "CarRental" : "Transport"}`);
-                          return;
+                        if (s.id === "eSIM") {
+                          router.push("/esim");
+                        } else {
+                          setActiveService(s.id);
                         }
-                        setActiveService(s.id);
                         setIsServiceDropdownOpen(false);
                         setActiveCat("All");
                         setSearchQuery("");
@@ -1000,7 +995,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               {getPopularTripsTitle()}
             </h2>
             <Link
-              href={activeService === "Tour" ? "/tours" : activeService === "Transport" ? "/map" : "/esim"}
+              href={activeService === "Tour" ? "/tours" : activeService === "Activities" ? "/map?service=Activities" : "/esim"}
               className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors"
             >
               See more
@@ -1024,7 +1019,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <section id="categories-section" className="px-6 mb-8 mt-2">
           <div className="flex justify-between items-end mb-4">
             <h2 className="text-[20px] font-bold text-primary">Categories</h2>
-            <Link href={activeService === "Tour" ? "/tours" : activeService === "Transport" ? "/map" : "/esim"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
+            <Link href={activeService === "Tour" ? "/tours" : activeService === "Activities" ? "/map?service=Activities" : "/esim"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
           </div>
           <div className="flex justify-center w-full overflow-hidden">
             <div className="bg-black rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">

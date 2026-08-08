@@ -77,8 +77,8 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   
   // All Hooks MUST be at the top level before any early returns
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isChecking, setIsChecking] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [customAvatar, setCustomAvatar] = useState(null);

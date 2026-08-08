@@ -43,7 +43,7 @@ const BALI_HOTSPOTS = [
   { name: "Lovina Beach", area: "Buleleng", lat: -8.1611, lng: 115.0256 }
 ];
 
-const CATEGORIES = ["Tour", "Transport", "Activities"];
+const CATEGORIES = ["Tour", "Activities"];
 
 // Leaflet-friendly Autocomplete Input
 function PlaceAutocompleteInput({ placeholder, onPlaceSelect, value, onChange, icon: Icon }) {

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Users, DollarSign, Calendar, MapPin, TrendingUp, ChevronRight, Activity, Download } from "lucide-react";
 import { TourIcon, SpaIcon, ScooterIcon, TransportIcon } from "../../components/icons/CategoryIcons";
 import HeroSettingsModal from "../../components/admin/HeroSettingsModal";
+import DiscountSettingsModal from "../../components/admin/DiscountSettingsModal";
 import { supabase } from "@/lib/supabase";
 
 const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
@@ -12,6 +13,7 @@ export default function AdminDashboard() {
   const [activeCategory, setActiveCategory] = useState("Tour");
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [isHeroModalOpen, setIsHeroModalOpen] = useState(false);
+  const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
   const [allBookings, setAllBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -102,8 +104,8 @@ export default function AdminDashboard() {
           <button onClick={() => setIsHeroModalOpen(true)} className="flex items-center gap-2 bg-[#1c1c1c] text-[#dcdcdc] px-5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-black transition-colors shadow-sm active:scale-95">
              Edit Homepage Hero
           </button>
-          <button className="hidden sm:flex items-center gap-2 bg-white border border-[#eaeaea] text-[#1c1c1c] px-5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-gray-50 transition-colors shadow-sm active:scale-95">
-             <Download size={16} /> Export Data
+          <button onClick={() => setIsDiscountModalOpen(true)} className="hidden sm:flex items-center gap-2 bg-white border border-[#eaeaea] text-[#1c1c1c] px-5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-gray-50 transition-colors shadow-sm active:scale-95">
+             Manage Discounts
           </button>
         </div>
       </div>
@@ -310,6 +312,7 @@ export default function AdminDashboard() {
       )}
 
       {isHeroModalOpen && <HeroSettingsModal onClose={() => setIsHeroModalOpen(false)} />}
+      {isDiscountModalOpen && <DiscountSettingsModal isOpen={isDiscountModalOpen} onClose={() => setIsDiscountModalOpen(false)} />}
     </div>
   );
 }

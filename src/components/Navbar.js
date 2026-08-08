@@ -71,7 +71,6 @@ export default function Navbar() {
   
   const services = [
     { id: "Tour", icon: Map },
-    { id: "Transport", icon: Bus },
     { id: "Activities", icon: Sparkles },
   ];
 
@@ -177,10 +176,6 @@ export default function Navbar() {
                         // Dispatch to page.js
                         window.dispatchEvent(new CustomEvent('serviceChanged', { detail: s.id }));
                         
-                        if (s.id === "Transport") {
-                          router.push("/map?service=Transport");
-                          return;
-                        }
                         
                         if (s.id === "Scooter") {
                            setTimeout(() => {

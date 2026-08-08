@@ -6,6 +6,7 @@ import WeeklyCalendar from "./WeeklyCalendar";
 import LocationAutocomplete from "./LocationAutocomplete";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "next-auth/react";
+import { validateDiscountCode, calculateDiscount } from "@/lib/discounts";
 
 const formatIDR = (num) => `IDR ${Number(num).toLocaleString('id-ID')}`;
 
@@ -14,6 +15,10 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   const [step, setStep] = useState(1);
   const [localPackage, setLocalPackage] = useState("Standard");
   const { data: session } = useSession();
+  
+  const [promoCode, setPromoCode] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState(null);
+  const [promoError, setPromoError] = useState("");
   
   // Form State
   const [formData, setFormData] = useState({
@@ -69,8 +74,70 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     if (onPaxChange) onPaxChange(finalGuests);
   };
 
+  const handleApplyPromo = () => {
+    if (!promoCode.trim()) {
+      setAppliedDiscount(null);
+      setPromoError('');
+      return;
+    }
+    const discount = validateDiscountCode(promoCode.trim());
+    if (discount) {
+      setAppliedDiscount(discount);
+      setPromoError('');
+    } else {
+      setAppliedDiscount(null);
+      setPromoError('Invalid or inactive code');
+    }
+  };
+
+  const getBaseTotal = () => {
+    const getMultiplierPrice = (rawPrice) => {
+      const p = Number(rawPrice);
+      if (!p) return 0;
+      return Math.floor(p > 1000 ? p : p * 1000);
+    };
+    let pax = parseInt(formData.guests) || 1;
+    let basePrice = getMultiplierPrice(serviceData.price);
+    
+    // Handle All Inclusive Surcharge if selected
+    if (localPackage === 'All Inclusive') {
+       basePrice = getMultiplierPrice(serviceData.allInclusiveSurcharge) || basePrice;
+       if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
+          let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
+          let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
+          if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
+       }
+    } else if (serviceData.tourTiers && serviceData.tourTiers.length > 0) {
+       let sortedTiers = [...serviceData.tourTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
+       let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
+       if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
+    }
+    
+    if (serviceData.type === 'scooter') {
+       return basePrice * (parseInt(formData.duration) || 1);
+    } else if (["tour", "spa", "transport", "activities"].includes(serviceData?.type?.toLowerCase())) {
+       if (localPackage === 'All Inclusive') {
+          if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
+             return basePrice;
+          } else {
+             return basePrice * pax;
+          }
+       } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
+          return basePrice;
+       } else {
+          let isGroupPricing = serviceData?.pricingType === "Per Group";
+          return basePrice * (isGroupPricing ? 1 : pax);
+       }
+    }
+    return basePrice;
+  };
+
   const handleCheckout = async (e) => {
     e.preventDefault();
+    
+    const baseTotal = getBaseTotal();
+    const discountAmt = calculateDiscount(baseTotal, appliedDiscount);
+    const total = baseTotal - discountAmt;
     
     // Generate Random Booking ID
     const bookingId = `BI-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -120,57 +187,14 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       }
     }
 
-    let total = 0;
-    
-    // Calculate Total correctly
-      const getMultiplierPrice = (rawPrice) => {
-        const p = Number(rawPrice);
-        if (!p) return 0;
-        return Math.floor(p > 1000 ? p : p * 1000);
-      };
-
-      let pax = parseInt(formData.guests) || 1;
-      let basePrice = getMultiplierPrice(serviceData.price);
-      
-      // Handle All Inclusive Surcharge if selected
-      if (localPackage === 'All Inclusive') {
-         basePrice = getMultiplierPrice(serviceData.allInclusiveSurcharge) || basePrice;
-         if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-            let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-            let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
-            if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
-         }
-      } else if (serviceData.tourTiers && serviceData.tourTiers.length > 0) {
-         let sortedTiers = [...serviceData.tourTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-         let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
-         if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
-      }
-      
-      if (serviceData.type === 'scooter') {
-         total = basePrice * (parseInt(formData.duration) || 1);
-      } else if (["tour", "spa", "transport", "activities"].includes(serviceData?.type?.toLowerCase())) {
-         if (localPackage === 'All Inclusive') {
-             if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                 total = basePrice;
-             } else {
-                 total = basePrice * pax;
-             }
-         } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
-             total = basePrice;
-         } else {
-             let isGroupPricing = serviceData?.pricingType === "Per Group";
-             total = basePrice * (isGroupPricing ? 1 : pax);
-         }
-      } else {
-         total = basePrice;
-      }
-      
-      messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatIDR(total)}`;
+    messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatIDR(total)}`;
+    if (appliedDiscount) {
+      messageDetails += ` (Code: ${appliedDiscount.code})`;
+    }
 
     const waUrl = `https://wa.me/6282247819449?text=${encodeURIComponent(messageDetails)}`;
     
     try {
-      // Await the insert so it completes before navigating away
       const { error } = await supabase.from('bookings').insert({
         id: bookingId,
         customer_name: formData.name,
@@ -434,52 +458,44 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         {/* Footer / Actions */}
         <div className="p-6 border-t border-gray-100 shrink-0 bg-white rounded-b-[32px] mt-auto">
            {serviceData && (
-             <div className="flex justify-between items-center mb-4 px-1">
-               <span className="text-[14px] font-bold text-gray-500">Expected Total</span>
-               <span className="text-[22px] font-extrabold text-primary">
-                 {(() => {
-                    const getMultiplierPrice = (rawPrice) => {
-                      const p = Number(rawPrice);
-                      if (!p) return 0;
-                      return Math.floor(p > 1000 ? p : p * 1000);
-                    };
-                    let pax = parseInt(formData.guests) || 1;
-                    let basePrice = getMultiplierPrice(serviceData.price);
-                    
-                    // Handle All Inclusive Surcharge if selected
-                    if (localPackage === 'All Inclusive') {
-                       basePrice = getMultiplierPrice(serviceData.allInclusiveSurcharge) || basePrice;
-                       if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                          let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-                          let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
-                          if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
-                       }
-                    } else if (serviceData.tourTiers && serviceData.tourTiers.length > 0) {
-                       let sortedTiers = [...serviceData.tourTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-                       let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
-                       if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
-                    }
-                    
-                    if (serviceData.type === 'scooter') {
-                       return formatIDR(basePrice * (parseInt(formData.duration) || 1));
-                    } else if (["tour", "spa", "transport", "activities"].includes(serviceData?.type?.toLowerCase())) {
-                       if (localPackage === 'All Inclusive') {
-                          if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                             return formatIDR(basePrice);
-                          } else {
-                             return formatIDR(basePrice * pax);
-                          }
-                       } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
-                          return formatIDR(basePrice);
-                       } else {
-                          let isGroupPricing = serviceData?.pricingType === "Per Group";
-                          return formatIDR(basePrice * (isGroupPricing ? 1 : pax));
-                       }
-                    }
-                    return formatIDR(basePrice);
-                 })()}
-               </span>
-             </div>
+             <>
+               {step === 1 && (
+                 <div className="mb-6 px-1">
+                   <div className="flex items-center gap-2 mb-2">
+                      <input 
+                        type="text" 
+                        placeholder="Promo Code" 
+                        value={promoCode} 
+                        onChange={(e) => setPromoCode(e.target.value.toUpperCase())} 
+                        className="bg-[#f9f9f9] border border-[#eaeaea] rounded-xl px-4 py-3 flex-1 text-sm font-bold outline-none focus:border-[#1c1c1c] uppercase"
+                      />
+                      <button 
+                        type="button" 
+                        onClick={handleApplyPromo}
+                        className="bg-[#1c1c1c] text-white px-5 py-3 rounded-xl font-bold text-sm shrink-0"
+                      >
+                        Apply
+                      </button>
+                   </div>
+                   {promoError && <p className="text-red-500 text-xs font-bold">{promoError}</p>}
+                   {appliedDiscount && <p className="text-green-600 text-xs font-bold">Discount applied: {appliedDiscount.code}</p>}
+                 </div>
+               )}
+               
+               <div className="flex justify-between items-center mb-6 px-1">
+                 <span className="text-[14px] font-bold text-gray-500">Expected Total</span>
+                 <div className="flex flex-col items-end">
+                    {appliedDiscount && (
+                      <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
+                        {formatIDR(getBaseTotal())}
+                      </span>
+                    )}
+                    <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
+                      {formatIDR(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}
+                    </span>
+                 </div>
+               </div>
+             </>
            )}
            <button form="bookingForm" type="submit" className="w-full bg-black hover:bg-neutral-800 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white transition-all active:scale-95 text-[16px] shadow-sm">
              {step === 1 ? 'Continue to Details' : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
