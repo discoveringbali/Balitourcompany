@@ -611,9 +611,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           }, 50);
                         }
                       }}
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeService === s.id ? 'bg-primary text-accent' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeService === s.id ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
                     >
-                      {Icon && <Icon size={16} className={activeService === s.id ? 'text-accent' : 'text-text-secondary'} strokeWidth={2} />}
+                      {Icon && <Icon size={16} className={activeService === s.id ? 'text-white' : 'text-text-secondary'} strokeWidth={2} />}
                       {s.id}
                     </button>
                   );
