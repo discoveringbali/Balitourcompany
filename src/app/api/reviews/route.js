@@ -18,8 +18,8 @@ export async function POST(req) {
 
     // 3. Initialize Supabase Admin Client to bypass RLS
     const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
+      process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+      process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder'
     );
 
     // 4. Fetch the existing listing

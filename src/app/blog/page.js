@@ -1,17 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { ChevronRight, Calendar } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
+import { ChevronRight, Calendar, Sparkles } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 export const metadata = {
   title: "Discover Bali | Premium Island Blog",
 };
-
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Helper to strip HTML and get excerpt
 const getExcerpt = (html, length = 120) => {
@@ -30,13 +25,20 @@ const getBlogUrl = (slug) => {
 export const revalidate = 3600; // Server-side caching for 1 hour
 
 export default async function Blog() {
-  const { data: dbArticles, error } = await supabase
-    .from('blogs')
-    .select('*')
-    .eq('status', 'Published')
-    .order('created_at', { ascending: false });
+  let articles = [];
+  try {
+    const { data: dbArticles, error } = await supabase
+      .from('blogs')
+      .select('*')
+      .eq('status', 'Published')
+      .order('created_at', { ascending: false });
 
-  const articles = dbArticles || [];
+    if (!error && dbArticles) {
+      articles = dbArticles;
+    }
+  } catch (e) {
+    console.error("Error loading blogs:", e);
+  }
 
   return (
     <div className="w-full bg-background min-h-screen font-sans">

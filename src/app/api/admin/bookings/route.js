@@ -5,8 +5,8 @@ export const runtime = 'edge';
 
 // Initialize Supabase with the SERVICE ROLE KEY (Bypasses RLS)
 const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder'
 );
 
 export async function GET(req) {
