@@ -177,7 +177,7 @@ export default function AdminLayout({ children }) {
         {/* Brand Header */}
         <div className="h-20 px-6 border-b border-[#eaeaea] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-             <img src="/icon.jpg" alt="Logo" className="w-8 h-8 rounded-lg object-cover border border-[#eaeaea]" />
+             <img src="/balance_island_logo.png" alt="Logo" className="w-8 h-8 rounded-lg object-cover border border-[#eaeaea]" />
              <span className="font-extrabold text-lg tracking-tight">Admin<span className="font-medium text-gray-500">Portal</span></span>
           </div>
           <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden p-1 text-gray-400 hover:text-[#1c1c1c] transition-colors">
@@ -204,9 +204,9 @@ export default function AdminLayout({ children }) {
                   key={link.name}
                   href={link.href} 
                   onClick={() => setIsSidebarOpen(false)}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${isActive ? 'bg-black text-white text-[#1c1c1c]' : 'text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9]'}`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${isActive ? 'bg-black text-white' : 'text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9]'}`}
                 >
-                  <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-[#1c1c1c]' : 'text-gray-400'} />
+                  <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className={isActive ? 'text-white' : 'text-gray-400'} />
                   {link.name}
                 </Link>
               );
@@ -379,7 +379,7 @@ export default function AdminLayout({ children }) {
              
              <div className="space-y-6">
                <div className="flex items-center gap-4 bg-[#f9f9f9] p-4 rounded-2xl border border-[#eaeaea]">
-                 <img src="/icon.jpg" alt="Logo" className="w-12 h-12 rounded-xl object-cover shadow-sm" />
+                 <img src="/balance_island_logo.png" alt="Logo" className="w-12 h-12 rounded-xl object-cover shadow-sm" />
                  <div>
                    <p className="text-sm font-black text-[#1c1c1c]">Balance Island Admin</p>
                    <p className="text-[11px] font-bold text-gray-500">Add to Home Screen</p>
