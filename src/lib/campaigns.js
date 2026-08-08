@@ -1,40 +1,52 @@
 export const DEFAULT_CAMPAIGNS = {
   scooter: {
     id: "scooter",
+    companyName: "The Bike Bali",
     type: "Scooter Rental",
-    title: "Scooter & Motorbike Rental",
-    subtitle: "Direct booking for premium automatic scooters with 2 sanitized helmets & free island-wide delivery.",
-    badge: "Official Partner",
+    title: "The Bike Bali",
+    subtitle: "Premium automatic scooters delivered directly to your villa or hotel across Bali.",
+    tagline: "Official Scooter Rental Partner",
+    badge: "Verified Partner",
     externalUrl: "https://thebikebali.com",
     image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=1200&q=80",
     active: true,
     accentColor: "#1c1c1c",
+    rating: "4.9",
+    reviewsCount: "850+",
+    location: "Island-wide Delivery",
     features: [
-      "Free delivery & pickup to your villa / hotel in Bali",
-      "2 clean sanitized helmets + phone holder + surf rack upon request",
-      "Comprehensive insurance & 24/7 island roadside support"
+      "Free villa & hotel delivery across Bali",
+      "2 clean sanitized helmets + phone mount",
+      "Comprehensive insurance & 24/7 roadside support",
+      "No passport hold required"
     ],
     options: [
-      { name: "Honda Scoopy 110cc", desc: "Best for town & beach cruising", price: "$6 / day" },
-      { name: "Yamaha NMAX 155cc", desc: "Comfortable power for long island rides", price: "$12 / day", popular: true },
-      { name: "Honda PCX 160cc", desc: "Smooth luxury touring with large storage", price: "$14 / day" }
+      { name: "Honda Scoopy 110cc", desc: "Best for beach & cafe trips", price: "$6 / day" },
+      { name: "Yamaha NMAX 155cc", desc: "Comfort & power for island exploration", price: "$12 / day", popular: true },
+      { name: "Honda PCX 160cc", desc: "Premium touring with large storage", price: "$14 / day" }
     ],
     stats: { clicks: 1420, views: 4850, conversion: "29.2%" }
   },
   spa: {
     id: "spa",
+    companyName: "Ubud Tranquility Spa",
     type: "Spa & Wellness",
-    title: "Luxury Spa & Authentic Massage",
-    subtitle: "Connect directly to authentic Balinese healing rituals, luxury day spa treatments & holistic wellness.",
+    title: "Ubud Tranquility Spa",
+    subtitle: "Authentic Balinese healing rituals, organic therapies, and luxury wellness sanctuaries.",
+    tagline: "Official Wellness Partner",
     badge: "Exclusive Partner",
     externalUrl: "https://ubudtranquilityspa.com",
     image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
     active: true,
     accentColor: "#1c1c1c",
+    rating: "4.9",
+    reviewsCount: "620+",
+    location: "Ubud & South Bali",
     features: [
-      "Authentic certified Balinese therapists & ancient pressure techniques",
-      "100% natural organic essential oils, herbal scrubs & floral baths",
-      "VIP private treatment suites & romantic couple wellness rituals"
+      "Certified master Balinese massage therapists",
+      "100% natural organic essential oils & herbal scrubs",
+      "Private VIP couple suites & floral open-air baths",
+      "Complimentary welcome herbal drink & refreshments"
     ],
     options: [
       { name: "Balinese Deep Tissue Massage", desc: "60-90 min traditional muscle tension relief", price: "$18" },
@@ -50,7 +62,11 @@ export const getCampaignSettings = () => {
   try {
     const saved = localStorage.getItem('balance_island_campaign_links');
     if (saved) {
-      return { ...DEFAULT_CAMPAIGNS, ...JSON.parse(saved) };
+      const parsed = JSON.parse(saved);
+      return {
+        scooter: { ...DEFAULT_CAMPAIGNS.scooter, ...(parsed.scooter || {}) },
+        spa: { ...DEFAULT_CAMPAIGNS.spa, ...(parsed.spa || {}) }
+      };
     }
   } catch (e) {
     console.error("Error reading campaign settings", e);

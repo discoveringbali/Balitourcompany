@@ -79,11 +79,16 @@ export default function Esim() {
                 </div>
               </div>
 
-              <button className="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-black/80 transition-colors shadow-md">
-                Buy eSIM Now
-              </button>
+              <a 
+                href="https://telkomsel.com/esim" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-full bg-black text-white font-extrabold py-4 rounded-xl hover:bg-neutral-800 transition-colors shadow-md flex items-center justify-center gap-2 cursor-pointer no-underline"
+              >
+                <span>Buy eSIM Now</span>
+              </a>
               <p className="text-center text-xs font-medium text-text-secondary mt-4">
-                You will be redirected to our trusted partner.
+                You will be redirected to our trusted partner in a new tab.
               </p>
             </div>
           </div>

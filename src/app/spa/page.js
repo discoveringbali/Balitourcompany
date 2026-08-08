@@ -22,7 +22,7 @@ export default function SpaPage() {
   }, []);
 
   return (
-    <div className="w-full pt-28 pb-20 bg-[#fafafa] min-h-screen">
+    <div className="w-full pt-32 md:pt-36 pb-20 bg-[#fafafa] min-h-screen">
       <CampaignServiceShowcase campaign={campaign} serviceName="Spa" />
     </div>
   );
