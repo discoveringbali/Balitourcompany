@@ -504,8 +504,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     {
       id: 'camp-default-1',
       title: "Ubud Heritage Tour",
-      subtitle: "Experience the lush green beauty of Tegalalang and sacred temples.",
-      badge: "Exclusive",
+      subtitle: "Tegalalang rice terraces & sacred temple exploration.",
+      badge: "OFFICIAL PARTNER",
       image: "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80",
       location: "Ubud, Bali"
     },
@@ -513,7 +513,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       id: 'camp-default-2',
       title: "Nusa Penida Island Escape",
       subtitle: "Fast boat & coastal tour package with private driver.",
-      badge: "Best Deal",
+      badge: "OFFICIAL PARTNER",
       image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80",
       location: "Nusa Penida, Bali"
     }
@@ -781,9 +781,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 ) : null}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/40 to-transparent z-0 pointer-events-none" />
 
-                <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-                  {!camp.isHeroSlide && camp.badge && (
-                    <span className="inline-block px-3 py-1.5 w-max bg-white/90 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px]">{camp.badge}</span>
+                {/* Badge top left */}
+                <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
+                  {!camp.isHeroSlide && (
+                    <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
+                      {camp.badge || "OFFICIAL PARTNER"}
+                    </span>
                   )}
                 </div>
 
@@ -857,24 +860,37 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
 
-                {/* Text and button positioned perfectly inside bounds */}
+                {/* Text and right-bottom click icon button */}
                 {!camp.isHeroSlide && (
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-5 flex flex-col justify-end items-start pointer-events-none">
-                    <h3 className="text-[22px] sm:text-[26px] font-extrabold text-white leading-[1.1] mb-1.5 font-sans tracking-tight whitespace-pre-line drop-shadow-lg">{camp.title}</h3>
-                    {camp.subtitle && <p className="text-white/90 text-[12px] sm:text-[13px] font-medium mb-3.5 leading-snug drop-shadow-md line-clamp-2">{camp.subtitle}</p>}
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
+                    <div className="flex-1 min-w-0 pr-1.5">
+                      <h3 className="text-[17px] sm:text-[19px] font-extrabold text-white leading-tight mb-1 font-sans tracking-tight line-clamp-1 drop-shadow-md">
+                        {camp.title}
+                      </h3>
+                      {camp.subtitle && (
+                        <p className="text-white/85 text-[11px] sm:text-[12px] font-medium leading-normal line-clamp-1 drop-shadow-sm">
+                          {camp.subtitle}
+                        </p>
+                      )}
+                    </div>
 
                     {camp.isExternalCampaign ? (
                       <a
                         href={camp.externalUrl || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-white text-black px-5 py-2.5 rounded-full font-black text-[13px] shadow-xl active:scale-95 transition-all hover:bg-neutral-100 flex items-center justify-center pointer-events-auto gap-1.5"
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
+                        aria-label="Open partner website"
                       >
-                        Book Partner Website <ArrowUpRight size={15} strokeWidth={2.5} />
+                        <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
                       </a>
                     ) : (
-                      <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="bg-white text-black px-5 py-2.5 rounded-full font-black text-[13px] shadow-xl active:scale-95 transition-all hover:bg-neutral-100 flex items-center justify-center pointer-events-auto gap-1">
-                        View Detail
+                      <Link
+                        href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
+                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
+                        aria-label="View tour details"
+                      >
+                        <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
                       </Link>
                     )}
                   </div>
