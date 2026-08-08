@@ -185,9 +185,9 @@ export default function AdminLayout({ children }) {
           </button>
         </div>
 
-        {/* Global Action Button - Lime Accent with Dark Text */}
+        {/* Global Action Button */}
         <div className="p-5 border-b border-[#eaeaea]">
-          <Link href="/admin/listings" className="w-full flex items-center justify-center gap-2 bg-black text-white hover:bg-[#c9c9c9] text-[#1c1c1c] py-3 rounded-xl font-extrabold text-sm transition-all shadow-[0_4px_20px_rgba(217,251,65,0.15)] active:scale-95">
+          <Link href="/admin/listings" className="w-full flex items-center justify-center gap-2 bg-black text-white hover:bg-neutral-800 py-3 rounded-xl font-extrabold text-sm transition-all shadow-sm active:scale-95">
              Create New Product
           </Link>
         </div>

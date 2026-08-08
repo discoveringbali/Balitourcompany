@@ -339,7 +339,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                     onClick={() => setActiveTab(tab)}
                     className={`py-2.5 px-5 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${
                       isActive 
-                        ? (tourData.service === "Spa" ? "bg-[#939393] text-white shadow-sm" : "bg-accent text-primary shadow-sm")
+                        ? (tourData.service === "Spa" ? "bg-[#939393] text-white shadow-sm" : "bg-black text-white shadow-sm")
                         : (tourData.service === "Spa" ? "bg-[#ededed] hover:bg-[#e2e2e2] text-[#909090]" : "bg-surface hover:bg-surface-hover text-text-secondary")
                     }`}
                   >

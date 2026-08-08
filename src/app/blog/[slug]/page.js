@@ -142,7 +142,7 @@ export default async function BlogDetail({ params }) {
       <div className="min-h-screen bg-background flex flex-col justify-center items-center p-6 text-center">
         <h1 className="text-3xl font-extrabold text-primary mb-4">Article Not Found</h1>
         <p className="text-text-secondary mb-8 font-medium">The recommended place you are looking for does not exist or has been removed.</p>
-        <Link href="/" className="px-8 py-3 bg-accent text-primary font-bold rounded-full hover:scale-105 transition-transform">
+        <Link href="/" className="px-8 py-3 bg-black text-white font-bold rounded-full hover:bg-neutral-800 transition-colors">
           Return Home
         </Link>
       </div>
@@ -178,7 +178,7 @@ export default async function BlogDetail({ params }) {
 
           {/* Title / Meta Area */}
           <div className="absolute bottom-6 md:bottom-12 inset-x-6 md:inset-x-12 z-20 flex flex-col md:w-[70%]">
-            <span className="inline-flex w-fit px-3 py-1 bg-accent text-primary text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px] mb-4">
+            <span className="inline-flex w-fit px-3 py-1 bg-white/90 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px] mb-4">
               {post.category || 'Featured'}
             </span>
             <h1 className="text-3xl md:text-5xl font-black text-white leading-[1.1] mb-4 drop-shadow-lg tracking-tight">

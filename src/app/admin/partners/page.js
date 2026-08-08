@@ -109,7 +109,7 @@ export default function PartnersManagement() {
             <h1 className="text-3xl font-black text-[#1c1c1c] tracking-tight">Partner Ecosystem</h1>
             <p className="text-sm text-gray-500 font-medium mt-1">Manage agencies, local providers, and their contracts.</p>
           </div>
-          <button onClick={openAddModal} className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-extrabold shadow-[0_4px_20px_rgba(217,251,65,0.15)] bg-black text-white text-[#1c1c1c] hover:bg-[#c9c9c9] transition-all active:scale-95">
+          <button onClick={openAddModal} className="flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-extrabold bg-black text-white hover:bg-neutral-800 transition-all active:scale-95 shadow-sm">
             <Plus size={18} strokeWidth={2.5} /> Onboard Partner
           </button>
         </div>

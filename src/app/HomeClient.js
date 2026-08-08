@@ -531,9 +531,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {/* Filter Modal Toggle */}
             <button
               onClick={() => setIsFilterModalOpen(true)}
-              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-accent text-primary hover:scale-105`}
+              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-black text-white hover:bg-neutral-800 hover:scale-105`}
             >
-              <Settings2 size={16} strokeWidth={2.5} />
+              <Settings2 size={16} strokeWidth={2.5} className="text-white" />
             </button>
 
             {/* Mobile Service Dropdown */}
@@ -646,7 +646,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
                 <button
                   onClick={() => setIsFilterModalOpen(false)}
-                  className="w-full bg-accent text-primary font-extrabold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2 mb-2"
+                  className="w-full bg-black text-white font-extrabold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2 mb-2 hover:bg-neutral-800"
                 >
                   Show {filteredTours.length} Results
                 </button>
@@ -685,7 +685,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
                 <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
                   {!camp.isHeroSlide && camp.badge && (
-                    <span className="inline-block px-3 py-1.5 w-max bg-accent text-primary text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px]">{camp.badge}</span>
+                    <span className="inline-block px-3 py-1.5 w-max bg-white/90 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px]">{camp.badge}</span>
                   )}
                 </div>
 
@@ -890,7 +890,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               {!camp.isHeroSlide && (
                 <div className="absolute bottom-[22%] right-[6%] xl:right-[8%] z-10 w-full max-w-[400px] flex flex-col items-end text-right">
                   {camp.badge && (
-                    <span className="inline-block mb-4 px-3 py-1.5 bg-accent text-primary text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px]">
+                    <span className="inline-block mb-4 px-3 py-1.5 bg-white/90 backdrop-blur-md text-black text-[11px] font-extrabold uppercase tracking-widest shadow-sm rounded-[8px]">
                       {camp.badge}
                     </span>
                   )}

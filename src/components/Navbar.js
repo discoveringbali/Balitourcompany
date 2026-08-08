@@ -89,8 +89,8 @@ export default function Navbar() {
               <img src={session.user.image || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"} referrerPolicy="no-referrer" alt="Avatar" className="w-full h-full object-cover" />
             </div>
           ) : (
-            <div className="w-11 h-11 bg-accent rounded-full flex justify-center items-center cursor-pointer hover:brightness-95 transition-colors shadow-sm" onClick={() => signIn('google')}>
-               <User size={20} className="text-primary" />
+            <div className="w-11 h-11 bg-black text-white rounded-full flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors shadow-sm" onClick={() => signIn('google')}>
+               <User size={20} className="text-white" />
             </div>
           )}
           <div className="flex flex-col">
@@ -112,9 +112,9 @@ export default function Navbar() {
         <div className="relative z-50">
           <button 
             onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-            className="px-3 h-10 bg-accent rounded-full flex items-center gap-1.5 justify-center hover:brightness-95 shadow-soft transition-colors text-primary font-extrabold text-[13px]"
+            className="px-3.5 h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft transition-colors font-extrabold text-[13px]"
           >
-            <Globe size={16} className={`text-primary ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
+            <Globe size={16} className={`text-white ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
           </button>
           {langDropdownOpen && (
             <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
@@ -122,7 +122,7 @@ export default function Navbar() {
                 <button
                   key={lang.code}
                   onClick={() => handleLanguageChange(lang.code)}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-primary text-accent' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
                 >
                   {lang.name}
                 </button>
@@ -158,8 +158,8 @@ export default function Navbar() {
               onChange={(e) => window.dispatchEvent(new CustomEvent('searchQueryChanged', { detail: e.target.value }))}
               className="flex-1 outline-none text-[13px] font-medium bg-transparent text-primary placeholder:text-text-secondary min-w-0" 
             />
-            <div className="w-8 h-8 rounded-full bg-accent text-primary flex items-center justify-center ml-2 shadow-sm transition-transform hover:scale-105 shrink-0">
-              <Settings2 size={15} strokeWidth={2.5} />
+            <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center ml-2 shadow-sm transition-transform hover:scale-105 shrink-0">
+              <Settings2 size={15} strokeWidth={2.5} className="text-white" />
             </div>
             
             {/* Desktop Navbar Dropdown */}
@@ -189,9 +189,9 @@ export default function Navbar() {
                            }, 50);
                         }
                       }} 
-                      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeService === s.id ? 'bg-primary text-accent' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                      className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeService === s.id ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
                     >
-                      <Icon size={16} className={activeService === s.id ? 'text-accent' : 'text-text-secondary'} strokeWidth={2} />
+                      <Icon size={16} className={activeService === s.id ? 'text-white' : 'text-text-secondary'} strokeWidth={2} />
                       {s.id}
                     </button>
                   );
@@ -219,7 +219,7 @@ export default function Navbar() {
                   <button
                     key={lang.code}
                     onClick={() => handleLanguageChange(lang.code)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-primary text-accent' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
                   >
                     {lang.name}
                   </button>

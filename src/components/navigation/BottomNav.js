@@ -51,11 +51,11 @@ export default function BottomNav() {
                 className="relative flex flex-col items-center justify-center w-10 h-10"
               >
                 {isActive && (
-                  <div className="absolute inset-0 bg-accent rounded-full shadow-[0_0_15px_rgba(217,251,65,0.4)]"></div>
+                  <div className="absolute inset-0 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
                 )}
                 <Icon 
                   size={22} 
-                  className={`relative z-10 transition-colors duration-300 ${isActive ? "text-primary stroke-[2.5px]" : "text-white/70 hover:text-white"}`} 
+                  className={`relative z-10 transition-colors duration-300 ${isActive ? "text-black stroke-[2.5px]" : "text-white/70 hover:text-white"}`} 
                 />
               </button>
             );
@@ -69,11 +69,11 @@ export default function BottomNav() {
               className="relative flex flex-col items-center justify-center w-10 h-10"
             >
               {isActive && (
-                <div className="absolute inset-0 bg-accent rounded-full shadow-[0_0_15px_rgba(217,251,65,0.4)]"></div>
+                <div className="absolute inset-0 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
               )}
               <Icon 
                 size={22} 
-                className={`relative z-10 transition-colors duration-300 ${isActive ? "text-primary stroke-[2.5px]" : "text-white/70 hover:text-white"}`} 
+                className={`relative z-10 transition-colors duration-300 ${isActive ? "text-black stroke-[2.5px]" : "text-white/70 hover:text-white"}`} 
               />
             </Link>
           );
