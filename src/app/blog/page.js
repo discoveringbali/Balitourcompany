@@ -42,7 +42,7 @@ export default async function Blog() {
 
   return (
     <div className="w-full bg-background min-h-screen font-sans">
-      
+
       {/* Cinematic Header */}
       <div className="relative w-full h-[40vh] md:h-[50vh] bg-black flex flex-col justify-center items-center text-center px-4">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center opacity-40"></div>
@@ -78,13 +78,13 @@ export default async function Blog() {
                   Featured
                 </div>
               </div>
-              
+
               <div className="md:w-2/5 p-8 md:p-12 lg:p-16 flex flex-col justify-center bg-white relative">
                 <span className="text-accent font-extrabold text-sm tracking-widest uppercase mb-4">{articles[0].category || 'Guides'}</span>
                 <h2 className="text-3xl lg:text-5xl font-black mb-6 text-primary group-hover:text-black transition-colors leading-[1.1]">{articles[0].title}</h2>
                 <p className="text-gray-600 text-lg mb-8 leading-relaxed line-clamp-4 font-medium">{articles[0].meta_description || getExcerpt(articles[0].content)}</p>
                 <div className="flex items-center justify-between text-sm font-bold mt-auto pt-6 border-t border-gray-100">
-                  <span className="flex items-center gap-2 text-gray-400"><Calendar size={18}/> {new Date(articles[0].created_at).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
+                  <span className="flex items-center gap-2 text-gray-400"><Calendar size={18} /> {new Date(articles[0].created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
                   <span className="text-primary group-hover:text-accent font-black flex items-center group-hover:translate-x-2 transition-transform uppercase tracking-wider">Read Full <ChevronRight size={20} className="ml-1" /></span>
                 </div>
               </div>
@@ -93,10 +93,10 @@ export default async function Blog() {
             {articles.length > 1 && (
               <>
                 <div className="flex items-center gap-4 mb-10">
-                   <h2 className="text-3xl lg:text-4xl font-black text-primary">Latest Articles</h2>
-                   <div className="h-0.5 flex-1 bg-gray-200 mt-2"></div>
+                  <h2 className="text-3xl lg:text-4xl font-black text-primary">Latest Articles</h2>
+                  <div className="h-0.5 flex-1 bg-gray-200 mt-2"></div>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {articles.slice(1).map((article) => (
                     <Link key={article.id} href={getBlogUrl(article.slug)} className="bg-surface border border-border rounded-[24px] shadow-soft flex flex-col group cursor-pointer hover:shadow-floating hover:-translate-y-2 transition-all duration-500 overflow-hidden block">
@@ -104,20 +104,20 @@ export default async function Blog() {
                         {article.image ? (
                           <Image src={article.image} alt={article.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition-transform duration-1000 group-hover:scale-105" />
                         ) : (
-                           <div className="w-full h-full bg-black flex items-center justify-center text-white/10 text-3xl font-black">DB</div>
+                          <div className="w-full h-full bg-black flex items-center justify-center text-white/10 text-3xl font-black">DB</div>
                         )}
                         <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-extrabold text-white shadow-sm tracking-widest uppercase border border-white/10">
                           {article.category || 'Guides'}
                         </div>
                       </div>
-                      
+
                       <div className="p-6 lg:p-8 flex flex-col flex-1 bg-white relative">
                         <h3 className="text-2xl font-black mb-3 line-clamp-2 text-primary group-hover:text-black transition-colors leading-[1.2]">{article.title}</h3>
                         <p className="text-sm font-medium text-gray-500 mb-8 line-clamp-3 leading-relaxed">{article.meta_description || getExcerpt(article.content)}</p>
-                        
+
                         <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between text-sm">
-                          <span className="font-bold text-gray-400">{new Date(article.created_at).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}</span>
-                          <span className="text-primary group-hover:text-accent font-black flex items-center gap-1 group-hover:translate-x-1 transition-transform uppercase tracking-widest text-xs">Read <ChevronRight size={16}/></span>
+                          <span className="font-bold text-gray-400">{new Date(article.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                          <span className="text-primary group-hover:text-accent font-black flex items-center gap-1 group-hover:translate-x-1 transition-transform uppercase tracking-widest text-xs">Read <ChevronRight size={16} /></span>
                         </div>
                       </div>
                     </Link>

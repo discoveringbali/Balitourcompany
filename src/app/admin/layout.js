@@ -3,11 +3,13 @@
 import React, { useState } from "react";
 import { 
   Calendar, MapPin, Settings, LogOut, 
-  Briefcase, Users, Newspaper, Home, Menu, X, Bell, Search, ChevronDown, Activity, Smartphone
+  Briefcase, Users, Newspaper, Home, Menu, X, Bell, Search, ChevronDown, Activity, Smartphone, Tag
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import HeroSettingsModal from "@/components/admin/HeroSettingsModal";
+import DiscountSettingsModal from "@/components/admin/DiscountSettingsModal";
 
 function AdminLoginScreen({ onLogin }) {
   const [email, setEmail] = useState("");
@@ -81,6 +83,8 @@ export default function AdminLayout({ children }) {
   const [isChecking, setIsChecking] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isHeroModalOpen, setIsHeroModalOpen] = useState(false);
+  const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
   const [customAvatar, setCustomAvatar] = useState(null);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
@@ -212,6 +216,30 @@ export default function AdminLayout({ children }) {
               );
             })}
           </nav>
+
+          <p className="px-6 text-[10px] font-extrabold text-gray-500 uppercase tracking-widest mt-6 mb-3">Quick Actions</p>
+          <div className="flex flex-col gap-1 px-4">
+            <button 
+              onClick={() => {
+                setIsHeroModalOpen(true);
+                setIsSidebarOpen(false);
+              }}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9] transition-all text-left w-full"
+            >
+              <Home size={18} strokeWidth={2} className="text-gray-400" />
+              Homepage Hero
+            </button>
+            <button 
+              onClick={() => {
+                setIsDiscountModalOpen(true);
+                setIsSidebarOpen(false);
+              }}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9] transition-all text-left w-full"
+            >
+              <Tag size={18} strokeWidth={2} className="text-gray-400" />
+              Discount Codes
+            </button>
+          </div>
         </div>
 
         {/* System Settings */}
@@ -411,6 +439,19 @@ export default function AdminLayout({ children }) {
              </button>
           </div>
         </div>
+      )}
+
+      {/* Homepage Hero Modal */}
+      {isHeroModalOpen && (
+        <HeroSettingsModal onClose={() => setIsHeroModalOpen(false)} />
+      )}
+
+      {/* Discount Codes Management Modal */}
+      {isDiscountModalOpen && (
+        <DiscountSettingsModal 
+          isOpen={isDiscountModalOpen} 
+          onClose={() => setIsDiscountModalOpen(false)} 
+        />
       )}
 
     </div>

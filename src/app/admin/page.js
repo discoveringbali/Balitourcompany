@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Users, DollarSign, Calendar, MapPin, TrendingUp, ChevronRight, Activity, Download } from "lucide-react";
-import { TourIcon, SpaIcon, ScooterIcon, TransportIcon } from "../../components/icons/CategoryIcons";
+import { Users, DollarSign, Calendar, MapPin, TrendingUp, ChevronRight, Activity } from "lucide-react";
 import HeroSettingsModal from "../../components/admin/HeroSettingsModal";
 import DiscountSettingsModal from "../../components/admin/DiscountSettingsModal";
 import { supabase } from "@/lib/supabase";
@@ -92,42 +91,46 @@ export default function AdminDashboard() {
   const currentStats = getStats(activeCategory);
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8">
+    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-6 sm:space-y-8">
       
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-[#1c1c1c] tracking-tight">Dashboard Overview</h1>
-          <p className="text-sm text-gray-500 mt-1 font-medium">Track your product portfolio performance and bookings.</p>
+          <h1 className="text-2xl sm:text-3xl font-black text-[#1c1c1c] tracking-tight">Dashboard Overview</h1>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1 font-medium">Track your product portfolio performance and bookings.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button onClick={() => setIsHeroModalOpen(true)} className="flex items-center gap-2 bg-[#1c1c1c] text-[#dcdcdc] px-5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-black transition-colors shadow-sm active:scale-95">
-             Edit Homepage Hero
+        <div className="hidden sm:flex items-center gap-3">
+          <button 
+            onClick={() => setIsHeroModalOpen(true)} 
+            className="flex items-center justify-center px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-[#1c1c1c] text-white hover:bg-black transition-all shadow-sm active:scale-95"
+          >
+            Homepage Hero
           </button>
-          <button onClick={() => setIsDiscountModalOpen(true)} className="hidden sm:flex items-center gap-2 bg-white border border-[#eaeaea] text-[#1c1c1c] px-5 py-2.5 rounded-xl text-sm font-extrabold hover:bg-gray-50 transition-colors shadow-sm active:scale-95">
-             Manage Discounts
+          <button 
+            onClick={() => setIsDiscountModalOpen(true)} 
+            className="flex items-center justify-center px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold bg-white border border-[#eaeaea] text-[#1c1c1c] hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm active:scale-95"
+          >
+            Discount Codes
           </button>
         </div>
       </div>
 
-      {/* Styled Category Tabs */}
-      <div className="flex gap-3 overflow-x-auto no-scrollbar pb-2 pt-1 snap-x">
+      {/* Clean Category Tabs */}
+      <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-2 pt-1 snap-x">
           <button 
-          onClick={() => setActiveCategory("Tour")}
-          className={`snap-center shrink-0 flex items-center justify-center gap-3 px-6 h-14 rounded-2xl font-extrabold shadow-sm active:scale-95 transition-all ${activeCategory === "Tour" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
-            <TourIcon size={20} strokeWidth={2.5} className={activeCategory === "Tour" ? "text-[#dcdcdc]" : "text-gray-400"} />
-            <span className="text-[13px] tracking-wide">Tour Dashboard</span>
+            onClick={() => setActiveCategory("Tour")}
+            className={`snap-center shrink-0 px-6 h-12 rounded-xl font-extrabold shadow-sm active:scale-95 transition-all text-[13px] tracking-wide ${activeCategory === "Tour" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
+            Tour Dashboard
           </button>
           <button 
-          onClick={() => setActiveCategory("Activities")}
-          className={`snap-center shrink-0 flex items-center justify-center gap-3 px-6 h-14 rounded-2xl font-extrabold shadow-sm active:scale-95 transition-all ${activeCategory === "Activities" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
-            <span className="text-[13px] tracking-wide">Activities</span>
+            onClick={() => setActiveCategory("Activities")}
+            className={`snap-center shrink-0 px-6 h-12 rounded-xl font-extrabold shadow-sm active:scale-95 transition-all text-[13px] tracking-wide ${activeCategory === "Activities" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
+            Activities
           </button>
           <button 
-          onClick={() => setActiveCategory("Transport")}
-          className={`snap-center shrink-0 flex items-center justify-center gap-3 px-6 h-14 rounded-2xl font-extrabold shadow-sm active:scale-95 transition-all ${activeCategory === "Transport" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
-            <TransportIcon size={20} strokeWidth={2.5} className={activeCategory === "Transport" ? "text-[#dcdcdc]" : "text-gray-400"} />
-            <span className="text-[13px] tracking-wide">Transports</span>
+            onClick={() => setActiveCategory("Transport")}
+            className={`snap-center shrink-0 px-6 h-12 rounded-xl font-extrabold shadow-sm active:scale-95 transition-all text-[13px] tracking-wide ${activeCategory === "Transport" ? "bg-[#1c1c1c] text-white" : "bg-white text-gray-500 hover:bg-gray-50 border border-[#eaeaea]"}`}>
+            Transports
           </button>
       </div>
       

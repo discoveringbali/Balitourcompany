@@ -26,6 +26,7 @@ export const getDiscountCodes = () => {
 export const saveDiscountCodes = (codes) => {
   if (typeof window !== 'undefined') {
     localStorage.setItem('balance_island_discounts', JSON.stringify(codes));
+    window.dispatchEvent(new Event('balance_island_discounts_changed'));
   }
 };
 
