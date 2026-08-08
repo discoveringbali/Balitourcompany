@@ -168,7 +168,7 @@ export default function HeroSettingsModal({ onClose }) {
                 <label className="text-xs font-bold text-gray-500 mb-1.5 block">Recommendation Text</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. Highly Recommended by Zondela" 
+                  placeholder="e.g. Highly Recommended by Balance Island" 
                   value={settings.campaignRecommendation} 
                   onChange={(e) => setSettings({...settings, campaignRecommendation: e.target.value})} 
                   className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
@@ -181,7 +181,7 @@ export default function HeroSettingsModal({ onClose }) {
                    <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
                    <input 
                      type="text" 
-                     placeholder="e.g. https://instagram.com/zondela" 
+                     placeholder="e.g. https://instagram.com/balanceisland" 
                      value={settings.campaignIgLink} 
                      onChange={(e) => setSettings({...settings, campaignIgLink: e.target.value})} 
                      className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
