@@ -1,39 +1,35 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { X, Save, Camera, Trash2, Video, Star } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { X, Save, Upload, Trash2, Video, Globe, Check } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { getCampaignSettings, saveCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
 
 export default function HeroSettingsModal({ onClose }) {
-  const [settings, setSettings] = useState({
+  const [heroSettings, setHeroSettings] = useState({
     campaignVideo: "",
-    campaignYoutubeLink: "",
-    campaignRecommendation: "",
-    campaignIgLink: "",
-    campaignRecommendation2: "",
-    campaignIgLink2: ""
+    campaignYoutubeLink: ""
   });
-  const [isUploading, setIsUploading] = useState(false);
-  const [originalVideo, setOriginalVideo] = useState("");
+  const [campaigns, setCampaigns] = useState(DEFAULT_CAMPAIGNS);
+  const [isHeroUploading, setIsHeroUploading] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [uploadingFor, setUploadingFor] = useState(null);
+  const [savedToast, setSavedToast] = useState(false);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     fetchSettings();
+    setCampaigns(getCampaignSettings());
   }, []);
 
   const fetchSettings = async () => {
     try {
       const { data, error } = await supabase.from('homepage_settings').select('*').eq('id', 1).single();
-      if (error && error.code !== 'PGRST116') throw error; // PGRST116 is 'not found'
-      
+      if (error && error.code !== 'PGRST116') throw error;
       if (data) {
-        setOriginalVideo(data.campaign_video || "");
-        setSettings({
+        setHeroSettings({
           campaignVideo: data.campaign_video || "",
-          campaignYoutubeLink: data.campaign_youtube_link || "",
-          campaignRecommendation: data.campaign_recommendation || "",
-          campaignIgLink: data.campaign_ig_link || "",
-          campaignRecommendation2: data.campaign_recommendation_2 || "",
-          campaignIgLink2: data.campaign_ig_link_2 || ""
+          campaignYoutubeLink: data.campaign_youtube_link || ""
         });
       }
     } catch (err) {
@@ -41,54 +37,84 @@ export default function HeroSettingsModal({ onClose }) {
     }
   };
 
-  const handleVideoUpload = async (e) => {
+  const handleHeroVideoUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
-    setIsUploading(true);
+    setIsHeroUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `hero_video_${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
-      const filePath = `campaign_videos/${fileName}`;
+      const fileName = `hero_${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from('campaigns')
+        .upload(fileName, file, { cacheControl: '3600', upsert: true });
 
-      const { error } = await supabase.storage
-        .from('discovering_bali_images')
-        .upload(filePath, file);
+      if (uploadError) throw uploadError;
 
-      if (error) throw error;
-      const { data: { publicUrl } } = supabase.storage.from('discovering_bali_images').getPublicUrl(filePath);
+      const { data: { publicUrl } } = supabase.storage
+        .from('campaigns')
+        .getPublicUrl(fileName);
 
-      setSettings({ ...settings, campaignVideo: publicUrl });
+      setHeroSettings(prev => ({ ...prev, campaignVideo: publicUrl }));
     } catch (err) {
-      alert("Error uploading video: " + err.message);
+      alert("Video upload failed: " + err.message);
     } finally {
-      setIsUploading(false);
+      setIsHeroUploading(false);
+    }
+  };
+
+  const handleCardImageUpload = async (e, type) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setIsUploadingImage(true);
+    setUploadingFor(type);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `partner_${type}_${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from('campaigns')
+        .upload(fileName, file, { cacheControl: '3600', upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from('campaigns')
+        .getPublicUrl(fileName);
+
+      setCampaigns(prev => ({
+        ...prev,
+        [type]: {
+          ...(prev[type] || DEFAULT_CAMPAIGNS[type]),
+          image: publicUrl
+        }
+      }));
+    } catch (err) {
+      alert("Image upload failed: " + err.message);
+    } finally {
+      setIsUploadingImage(false);
+      setUploadingFor(null);
     }
   };
 
   const handleSave = async () => {
     try {
-      const { error } = await supabase.from('homepage_settings').upsert({
+      const payload = {
         id: 1,
-        campaign_video: settings.campaignVideo,
-        campaign_youtube_link: settings.campaignYoutubeLink,
-        campaign_recommendation: settings.campaignRecommendation,
-        campaign_ig_link: settings.campaignIgLink,
-        campaign_recommendation_2: settings.campaignRecommendation2,
-        campaign_ig_link_2: settings.campaignIgLink2,
+        campaign_video: heroSettings.campaignVideo,
+        campaign_youtube_link: heroSettings.campaignYoutubeLink,
         updated_at: new Date().toISOString()
-      });
-
+      };
+      const { error } = await supabase.from('homepage_settings').upsert(payload, { onConflict: 'id' });
       if (error) throw error;
 
-      if (originalVideo && originalVideo !== settings.campaignVideo) {
-         const { deleteSupabaseFiles } = await import('@/lib/supabase');
-         await deleteSupabaseFiles([originalVideo]);
-      }
+      // Save campaign card settings
+      saveCampaignSettings(campaigns);
 
-      // Dispatch custom event to sync with other components
+      setSavedToast(true);
       window.dispatchEvent(new Event("homepage_hero_settings_changed"));
-      onClose();
+      setTimeout(() => {
+        setSavedToast(false);
+        onClose();
+      }, 800);
     } catch (err) {
       alert("Failed to save settings: " + err.message);
     }
@@ -96,132 +122,268 @@ export default function HeroSettingsModal({ onClose }) {
 
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center font-sans px-4">
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity" onClick={onClose} />
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-xs transition-opacity" onClick={onClose} />
 
-      <div className="relative w-full max-w-lg bg-gray-50 rounded-3xl shadow-2xl flex flex-col overflow-hidden transform transition-transform animate-scaleIn z-10 max-h-[90dvh]">
+      <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden z-10 max-h-[90dvh] border border-[#eaeaea]">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-gray-100 shrink-0">
-           <div>
-             <h2 className="text-xl font-extrabold text-primary tracking-tight">Homepage Hero Settings</h2>
-             <p className="text-xs font-semibold text-gray-400 mt-0.5 tracking-wide">Configure the main video & endorsement</p>
-           </div>
-           <button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 transition-colors">
-             <X size={16} strokeWidth={3} />
-           </button>
+        <div className="flex items-center justify-between px-6 py-5 bg-white border-b border-[#eaeaea] shrink-0">
+          <div>
+            <h2 className="text-xl font-black text-[#1c1c1c] tracking-tight">Homepage Hero & Campaign Cards</h2>
+            <p className="text-xs font-medium text-gray-500 mt-0.5">
+              Manage hero media and partner campaign cards (Scooter & Home Service Spa).
+            </p>
+          </div>
+          <button onClick={onClose} className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:text-black hover:bg-gray-200 transition-colors">
+            <X size={16} strokeWidth={2.5} />
+          </button>
         </div>
 
         {/* Body */}
         <div className="p-6 space-y-6 overflow-y-auto">
-          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
-             <h3 className="font-extrabold text-primary text-sm uppercase tracking-widest flex items-center gap-2 mb-4">
-                <Camera size={18} className="text-accent" /> Media Background
-             </h3>
-             
-             <div>
-                <label className="text-xs font-bold text-gray-500 mb-1.5 block">YouTube Link (Takes Priority, Includes Audio)</label>
-                <div className="relative">
-                   <Video className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
-                   <input 
-                     type="text" 
-                     placeholder="e.g. https://www.youtube.com/watch?v=..." 
-                     value={settings.campaignYoutubeLink} 
-                     onChange={(e) => setSettings({...settings, campaignYoutubeLink: e.target.value})} 
-                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
-                   />
-                </div>
-             </div>
+          
+          {/* Section 1: Hero Media Background */}
+          <div className="bg-[#fafafa] p-5 rounded-2xl border border-[#eaeaea] space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-black text-xs uppercase tracking-wider text-gray-700 flex items-center gap-2">
+                <Video size={16} className="text-black" /> Hero Background Media
+              </h3>
+            </div>
+            
+            <div>
+              <label className="text-xs font-black uppercase tracking-wider text-gray-500 mb-1.5 block">
+                YouTube Showcase URL (Takes Priority)
+              </label>
+              <input 
+                type="text" 
+                placeholder="https://www.youtube.com/watch?v=..." 
+                value={heroSettings.campaignYoutubeLink} 
+                onChange={(e) => setHeroSettings({ ...heroSettings, campaignYoutubeLink: e.target.value })} 
+                className="w-full bg-white text-sm font-bold text-[#1c1c1c] rounded-xl px-4 py-2.5 border border-[#eaeaea] focus:border-black outline-none transition-colors" 
+              />
+            </div>
 
-             <div className="flex items-center gap-4">
-                <div className="flex-1 h-px bg-gray-200"></div>
-                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">OR</span>
-                <div className="flex-1 h-px bg-gray-200"></div>
-             </div>
+            <div className="flex items-center gap-4">
+              <div className="flex-1 h-px bg-gray-200"></div>
+              <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">OR DIRECT MP4</span>
+              <div className="flex-1 h-px bg-gray-200"></div>
+            </div>
 
-             <div>
-                <label className="text-xs font-bold text-gray-500 mb-1.5 block">Direct Video Upload (Muted Loop)</label>
-                {settings.campaignVideo ? (
-                   <div className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200">
-                      <span className="text-xs text-primary font-bold truncate pr-4 text-black flex items-center gap-2">
-                         <div className="w-2 h-2 rounded-full bg-gray-800 text-white animate-pulse"></div> Video Uploaded
-                      </span>
-                      <button onClick={() => setSettings({...settings, campaignVideo: ""})} className="text-black hover:bg-gray-50 p-1.5 rounded-md transition-colors"><Trash2 size={16}/></button>
-                   </div>
-                ) : (
-                   <div className="relative overflow-hidden">
-                      <button type="button" disabled={isUploading} className="w-full bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-3 rounded-xl text-sm font-bold transition-colors border border-gray-200 text-left flex items-center justify-between">
-                         {isUploading ? 'Uploading...' : 'Upload MP4 Video'}
-                         <Camera size={16} />
-                      </button>
-                      <input type="file" accept="video/*" onChange={handleVideoUpload} disabled={isUploading} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
-                   </div>
-                )}
-             </div>
-          </div>
-
-          <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-sm space-y-4">
-             <h3 className="font-extrabold text-primary text-sm uppercase tracking-widest flex items-center gap-2 mb-4">
-                <Star size={18} className="text-black fill-[#c9c9c9]" /> Endorsement Badge
-             </h3>
-             
-             <div>
-                <label className="text-xs font-bold text-gray-500 mb-1.5 block">Recommendation Text</label>
+            <div>
+              <label className="text-xs font-black uppercase tracking-wider text-gray-500 mb-1.5 block">
+                Direct Video URL or Upload
+              </label>
+              <div className="flex gap-2">
                 <input 
                   type="text" 
-                  placeholder="e.g. Highly Recommended by Balance Island" 
-                  value={settings.campaignRecommendation} 
-                  onChange={(e) => setSettings({...settings, campaignRecommendation: e.target.value})} 
-                  className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
+                  placeholder="https://.../video.mp4" 
+                  value={heroSettings.campaignVideo} 
+                  onChange={(e) => setHeroSettings({ ...heroSettings, campaignVideo: e.target.value })} 
+                  className="flex-1 bg-white text-sm font-bold text-[#1c1c1c] rounded-xl px-4 py-2.5 border border-[#eaeaea] focus:border-black outline-none transition-colors" 
                 />
-             </div>
+                <label className="px-4 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0">
+                  <Upload size={14} /> {isHeroUploading ? "Uploading..." : "Upload MP4"}
+                  <input type="file" accept="video/*" onChange={handleHeroVideoUpload} className="hidden" disabled={isHeroUploading} />
+                </label>
+              </div>
+            </div>
+          </div>
 
-             <div>
-                <label className="text-xs font-bold text-gray-500 mb-1.5 block">Instagram / Profile Link</label>
-                <div className="relative">
-                   <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
-                   <input 
-                     type="text" 
-                     placeholder="e.g. https://instagram.com/balanceisland" 
-                     value={settings.campaignIgLink} 
-                     onChange={(e) => setSettings({...settings, campaignIgLink: e.target.value})} 
-                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
-                   />
-                 </div>
+          {/* Section 2: Scooter Campaign Card */}
+          <div className="bg-[#fafafa] p-5 rounded-2xl border border-[#eaeaea] space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-black text-sm text-[#1c1c1c] flex items-center gap-2">
+                  <Globe size={16} className="text-black" /> Scooter Campaign Card
+                </h3>
+                <p className="text-[11px] text-gray-500 font-medium mt-0.5">
+                  Appears as a campaign slide on the homepage hero. Opens the partner link in a new tab.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCampaigns(prev => ({
+                  ...prev,
+                  scooter: { ...prev.scooter, active: !prev.scooter?.active }
+                }))}
+                className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${campaigns.scooter?.active !== false ? 'bg-black' : 'bg-gray-300'}`}
+              >
+                <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${campaigns.scooter?.active !== false ? 'translate-x-5' : 'translate-x-0'}`} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Card Title</label>
+                <input 
+                  type="text" 
+                  value={campaigns.scooter?.title || ""} 
+                  onChange={(e) => setCampaigns(prev => ({
+                    ...prev,
+                    scooter: { ...prev.scooter, title: e.target.value }
+                  }))}
+                  placeholder="Scooter Rental Bali"
+                  className="w-full bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                />
               </div>
 
-             <div>
-                <label className="text-xs font-bold text-gray-500 mb-1.5 block mt-4">Second Recommendation Text (Optional)</label>
+              <div>
+                <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Badge / Label</label>
                 <input 
                   type="text" 
-                  placeholder="e.g. Featured on Travel Bali" 
-                  value={settings.campaignRecommendation2 || ""} 
-                  onChange={(e) => setSettings({...settings, campaignRecommendation2: e.target.value})} 
-                  className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl px-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
+                  value={campaigns.scooter?.badge || ""} 
+                  onChange={(e) => setCampaigns(prev => ({
+                    ...prev,
+                    scooter: { ...prev.scooter, badge: e.target.value }
+                  }))}
+                  placeholder="Scooter Rental"
+                  className="w-full bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
                 />
-             </div>
+              </div>
+            </div>
 
-             <div>
-                <label className="text-xs font-bold text-gray-500 mb-1.5 block">Second Instagram Link (Optional)</label>
-                <div className="relative">
-                   <Star className="absolute left-3 top-1/2 -translate-y-1/2 text-black" size={16} />
-                   <input 
-                     type="text" 
-                     placeholder="e.g. https://instagram.com/travelbali" 
-                     value={settings.campaignIgLink2 || ""} 
-                     onChange={(e) => setSettings({...settings, campaignIgLink2: e.target.value})} 
-                     className="w-full bg-gray-50 text-sm font-bold text-primary rounded-xl pl-9 pr-4 py-2.5 border border-gray-200 focus:border-black focus:ring-1 focus:ring-[#c9c9c9] outline-none transition-colors" 
-                   />
-                </div>
-             </div>
+            <div>
+              <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Website Link (Opens in New Tab)</label>
+              <input 
+                type="text" 
+                value={campaigns.scooter?.externalUrl || ""} 
+                onChange={(e) => setCampaigns(prev => ({
+                  ...prev,
+                  scooter: { ...prev.scooter, externalUrl: e.target.value }
+                }))}
+                placeholder="https://thebikebali.com"
+                className="w-full bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Card Image</label>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={campaigns.scooter?.image || ""} 
+                  onChange={(e) => setCampaigns(prev => ({
+                    ...prev,
+                    scooter: { ...prev.scooter, image: e.target.value }
+                  }))}
+                  placeholder="https://..."
+                  className="flex-1 bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                />
+                <label className="px-3.5 py-2 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1 shrink-0">
+                  <Upload size={13} /> {isUploadingImage && uploadingFor === 'scooter' ? "Uploading..." : "Upload Image"}
+                  <input type="file" accept="image/*" onChange={(e) => handleCardImageUpload(e, 'scooter')} className="hidden" disabled={isUploadingImage} />
+                </label>
+              </div>
+            </div>
           </div>
+
+          {/* Section 3: Spa (Home Service) Campaign Card */}
+          <div className="bg-[#fafafa] p-5 rounded-2xl border border-[#eaeaea] space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-black text-sm text-[#1c1c1c] flex items-center gap-2">
+                  <Globe size={16} className="text-black" /> Spa Campaign Card (Home Service Only)
+                </h3>
+                <p className="text-[11px] text-gray-500 font-medium mt-0.5">
+                  Appears as a campaign slide on the homepage hero. Opens the partner link in a new tab.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCampaigns(prev => ({
+                  ...prev,
+                  spa: { ...prev.spa, active: !prev.spa?.active }
+                }))}
+                className={`w-11 h-6 flex items-center rounded-full p-1 transition-colors ${campaigns.spa?.active !== false ? 'bg-black' : 'bg-gray-300'}`}
+              >
+                <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${campaigns.spa?.active !== false ? 'translate-x-5' : 'translate-x-0'}`} />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Card Title</label>
+                <input 
+                  type="text" 
+                  value={campaigns.spa?.title || ""} 
+                  onChange={(e) => setCampaigns(prev => ({
+                    ...prev,
+                    spa: { ...prev.spa, title: e.target.value }
+                  }))}
+                  placeholder="Home Service Spa Bali"
+                  className="w-full bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Badge / Label</label>
+                <input 
+                  type="text" 
+                  value={campaigns.spa?.badge || ""} 
+                  onChange={(e) => setCampaigns(prev => ({
+                    ...prev,
+                    spa: { ...prev.spa, badge: e.target.value }
+                  }))}
+                  placeholder="Home Service Spa"
+                  className="w-full bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Website Link (Opens in New Tab)</label>
+              <input 
+                type="text" 
+                value={campaigns.spa?.externalUrl || ""} 
+                onChange={(e) => setCampaigns(prev => ({
+                  ...prev,
+                  spa: { ...prev.spa, externalUrl: e.target.value }
+                }))}
+                placeholder="https://ubudtranquilityspa.com"
+                className="w-full bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Card Image</label>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={campaigns.spa?.image || ""} 
+                  onChange={(e) => setCampaigns(prev => ({
+                    ...prev,
+                    spa: { ...prev.spa, image: e.target.value }
+                  }))}
+                  placeholder="https://..."
+                  className="flex-1 bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                />
+                <label className="px-3.5 py-2 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1 shrink-0">
+                  <Upload size={13} /> {isUploadingImage && uploadingFor === 'spa' ? "Uploading..." : "Upload Image"}
+                  <input type="file" accept="image/*" onChange={(e) => handleCardImageUpload(e, 'spa')} className="hidden" disabled={isUploadingImage} />
+                </label>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* Footer */}
-        <div className="p-5 bg-white border-t border-gray-100 shrink-0 flex items-center justify-end gap-3">
-           <button onClick={onClose} className="px-6 py-3 rounded-xl font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">Cancel</button>
-           <button onClick={handleSave} className="px-6 py-3 rounded-xl font-bold text-white bg-primary hover:bg-primary/95 transition-colors flex items-center gap-2 shadow-md">
-             <Save size={18} /> Save Settings
-           </button>
+        <div className="p-5 bg-white border-t border-[#eaeaea] shrink-0 flex items-center justify-between">
+          <div>
+            {savedToast && (
+              <span className="text-xs font-extrabold text-black flex items-center gap-1">
+                <Check size={14} /> Settings Saved Successfully!
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-3">
+            <button onClick={onClose} className="px-5 py-2.5 rounded-xl font-extrabold text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">
+              Cancel
+            </button>
+            <button onClick={handleSave} className="px-6 py-2.5 rounded-xl font-extrabold text-xs text-white bg-black hover:bg-neutral-800 transition-all flex items-center gap-2 shadow-sm">
+              <Save size={15} /> Save All Settings
+            </button>
+          </div>
         </div>
       </div>
     </div>

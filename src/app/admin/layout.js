@@ -239,14 +239,6 @@ export default function AdminLayout({ children }) {
               <Tag size={18} strokeWidth={2} className="text-gray-400" />
               Discount Codes
             </button>
-            <Link
-              href="/admin"
-              onClick={() => setIsSidebarOpen(false)}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9] transition-all text-left w-full"
-            >
-              <Activity size={18} strokeWidth={2} className="text-gray-400" />
-              Campaign Links (Scooter / Spa)
-            </Link>
           </div>
         </div>
 

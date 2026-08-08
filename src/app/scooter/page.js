@@ -1,29 +1,28 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import CampaignServiceShowcase from "@/components/campaign/CampaignServiceShowcase";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { getCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
 
 export default function ScooterPage() {
-  const [campaign, setCampaign] = useState(DEFAULT_CAMPAIGNS.scooter);
+  const router = useRouter();
 
   useEffect(() => {
     const data = getCampaignSettings();
-    if (data?.scooter) {
-      setCampaign(data.scooter);
+    const target = data?.scooter?.externalUrl || DEFAULT_CAMPAIGNS.scooter.externalUrl;
+    if (target) {
+      window.location.href = target;
+    } else {
+      router.replace("/");
     }
-
-    const handleUpdate = (e) => {
-      if (e.detail?.scooter) setCampaign(e.detail.scooter);
-    };
-
-    window.addEventListener("balance_island_campaigns_changed", handleUpdate);
-    return () => window.removeEventListener("balance_island_campaigns_changed", handleUpdate);
-  }, []);
+  }, [router]);
 
   return (
-    <div className="w-full pt-32 md:pt-36 pb-20 bg-[#fafafa] min-h-screen">
-      <CampaignServiceShowcase campaign={campaign} serviceName="Scooter" />
+    <div className="w-full min-h-screen flex items-center justify-center bg-white font-sans">
+      <div className="text-center space-y-2">
+        <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto" />
+        <p className="text-xs font-bold text-gray-500">Redirecting to Scooter Partner...</p>
+      </div>
     </div>
   );
 }

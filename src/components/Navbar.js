@@ -73,8 +73,6 @@ export default function Navbar() {
   const services = [
     { id: "Tour", icon: Map },
     { id: "Activities", icon: Sparkles },
-    { id: "Scooter", icon: ScooterIcon },
-    { id: "Spa", icon: SpaIcon },
     { id: "eSIM", icon: TowelsIcon },
   ];
 
@@ -177,10 +175,6 @@ export default function Navbar() {
                         setFilterOpen(false); 
                         if (s.id === "eSIM") {
                           router.push("/esim");
-                        } else if (s.id === "Scooter") {
-                          router.push("/scooter");
-                        } else if (s.id === "Spa") {
-                          router.push("/spa");
                         } else {
                           setActiveService(s.id); 
                           if (pathname !== "/") {
