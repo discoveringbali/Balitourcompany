@@ -209,7 +209,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       messageDetails += ` (Code: ${appliedDiscount.code})`;
     }
 
-    const waUrl = `https://wa.me/6282247819449?text=${encodeURIComponent(messageDetails)}`;
+    const waUrl = `https://wa.me/6285174119423?text=${encodeURIComponent(messageDetails)}`;
     
     try {
       const { error } = await supabase.from('bookings').insert({

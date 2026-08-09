@@ -16,7 +16,7 @@ export default function PartnersManagement() {
   const [formData, setFormData] = useState({ name: "", type: "Scooter Rental", contact: "", email: "" });
 
   const initialPartners = [
-    { id: "PRT-001", name: "THE BIKE RENTAL BALI", type: "Scooter Rental", email: "contact@thebikebali.com", contact: "+6282247819449", joined: "Jan 10, 2026", status: "Verified", listings: 12 },
+    { id: "PRT-001", name: "THE BIKE RENTAL BALI", type: "Scooter Rental", email: "contact@thebikebali.com", contact: "+6285174119423", joined: "Jan 10, 2026", status: "Verified", listings: 12 },
     { id: "PRT-002", name: "B&G UBUD RENT MOTOR", type: "Scooter Rental", email: "info@bgubud.com", contact: "+6281246889611", joined: "Feb 01, 2026", status: "Verified", listings: 8 },
     { id: "PRT-003", name: "Ubud Tranquility Spa", type: "Spa Center", email: "booking@tranquility.com", contact: "+6281995373455", joined: "Feb 15, 2026", status: "Verified", listings: 4 },
     { id: "PRT-004", name: "Bali Fast Drivers", type: "Transport", email: "admin@balifast.com", contact: "+628111222334", joined: "Mar 05, 2026", status: "Pending Audit", listings: 0 },
