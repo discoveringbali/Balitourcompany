@@ -210,7 +210,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
     const finalItem = {
       ...item,
       ...formData,
-      status: forcedStatus || formData.status,
+      status: typeof forcedStatus === 'string' ? forcedStatus : formData.status,
       service: formData.serviceType || activeTab,
       ...details,
       ...pins,

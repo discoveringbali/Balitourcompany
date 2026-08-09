@@ -178,6 +178,19 @@ export default function AdminListings() {
       reviews, status, image, company, ...nestedData 
     } = updatedItem;
 
+    const getCircularReplacer = () => {
+      const seen = new WeakSet();
+      return (key, value) => {
+        if (typeof value === "object" && value !== null) {
+          if (seen.has(value)) return undefined;
+          seen.add(value);
+        }
+        return value;
+      };
+    };
+
+    const safeNestedData = JSON.parse(JSON.stringify(nestedData, getCircularReplacer()));
+
     const dbPayload = {
        id: id,
        type: service === 'Activities' ? 'Tour' : service,
@@ -192,7 +205,7 @@ export default function AdminListings() {
        image: image,
        company_name: company || null,
        data: {
-         ...nestedData,
+         ...safeNestedData,
          originalService: service === 'Activities' ? 'Activities' : undefined
        }
     };
