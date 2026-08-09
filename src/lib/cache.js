@@ -11,7 +11,27 @@ export const getHomepageListings = unstable_cache(
       if (error || !data || data.length === 0) {
         return [];
       }
-      return data;
+      return data.map(d => ({
+        id: d.id,
+        slug: d.slug,
+        type: d.type,
+        title: d.title,
+        location: d.location,
+        price: d.base_price,
+        duration: d.duration,
+        category: d.category,
+        rating: d.rating,
+        reviews: d.reviews_count,
+        status: d.status,
+        image: d.thumbnail_image,
+        isCampaignPinned: d.is_hero_campaign,
+        campaignTitle: d.campaign_title,
+        campaignDescription: d.campaign_description,
+        campaignLabel: d.campaign_label,
+        tourTiers: d.pricing_tiers ? d.pricing_tiers.map(pt => ({ pax: pt.min_pax, price: pt.price })) : [],
+        itinerary: d.itineraries || [],
+        ...(d.metadata || {})
+      }));
     } catch {
       return [];
     }
@@ -27,7 +47,27 @@ export const getActiveListings = unstable_cache(
       if (error || !data || data.length === 0) {
         return [];
       }
-      return data;
+      return data.map(d => ({
+        id: d.id,
+        slug: d.slug,
+        type: d.type,
+        title: d.title,
+        location: d.location,
+        price: d.base_price,
+        duration: d.duration,
+        category: d.category,
+        rating: d.rating,
+        reviews: d.reviews_count,
+        status: d.status,
+        image: d.thumbnail_image,
+        isCampaignPinned: d.is_hero_campaign,
+        campaignTitle: d.campaign_title,
+        campaignDescription: d.campaign_description,
+        campaignLabel: d.campaign_label,
+        tourTiers: d.pricing_tiers ? d.pricing_tiers.map(pt => ({ pax: pt.min_pax, price: pt.price })) : [],
+        itinerary: d.itineraries || [],
+        ...(d.metadata || {})
+      }));
     } catch {
       return [];
     }
