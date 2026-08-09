@@ -201,7 +201,6 @@ export default function AdminListings() {
        reviews: parseInt(reviews) || 0,
        status: status,
        image: image,
-       company_name: company || null,
        data: {
          ...nestedData,
          originalService: service === 'Activities' ? 'Activities' : undefined
