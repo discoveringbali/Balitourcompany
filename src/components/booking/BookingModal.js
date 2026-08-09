@@ -12,6 +12,7 @@ import { useCurrency } from "@/lib/currency";
 
 
 export default function BookingModal({ isOpen, onClose, serviceData, initialPax = 1, initialDate = "", startStep = 1, onPackageChange, onPaxChange, onDateChange }) {
+  const formatIDR = (num) => `IDR ${Number(num).toLocaleString('id-ID')}`;
   const [mounted, setMounted] = useState(false);
   const { formatPrice } = useCurrency();
   const [step, setStep] = useState(1);
@@ -203,7 +204,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       }
     }
 
-    messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatPrice(total)}`;
+    messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatIDR(total)}`;
     if (appliedDiscount) {
       messageDetails += ` (Code: ${appliedDiscount.code})`;
     }
@@ -217,7 +218,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         contact_info: formData.phone,
         service_name: sTitle,
         booking_date: formData.date,
-        amount: formatPrice(total),
+        amount: formatIDR(total),
         status: 'Pending',
         category: serviceData?.type === "tour" ? "Tour" : serviceData?.type === "transport" ? "Transport" : "Activities",
         details: {
