@@ -3,15 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles } from "lucide-react";
+import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, CircleDollarSign } from "lucide-react";
 import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
-
-import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: session, status } = useSession();
   
   if (pathname?.startsWith('/admin')) {
     return null;
@@ -37,12 +34,31 @@ export default function Navbar() {
     { code: 'ID', name: 'Indonesia' }
   ];
 
+  const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
+  const [activeCurrency, setActiveCurrency] = useState("IDR");
+  const currencies = [
+    { code: 'IDR', symbol: 'Rp', name: 'Indonesian Rupiah' },
+    { code: 'USD', symbol: '$', name: 'US Dollar' },
+    { code: 'EUR', symbol: '€', name: 'Euro' },
+    { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
+    { code: 'GBP', symbol: '£', name: 'British Pound' }
+  ];
+
   useEffect(() => {
     const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
     if (match && match[1]) {
       setActiveLang(match[1].toUpperCase());
     }
+    const savedCurrency = localStorage.getItem('balance_island_currency');
+    if (savedCurrency) setActiveCurrency(savedCurrency);
   }, []);
+
+  const handleCurrencyChange = (currCode) => {
+    setActiveCurrency(currCode);
+    setCurrencyDropdownOpen(false);
+    localStorage.setItem('balance_island_currency', currCode);
+    window.dispatchEvent(new CustomEvent('currencyChanged', { detail: currCode }));
+  };
 
   const handleLanguageChange = (langCode) => {
     setActiveLang(langCode);
@@ -84,31 +100,26 @@ export default function Navbar() {
       
       {/* MOBILE LAYOUT (Inspired by the Reference Image) */}
       <div className="md:hidden px-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          {session ? (
-            <div className="w-11 h-11 bg-gray-200 rounded-full overflow-hidden border border-border cursor-pointer shadow-sm" onClick={() => router.push('/profile')}>
-              <img src={session.user.image || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"} referrerPolicy="no-referrer" alt="Avatar" className="w-full h-full object-cover" />
-            </div>
-          ) : (
-            <div className="w-11 h-11 bg-black text-white rounded-full flex justify-center items-center cursor-pointer hover:bg-neutral-800 transition-colors shadow-sm" onClick={() => signIn('google')}>
-               <User size={20} className="text-white" />
+        <div className="relative z-50">
+          <button 
+            onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
+            className="px-3.5 h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft transition-colors font-extrabold text-[13px]"
+          >
+            <CircleDollarSign size={16} className="text-white" /> {activeCurrency}
+          </button>
+          {currencyDropdownOpen && (
+            <div className="absolute top-12 left-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
+              {currencies.map((curr) => (
+                <button
+                  key={curr.code}
+                  onClick={() => handleCurrencyChange(curr.code)}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeCurrency === curr.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                >
+                  <span className="w-5 text-center">{curr.symbol}</span> {curr.name}
+                </button>
+              ))}
             </div>
           )}
-          <div className="flex flex-col">
-            {session ? (
-              <>
-                <span className="text-xs text-text-secondary font-medium">Hey, <span className="text-text-primary font-bold">{session.user.name?.split(' ')[0]} 👋</span></span>
-                <div className="flex items-center gap-1 text-[10px] text-text-secondary mt-0.5">
-                  <span className="text-[#939393] font-bold">Verified</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <span className="text-[13px] font-extrabold text-primary cursor-pointer hover:opacity-70 transition-opacity" onClick={() => signIn('google')}>Log In</span>
-                <span className="text-[10px] text-text-secondary mt-0.5 font-medium">Sign in to save bookings</span>
-              </>
-            )}
-          </div>
         </div>
         <div className="relative z-50">
           <button 
@@ -223,15 +234,27 @@ export default function Navbar() {
             )}
           </div>
           
-          {session ? (
-            <div className="w-9 h-9 bg-gray-200 rounded-full overflow-hidden border border-border cursor-pointer hover:border-black transition-colors shadow-soft" onClick={() => router.push('/profile')}>
-              <img src={session.user.image || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"} referrerPolicy="no-referrer" alt="Avatar" className="w-full h-full object-cover" />
-            </div>
-          ) : (
-            <button onClick={() => signIn('google')} className={`w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft ${isScrolled ? 'bg-dark-surface border-transparent text-white hover:scale-105 active:scale-95' : 'bg-black/20 backdrop-blur-md border-white/30 text-white hover:bg-white/20'}`}>
-              <User size={16} />
+          <div className="relative">
+            <button 
+              onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
+              className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+            >
+              <CircleDollarSign size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} /> {activeCurrency}
             </button>
-          )}
+            {currencyDropdownOpen && (
+              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200 z-50">
+                {currencies.map((curr) => (
+                  <button
+                    key={curr.code}
+                    onClick={() => handleCurrencyChange(curr.code)}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeCurrency === curr.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                  >
+                    <span className="w-5 text-center">{curr.symbol}</span> {curr.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       

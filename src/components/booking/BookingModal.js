@@ -7,6 +7,7 @@ import LocationAutocomplete from "./LocationAutocomplete";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "next-auth/react";
 import { validateDiscountCode, calculateDiscount } from "@/lib/discounts";
+import { saveBooking } from "@/lib/bookings";
 
 const formatIDR = (num) => `IDR ${Number(num).toLocaleString('id-ID')}`;
 
@@ -229,7 +230,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           image: serviceData?.image || null
         }
       });
-      if (error) console.error("Failed to save booking to Supabase:", error);
+      if (error) {
+        console.error("Failed to save booking to Supabase:", error);
+      } else {
+        saveBooking(bookingId);
+      }
     } catch (err) {
       console.error("Booking save error:", err);
     }

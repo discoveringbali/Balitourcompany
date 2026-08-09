@@ -12,12 +12,14 @@ export default function Esim() {
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
           
           <div className="flex-1 flex flex-col gap-6">
-            <div className="flex items-center gap-2 text-accent font-bold text-sm tracking-widest uppercase">
-              <Wifi size={16} /> Partner Integration
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center gap-2 text-accent font-bold text-sm tracking-widest uppercase">
+                <Wifi size={16} /> Partner Integration
+              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-text-primary tracking-tight">
+                Stay Connected <br /> the Instant You Land
+              </h1>
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-text-primary tracking-tight">
-              Stay Connected <br /> the Instant You Land
-            </h1>
             <p className="text-lg md:text-xl font-medium text-text-secondary">
               No more searching for physical SIM cards at the airport. Scan your QR code before departure and get high-speed 4G/5G data instantly upon arrival in Bali.
             </p>
