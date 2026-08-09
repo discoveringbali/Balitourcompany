@@ -15,6 +15,7 @@ export const getHomepageListings = unstable_cache(
         id: d.id,
         slug: d.slug,
         type: d.type,
+        service: d.type,
         title: d.title,
         location: d.location,
         price: d.base_price,
@@ -34,7 +35,8 @@ export const getHomepageListings = unstable_cache(
         gallery_images: d.metadata?.gallery_images || [],
         description: d.metadata?.description || "",
         highlights: d.metadata?.highlights || "",
-        faq: d.metadata?.faq || []
+        faq: d.metadata?.faq || [],
+        isBestTripPinned: d.metadata?.is_best_trip_pinned || false
       }));
     } catch {
       return [];
@@ -58,6 +60,7 @@ export const getActiveListings = unstable_cache(
         id: d.id,
         slug: d.slug,
         type: d.type,
+        service: d.type,
         title: d.title,
         location: d.location,
         price: d.base_price,
@@ -77,7 +80,8 @@ export const getActiveListings = unstable_cache(
         gallery_images: d.metadata?.gallery_images || [],
         description: d.metadata?.description || "",
         highlights: d.metadata?.highlights || "",
-        faq: d.metadata?.faq || []
+        faq: d.metadata?.faq || [],
+        isBestTripPinned: d.metadata?.is_best_trip_pinned || false
       }));
     } catch {
       return [];
