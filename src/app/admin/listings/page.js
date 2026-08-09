@@ -189,9 +189,7 @@ export default function AdminListings() {
       };
     };
 
-    const safeNestedData = JSON.parse(JSON.stringify(nestedData, getCircularReplacer()));
-
-    const dbPayload = {
+    const rawDbPayload = {
        id: id,
        type: service === 'Activities' ? 'Tour' : service,
        title: title || "Untitled",
@@ -205,12 +203,14 @@ export default function AdminListings() {
        image: image,
        company_name: company || null,
        data: {
-         ...safeNestedData,
+         ...nestedData,
          originalService: service === 'Activities' ? 'Activities' : undefined
        }
     };
 
-    const { error } = await supabase.from('listings').upsert(dbPayload);
+    const safeDbPayload = JSON.parse(JSON.stringify(rawDbPayload, getCircularReplacer()));
+
+    const { error } = await supabase.from('listings').upsert(safeDbPayload);
     if (error) {
        alert("Error saving safely to database: " + error.message);
        return;
