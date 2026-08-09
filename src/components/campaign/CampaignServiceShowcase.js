@@ -65,10 +65,10 @@ export default function CampaignServiceShowcase({ campaign, serviceName }) {
 
           {/* Company Title */}
           <div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.08] text-[#1c1c1c] tracking-tight">
-              {companyTitle}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight text-[#1c1c1c] tracking-tight capitalize">
+              {companyTitle?.toLowerCase()}
             </h1>
-            <p className="text-base md:text-lg font-medium text-gray-600 leading-relaxed mt-3 max-w-xl">
+            <p className="text-base font-medium text-gray-600 leading-relaxed mt-2 max-w-xl">
               {companySubtitle}
             </p>
           </div>

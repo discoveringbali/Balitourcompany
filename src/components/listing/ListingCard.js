@@ -1,13 +1,17 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Heart, Star } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
+import { useCurrency } from "@/lib/currency";
 
 export default function ListingCard({ item, linkTo }) {
+  const router = useRouter();
   const [isSaved, setIsSaved] = useState(false);
+  const { formatPrice } = useCurrency();
 
   useEffect(() => {
     if (item?.id) {
@@ -62,7 +66,7 @@ export default function ListingCard({ item, linkTo }) {
   }
 
   const cleanBasePrice = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
-  const formattedPrice = `IDR ${getFormattedPrice(cleanBasePrice).toLocaleString('id-ID')}`;
+  const formattedPrice = formatPrice(cleanBasePrice);
 
   if (item.service === "Spa") {
     // Determine the prices to show
@@ -134,8 +138,8 @@ export default function ListingCard({ item, linkTo }) {
                  <>
                    <span className="text-[10px] font-bold text-[#acacac] uppercase tracking-widest mb-0.5">{displayPrice.label}</span>
                    <div className="flex items-end gap-1">
-                     <span className="font-extrabold text-[15px] sm:text-[16px] text-[#383838] tracking-tight leading-none">
-                       {`IDR ${getFormattedPrice(displayPrice.price).toLocaleString('id-ID')}`}
+                     <span className="font-extrabold text-[15px] text-[#1c1c1c]">
+                       {formatPrice(displayPrice.price)}
                      </span>
                    </div>
                  </>

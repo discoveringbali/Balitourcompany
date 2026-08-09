@@ -1,5 +1,6 @@
 import React from "react";
 import { Wifi, Earth, Check } from "lucide-react";
+import PriceDisplay from "@/components/PriceDisplay";
 
 export const metadata = {
   title: "Bali Travel eSIM | Balance Island",
@@ -7,7 +8,7 @@ export const metadata = {
 
 export default function Esim() {
   return (
-    <div className="w-full pt-32 pb-20">
+    <div className="w-full pt-24 md:pt-32 pb-20">
       <section className="container mx-auto px-4 lg:max-w-7xl">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
           
@@ -60,7 +61,7 @@ export default function Esim() {
                     <div className="font-bold text-text-primary group-hover/option:text-accent transition-colors">15 GB Data</div>
                     <div className="text-xs font-medium text-text-secondary mt-0.5">15 Days Validity</div>
                   </div>
-                  <div className="font-bold text-xl text-primary group-hover/option:text-accent transition-colors">$12</div>
+                  <PriceDisplay amount={186000} className="font-bold text-xl text-primary group-hover/option:text-accent transition-colors" />
                 </div>
 
                 <div className="flex items-center justify-between p-4 border-2 rounded-xl border-accent bg-accent/5 cursor-pointer relative shadow-sm">
@@ -69,7 +70,7 @@ export default function Esim() {
                     <div className="font-bold text-accent">30 GB Data</div>
                     <div className="text-xs font-medium text-text-secondary mt-0.5">30 Days Validity</div>
                   </div>
-                  <div className="font-bold text-xl text-accent">$20</div>
+                  <PriceDisplay amount={310000} className="font-bold text-xl text-accent" />
                 </div>
 
                 <div className="flex items-center justify-between p-4 border-2 rounded-xl border-border hover:border-accent transition-colors cursor-pointer bg-white group/option">
@@ -77,7 +78,7 @@ export default function Esim() {
                     <div className="font-bold text-text-primary group-hover/option:text-accent transition-colors">Unlimited Data</div>
                     <div className="text-xs font-medium text-text-secondary mt-0.5">30 Days Validity</div>
                   </div>
-                  <div className="font-bold text-xl text-primary group-hover/option:text-accent transition-colors">$35</div>
+                  <PriceDisplay amount={542500} className="font-bold text-xl text-primary group-hover/option:text-accent transition-colors" />
                 </div>
               </div>
 

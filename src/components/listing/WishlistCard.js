@@ -4,8 +4,10 @@ import React from "react";
 import { Heart, Star, MapPin, Bookmark } from "lucide-react";
 import Link from "next/link";
 import { removeSavedTrip } from "@/lib/favorites";
+import { useCurrency } from "@/lib/currency";
 
 export default function WishlistCard({ item, linkTo }) {
+  const { formatPrice } = useCurrency();
   const handleRemove = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -32,8 +34,7 @@ export default function WishlistCard({ item, linkTo }) {
   }
 
   const cleanBasePrice = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
-  const isIdr = cleanBasePrice >= 1000;
-  const formattedPrice = isIdr ? `IDR ${cleanBasePrice.toLocaleString('id-ID')}` : `$${cleanBasePrice}`;
+  const formattedPrice = formatPrice(cleanBasePrice);
 
   return (
     <Link href={linkTo} className="relative flex flex-col w-full aspect-[4/5] sm:aspect-square overflow-hidden rounded-[32px] group block w-full outline-none transform transition-transform duration-300 hover:scale-[1.02] shadow-[0_8px_30px_rgb(0,0,0,0.06)] active:scale-[0.98]">

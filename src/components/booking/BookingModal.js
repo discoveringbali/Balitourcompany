@@ -8,11 +8,12 @@ import { supabase } from "@/lib/supabase";
 import { useSession } from "next-auth/react";
 import { validateDiscountCode, calculateDiscount } from "@/lib/discounts";
 import { saveBooking } from "@/lib/bookings";
+import { useCurrency } from "@/lib/currency";
 
-const formatIDR = (num) => `IDR ${Number(num).toLocaleString('id-ID')}`;
 
 export default function BookingModal({ isOpen, onClose, serviceData, initialPax = 1, initialDate = "", startStep = 1, onPackageChange, onPaxChange, onDateChange }) {
   const [mounted, setMounted] = useState(false);
+  const { formatPrice } = useCurrency();
   const [step, setStep] = useState(1);
   const [localPackage, setLocalPackage] = useState("Standard");
   const { data: session } = useSession();
@@ -202,7 +203,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       }
     }
 
-    messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatIDR(total)}`;
+    messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatPrice(total)}`;
     if (appliedDiscount) {
       messageDetails += ` (Code: ${appliedDiscount.code})`;
     }
@@ -216,7 +217,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         contact_info: formData.phone,
         service_name: sTitle,
         booking_date: formData.date,
-        amount: formatIDR(total),
+        amount: formatPrice(total),
         status: 'Pending',
         category: serviceData?.type === "tour" ? "Tour" : serviceData?.type === "transport" ? "Transport" : "Activities",
         details: {
@@ -506,11 +507,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                  <div className="flex flex-col items-end">
                     {appliedDiscount && (
                       <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
-                        {formatIDR(getBaseTotal())}
+                        {formatPrice(getBaseTotal())}
                       </span>
                     )}
                     <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
-                      {formatIDR(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}
+                      {formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}
                     </span>
                  </div>
                </div>
