@@ -6,7 +6,7 @@ export const getHomepageListings = unstable_cache(
     try {
       const { data, error } = await supabase
         .from('listings')
-        .select('id, slug, type, title, location, base_price, duration, category, rating, reviews, status, main_image, gallery_images, description, highlights, included, excluded, what_to_bring, faq, policies, is_hero_campaign, campaign_title, campaign_description, campaign_label, is_best_trip_pinned, pricing_tiers(*), itineraries(*)')
+        .select('id, slug, type, title, location, base_price, duration, category, rating, reviews_count, status, thumbnail_image, is_hero_campaign, campaign_title, campaign_description, campaign_label, metadata, pricing_tiers(*), itineraries(*)')
         .eq('status', 'Active');
       if (error || !data || data.length === 0) {
         return [];

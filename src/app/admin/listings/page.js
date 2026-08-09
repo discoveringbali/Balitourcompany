@@ -56,22 +56,22 @@ export default function AdminListings() {
                rating: d.rating,
                reviews: d.reviews,
                status: d.status,
-               image: d.main_image,
-               gallery: d.gallery_images || [],
+               image: d.thumbnail_image || "",
+               gallery: d.metadata?.gallery_images || [],
                
-               description: d.description || "",
-               highlights: d.highlights || "",
-               included: d.included || "",
-               excluded: d.excluded || "",
-               whatToBring: d.what_to_bring || "",
-               faq: d.faq || "",
-               policies: d.policies || "",
+               description: d.metadata?.description || "",
+               highlights: d.metadata?.highlights || "",
+               included: d.metadata?.included || "",
+               excluded: d.metadata?.excluded || "",
+               whatToBring: d.metadata?.what_to_bring || "",
+               faq: d.metadata?.faq || "",
+               policies: d.metadata?.policies || "",
 
                isCampaignPinned: d.is_hero_campaign,
                campaignTitle: d.campaign_title || "",
                campaignDescription: d.campaign_description || "",
                campaignLabel: d.campaign_label || "",
-               isBestTripPinned: d.is_best_trip_pinned,
+               isBestTripPinned: d.metadata?.is_best_trip_pinned || false,
 
                itinerary: (d.itineraries || []).map(it => ({ title: it.title, description: it.description, time_label: it.time_label || "" })),
                tourTiers: (d.pricing_tiers || []).map(pt => ({ pax: pt.min_pax, price: pt.price }))
@@ -185,22 +185,24 @@ export default function AdminListings() {
        duration: String(duration),
        category: category || "General",
        rating: parseFloat(rating) || 5.0,
-       reviews: parseInt(reviews) || 0,
+       reviews_count: parseInt(reviews) || 0,
        status: status,
-       main_image: image,
-       gallery_images: gallery || [],
-       description: description || null,
-       highlights: highlights || null,
-       included: included || null,
-       excluded: excluded || null,
-       what_to_bring: whatToBring || null,
-       faq: faq || null,
-       policies: policies || null,
+       thumbnail_image: image,
        is_hero_campaign: !!isCampaignPinned,
        campaign_title: campaignTitle || null,
        campaign_description: campaignDescription || null,
        campaign_label: campaignLabel || null,
-       is_best_trip_pinned: !!isBestTripPinned
+       metadata: {
+           gallery_images: gallery || [],
+           description: description || null,
+           highlights: highlights || null,
+           included: included || null,
+           excluded: excluded || null,
+           what_to_bring: whatToBring || null,
+           faq: faq || null,
+           policies: policies || null,
+           is_best_trip_pinned: !!isBestTripPinned
+       }
     };
 
     const getCircularReplacer = () => {
