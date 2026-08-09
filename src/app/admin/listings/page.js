@@ -265,7 +265,7 @@ export default function AdminListings() {
     }
 
     const newItem = {
-      id: crypto.randomUUID(), // Valid UUID for Postgres!
+      id: crypto.randomUUID(),
       title: "New " + activeTab,
       location: "Bali, Indonesia",
       duration: "1 Day",
@@ -274,9 +274,40 @@ export default function AdminListings() {
       reviews: "0",
       service: activeTab,
       category: "Nature",
-      status: "Active",
+      status: "Draft", // Always start as Draft
       image: ""
     };
+    
+    // Immediately save to database to prevent data loss on refresh
+    import('@/lib/supabase').then(async ({ supabase }) => {
+      const dbPayload = {
+        id: newItem.id,
+        type: newItem.service,
+        title: newItem.title,
+        location: newItem.location,
+        price: 0,
+        duration: newItem.duration,
+        category: newItem.category,
+        rating: 5,
+        reviews: 0,
+        status: "Draft",
+        image: newItem.image,
+        data: {
+          originalService: newItem.service,
+          tourTiers: [],
+          groupTiers: [],
+          allInclusiveTiers: []
+        }
+      };
+      await supabase.from('listings').upsert(dbPayload);
+      
+      // Update local UI state
+      setListingsData(prev => ({
+         ...prev,
+         [activeTab]: [newItem, ...(prev[activeTab] || [])]
+      }));
+    });
+    
     setEditingItem(newItem);
   };
 
