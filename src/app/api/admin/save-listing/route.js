@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
 
 const getSupabase = () => createClient(
@@ -33,6 +34,9 @@ export async function POST(req) {
       const { error: itinsError } = await supabase.from('itineraries').insert(itinsToInsert);
       if (itinsError) console.error("Itineraries save error:", itinsError);
     }
+
+    // Revalidate the Next.js cache for the main website
+    revalidateTag('listings');
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
