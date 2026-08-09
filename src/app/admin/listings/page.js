@@ -218,36 +218,38 @@ export default function AdminListings() {
 
     const safeDbPayload = JSON.parse(JSON.stringify(dbPayload, getCircularReplacer()));
 
-    const { error } = await supabase.from('listings').upsert(safeDbPayload);
-    if (error) {
-       alert("Error saving listing: " + error.message);
-       return;
-    }
+    const tiersToInsert = (tourTiers && tourTiers.length > 0) ? tourTiers.map(t => ({
+        listing_id: id,
+        tier_name: `${t.pax} Pax`,
+        price: parseInt(t.price) || 0,
+        min_pax: parseInt(t.pax) || 1,
+        max_pax: parseInt(t.pax) || 1
+    })) : [];
 
-    // Upsert pricing tiers
-    await supabase.from('pricing_tiers').delete().eq('listing_id', id);
-    if (tourTiers && tourTiers.length > 0) {
-       const tiersToInsert = tourTiers.map(t => ({
-          listing_id: id,
-          tier_name: `${t.pax} Pax`,
-          price: parseInt(t.price) || 0,
-          min_pax: parseInt(t.pax) || 1,
-          max_pax: parseInt(t.pax) || 1
-       }));
-       await supabase.from('pricing_tiers').insert(tiersToInsert);
-    }
+    const itinsToInsert = (itinerary && itinerary.length > 0) ? itinerary.map((it, idx) => ({
+        listing_id: id,
+        time_label: it.time_label || `${idx+1}`,
+        title: it.title || "Activity",
+        description: it.description || null,
+        order_index: idx
+    })) : [];
 
-    // Upsert itineraries
-    await supabase.from('itineraries').delete().eq('listing_id', id);
-    if (itinerary && itinerary.length > 0) {
-       const itinsToInsert = itinerary.map((it, idx) => ({
-          listing_id: id,
-          time_label: it.time_label || `${idx+1}`,
-          title: it.title || "Activity",
-          description: it.description || null,
-          order_index: idx
-       }));
-       await supabase.from('itineraries').insert(itinsToInsert);
+    try {
+      const res = await fetch('/api/admin/save-listing', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id,
+          safeDbPayload,
+          tiersToInsert,
+          itinsToInsert
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to save listing');
+    } catch (err) {
+      alert("Error saving listing: " + err.message);
+      return;
     }
 
     if (urlsToDelete.length > 0) {
@@ -316,19 +318,26 @@ export default function AdminListings() {
       image: ""
     };
 
-    import('@/lib/supabase').then(async ({ supabase }) => {
-      const dbPayload = {
+    const dbPayload = {
+      id: newItem.id,
+      slug: generateSlug(newItem.title),
+      type: newItem.service === 'Activities' ? 'Tour' : newItem.service,
+      title: newItem.title,
+      location: newItem.location,
+      base_price: 0,
+      status: 'Draft'
+    };
+    
+    fetch('/api/admin/save-listing', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
         id: newItem.id,
-        slug: generateSlug(newItem.title),
-        type: newItem.service === 'Activities' ? 'Tour' : newItem.service,
-        title: newItem.title,
-        location: newItem.location,
-        base_price: 0,
-        status: 'Draft'
-      };
-      const { error } = await supabase.from('listings').upsert(dbPayload);
-      if (error) console.error("Draft error", error);
-    });
+        safeDbPayload: dbPayload,
+        tiersToInsert: [],
+        itinsToInsert: []
+      })
+    }).catch(err => console.error("Draft API error", err));
 
     setListingsData(prev => ({
        ...prev,
