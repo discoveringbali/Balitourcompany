@@ -129,7 +129,7 @@ export const getHomepageSettings = unstable_cache(
     try {
       const { data, error } = await supabase
         .from('homepage_settings')
-        .select('campaign_video, campaign_youtube_link, campaign_recommendation, campaign_ig_link, campaign_recommendation_2, campaign_ig_link_2')
+        .select('campaign_video, campaign_youtube_link, campaign_recommendation, campaign_ig_link, campaign_recommendation_2, campaign_ig_link_2, metadata')
         .eq('id', 1)
         .single();
       if (error || !data) {

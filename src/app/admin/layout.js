@@ -181,7 +181,7 @@ export default function AdminLayout({ children }) {
         {/* Brand Header */}
         <div className="h-20 px-6 border-b border-[#eaeaea] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-             <img src="/balance_island_logo.png" alt="Logo" className="w-8 h-8 rounded-lg object-cover border border-[#eaeaea]" />
+             <img src="/icon.png" alt="Logo" className="w-8 h-8 rounded-lg object-cover border border-[#eaeaea]" />
              <span className="font-black text-lg tracking-tight">Balance Island</span>
           </div>
           <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden p-1 text-gray-400 hover:text-[#1c1c1c] transition-colors">
@@ -249,9 +249,6 @@ export default function AdminLayout({ children }) {
 
         {/* System Settings */}
         <div className="p-5 border-t border-[#eaeaea] flex flex-col gap-1">
-           <button onClick={handleInstallClick} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-sm font-bold text-[#1c1c1c] bg-black text-white hover:bg-[#c9c9c9] transition-all mb-2 shadow-sm">
-              <Smartphone size={18} /> Download Mobile App
-            </button>
            <button onClick={() => setIsSettingsOpen(true)} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-sm font-bold text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9] transition-all">
               <Settings size={18} /> Account Settings
             </button>
@@ -412,7 +409,7 @@ export default function AdminLayout({ children }) {
              
              <div className="space-y-6">
                <div className="flex items-center gap-4 bg-[#f9f9f9] p-4 rounded-2xl border border-[#eaeaea]">
-                 <img src="/balance_island_logo.png" alt="Logo" className="w-12 h-12 rounded-xl object-cover shadow-sm" />
+                 <img src="/icon.png" alt="Logo" className="w-12 h-12 rounded-xl object-cover shadow-sm" />
                  <div>
                    <p className="text-sm font-black text-[#1c1c1c]">Balance Island Admin</p>
                    <p className="text-[11px] font-bold text-gray-500">Add to Home Screen</p>

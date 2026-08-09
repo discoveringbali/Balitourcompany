@@ -153,15 +153,22 @@ function PopularTripCard({ trip }) {
   );
 }
 
-export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [] }) {
+export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [], initialCampaigns = null }) {
   const router = useRouter();
   const [activeCat, setActiveCat] = useState("All");
   const [activeService, setActiveService] = useState("Tour");
   const [currentCampIdx, setCurrentCampIdx] = useState(0);
-  const [serviceCampaigns, setServiceCampaigns] = useState(DEFAULT_CAMPAIGNS);
+
+  // Use initialCampaigns from server or fallback to DEFAULT_CAMPAIGNS
+  const safeInitialCampaigns = initialCampaigns ? {
+    scooter: { ...DEFAULT_CAMPAIGNS.scooter, ...(initialCampaigns.scooter || {}) },
+    spa: { ...DEFAULT_CAMPAIGNS.spa, ...(initialCampaigns.spa || {}) }
+  } : DEFAULT_CAMPAIGNS;
+
+  const [serviceCampaigns, setServiceCampaigns] = useState(safeInitialCampaigns);
 
   useEffect(() => {
-    setServiceCampaigns(getCampaignSettings());
+    // Only listen for changes if we're in the admin dashboard preview
     const handleCampaignsChanged = (e) => {
       if (e.detail) setServiceCampaigns(e.detail);
     };

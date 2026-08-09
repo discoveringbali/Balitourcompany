@@ -28,11 +28,14 @@ export default async function Page() {
     campaignIgLink2: settingsData.campaign_ig_link_2 || ""
   } : null;
 
+  const initialCampaigns = settingsData?.metadata?.campaigns || null;
+
   return (
     <HomeClient 
       initialListings={initialListings || []} 
       initialBlogs={initialBlogs || []} 
       initialSettings={initialSettings} 
+      initialCampaigns={initialCampaigns}
     />
   );
 }

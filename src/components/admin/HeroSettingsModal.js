@@ -107,6 +107,7 @@ export default function HeroSettingsModal({ onClose }) {
         id: 1,
         campaign_video: heroSettings.campaignVideo,
         campaign_youtube_link: heroSettings.campaignYoutubeLink,
+        metadata: { campaigns },
         updated_at: new Date().toISOString()
       };
       const res = await fetch('/api/admin/homepage-settings', {
