@@ -507,24 +507,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   const partnerCards = [scooterCard, spaCard].filter(Boolean);
 
-  const defaultTourCampaigns = [
-    {
-      id: 'camp-default-1',
-      title: "Ubud Heritage Tour",
-      subtitle: "Tegalalang rice terraces & sacred temple exploration.",
-      badge: "OFFICIAL PARTNER",
-      image: "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=1200&q=80",
-      location: "Ubud, Bali"
-    },
-    {
-      id: 'camp-default-2',
-      title: "Nusa Penida Island Escape",
-      subtitle: "Fast boat & coastal tour package with private driver.",
-      badge: "OFFICIAL PARTNER",
-      image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=1200&q=80",
-      location: "Nusa Penida, Bali"
-    }
-  ];
+  const defaultTourCampaigns = [];
 
   const tourCampaigns = pinnedCampaigns.length > 0 ? pinnedCampaigns : defaultTourCampaigns;
 
@@ -553,9 +536,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     displayCampaigns = [...partnerCards, ...tourCampaigns];
   }
 
-  if (displayCampaigns.length === 0) {
-    displayCampaigns = defaultTourCampaigns;
-  }
+  // Removed defaultTourCampaigns fallback to prevent mock data from showing
 
   const bestTrips = allListings.filter(t => t.isBestTripPinned && t.service === activeService);
   const displayPopularTrips = bestTrips.length > 0 ? bestTrips : popularTrips;
@@ -761,6 +742,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         </AnimatePresence>
 
         {/* Mobile-only Campaign Swipe Carousel */}
+        {displayCampaigns.length > 0 && (
         <section className="md:hidden pt-3 pb-4 relative z-10">
           <div
             className="flex overflow-x-auto no-scrollbar gap-4 px-5 snap-x snap-mandatory"
@@ -919,8 +901,10 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             ))}
           </div>
         </section>
+        )}
 
         {/* Desktop/iPad Full-Screen Cinematic Hero */}
+        {displayCampaigns.length > 0 && (
         <section className="hidden md:block absolute top-0 left-0 w-full h-[100vh] min-h-[700px] overflow-hidden bg-black group">
           {displayCampaigns.map((camp, idx) => (
             <div
@@ -1072,9 +1056,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             <span className="font-bold text-[18px] opacity-60">/ {displayCampaigns.length.toString().padStart(2, '0')}</span>
           </div>
         </section>
+        )}
 
         {/* Invisible spacer to push content down below the absolute hero */}
-        <div className="hidden md:block w-full h-[100vh]" />
+        {displayCampaigns.length > 0 && (
+          <div className="hidden md:block w-full h-[100vh]" />
+        )}
       </div>
 
       <div id="showcase-section" className="max-w-[1400px] mx-auto min-h-screen">
