@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { revalidateTag, revalidatePath } from 'next/cache';
 
 const getSupabase = () => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
@@ -18,6 +19,9 @@ export async function POST(req) {
       console.error("Homepage settings save error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    revalidateTag('homepage_settings');
+    revalidatePath('/');
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
