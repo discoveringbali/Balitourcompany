@@ -126,14 +126,19 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
       const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
       const filePath = `cover_images/${fileName}`;
 
-      const { error } = await supabase.storage
-        .from('discovering_bali_images')
-        .upload(filePath, file);
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+      formDataUpload.append('bucket', 'discovering_bali_images');
+      formDataUpload.append('filePath', filePath);
 
-      if (error) throw error;
-      const { data: { publicUrl } } = supabase.storage.from('discovering_bali_images').getPublicUrl(filePath);
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formDataUpload
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
 
-      setFormData({ ...formData, image: publicUrl });
+      setFormData({ ...formData, image: data.url });
     } catch (err) {
       if (err.message.includes('Bucket not found')) {
         alert("Action Required: Please create a public storage bucket named 'discovering_bali_images' in your Supabase dashboard to enable image uploads.");

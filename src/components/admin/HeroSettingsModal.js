@@ -43,18 +43,21 @@ export default function HeroSettingsModal({ onClose }) {
     setIsHeroUploading(true);
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `hero_${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage
-        .from('campaigns')
-        .upload(fileName, file, { cacheControl: '3600', upsert: true });
+      const fileName = `campaigns/hero_${Date.now()}.${fileExt}`;
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('bucket', 'discovering_bali_images');
+      formData.append('filePath', fileName);
 
-      if (uploadError) throw uploadError;
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('campaigns')
-        .getPublicUrl(fileName);
-
-      setHeroSettings(prev => ({ ...prev, campaignVideo: publicUrl }));
+      setHeroSettings(prev => ({ ...prev, campaignVideo: data.url }));
     } catch (err) {
       alert("Video upload failed: " + err.message);
     } finally {
@@ -69,22 +72,25 @@ export default function HeroSettingsModal({ onClose }) {
     setUploadingFor(type);
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `partner_${type}_${Date.now()}.${fileExt}`;
-      const { error: uploadError } = await supabase.storage
-        .from('campaigns')
-        .upload(fileName, file, { cacheControl: '3600', upsert: true });
+      const fileName = `campaigns/partner_${type}_${Date.now()}.${fileExt}`;
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('bucket', 'discovering_bali_images');
+      formData.append('filePath', fileName);
 
-      if (uploadError) throw uploadError;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('campaigns')
-        .getPublicUrl(fileName);
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Upload failed');
 
       setCampaigns(prev => ({
         ...prev,
         [type]: {
           ...(prev[type] || DEFAULT_CAMPAIGNS[type]),
-          image: publicUrl
+          image: data.url
         }
       }));
     } catch (err) {
