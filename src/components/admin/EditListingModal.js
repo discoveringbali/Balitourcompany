@@ -135,7 +135,11 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
 
       setFormData({ ...formData, image: publicUrl });
     } catch (err) {
-      alert("Error uploading cover image: " + err.message);
+      if (err.message.includes('Bucket not found')) {
+        alert("Action Required: Please create a public storage bucket named 'discovering_bali_images' in your Supabase dashboard to enable image uploads.");
+      } else {
+        alert("Error uploading cover image: " + err.message);
+      }
     } finally {
       setIsUploading(false);
     }
@@ -171,7 +175,11 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
       }
       setGallery(updatedGallery);
     } catch (err) {
-       alert("Error uploading gallery: " + err.message);
+       if (err.message.includes('Bucket not found')) {
+         alert("Action Required: Please create a public storage bucket named 'discovering_bali_images' in your Supabase dashboard to enable image uploads.");
+       } else {
+         alert("Error uploading gallery: " + err.message);
+       }
     } finally {
        setIsUploading(false);
     }
@@ -192,10 +200,17 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
     ]);
   };
 
-  const handleSave = () => {
+  const handleAutoSaveAndClose = () => {
+    const isNew = !item.id || item.id.toString().startsWith("temp-");
+    handleSave(isNew ? "Draft" : null);
+    onClose();
+  };
+
+  const handleSave = (forcedStatus = null) => {
     const finalItem = {
       ...item,
       ...formData,
+      status: forcedStatus || formData.status,
       service: formData.serviceType || activeTab,
       ...details,
       ...pins,
@@ -265,9 +280,9 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
       <header className="h-16 sm:h-20 bg-white/95 backdrop-blur-md border-b border-gray-200/80 px-4 sm:px-8 flex items-center justify-between z-30 shrink-0 shadow-sm">
         <div className="flex items-center gap-3 sm:gap-4 min-w-0">
           <button 
-            onClick={onClose} 
+            onClick={handleAutoSaveAndClose} 
             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-black hover:text-white transition-colors shrink-0"
-            title="Close editor"
+            title="Save and close"
           >
             <ArrowLeft size={18} strokeWidth={2.5} />
           </button>
