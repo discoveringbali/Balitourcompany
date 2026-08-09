@@ -151,15 +151,28 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
     
     setIsUploading(true);
     try {
-      const newUrls = await Promise.all(files.map(async (file) => {
+            const newUrls = await Promise.all(files.map(async (file) => {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
         const filePath = `gallery/${fileName}`;
 
-        const { error } = await supabase.storage.from('discovering_bali_images').upload(filePath, file);
-        if (error) throw error;
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('bucket', 'discovering_bali_images');
+        formData.append('filePath', filePath);
+
+        const res = await fetch('/api/admin/upload', {
+          method: 'POST',
+          body: formData
+        });
         
-        return supabase.storage.from('discovering_bali_images').getPublicUrl(filePath).data.publicUrl;
+        const data = await res.json();
+        
+        if (!res.ok) {
+           throw new Error(data.error || 'Failed to upload image via server');
+        }
+        
+        return data.url;
       }));
 
       const updatedGallery = [...gallery];
