@@ -463,7 +463,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   const pinnedCampaigns = allListings.filter(t => t.isCampaignPinned).map((t, idx) => ({
     id: t.id || idx,
     title: t.campaignTitle || t.title,
-    subtitle: t.campaignDescription, // Description
+    subtitle: t.campaignDescription || t.description, // Fallback to regular description
     location: t.location, // Explicitly pass location
     badge: t.campaignLabel !== undefined ? t.campaignLabel : "Featured Deal",
     image: t.image || "",
@@ -867,9 +867,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       <h3 className="text-[17px] sm:text-[19px] font-bold text-white leading-tight mb-1 font-sans drop-shadow-xl line-clamp-1">
                         {camp.title}
                       </h3>
-                      {camp.subtitle && (
-                        <p className="text-white/90 text-[12px] sm:text-[13px] font-medium leading-normal line-clamp-1 drop-shadow-md">
-                          {camp.subtitle}
+                      {(camp.subtitle || camp.description) && (
+                        <p className="text-white/80 text-[12px] sm:text-[13px] font-medium leading-relaxed line-clamp-2 pr-4 sm:pr-8">
+                          {camp.subtitle || camp.description}
                         </p>
                       )}
                     </div>

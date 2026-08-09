@@ -15,7 +15,7 @@ export async function POST(req) {
     const { data: listings } = await supabase.from('listings').select('thumbnail_image, metadata');
     
     // 2. Fetch all used images from homepage_settings
-    const { data: settings } = await supabase.from('homepage_settings').select('campaign_video_url, campaign_youtube_url, metadata');
+    const { data: settings } = await supabase.from('homepage_settings').select('campaign_video, campaign_youtube_link, metadata');
 
     const usedPaths = new Set();
     const extractPath = (url) => {
@@ -43,8 +43,8 @@ export async function POST(req) {
     // Collect paths from homepage_settings
     if (settings && settings[0]) {
       const s = settings[0];
-      if (s.campaign_video_url) {
-        const path = extractPath(s.campaign_video_url);
+      if (s.campaign_video) {
+        const path = extractPath(s.campaign_video);
         if (path) usedPaths.add(path);
       }
       if (s.metadata) {
