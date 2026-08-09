@@ -1,3 +1,17 @@
+
+-- ==============================================================
+-- CLEANUP PREVIOUS ATTEMPTS
+-- ==============================================================
+DROP TABLE IF EXISTS public.bookings CASCADE;
+DROP TABLE IF EXISTS public.reviews CASCADE;
+DROP TABLE IF EXISTS public.itineraries CASCADE;
+DROP TABLE IF EXISTS public.pricing_tiers CASCADE;
+DROP TABLE IF EXISTS public.listings CASCADE;
+
+DROP TYPE IF EXISTS public.service_type CASCADE;
+DROP TYPE IF EXISTS public.listing_status CASCADE;
+DROP TYPE IF EXISTS public.pricing_mode CASCADE;
+
 -- ==============================================================
 -- HIGH-END ENTERPRISE DATABASE ARCHITECTURE FOR BALANCE ISLAND
 -- ==============================================================
@@ -9,25 +23,10 @@ CREATE TYPE public.service_type AS ENUM ('Tour', 'Scooter', 'Spa');
 CREATE TYPE public.listing_status AS ENUM ('Draft', 'Active', 'Archived');
 CREATE TYPE public.pricing_mode AS ENUM ('Per Person', 'Per Group', 'Per Vehicle', 'Fixed');
 
--- 1. COMPANIES (Partners)
-CREATE TABLE public.companies (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    name TEXT NOT NULL,
-    description TEXT,
-    contact_email TEXT,
-    contact_phone TEXT,
-    logo_url TEXT,
-    verified BOOLEAN DEFAULT false,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    deleted_at TIMESTAMPTZ
-);
-
 -- 2. LISTINGS (Core services: Tours, Scooters, Spas)
 CREATE TABLE public.listings (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     slug TEXT UNIQUE NOT NULL,
-    company_id UUID NOT NULL REFERENCES public.companies(id) ON DELETE CASCADE,
     type public.service_type NOT NULL,
     status public.listing_status NOT NULL DEFAULT 'Draft',
     
@@ -114,7 +113,6 @@ CREATE TABLE public.bookings (
 -- Critical for enterprise scale. Automatically optimizes query plans for filters and joins.
 -- =========================================================================
 CREATE INDEX idx_listings_slug ON public.listings(slug);
-CREATE INDEX idx_listings_company_id ON public.listings(company_id);
 -- Partial index: only indexes non-deleted rows, making active feed queries lightning fast
 CREATE INDEX idx_listings_status_type ON public.listings(status, type) WHERE deleted_at IS NULL;
 -- Partial index: instantly fetch hero campaigns without scanning the whole table
@@ -135,10 +133,6 @@ BEGIN
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trigger_update_companies
-BEFORE UPDATE ON public.companies
-FOR EACH ROW EXECUTE PROCEDURE set_updated_at();
 
 CREATE TRIGGER trigger_update_listings
 BEFORE UPDATE ON public.listings

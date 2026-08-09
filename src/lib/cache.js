@@ -30,7 +30,11 @@ export const getHomepageListings = unstable_cache(
         campaignLabel: d.campaign_label,
         tourTiers: d.pricing_tiers ? d.pricing_tiers.map(pt => ({ pax: pt.min_pax, price: pt.price })) : [],
         itinerary: d.itineraries || [],
-        ...(d.metadata || {})
+        ...(d.metadata || {}),
+        gallery_images: d.metadata?.gallery_images || [],
+        description: d.metadata?.description || "",
+        highlights: d.metadata?.highlights || "",
+        faq: d.metadata?.faq || []
       }));
     } catch {
       return [];
@@ -43,7 +47,10 @@ export const getHomepageListings = unstable_cache(
 export const getActiveListings = unstable_cache(
   async () => {
     try {
-      const { data, error } = await supabase.from('listings').select('*').eq('status', 'Active');
+      const { data, error } = await supabase
+        .from('listings')
+        .select('id, slug, type, title, location, base_price, duration, category, rating, reviews_count, status, thumbnail_image, is_hero_campaign, campaign_title, campaign_description, campaign_label, metadata, pricing_tiers(*), itineraries(*)')
+        .eq('status', 'Active');
       if (error || !data || data.length === 0) {
         return [];
       }
@@ -66,7 +73,11 @@ export const getActiveListings = unstable_cache(
         campaignLabel: d.campaign_label,
         tourTiers: d.pricing_tiers ? d.pricing_tiers.map(pt => ({ pax: pt.min_pax, price: pt.price })) : [],
         itinerary: d.itineraries || [],
-        ...(d.metadata || {})
+        ...(d.metadata || {}),
+        gallery_images: d.metadata?.gallery_images || [],
+        description: d.metadata?.description || "",
+        highlights: d.metadata?.highlights || "",
+        faq: d.metadata?.faq || []
       }));
     } catch {
       return [];

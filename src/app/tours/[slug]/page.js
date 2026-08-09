@@ -97,8 +97,10 @@ export default async function TourPage({ params }) {
      reviews: data.reviews,
      status: data.status,
      image: data.image,
-     company: data.company_name,
-     ...(data.data || {})
+     ...(data || {}),
+     gallery: data.gallery_images || data.gallery || [],
+     tourTiers: data.tourTiers || [],
+     itinerary: data.itinerary || []
   };
 
   const defaultImg = "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=1200&q=80";
@@ -144,8 +146,10 @@ export default async function TourPage({ params }) {
         reviews: item.reviews,
         status: item.status,
         image: item.image,
-        company: item.company_name,
-        ...(item.data || {})
+        ...(item || {}),
+        gallery: item.gallery_images || item.gallery || [],
+        tourTiers: item.tourTiers || [],
+        itinerary: item.itinerary || []
      })) || [];
 
   const jsonLd = generateTourJsonLd(frontendObj);
