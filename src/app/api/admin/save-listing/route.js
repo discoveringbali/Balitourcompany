@@ -38,6 +38,12 @@ export async function POST(req) {
     // Revalidate the Next.js cache for the main website
     revalidateTag('listings');
 
+    // Asynchronously trigger storage cleanup (fire and forget)
+    // We construct the absolute URL based on the request
+    const protocol = req.headers.get('x-forwarded-proto') || 'http';
+    const host = req.headers.get('host');
+    fetch(`${protocol}://${host}/api/admin/cleanup-storage`, { method: 'POST' }).catch(e => console.error(e));
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Save listing server error:", error);
