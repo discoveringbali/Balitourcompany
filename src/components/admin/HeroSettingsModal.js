@@ -109,8 +109,13 @@ export default function HeroSettingsModal({ onClose }) {
         campaign_youtube_link: heroSettings.campaignYoutubeLink,
         updated_at: new Date().toISOString()
       };
-      const { error } = await supabase.from('homepage_settings').upsert(payload, { onConflict: 'id' });
-      if (error) throw error;
+      const res = await fetch('/api/admin/homepage-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to save settings');
 
       // Save campaign card settings
       saveCampaignSettings(campaigns);

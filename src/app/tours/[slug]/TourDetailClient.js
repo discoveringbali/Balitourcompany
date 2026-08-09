@@ -107,7 +107,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
            if (tourData.pricingType === "Per Group") {
               total = baseUnit;
            } else if (tourData.tourTiers && tourData.tourTiers.length > 0) {
-              total = baseUnit; // Tiers are total prices
+              total = baseUnit * desktopPax; // Per person tiered prices are per person
            } else {
               total = baseUnit * desktopPax;
            }
@@ -614,7 +614,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
             <div className={`sticky top-[120px] rounded-2xl p-6 shadow-lg z-10 w-full ${tourData.service === "Spa" ? "bg-white border border-[#ededed]" : "bg-white border border-gray-200"}`}>
                <div className="mb-4 flex items-end gap-1">
                   <span className={`text-[34px] font-extrabold leading-none ${tourData.service === "Spa" ? "text-[#383838] font-serif tracking-tight" : "text-primary"}`}>{formatPrice(getUnitDynamicPrice())}</span>
-                  <span className="text-text-secondary text-[15px] font-medium pb-1">/ {tourData.service === "Spa" ? "treatment" : tourData.service === "Scooter" ? scooterDuration.replace('daily', 'day').replace('weekly', 'week').replace('monthly', 'month') : tourData.pricingType === "Per Group" ? "group" : (tourData.tourTiers && tourData.tourTiers.length > 0 ? "total" : "person")}</span>
+                  <span className="text-text-secondary text-[15px] font-medium pb-1">/ {tourData.service === "Spa" ? "treatment" : tourData.service === "Scooter" ? scooterDuration.replace('daily', 'day').replace('weekly', 'week').replace('monthly', 'month') : tourData.pricingType === "Per Group" ? "group" : "person"}</span>
                </div>
                
                <p className="text-sm text-text-secondary font-medium mb-6">Reserve now and pay later to book your spot and pay nothing today.</p>

@@ -170,7 +170,8 @@ export default function AdminListings() {
       id, service, title, location, price, duration, category, rating, 
       reviews, status, image, gallery, description, highlights, included, excluded, 
       whatToBring, faq, policies, isCampaignPinned, campaignTitle, campaignDescription, 
-      campaignLabel, isBestTripPinned, itinerary, tourTiers
+      campaignLabel, isBestTripPinned, itinerary, tourTiers, pricingType, groupPricingMode, 
+      groupPrice, minGroupPax, maxGroupPax, groupTiers
     } = updatedItem;
     
     const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + id.split('-')[0];
@@ -201,7 +202,13 @@ export default function AdminListings() {
            what_to_bring: whatToBring || null,
            faq: faq || null,
            policies: policies || null,
-           is_best_trip_pinned: !!isBestTripPinned
+           is_best_trip_pinned: !!isBestTripPinned,
+           pricingType: pricingType || "Per Person",
+           groupPricingMode: groupPricingMode || "flat",
+           groupPrice: groupPrice || null,
+           minGroupPax: minGroupPax || 1,
+           maxGroupPax: maxGroupPax || 12,
+           groupTiers: groupTiers || []
        }
     };
 

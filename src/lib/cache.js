@@ -36,7 +36,13 @@ export const getHomepageListings = unstable_cache(
         description: d.metadata?.description || "",
         highlights: d.metadata?.highlights || "",
         faq: d.metadata?.faq || [],
-        isBestTripPinned: d.metadata?.is_best_trip_pinned || false
+        isBestTripPinned: d.metadata?.is_best_trip_pinned || false,
+        pricingType: d.metadata?.pricingType || "Per Person",
+        groupPricingMode: d.metadata?.groupPricingMode || "flat",
+        groupPrice: d.metadata?.groupPrice || d.base_price,
+        minGroupPax: d.metadata?.minGroupPax || 1,
+        maxGroupPax: d.metadata?.maxGroupPax || 12,
+        groupTiers: d.metadata?.groupTiers || []
       }));
     } catch {
       return [];
@@ -81,7 +87,13 @@ export const getActiveListings = unstable_cache(
         description: d.metadata?.description || "",
         highlights: d.metadata?.highlights || "",
         faq: d.metadata?.faq || [],
-        isBestTripPinned: d.metadata?.is_best_trip_pinned || false
+        isBestTripPinned: d.metadata?.is_best_trip_pinned || false,
+        pricingType: d.metadata?.pricingType || "Per Person",
+        groupPricingMode: d.metadata?.groupPricingMode || "flat",
+        groupPrice: d.metadata?.groupPrice || d.base_price,
+        minGroupPax: d.metadata?.minGroupPax || 1,
+        maxGroupPax: d.metadata?.maxGroupPax || 12,
+        groupTiers: d.metadata?.groupTiers || []
       }));
     } catch {
       return [];
