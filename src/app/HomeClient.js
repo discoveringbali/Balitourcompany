@@ -864,7 +864,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
                     <div className="flex-1 min-w-0 pr-2">
-                      <h3 className="text-[20px] sm:text-[23px] font-black uppercase tracking-tight text-white leading-tight mb-1 font-sans drop-shadow-xl line-clamp-1">
+                      <h3 className="text-[17px] sm:text-[19px] font-bold text-white leading-tight mb-1 font-sans drop-shadow-xl line-clamp-1">
                         {camp.title}
                       </h3>
                       {camp.subtitle && (
@@ -1002,7 +1002,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   {/* Bottom Bar: Title & Subtitle on Left, Click Icon Button on Right */}
                   <div className="absolute bottom-[14%] xl:bottom-[15%] inset-x-[6%] xl:inset-x-[8%] z-20 flex items-end justify-between gap-6 pointer-events-none">
                     <div className="max-w-[760px] pointer-events-none">
-                      <h2 className="text-[38px] lg:text-[48px] xl:text-[56px] font-black uppercase tracking-tight text-white leading-[1.05] drop-shadow-2xl mb-1.5 font-sans">
+                      <h2 className="text-[28px] lg:text-[36px] xl:text-[42px] font-extrabold text-white leading-[1.1] drop-shadow-2xl mb-1.5 font-sans">
                         {camp.title}
                       </h2>
                       {camp.subtitle && (
