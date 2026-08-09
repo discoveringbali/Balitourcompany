@@ -29,49 +29,57 @@ export default function AdminListings() {
 
   const tabs = ["Tour", "Activities"];
   const [listingsData, setListingsData] = useState(allListings);
-  const [companiesList, setCompaniesList] = useState([]);
+  
   const [editingCompany, setEditingCompany] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   React.useEffect(() => {
     const fetchListings = async () => {
        const { supabase } = await import('@/lib/supabase');
-       const { data, error } = await supabase.from('listings').select('*').order('created_at', { ascending: false });
+       const { data, error } = await supabase.from('listings').select('*, pricing_tiers(*), itineraries(*)').order('created_at', { ascending: false });
        if (error) {
          console.error("Error fetching listings:", error);
          setIsLoading(false);
          return;
        }
-         if (data) {
+       if (data) {
          const grouped = { Tour: [], Activities: [], Transport: [] };
          data.forEach(d => {
-            const serviceType = d.data?.originalService || d.type;
             const frontendItem = {
                id: d.id,
-               service: serviceType,
+               service: d.type,
                title: d.title,
                location: d.location,
-               price: d.price,
+               price: d.base_price,
                duration: d.duration,
                category: d.category,
                rating: d.rating,
                reviews: d.reviews,
                status: d.status,
-               image: d.image,
-               company: d.company_name,
-               ...(d.data || {}) // Spread the nested JSONB details
+               image: d.main_image,
+               gallery: d.gallery_images || [],
+               
+               description: d.description || "",
+               highlights: d.highlights || "",
+               included: d.included || "",
+               excluded: d.excluded || "",
+               whatToBring: d.what_to_bring || "",
+               faq: d.faq || "",
+               policies: d.policies || "",
+
+               isCampaignPinned: d.is_hero_campaign,
+               campaignTitle: d.campaign_title || "",
+               campaignDescription: d.campaign_description || "",
+               campaignLabel: d.campaign_label || "",
+               isBestTripPinned: d.is_best_trip_pinned,
+
+               itinerary: (d.itineraries || []).map(it => ({ title: it.title, description: it.description, time_label: it.time_label || "" })),
+               tourTiers: (d.pricing_tiers || []).map(pt => ({ pax: pt.min_pax, price: pt.price }))
             };
             if(grouped[frontendItem.service]) grouped[frontendItem.service].push(frontendItem);
          });
          setListingsData(grouped);
        }
-
-       // Fetch companies
-       const { data: compData } = await supabase.from('companies').select('*').order('created_at', { ascending: false });
-       if (compData) {
-         setCompaniesList(compData);
-       }
-
        setIsLoading(false);
     };
     fetchListings();
@@ -82,17 +90,7 @@ export default function AdminListings() {
     ((activeTab === "Activities" || activeTab === "Tour" || activeTab === "Transport") && item.company?.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const matchedDbCompanies = companiesList.filter(comp => comp.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  const legacyCompanyNames = Array.from(new Set(currentListings.filter(i => i.company).map(i => i.company)));
   
-  const combinedCompanies = [...matchedDbCompanies];
-  legacyCompanyNames.forEach(lname => {
-     if (!combinedCompanies.find(c => c.name.toLowerCase() === lname.toLowerCase())) {
-        combinedCompanies.push({ id: `legacy-${lname}`, name: lname, location: "Bali, Indonesia", joined_year: "2024", phone: "+62 800-0000-0000", verified: false });
-     }
-  });
-
-  const groupedCompanies = combinedCompanies;
 
   const handleEdit = (item) => {
     setEditingItem(item);
@@ -155,28 +153,55 @@ export default function AdminListings() {
   };
 
   const handleSaveItem = async (updatedItem) => {
-    const { supabase, deleteSupabaseFiles } = await import('@/lib/supabase');
-    
-    const oldItem = listingsData[activeTab].find(i => i.id === updatedItem.id);
+    const { supabase } = await import('@/lib/supabase');
+    const { deleteSupabaseFiles } = await import('@/lib/supabase');
+
     const urlsToDelete = [];
-    if (oldItem) {
-       if (oldItem.image && oldItem.image !== updatedItem.image) {
-          urlsToDelete.push(oldItem.image);
-       }
-       if (oldItem.gallery && Array.isArray(oldItem.gallery)) {
-          oldItem.gallery.forEach(url => {
-             if (url && (!updatedItem.gallery || !updatedItem.gallery.includes(url))) {
-                urlsToDelete.push(url);
-             }
-          });
-       }
+    if (editingItem && editingItem.image && editingItem.image !== updatedItem.image && editingItem.image.includes('supabase.co')) {
+      urlsToDelete.push(editingItem.image);
     }
-    
-    // Deconstruct for Supabase schema
+    if (editingItem && editingItem.gallery) {
+      editingItem.gallery.forEach(url => {
+        if (url && url.includes('supabase.co') && !(updatedItem.gallery || []).includes(url)) urlsToDelete.push(url);
+      });
+    }
+
     const { 
       id, service, title, location, price, duration, category, rating, 
-      reviews, status, image, company, ...nestedData 
+      reviews, status, image, gallery, description, highlights, included, excluded, 
+      whatToBring, faq, policies, isCampaignPinned, campaignTitle, campaignDescription, 
+      campaignLabel, isBestTripPinned, itinerary, tourTiers
     } = updatedItem;
+    
+    const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + id.split('-')[0];
+
+    const dbPayload = {
+       id: id,
+       slug: generateSlug(title || "Untitled"),
+       type: service === 'Activities' ? 'Tour' : service,
+       title: title || "Untitled",
+       location: location || "Bali",
+       base_price: parseInt(price) || 0,
+       duration: String(duration),
+       category: category || "General",
+       rating: parseFloat(rating) || 5.0,
+       reviews: parseInt(reviews) || 0,
+       status: status,
+       main_image: image,
+       gallery_images: gallery || [],
+       description: description || null,
+       highlights: highlights || null,
+       included: included || null,
+       excluded: excluded || null,
+       what_to_bring: whatToBring || null,
+       faq: faq || null,
+       policies: policies || null,
+       is_hero_campaign: !!isCampaignPinned,
+       campaign_title: campaignTitle || null,
+       campaign_description: campaignDescription || null,
+       campaign_label: campaignLabel || null,
+       is_best_trip_pinned: !!isBestTripPinned
+    };
 
     const getCircularReplacer = () => {
       const seen = new WeakSet();
@@ -189,30 +214,38 @@ export default function AdminListings() {
       };
     };
 
-    const rawDbPayload = {
-       id: id,
-       type: service === 'Activities' ? 'Tour' : service,
-       title: title || "Untitled",
-       location: location || "Bali",
-       price: parseInt(price) || 0,
-       duration: String(duration),
-       category: category || "General",
-       rating: parseFloat(rating) || 5.0,
-       reviews: parseInt(reviews) || 0,
-       status: status,
-       image: image,
-       data: {
-         ...nestedData,
-         originalService: service === 'Activities' ? 'Activities' : undefined
-       }
-    };
-
-    const safeDbPayload = JSON.parse(JSON.stringify(rawDbPayload, getCircularReplacer()));
+    const safeDbPayload = JSON.parse(JSON.stringify(dbPayload, getCircularReplacer()));
 
     const { error } = await supabase.from('listings').upsert(safeDbPayload);
     if (error) {
-       alert("Error saving safely to database: " + error.message);
+       alert("Error saving listing: " + error.message);
        return;
+    }
+
+    // Upsert pricing tiers
+    await supabase.from('pricing_tiers').delete().eq('listing_id', id);
+    if (tourTiers && tourTiers.length > 0) {
+       const tiersToInsert = tourTiers.map(t => ({
+          listing_id: id,
+          tier_name: `${t.pax} Pax`,
+          price: parseInt(t.price) || 0,
+          min_pax: parseInt(t.pax) || 1,
+          max_pax: parseInt(t.pax) || 1
+       }));
+       await supabase.from('pricing_tiers').insert(tiersToInsert);
+    }
+
+    // Upsert itineraries
+    await supabase.from('itineraries').delete().eq('listing_id', id);
+    if (itinerary && itinerary.length > 0) {
+       const itinsToInsert = itinerary.map((it, idx) => ({
+          listing_id: id,
+          time_label: it.time_label || `${idx+1}`,
+          title: it.title || "Activity",
+          description: it.description || null,
+          order_index: idx
+       }));
+       await supabase.from('itineraries').insert(itinsToInsert);
     }
 
     if (urlsToDelete.length > 0) {
@@ -265,19 +298,10 @@ export default function AdminListings() {
   };
 
   const handleCreateNew = () => {
-    if (activeTab === "Scooter" || activeTab === "Spa") {
-       setEditingCompany({
-          name: "",
-          location: "Bali, Indonesia",
-          phone: "",
-          google_link: "",
-          verified: false
-       });
-       return;
-    }
-
+    const generateSlug = (text) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '') + '-' + crypto.randomUUID().split('-')[0];
+    const newId = crypto.randomUUID();
     const newItem = {
-      id: crypto.randomUUID(),
+      id: newId,
       title: "New " + activeTab,
       location: "Bali, Indonesia",
       duration: "1 Day",
@@ -286,39 +310,28 @@ export default function AdminListings() {
       reviews: "0",
       service: activeTab,
       category: "Nature",
-      status: "Draft", // Always start as Draft
+      status: "Draft",
       image: ""
     };
-    
-    // Immediately save to database to prevent data loss on refresh
+
     import('@/lib/supabase').then(async ({ supabase }) => {
       const dbPayload = {
         id: newItem.id,
-        type: newItem.service,
+        slug: generateSlug(newItem.title),
+        type: newItem.service === 'Activities' ? 'Tour' : newItem.service,
         title: newItem.title,
         location: newItem.location,
-        price: 0,
-        duration: newItem.duration,
-        category: newItem.category,
-        rating: 5,
-        reviews: 0,
-        status: "Draft",
-        image: newItem.image,
-        data: {
-          originalService: newItem.service,
-          tourTiers: [],
-          groupTiers: [],
-          allInclusiveTiers: []
-        }
+        base_price: 0,
+        status: 'Draft'
       };
-      await supabase.from('listings').upsert(dbPayload);
-      
-      // Update local UI state
-      setListingsData(prev => ({
-         ...prev,
-         [activeTab]: [newItem, ...(prev[activeTab] || [])]
-      }));
+      const { error } = await supabase.from('listings').upsert(dbPayload);
+      if (error) console.error("Draft error", error);
     });
+
+    setListingsData(prev => ({
+       ...prev,
+       [activeTab]: [newItem, ...(prev[activeTab] || [])]
+    }));
     
     setEditingItem(newItem);
   };

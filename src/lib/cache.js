@@ -6,7 +6,7 @@ export const getHomepageListings = unstable_cache(
     try {
       const { data, error } = await supabase
         .from('listings')
-        .select('id, type, title, location, price, duration, category, rating, reviews, status, image, company_name, originalService:data->originalService, isCampaignPinned:data->isCampaignPinned, campaignTitle:data->campaignTitle, campaignDescription:data->campaignDescription, campaignLabel:data->campaignLabel, campaignVideo:data->campaignVideo, campaignYoutubeLink:data->campaignYoutubeLink, campaignRecommendation:data->campaignRecommendation, campaignIgLink:data->campaignIgLink, isBestTripPinned:data->isBestTripPinned, spaSetting:data->spaSetting, tourTiers:data->tourTiers, groupTiers:data->groupTiers, minGroupPax:data->minGroupPax, maxGroupPax:data->maxGroupPax, groupPricingMode:data->groupPricingMode, allInclusiveTiers:data->allInclusiveTiers, allInclusiveSurcharge:data->allInclusiveSurcharge, pricingType:data->pricingType, min60:data->min60, min90:data->min90, min120:data->min120, dailyPrice:data->dailyPrice, weeklyPrice:data->weeklyPrice, monthlyPrice:data->monthlyPrice, badge:data->badge')
+        .select('id, slug, type, title, location, base_price, duration, category, rating, reviews, status, main_image, gallery_images, description, highlights, included, excluded, what_to_bring, faq, policies, is_hero_campaign, campaign_title, campaign_description, campaign_label, is_best_trip_pinned, pricing_tiers(*), itineraries(*)')
         .eq('status', 'Active');
       if (error || !data || data.length === 0) {
         return [];
