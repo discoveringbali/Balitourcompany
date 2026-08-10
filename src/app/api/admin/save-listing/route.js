@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import { createClient } from '@supabase/supabase-js';
+import { generateTourReviews } from '@/lib/reviews-generator';
 
 const getSupabase = () => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
@@ -13,6 +14,19 @@ export async function POST(req) {
     const { safeDbPayload, tiersToInsert, itinsToInsert, id } = body;
 
     const supabase = getSupabase();
+
+    // 0. Auto-generate reviews for new tours
+    if (!safeDbPayload.reviews_count || safeDbPayload.reviews_count === 0) {
+      const reviewCount = Math.floor(Math.random() * (70 - 45 + 1)) + 45; // 45 to 70
+      const generatedReviews = generateTourReviews(safeDbPayload.title, safeDbPayload.location, reviewCount);
+      
+      const newMetadata = safeDbPayload.metadata || {};
+      newMetadata.reviewsList = generatedReviews;
+      
+      safeDbPayload.metadata = newMetadata;
+      safeDbPayload.reviews_count = reviewCount;
+      safeDbPayload.rating = 5;
+    }
 
     // 1. Upsert Listing
     const { error: listingError } = await supabase.from('listings').upsert(safeDbPayload);
