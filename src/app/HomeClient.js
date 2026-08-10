@@ -989,6 +989,41 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 </div>
               )}
 
+              {/* Desktop Hero Typography */}
+              {camp.isHeroSlide && (
+                <>
+                  {/* Left Side: Huge Title */}
+                  <div className="absolute top-[22%] xl:top-[28%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[80%] md:max-w-[65%] lg:max-w-[55%] flex flex-col gap-8">
+                    <h1 
+                      className="text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black text-white leading-[0.9] tracking-tighter uppercase drop-shadow-2xl font-sans"
+                      style={{ textWrap: 'balance' }}
+                    >
+                      {camp.title}
+                    </h1>
+                    
+                    <div className="flex flex-col gap-6 items-start">
+                      <span className="text-white/90 font-bold tracking-[0.25em] uppercase text-sm md:text-base drop-shadow-lg">
+                        BALI, INDONESIA
+                      </span>
+                      
+                      <div className="pointer-events-auto mt-2">
+                        <Link href="/tours" className="inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/40 bg-black/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold tracking-widest text-[11px] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl">
+                          EXPLORE EXPERIENCE
+                          <ArrowUpRight size={16} strokeWidth={2.5} />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Side: Description */}
+                  <div className="absolute bottom-[20%] xl:bottom-[25%] right-[6%] xl:right-[8%] z-20 pointer-events-none w-full max-w-[350px] lg:max-w-[450px] xl:max-w-[500px]">
+                     <p className="text-white/90 text-[15px] lg:text-[17px] font-medium leading-relaxed drop-shadow-lg text-right">
+                       {camp.subtitle}
+                     </p>
+                  </div>
+                </>
+              )}
+
               {/* Desktop Campaign Card Content */}
               {!camp.isHeroSlide && (
                 <>
