@@ -751,33 +751,60 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               if (index !== currentCampIdx) setCurrentCampIdx(index);
             }}
           >
-            {displayCampaigns.map((camp, idx) => (
-              <div key={camp.id} className="relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-soft border border-border bg-black select-none">
-                {camp.campaignYoutubeLink && idx === 0 && !isDesktop ? (
-                  showVideo ? (
-                    <iframe loading="lazy" ref={camp.isHeroSlide ? heroMediaRef : null} src={getYoutubeEmbedUrl(camp.campaignYoutubeLink)} className="absolute inset-0 w-full h-full" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen />
+            {displayCampaigns.map((camp, idx) => {
+              const innerContent = (
+                <>
+                  {camp.campaignYoutubeLink && idx === 0 && !isDesktop ? (
+                    showVideo ? (
+                      <iframe loading="lazy" ref={camp.isHeroSlide ? heroMediaRef : null} src={getYoutubeEmbedUrl(camp.campaignYoutubeLink)} className="absolute inset-0 w-full h-full" frameBorder="0" allow="autoplay; fullscreen" allowFullScreen />
+                    ) : camp.image ? (
+                      <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                    ) : null
+                  ) : camp.campaignVideo && idx === 0 && !isDesktop ? (
+                    showVideo ? (
+                      <video ref={camp.isHeroSlide ? heroMediaRef : null} src={camp.campaignVideo} autoPlay loop playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
+                    ) : camp.image ? (
+                      <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                    ) : null
                   ) : camp.image ? (
                     <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
-                  ) : null
-                ) : camp.campaignVideo && idx === 0 && !isDesktop ? (
-                  showVideo ? (
-                    <video ref={camp.isHeroSlide ? heroMediaRef : null} src={camp.campaignVideo} autoPlay loop playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none" />
-                  ) : camp.image ? (
-                    <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
-                  ) : null
-                ) : camp.image ? (
-                  <Image src={camp.image} alt={camp.badge || "Campaign Image"} unoptimized priority={idx === 0} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
-                ) : null}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/40 to-transparent z-0 pointer-events-none" />
-
-                {/* Badge top left */}
-                <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
-                  {!camp.isHeroSlide && (
-                    <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
-                      {camp.badge || "OFFICIAL PARTNER"}
-                    </span>
-                  )}
+                  ) : null}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/40 to-transparent z-0 pointer-events-none" />
+                </>
+              );
+              
+              if (camp.isExternalCampaign && camp.externalUrl) {
+                return (
+                  <a key={camp.id} href={camp.externalUrl} target="_blank" rel="noopener noreferrer" className="relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-soft border border-border bg-black select-none block">
+                    {innerContent}
+                    
+                    {/* Badge top left */}
+                    <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
+                      {!camp.isHeroSlide && (
+                        <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
+                          {camp.badge || "OFFICIAL PARTNER"}
+                        </span>
+                      )}
+                    </div>
+                  </a>
+                );
+              }
+              
+              return (
+                <div key={camp.id} className="relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-soft border border-border bg-black select-none">
+                  {innerContent}
+                  
+                  {/* Badge top left */}
+                  <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
+                    {!camp.isHeroSlide && (
+                      <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
+                        {camp.badge || "OFFICIAL PARTNER"}
+                      </span>
+                    )}
+                  </div>
                 </div>
+              );
+            })}
 
                 {/* Mobile Hero Recommendation Labels (Top and Bottom) */}
                 {camp.isHeroSlide && (
