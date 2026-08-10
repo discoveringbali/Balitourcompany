@@ -64,7 +64,6 @@ export default function AdminDashboard() {
   }, []);
 
   const loadHeroAndCampaigns = async () => {
-    setCampaigns(getCampaignSettings());
     try {
       const { data, error } = await supabase.from('homepage_settings').select('*').eq('id', 1).single();
       if (error && error.code !== 'PGRST116') throw error;
@@ -73,9 +72,18 @@ export default function AdminDashboard() {
           campaignVideo: data.campaign_video || "",
           campaignYoutubeLink: data.campaign_youtube_link || ""
         });
+        if (data.metadata?.campaigns) {
+          setCampaigns(data.metadata.campaigns);
+          saveCampaignSettings(data.metadata.campaigns);
+        } else {
+          setCampaigns(getCampaignSettings());
+        }
+      } else {
+        setCampaigns(getCampaignSettings());
       }
     } catch (err) {
       console.error("Error loading hero settings:", err.message);
+      setCampaigns(getCampaignSettings());
     }
   };
 
@@ -159,10 +167,14 @@ export default function AdminDashboard() {
   const handleHeroSave = async (e) => {
     if (e) e.preventDefault();
     try {
+      const { data: existingData } = await supabase.from('homepage_settings').select('metadata').eq('id', 1).single();
+      const metadata = existingData?.metadata || {};
+
       const payload = {
         id: 1,
         campaign_video: heroSettings.campaignVideo,
         campaign_youtube_link: heroSettings.campaignYoutubeLink,
+        metadata: { ...metadata, campaigns: campaigns },
         updated_at: new Date().toISOString()
       };
       const { error } = await supabase.from('homepage_settings').upsert(payload, { onConflict: 'id' });
