@@ -105,7 +105,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
            }
         } else {
            if (tourData.pricingType === "Per Group") {
-              total = baseUnit;
+              total = baseUnit * desktopPax;
            } else if (tourData.tourTiers && tourData.tourTiers.length > 0) {
               total = baseUnit * desktopPax; // Per person tiered prices are per person
            } else {

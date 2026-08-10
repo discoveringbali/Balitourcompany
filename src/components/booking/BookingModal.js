@@ -139,9 +139,9 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
              return basePrice * pax;
           }
        } else if (serviceData?.pricingType === "Per Group") {
-          return basePrice;
+          return basePrice * pax;
        } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
-          return basePrice;
+          return basePrice * pax;
        } else {
           return basePrice * pax;
        }
@@ -519,7 +519,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
              </>
            )}
            <button form="bookingForm" type="submit" className="w-full bg-black hover:bg-neutral-800 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white transition-all active:scale-95 text-[16px] shadow-sm">
-             {step === 1 ? 'Continue to Details' : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
+             {step === 1 ? (serviceData ? formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount)) : 'Continue to Details') : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
            </button>
            {step === 2 && (
              <p className="text-center text-[12px] font-medium text-gray-400 mt-4 px-4 leading-snug">

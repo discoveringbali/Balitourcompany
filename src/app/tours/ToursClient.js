@@ -5,6 +5,7 @@ import ListingCard from "@/components/listing/ListingCard";
 import UniversalSearchBar from "@/components/search/UniversalSearchBar";
 import { ChevronDown } from "lucide-react";
 import { generateSlug } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const categories = ["All", "Adventure", "Water", "Nature", "Culture"];
 const locations = ["All", "Ubud", "Nusa Penida", "Kuta", "Seminyak", "Canggu", "Uluwatu", "Bedugul"];
@@ -31,7 +32,7 @@ export default function ToursClient({ initialTours }) {
   });
 
   return (
-    <div className="w-full bg-background min-h-screen pt-24 pb-20">
+    <div className="w-full bg-background min-h-screen pt-20 md:pt-24 pb-20">
       <div className="container mx-auto px-4 lg:max-w-7xl">
         
         {/* Header & Search */}
@@ -43,50 +44,65 @@ export default function ToursClient({ initialTours }) {
           </div>
         </div>
 
-        {/* Mobile Title (hidden on desktop) */}
-        <h1 className="text-2xl font-bold mb-6 md:hidden">Explore Tours</h1>
-
         {/* Pill Filters */}
-        <div className="mb-6 flex flex-col gap-4">
+        <div className="mb-6 flex flex-col gap-3">
           
           {/* Category Filter */}
-          <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll gap-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {categories.map((cat) => {
-              const isActive = activeCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2 rounded-full font-bold text-[14px] whitespace-nowrap transition-colors outline-none shrink-0 border ${
-                    isActive 
-                      ? 'bg-black text-white border-black' 
-                      : 'bg-white text-text-secondary border-border hover:border-black hover:text-black'
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+          <div className="bg-black rounded-[32px] p-1.5 shadow-md">
+            <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {categories.map((cat) => {
+                const isActive = activeCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="toursCategoryIndicator"
+                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
+                        transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                      />
+                    )}
+                    <div className="relative z-10 flex items-center justify-center">
+                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                          {cat}
+                        </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Location Filter */}
-          <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll gap-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {locations.map((loc) => {
-              const isActive = activeLocation === loc;
-              return (
-                <button
-                  key={loc}
-                  onClick={() => setActiveLocation(loc)}
-                  className={`px-5 py-2 rounded-full font-bold text-[14px] whitespace-nowrap transition-colors outline-none shrink-0 border ${
-                    isActive 
-                      ? 'bg-black text-white border-black' 
-                      : 'bg-white text-text-secondary border-border hover:border-black hover:text-black'
-                  }`}
-                >
-                  {loc}
-                </button>
-              );
-            })}
+          <div className="bg-black rounded-[32px] p-1.5 shadow-md">
+            <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              {locations.map((loc) => {
+                const isActive = activeLocation === loc;
+                return (
+                  <button
+                    key={loc}
+                    onClick={() => setActiveLocation(loc)}
+                    className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="toursLocationIndicator"
+                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
+                        transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                      />
+                    )}
+                    <div className="relative z-10 flex items-center justify-center">
+                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                          {loc}
+                        </span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
         </div>
