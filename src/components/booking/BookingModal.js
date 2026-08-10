@@ -71,8 +71,9 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   };
 
   const handleGuestsChange = (newGuests) => {
-    const minP = serviceData?.minPax || 1;
-    const finalGuests = Math.max(minP, newGuests);
+    const minP = serviceData?.minGroupPax || serviceData?.minPax || 1;
+    const maxP = serviceData?.maxGroupPax || serviceData?.maxPax || 99;
+    const finalGuests = Math.min(maxP, Math.max(minP, newGuests));
     setFormData(prev => ({ ...prev, guests: String(finalGuests) }));
     if (onPaxChange) onPaxChange(finalGuests);
   };

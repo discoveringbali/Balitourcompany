@@ -43,17 +43,25 @@ export default function ListingCard({ item, linkTo, compact }) {
 
   let basePriceToUse = item.price;
   const dataObj = item.data || item || {};
-  if (dataObj.pricingType === "Per Group" && dataObj.groupTiers && dataObj.groupTiers.length > 0) {
-      const validGroupTiers = dataObj.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
-      if (validGroupTiers.length > 0) {
-          validGroupTiers.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
-          basePriceToUse = Number(String(validGroupTiers[0].price).replace(/[^0-9]/g, ''));
+  if (dataObj.pricingType === "Per Group") {
+      if (dataObj.groupPricingMode === "flat" && dataObj.groupPrice) {
+          basePriceToUse = Number(String(dataObj.groupPrice).replace(/[^0-9]/g, ''));
+      } else if (dataObj.groupTiers && dataObj.groupTiers.length > 0) {
+          const validGroupTiers = dataObj.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+          if (validGroupTiers.length > 0) {
+              validGroupTiers.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
+              basePriceToUse = Number(String(validGroupTiers[0].price).replace(/[^0-9]/g, ''));
+          }
       }
   } else if (!basePriceToUse || basePriceToUse == 0) {
       const tiersToUse = (dataObj.tourTiers && dataObj.tourTiers.length > 0) ? dataObj.tourTiers : ((dataObj.allInclusiveTiers && dataObj.allInclusiveTiers.length > 0) ? dataObj.allInclusiveTiers : []);
       const validTiers = tiersToUse.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
       if (validTiers.length > 0) {
-          validTiers.sort((a, b) => Number(a.pax) - Number(b.pax));
+          validTiers.sort((a, b) => {
+              const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (dataObj.pricingType !== "Per Group" ? (Number(a.pax) || 1) : 1);
+              const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (dataObj.pricingType !== "Per Group" ? (Number(b.pax) || 1) : 1);
+              return aPrice - bPrice;
+          });
           const minTier = validTiers[0];
           let priceNum = Number(String(minTier.price).replace(/[^0-9]/g, ''));
           if (dataObj.pricingType !== "Per Group") {

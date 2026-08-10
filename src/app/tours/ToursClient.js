@@ -36,18 +36,16 @@ export default function ToursClient({ initialTours }) {
       <div className="container mx-auto px-4 lg:max-w-7xl">
         
         {/* Header & Search */}
-        <div className="mb-8 hidden md:block">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">Explore Bali Tours</h1>
-          <p className="text-text-secondary mb-8">Discover and book the most epic adventures on the island.</p>
-          <div className="bg-surface p-2 rounded-3xl shadow-sm mb-8 inline-block max-w-full lg:min-w-[800px]">
+        <div className="mb-4">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 hidden md:block">Explore Bali Tours</h1>
+          <p className="text-text-secondary mb-8 hidden md:block">Discover and book the most epic adventures on the island.</p>
+          <div className="bg-surface p-2 rounded-3xl shadow-sm inline-block w-full lg:min-w-[800px]">
             <UniversalSearchBar />
           </div>
         </div>
 
-        {/* Pill Filters */}
-        <div className="mb-6 flex flex-col gap-3">
-          
-          {/* Category Filter */}
+        {/* Sticky Category Filter */}
+        <div className="sticky top-[70px] md:top-[90px] z-30 bg-background pt-2 pb-4">
           <div className="bg-black rounded-[32px] p-1.5 shadow-md">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {categories.map((cat) => {
@@ -75,36 +73,6 @@ export default function ToursClient({ initialTours }) {
               })}
             </div>
           </div>
-
-          {/* Location Filter */}
-          <div className="bg-black rounded-[32px] p-1.5 shadow-md">
-            <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              {locations.map((loc) => {
-                const isActive = activeLocation === loc;
-                return (
-                  <button
-                    key={loc}
-                    onClick={() => setActiveLocation(loc)}
-                    className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="toursLocationIndicator"
-                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
-                        transition={{ type: "spring", stiffness: 400, damping: 28 }}
-                      />
-                    )}
-                    <div className="relative z-10 flex items-center justify-center">
-                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
-                          {loc}
-                        </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">

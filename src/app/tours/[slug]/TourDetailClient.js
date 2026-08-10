@@ -105,7 +105,11 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
            }
         } else {
            if (tourData.pricingType === "Per Group") {
-              total = baseUnit * desktopPax;
+              if (tourData.groupPricingMode === "tiered" || (tourData.groupTiers && tourData.groupTiers.length > 0 && !tourData.groupPricingMode)) {
+                  total = baseUnit * desktopPax; // Tiered is per person
+              } else {
+                  total = baseUnit; // Flat rate is total group price
+              }
            } else if (tourData.tourTiers && tourData.tourTiers.length > 0) {
               total = baseUnit * desktopPax; // Per person tiered prices are per person
            } else {
@@ -702,7 +706,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                  <div className="flex items-center gap-3">
                    <button onClick={() => setDesktopPax(Math.max(tourData.minGroupPax || tourData.minPax || 1, desktopPax - 1))} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Minus size={16} strokeWidth={3} /></button>
                    <span className="font-extrabold text-primary text-[15px] w-4 text-center">{desktopPax}</span>
-                   <button onClick={() => setDesktopPax(Math.min(tourData.maxGroupPax || 20, desktopPax + 1))} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Plus size={16} strokeWidth={3} /></button>
+                   <button onClick={() => setDesktopPax(Math.min(tourData.maxGroupPax || tourData.maxPax || 99, desktopPax + 1))} className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"><Plus size={16} strokeWidth={3} /></button>
                  </div>
                </div>
 
