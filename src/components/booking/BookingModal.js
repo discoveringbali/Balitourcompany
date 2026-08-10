@@ -94,19 +94,18 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     }
   };
 
-  const getBaseTotal = () => {
+  const getPerPersonPrice = () => {
     const getMultiplierPrice = (rawPrice) => {
       const p = Number(rawPrice);
       if (!p) return 0;
       return Math.floor(p > 1000 ? p : p * 1000);
     };
     let pax = parseInt(formData.guests) || 1;
-    let basePrice = getMultiplierPrice(serviceData.price);
+    let basePrice = getMultiplierPrice(serviceData?.price);
     
-    // Handle All Inclusive Surcharge if selected
     if (localPackage === 'All Inclusive') {
-       basePrice = getMultiplierPrice(serviceData.allInclusiveSurcharge) || basePrice;
-       if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
+       basePrice = getMultiplierPrice(serviceData?.allInclusiveSurcharge) || basePrice;
+       if (serviceData?.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
           let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
           let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
           if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
@@ -124,11 +123,19 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
        } else if (serviceData.groupPrice) {
           basePrice = getMultiplierPrice(serviceData.groupPrice);
        }
-    } else if (serviceData.tourTiers && serviceData.tourTiers.length > 0) {
+    } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
        let sortedTiers = [...serviceData.tourTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
        let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
        if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
     }
+    return basePrice;
+  };
+
+  const getBaseTotal = () => {
+    if (!serviceData) return 0;
+    
+    let pax = parseInt(formData.guests) || 1;
+    let basePrice = getPerPersonPrice();
     
     if (serviceData.type === 'scooter') {
        return basePrice * (parseInt(formData.duration) || 1);
@@ -504,23 +511,31 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                  </div>
                )}
                
-               <div className="flex justify-between items-center mb-6 px-1">
-                 <span className="text-[14px] font-bold text-gray-500">Expected Total</span>
-                 <div className="flex flex-col items-end">
-                    {appliedDiscount && (
-                      <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
-                        {formatPrice(getBaseTotal())}
+               
+               {!(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode === "flat") && (
+                 <div className="flex justify-between items-center mb-6 px-1">
+                   <span className="text-[14px] font-bold text-gray-500">
+                     {serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? "Price per person" : "Expected Total"}
+                   </span>
+                   <div className="flex flex-col items-end">
+                      {appliedDiscount && (
+                        <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
+                          {formatPrice(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal())}
+                        </span>
+                      )}
+                      <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
+                        {formatPrice((serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal()) - calculateDiscount(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal(), appliedDiscount))}
                       </span>
-                    )}
-                    <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
-                      {formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}
-                    </span>
+                   </div>
                  </div>
-               </div>
+               )}
              </>
            )}
            <button form="bookingForm" type="submit" className="w-full bg-black hover:bg-neutral-800 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white transition-all active:scale-95 text-[16px] shadow-sm">
-             {step === 1 ? (serviceData ? formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount)) : 'Continue to Details') : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
+             {step === 1 ? (
+                (serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode === "flat") ? 'Continue to Details' : 
+                (serviceData ? formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount)) : 'Continue to Details')
+             ) : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
            </button>
            {step === 2 && (
              <p className="text-center text-[12px] font-medium text-gray-400 mt-4 px-4 leading-snug">
