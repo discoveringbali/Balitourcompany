@@ -127,7 +127,13 @@ export const getPublishedBlogs = unstable_cache(
 export const getHomepageSettings = unstable_cache(
   async () => {
     try {
-      const { data, error } = await supabase
+      const { createClient } = await import('@supabase/supabase-js');
+      const adminSupabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+        process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder'
+      );
+      
+      const { data, error } = await adminSupabase
         .from('homepage_settings')
         .select('campaign_video, campaign_youtube_link, campaign_recommendation, campaign_ig_link, campaign_recommendation_2, campaign_ig_link_2, metadata')
         .eq('id', 1)
