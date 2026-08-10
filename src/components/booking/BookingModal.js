@@ -94,6 +94,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     }
   };
 
+  const getMultiplierPrice = (p) => {
+    if (!p) return 0;
+    return Math.floor(p > 1000 ? p : p * 1000);
+  };
+
   const getPerPersonPrice = () => {
     let pax = parseInt(formData.guests) || 1;
     let basePrice = getMultiplierPrice(serviceData?.price);
@@ -128,11 +133,6 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
 
   const getBaseTotal = () => {
     if (!serviceData) return 0;
-    
-    const getMultiplierPrice = (p) => {
-      if (!p) return 0;
-      return Math.floor(p > 1000 ? p : p * 1000);
-    };
     
     let pax = parseInt(formData.guests) || 1;
     let basePrice = getPerPersonPrice();
