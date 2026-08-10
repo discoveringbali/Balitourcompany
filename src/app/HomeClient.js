@@ -987,11 +987,42 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isPlaying ? <Pause size={36} className="fill-current" /> : <Play size={36} className="fill-current ml-2" />}
                   </button>
                 </div>
+              {/* Desktop Hero Typography for Video Slide (No title) */}
+              {camp.isHeroSlide && camp.campaignRecommendation && (
+                <div className="absolute bottom-[20%] right-[6%] xl:right-[8%] z-20 pointer-events-none max-w-[320px] text-right">
+                  <p className="text-white font-bold drop-shadow-md text-sm xl:text-base leading-tight uppercase tracking-wider">
+                    {camp.campaignRecommendation}
+                  </p>
+                  {camp.campaignIgLink && (
+                    <a href={camp.campaignIgLink} target="_blank" rel="noopener noreferrer" className="inline-block mt-3 text-white/80 hover:text-white pointer-events-auto">
+                      <ArrowUpRight size={20} />
+                    </a>
+                  )}
+                </div>
+              )}
+              {camp.isHeroSlide && camp.campaignRecommendation2 && (
+                <div className="absolute bottom-[20%] left-[6%] xl:left-[8%] z-20 pointer-events-none max-w-[320px] text-left">
+                  <p className="text-white font-bold drop-shadow-md text-sm xl:text-base leading-tight uppercase tracking-wider">
+                    {camp.campaignRecommendation2}
+                  </p>
+                  {camp.campaignIgLink2 && (
+                    <a href={camp.campaignIgLink2} target="_blank" rel="noopener noreferrer" className="inline-block mt-3 text-white/80 hover:text-white pointer-events-auto">
+                      <ArrowUpRight size={20} />
+                    </a>
+                  )}
+                </div>
               )}
 
-              {/* Desktop Hero Typography */}
-              {camp.isHeroSlide && (
+              {/* Desktop Campaign Slide Content (Huge Typography) */}
+              {!camp.isHeroSlide && (
                 <>
+                  {/* Top Left Badge */}
+                  <div className="absolute top-[12%] left-[6%] xl:left-[8%] z-20 pointer-events-none">
+                    <span className="inline-block px-4 py-2 bg-white/95 backdrop-blur-md text-black text-[12px] font-black uppercase tracking-wider shadow-md rounded-[10px]">
+                      {camp.badge || "OFFICIAL PARTNER"}
+                    </span>
+                  </div>
+
                   {/* Left Side: Huge Title */}
                   <div className="absolute top-[22%] xl:top-[28%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[80%] md:max-w-[65%] lg:max-w-[55%] flex flex-col gap-8">
                     <h1 
@@ -1007,10 +1038,25 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       </span>
                       
                       <div className="pointer-events-auto mt-2">
-                        <Link href="/tours" className="inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/40 bg-black/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold tracking-widest text-[11px] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl">
-                          EXPLORE EXPERIENCE
-                          <ArrowUpRight size={16} strokeWidth={2.5} />
-                        </Link>
+                        {camp.isExternalCampaign ? (
+                          <a
+                            href={camp.externalUrl || "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/40 bg-black/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold tracking-widest text-[11px] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl"
+                          >
+                            EXPLORE EXPERIENCE
+                            <ArrowUpRight size={16} strokeWidth={2.5} />
+                          </a>
+                        ) : (
+                          <Link
+                            href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
+                            className="inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/40 bg-black/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold tracking-widest text-[11px] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl"
+                          >
+                            EXPLORE EXPERIENCE
+                            <ArrowUpRight size={16} strokeWidth={2.5} />
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1020,52 +1066,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                      <p className="text-white/90 text-[15px] lg:text-[17px] font-medium leading-relaxed drop-shadow-lg text-right">
                        {camp.subtitle}
                      </p>
-                  </div>
-                </>
-              )}
-
-              {/* Desktop Campaign Card Content */}
-              {!camp.isHeroSlide && (
-                <>
-                  {/* Top Left Badge */}
-                  <div className="absolute top-[12%] left-[6%] xl:left-[8%] z-20 pointer-events-none">
-                    <span className="inline-block px-4 py-2 bg-white/95 backdrop-blur-md text-black text-[12px] font-black uppercase tracking-wider shadow-md rounded-[10px]">
-                      {camp.badge || "OFFICIAL PARTNER"}
-                    </span>
-                  </div>
-
-                  {/* Bottom Bar: Title & Subtitle on Left, Click Icon Button on Right */}
-                  <div className="absolute bottom-[14%] xl:bottom-[15%] inset-x-[6%] xl:inset-x-[8%] z-20 flex items-end justify-between gap-6 pointer-events-none">
-                    <div className="max-w-[760px] pointer-events-none">
-                      <h2 className="text-[28px] lg:text-[36px] xl:text-[42px] font-extrabold text-white leading-[1.1] drop-shadow-2xl mb-1.5 font-sans">
-                        {camp.title}
-                      </h2>
-                      {camp.subtitle && (
-                        <p className="text-white/90 text-[15px] lg:text-[17px] font-medium leading-normal drop-shadow-lg line-clamp-1">
-                          {camp.subtitle}
-                        </p>
-                      )}
-                    </div>
-
-                    {camp.isExternalCampaign ? (
-                      <a
-                        href={camp.externalUrl || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-13 h-13 rounded-full bg-white text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
-                        aria-label="Open partner website"
-                      >
-                        <ArrowUpRight size={22} strokeWidth={2.5} className="text-black" />
-                      </a>
-                    ) : (
-                      <Link
-                        href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                        className="w-13 h-13 rounded-full bg-white text-black flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
-                        aria-label="View tour details"
-                      >
-                        <ArrowUpRight size={22} strokeWidth={2.5} className="text-black" />
-                      </Link>
-                    )}
                   </div>
                 </>
               )}
