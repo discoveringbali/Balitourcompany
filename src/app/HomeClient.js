@@ -1026,20 +1026,20 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
 
                   {/* Left Side: Cinematic Title */}
-                  <div className="absolute top-[22%] xl:top-[28%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[85%] md:max-w-[70%] lg:max-w-[55%] flex flex-col gap-5">
+                  <div className="absolute bottom-[18%] xl:bottom-[20%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[85%] md:max-w-[65%] lg:max-w-[50%] flex flex-col gap-4">
                     <h1 
-                      className="text-[32px] md:text-[40px] lg:text-[48px] xl:text-[56px] font-extrabold text-white leading-[1.1] tracking-tight uppercase drop-shadow-xl font-sans"
+                      className="text-[28px] md:text-[36px] lg:text-[42px] xl:text-[48px] font-extrabold text-white leading-[1.1] tracking-tight uppercase drop-shadow-xl font-sans"
                       style={{ textWrap: 'balance' }}
                     >
                       {camp.title}
                     </h1>
                     
                     <div className="flex flex-col gap-4 items-start mt-1">
-                      <span className="text-white/80 font-semibold tracking-[0.25em] uppercase text-[10px] md:text-xs drop-shadow-md">
+                      <span className="text-white/80 font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs drop-shadow-md">
                         BALI, INDONESIA
                       </span>
                       
-                      <div className="pointer-events-auto mt-3">
+                      <div className="pointer-events-auto mt-2">
                         {camp.isExternalCampaign ? (
                           <a
                             href={camp.externalUrl || "#"}
@@ -1064,8 +1064,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
 
                   {/* Right Side: Cinematic Description */}
-                  <div className="absolute bottom-[20%] xl:bottom-[22%] right-[6%] xl:right-[8%] z-20 pointer-events-none w-full max-w-[300px] lg:max-w-[380px] xl:max-w-[420px]">
-                     <p className="text-white/80 text-[13px] lg:text-[14px] xl:text-[15px] font-medium leading-[1.6] drop-shadow-md text-right line-clamp-3 md:line-clamp-4">
+                  <div className="absolute bottom-[18%] xl:bottom-[20%] right-[6%] xl:right-[8%] z-20 pointer-events-none w-full max-w-[300px] lg:max-w-[380px] xl:max-w-[420px] flex items-end">
+                     <p className="text-white/80 text-[13px] lg:text-[14px] xl:text-[15px] font-medium leading-[1.6] drop-shadow-md text-right line-clamp-3 md:line-clamp-4 mb-3">
                        {camp.subtitle}
                      </p>
                   </div>
