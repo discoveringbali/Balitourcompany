@@ -602,7 +602,7 @@ export default function AdminListings() {
                        {cleanDisplayPrice > 1000 ? `IDR ${cleanDisplayPrice.toLocaleString('id-ID')}` : `IDR ${(cleanDisplayPrice * 15000).toLocaleString('id-ID')}`}
                     </div>
                     <div className="text-[10px] font-extrabold text-gray-400 uppercase tracking-widest">
-                       / {item.pricingType === "Per Group" ? 'GROUP' : 'PERSON'}
+                       / {item.pricingType === "Per Group" ? (item.groupPricingMode === "tiered" ? 'PERSON (TIERED)' : 'GROUP') : 'PERSON'}
                     </div>
                   </div>
                   

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { X, Plus, Trash2, Tag, Percent, Check, AlertCircle, Copy } from "lucide-react";
-import { getDiscountCodes, saveDiscountCodes } from "@/lib/discounts";
 
 const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
 
@@ -13,7 +12,12 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
-      setCodes(getDiscountCodes());
+      fetch('/api/discounts')
+        .then(res => res.json())
+        .then(data => {
+           setCodes(Array.isArray(data) ? data : []);
+        })
+        .catch(err => console.error("Error fetching discounts:", err));
       setIsSaved(false);
       document.body.style.overflow = "hidden";
     } else {
@@ -24,9 +28,17 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const handleSave = () => {
-    saveDiscountCodes(codes);
-    setIsSaved(true);
+  const handleSave = async () => {
+    try {
+      await fetch('/api/discounts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(codes)
+      });
+      setIsSaved(true);
+    } catch (error) {
+      console.error("Error saving discounts:", error);
+    }
     setTimeout(() => {
       onClose();
     }, 600);

@@ -6,7 +6,7 @@ import WeeklyCalendar from "./WeeklyCalendar";
 import LocationAutocomplete from "./LocationAutocomplete";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "next-auth/react";
-import { validateDiscountCode, calculateDiscount } from "@/lib/discounts";
+import { calculateDiscount } from "@/lib/discounts";
 import { saveBooking } from "@/lib/bookings";
 import { useCurrency } from "@/lib/currency";
 
@@ -78,19 +78,28 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     if (onPaxChange) onPaxChange(finalGuests);
   };
 
-  const handleApplyPromo = () => {
+  const handleApplyPromo = async () => {
     if (!promoCode.trim()) {
       setAppliedDiscount(null);
       setPromoError('');
       return;
     }
-    const discount = validateDiscountCode(promoCode.trim());
-    if (discount) {
-      setAppliedDiscount(discount);
-      setPromoError('');
-    } else {
-      setAppliedDiscount(null);
-      setPromoError('Invalid or inactive code');
+    
+    try {
+      const res = await fetch('/api/discounts');
+      const codes = await res.json();
+      const found = codes.find(c => c.code.toUpperCase() === promoCode.trim().toUpperCase() && c.active);
+      
+      if (found) {
+        setAppliedDiscount(found);
+        setPromoError('');
+      } else {
+        setAppliedDiscount(null);
+        setPromoError('Invalid or inactive code');
+      }
+    } catch(err) {
+      console.error(err);
+      setPromoError('Error verifying code');
     }
   };
 
