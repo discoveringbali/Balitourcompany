@@ -1025,27 +1025,27 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     </span>
                   </div>
 
-                  {/* Left Side: Huge Title */}
-                  <div className="absolute top-[22%] xl:top-[28%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[80%] md:max-w-[65%] lg:max-w-[55%] flex flex-col gap-8">
+                  {/* Left Side: Cinematic Title */}
+                  <div className="absolute top-[22%] xl:top-[28%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[85%] md:max-w-[70%] lg:max-w-[60%] flex flex-col gap-6">
                     <h1 
-                      className="text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] font-black text-white leading-[0.9] tracking-tighter uppercase drop-shadow-2xl font-sans"
+                      className="text-[42px] md:text-[56px] lg:text-[64px] xl:text-[76px] font-extrabold text-white leading-[1.05] tracking-tight uppercase drop-shadow-2xl font-sans"
                       style={{ textWrap: 'balance' }}
                     >
                       {camp.title}
                     </h1>
                     
-                    <div className="flex flex-col gap-6 items-start">
-                      <span className="text-white/90 font-bold tracking-[0.25em] uppercase text-sm md:text-base drop-shadow-lg">
+                    <div className="flex flex-col gap-5 items-start mt-2">
+                      <span className="text-white/80 font-semibold tracking-[0.3em] uppercase text-xs md:text-sm drop-shadow-lg">
                         BALI, INDONESIA
                       </span>
                       
-                      <div className="pointer-events-auto mt-2">
+                      <div className="pointer-events-auto mt-4">
                         {camp.isExternalCampaign ? (
                           <a
                             href={camp.externalUrl || "#"}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/40 bg-black/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold tracking-widest text-[11px] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl"
+                            className="inline-flex items-center gap-4 px-7 py-3.5 rounded-full border border-white/30 bg-black/30 hover:bg-white/20 backdrop-blur-md text-white font-bold tracking-[0.15em] text-[10px] md:text-xs uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl"
                           >
                             EXPLORE EXPERIENCE
                             <ArrowUpRight size={16} strokeWidth={2.5} />
@@ -1053,7 +1053,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                         ) : (
                           <Link
                             href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                            className="inline-flex items-center gap-4 px-8 py-4 rounded-full border border-white/40 bg-black/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold tracking-widest text-[11px] uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl"
+                            className="inline-flex items-center gap-4 px-7 py-3.5 rounded-full border border-white/30 bg-black/30 hover:bg-white/20 backdrop-blur-md text-white font-bold tracking-[0.15em] text-[10px] md:text-xs uppercase transition-all hover:scale-105 active:scale-95 shadow-2xl"
                           >
                             EXPLORE EXPERIENCE
                             <ArrowUpRight size={16} strokeWidth={2.5} />
@@ -1063,9 +1063,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     </div>
                   </div>
 
-                  {/* Right Side: Description */}
-                  <div className="absolute bottom-[20%] xl:bottom-[25%] right-[6%] xl:right-[8%] z-20 pointer-events-none w-full max-w-[350px] lg:max-w-[450px] xl:max-w-[500px]">
-                     <p className="text-white/90 text-[15px] lg:text-[17px] font-medium leading-relaxed drop-shadow-lg text-right">
+                  {/* Right Side: Cinematic Description */}
+                  <div className="absolute bottom-[20%] xl:bottom-[22%] right-[6%] xl:right-[8%] z-20 pointer-events-none w-full max-w-[320px] lg:max-w-[400px] xl:max-w-[450px]">
+                     <p className="text-white/80 text-[14px] lg:text-[15px] xl:text-[16px] font-medium leading-[1.7] drop-shadow-lg text-right line-clamp-4 md:line-clamp-5">
                        {camp.subtitle}
                      </p>
                   </div>
