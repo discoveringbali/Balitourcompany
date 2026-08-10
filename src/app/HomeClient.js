@@ -987,6 +987,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isPlaying ? <Pause size={36} className="fill-current" /> : <Play size={36} className="fill-current ml-2" />}
                   </button>
                 </div>
+              )}
+
               {/* Desktop Hero Typography for Video Slide (No title) */}
               {camp.isHeroSlide && camp.campaignRecommendation && (
                 <div className="absolute bottom-[20%] right-[6%] xl:right-[8%] z-20 pointer-events-none max-w-[320px] text-right">

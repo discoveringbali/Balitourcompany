@@ -1,11 +1,10 @@
-import { createClient } from '@supabase/supabase-js';
-import dotenv from 'dotenv';
+const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
+const dotenv = require('dotenv');
 dotenv.config({ path: '.env.local' });
-
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 async function run() {
-  const { data, error } = await supabase.from('listings').select('*').limit(1);
+  const { data, error } = await supabase.from('homepage_settings').select('metadata').eq('id', 1).single();
   console.log(JSON.stringify(data, null, 2));
 }
 run();
