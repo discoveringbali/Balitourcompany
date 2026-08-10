@@ -112,7 +112,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           if (applicableTier) basePrice = getMultiplierPrice(applicableTier.price);
        }
     } else if (serviceData?.pricingType === "Per Group") {
-       if (serviceData.groupTiers && serviceData.groupTiers.length > 0) {
+       if (serviceData.groupPricingMode !== "flat" && serviceData.groupTiers && serviceData.groupTiers.length > 0) {
           const matchedTier = serviceData.groupTiers.find(t => {
              const min = Number(t.minPax || 1);
              const max = t.maxPax ? Number(t.maxPax) : 999;

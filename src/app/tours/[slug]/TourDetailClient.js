@@ -58,7 +58,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
     
     let basePrice = getMultiplierPrice(tourData.price);
     if (tourData.pricingType === "Per Group") {
-       if (tourData.groupTiers && tourData.groupTiers.length > 0) {
+       if (tourData.groupPricingMode !== "flat" && tourData.groupTiers && tourData.groupTiers.length > 0) {
           const matchedTier = tourData.groupTiers.find(t => {
              const min = Number(t.minPax || 1);
              const max = t.maxPax ? Number(t.maxPax) : 999;
@@ -118,6 +118,39 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
         }
      }
      return total;
+  };
+
+  const getLowestPrice = () => {
+      if (!tourData) return 0;
+      let basePriceToUse = tourData.price;
+      if (tourData.pricingType === "Per Group") {
+          if (tourData.groupPricingMode === "flat" && tourData.groupPrice) {
+              basePriceToUse = Number(String(tourData.groupPrice).replace(/[^0-9]/g, ''));
+          } else if (tourData.groupTiers && tourData.groupTiers.length > 0) {
+              const validGroupTiers = tourData.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+              if (validGroupTiers.length > 0) {
+                  validGroupTiers.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
+                  basePriceToUse = Number(String(validGroupTiers[0].price).replace(/[^0-9]/g, ''));
+              }
+          }
+      } else {
+          const tiersToUse = (tourData.tourTiers && tourData.tourTiers.length > 0) ? tourData.tourTiers : ((tourData.allInclusiveTiers && tourData.allInclusiveTiers.length > 0) ? tourData.allInclusiveTiers : []);
+          const validTiers = tiersToUse.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+          if (validTiers.length > 0) {
+              validTiers.sort((a, b) => {
+                  const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (tourData.pricingType !== "Per Group" ? (Number(a.pax) || 1) : 1);
+                  const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (tourData.pricingType !== "Per Group" ? (Number(b.pax) || 1) : 1);
+                  return aPrice - bPrice;
+              });
+              const minTier = validTiers[0];
+              let priceNum = Number(String(minTier.price).replace(/[^0-9]/g, ''));
+              if (tourData.pricingType !== "Per Group") {
+                 priceNum = priceNum / (Number(minTier.pax) || 1);
+              }
+              basePriceToUse = priceNum;
+          }
+      }
+      return getMultiplierPrice(basePriceToUse);
   };
 
   React.useEffect(() => {
@@ -604,7 +637,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
           <div className="hidden md:block md:w-[35%] lg:w-[32%]">
             <div className={`sticky top-[120px] rounded-2xl p-6 shadow-lg z-10 w-full ${tourData.service === "Spa" ? "bg-white border border-[#ededed]" : "bg-white border border-gray-200"}`}>
                <div className="mb-4 flex items-end gap-1">
-                  <span className={`text-[34px] font-extrabold leading-none ${tourData.service === "Spa" ? "text-[#383838] font-serif tracking-tight" : "text-primary"}`}>{formatPrice(getUnitDynamicPrice())}</span>
+                  <span className={`text-[34px] font-extrabold leading-none ${tourData.service === "Spa" ? "text-[#383838] font-serif tracking-tight" : "text-primary"}`}>{formatPrice(getLowestPrice())}</span>
                   <span className="text-text-secondary text-[15px] font-medium pb-1">/ {tourData.service === "Spa" ? "treatment" : tourData.service === "Scooter" ? scooterDuration.replace('daily', 'day').replace('weekly', 'week').replace('monthly', 'month') : tourData.pricingType === "Per Group" ? "group" : "person"}</span>
                </div>
                
@@ -822,7 +855,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                </span>
                <div className="flex items-baseline gap-1.5 truncate">
                <span className={`text-[20px] font-black leading-none tracking-tight truncate ${tourData.service === "Spa" ? "text-[#383838] font-serif" : "text-primary"}`}>
-                  {formatPrice(selectedPackage === 'All Inclusive' && (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? getAllInclusivePriceForPax(desktopPax) : getUnitDynamicPrice())}
+                  {formatPrice(selectedPackage === 'All Inclusive' && (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? getAllInclusivePriceForPax(desktopPax) : getLowestPrice())}
                </span>
             </div>
           </div>
