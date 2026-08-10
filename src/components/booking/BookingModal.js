@@ -147,7 +147,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
              return basePrice * pax;
           }
        } else if (serviceData?.pricingType === "Per Group") {
-          return basePrice * pax;
+          if (serviceData.groupPricingMode === "flat") {
+              return basePrice;
+          } else {
+              return basePrice * pax;
+          }
        } else if (serviceData?.tourTiers && serviceData.tourTiers.length > 0) {
           return basePrice * pax;
        } else {
