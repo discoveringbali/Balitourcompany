@@ -166,6 +166,10 @@ export default function MapComponent() {
           maxZoom: 19
         }).addTo(map);
 
+        map.on("click", () => {
+          setSelectedRegion(null);
+        });
+
         markersLayerRef.current = L.layerGroup().addTo(map);
         routeLayerRef.current = L.layerGroup().addTo(map);
 
@@ -362,26 +366,39 @@ export default function MapComponent() {
       </div>
 
       {activeMode === "Transport" && routeStats && (
-        <div className="absolute bottom-10 left-6 right-6 z-20 flex gap-4 overflow-x-auto pointer-events-auto">
+        <div className="absolute bottom-28 left-0 right-0 z-20 flex gap-4 overflow-x-auto pointer-events-auto px-6 snap-x snap-mandatory pb-4 hide-scroll">
           {transportsData.map(car => (
-            <div key={car.id} onClick={() => setSelectedTransport(car.id)} className={`w-[280px] shrink-0 bg-white p-4 rounded-3xl shadow-lg border-2 ${selectedTransport === car.id ? 'border-black' : 'border-transparent'}`}>
-              <h3 className="font-bold text-sm">{car.title}</h3>
-              <p className="text-xs text-gray-500">{routeStats.distanceText} • {routeStats.durationText}</p>
-              <div className="font-extrabold mt-2 text-lg">{formatIDR(routeStats.distKm * car.pricePerKm)}</div>
+            <div key={car.id} onClick={() => setSelectedTransport(car.id)} className={`w-[260px] md:w-[300px] shrink-0 bg-white p-5 rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 cursor-pointer transition-transform active:scale-95 snap-start ${selectedTransport === car.id ? 'border-black' : 'border-transparent'}`}>
+              <h3 className="font-extrabold text-[15px] leading-tight text-primary truncate">{car.title}</h3>
+              <p className="text-[13px] font-bold text-gray-400 mt-1">{routeStats.distanceText} • {routeStats.durationText}</p>
+              <div className="font-black mt-3 text-[16px] text-primary">{formatIDR(routeStats.distKm * car.pricePerKm)}</div>
               {selectedTransport === car.id && (
-                <a href={`https://wa.me/6285174119423`} target="_blank" className="block text-center mt-3 bg-black text-white py-2 rounded-lg text-xs font-bold">Book on WhatsApp</a>
+                <a href={`https://wa.me/6285174119423`} target="_blank" className="block text-center mt-4 bg-black text-white py-3 rounded-xl text-[14px] font-bold hover:scale-105 transition-transform">Book on WhatsApp</a>
               )}
             </div>
           ))}
         </div>
       )}
 
-      {activeMode !== "Transport" && (
-        <div className="absolute bottom-10 left-6 right-6 z-20 flex gap-4 overflow-x-auto pointer-events-auto">
+      {activeMode !== "Transport" && selectedRegion && displayedTours.length > 0 && (
+        <div className="absolute bottom-28 left-0 right-0 z-20 flex gap-4 overflow-x-auto pointer-events-auto px-6 snap-x snap-mandatory pb-4 hide-scroll animate-in slide-in-from-bottom-8 fade-in duration-300">
           {displayedTours.map(tour => (
-            <div key={tour.id} onClick={() => router.push(`/tours/${generateSlug(tour.name)}`)} className="w-[280px] shrink-0 bg-white p-4 rounded-3xl shadow-lg">
-              <h3 className="font-bold text-sm truncate">{tour.name}</h3>
-              <p className="font-extrabold mt-1">{formatIDR(tour.price)}</p>
+            <div key={tour.id} onClick={() => router.push(`/tours/${generateSlug(tour.name)}`)} className="w-[260px] md:w-[300px] shrink-0 bg-white rounded-[24px] shadow-[0_12px_40px_rgb(0,0,0,0.15)] snap-start overflow-hidden border border-gray-100 flex flex-col cursor-pointer active:scale-95 transition-transform hover:-translate-y-1">
+              <div className="relative w-full aspect-[16/10] bg-gray-200">
+                <img src={tour.image} alt={tour.name} className="w-full h-full object-cover" />
+                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-black uppercase text-primary shadow-sm">
+                  {selectedRegion.toUpperCase()}
+                </div>
+              </div>
+              <div className="p-4 flex flex-col justify-between flex-1">
+                <h3 className="font-extrabold text-[14px] leading-snug text-primary line-clamp-2">{tour.name}</h3>
+                <div className="mt-3 flex items-end justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Starts From</span>
+                    <p className="font-black text-primary text-[15px]">{formatIDR(tour.price)}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
