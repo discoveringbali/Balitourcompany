@@ -53,7 +53,7 @@ export default function ListingCard({ item, linkTo, compact }) {
               basePriceToUse = Number(String(validGroupTiers[0].price).replace(/[^0-9]/g, ''));
           }
       }
-  } else if (!basePriceToUse || basePriceToUse == 0) {
+  } else {
       const tiersToUse = (dataObj.tourTiers && dataObj.tourTiers.length > 0) ? dataObj.tourTiers : ((dataObj.allInclusiveTiers && dataObj.allInclusiveTiers.length > 0) ? dataObj.allInclusiveTiers : []);
       const validTiers = tiersToUse.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
       if (validTiers.length > 0) {
@@ -67,9 +67,13 @@ export default function ListingCard({ item, linkTo, compact }) {
           if (dataObj.pricingType !== "Per Group") {
              priceNum = priceNum / (Number(minTier.pax) || 1);
           }
-          basePriceToUse = priceNum;
-      } else if (dataObj.allInclusiveSurcharge) {
-          basePriceToUse = Number(String(dataObj.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
+          if (!basePriceToUse || basePriceToUse == 0 || priceNum < basePriceToUse) {
+              basePriceToUse = priceNum;
+          }
+      } else if (!basePriceToUse || basePriceToUse == 0) {
+          if (dataObj.allInclusiveSurcharge) {
+              basePriceToUse = Number(String(dataObj.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
+          }
       }
   }
 
