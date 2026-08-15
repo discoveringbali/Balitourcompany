@@ -96,7 +96,11 @@ export default function Navbar() {
   if (pathname.match(/^\/tours\/.+/) || pathname === '/map') return null;
 
   return (
-    <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 w-full ${isScrolled ? "top-0 bg-white md:bg-white/90 md:backdrop-blur-md shadow-sm border-b border-border md:top-4 md:w-[85%] md:max-w-[1000px] md:rounded-full md:shadow-[0_8px_30px_rgb(0,0,0,0.08)] md:border md:border-gray-100 md:py-2.5" : "top-0 bg-white md:bg-transparent md:border-b-0 md:w-[95%] md:max-w-[1400px] md:py-5 pt-4 pb-4"}`}>
+    <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
+      isScrolled 
+        ? "top-2 w-[95%] max-w-[95%] rounded-full bg-white/90 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px]" 
+        : "top-0 w-full bg-white pt-4 pb-4 md:bg-transparent md:w-[95%] md:max-w-[1400px] md:py-5"
+    }`}>
       
       {/* MOBILE LAYOUT (Inspired by the Reference Image) */}
       <div className="md:hidden px-6 flex items-center justify-between">

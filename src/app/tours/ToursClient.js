@@ -34,10 +34,14 @@ export default function ToursClient({ initialTours }) {
     <div className="w-full bg-background min-h-screen pt-20 md:pt-24 pb-20">
       <div className="container mx-auto px-4 lg:max-w-7xl">
         
-        {/* Header & Search */}
-        <div className="mb-4">
+        {/* Header */}
+        <div className="pt-2">
           <h1 className="text-3xl md:text-4xl font-bold mb-2 hidden md:block">Explore Bali Tours</h1>
-          <p className="text-text-secondary mb-8 hidden md:block">Discover and book the most epic adventures on the island.</p>
+          <p className="text-text-secondary mb-6 hidden md:block">Discover and book the most epic adventures on the island.</p>
+        </div>
+
+        {/* Sticky Filters */}
+        <div className="sticky top-[60px] md:top-[80px] z-30 bg-background pt-2 pb-4 flex flex-col gap-3">
           <div className="w-full lg:max-w-xl">
             <div className="flex gap-2">
               <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[28px] p-2.5 flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors">
@@ -54,11 +58,8 @@ export default function ToursClient({ initialTours }) {
               </button>
             </div>
           </div>
-        </div>
 
-        {/* Sticky Category Filter */}
-        <div className="sticky top-[70px] md:top-[90px] z-30 bg-background pt-2 pb-4">
-          <div className="bg-black rounded-[32px] p-1.5 shadow-md">
+          <div className="bg-black rounded-[32px] p-1.5 shadow-md self-start max-w-full">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {categories.map((cat) => {
                 const isActive = activeCategory === cat;
