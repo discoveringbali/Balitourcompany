@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import ListingCard from "@/components/listing/ListingCard";
-import UniversalSearchBar from "@/components/search/UniversalSearchBar";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
 import { generateSlug } from "@/lib/utils";
 import { motion } from "framer-motion";
 
@@ -39,8 +38,21 @@ export default function ToursClient({ initialTours }) {
         <div className="mb-4">
           <h1 className="text-3xl md:text-4xl font-bold mb-2 hidden md:block">Explore Bali Tours</h1>
           <p className="text-text-secondary mb-8 hidden md:block">Discover and book the most epic adventures on the island.</p>
-          <div className="bg-surface p-2 rounded-3xl shadow-sm inline-block w-full lg:min-w-[800px]">
-            <UniversalSearchBar />
+          <div className="w-full lg:max-w-xl">
+            <div className="flex gap-2">
+              <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[28px] p-2.5 flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors">
+                <div className="w-10 h-10 bg-[#f4f4f4] rounded-full flex items-center justify-center shrink-0">
+                   <Search size={16} strokeWidth={2.5} className="text-gray-400" />
+                </div>
+                <div className="ml-3 flex flex-col justify-center h-full">
+                  <span className="font-extrabold text-[13px] text-primary leading-none mb-1">Where to?</span>
+                  <span className="text-[11px] font-bold text-gray-400 leading-none">Anywhere • Any week • Add guests</span>
+                </div>
+              </div>
+              <button className="w-[60px] h-[60px] shrink-0 bg-white/95 backdrop-blur-md rounded-[28px] flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 hover:bg-gray-50 transition-colors">
+                <SlidersHorizontal size={16} strokeWidth={2.5} className="text-primary" />
+              </button>
+            </div>
           </div>
         </div>
 
