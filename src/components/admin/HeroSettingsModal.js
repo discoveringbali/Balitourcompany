@@ -185,15 +185,15 @@ export default function HeroSettingsModal({ onClose }) {
               <label className="text-xs font-black uppercase tracking-wider text-gray-500 mb-1.5 block">
                 Direct Video URL or Upload
               </label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <input 
                   type="text" 
                   placeholder="https://.../video.mp4" 
                   value={heroSettings.campaignVideo} 
                   onChange={(e) => setHeroSettings({ ...heroSettings, campaignVideo: e.target.value })} 
-                  className="flex-1 bg-white text-sm font-bold text-[#1c1c1c] rounded-xl px-4 py-2.5 border border-[#eaeaea] focus:border-black outline-none transition-colors" 
+                  className="w-full sm:flex-1 bg-white text-sm font-bold text-[#1c1c1c] rounded-xl px-4 py-2.5 border border-[#eaeaea] focus:border-black outline-none transition-colors" 
                 />
-                <label className="px-4 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0">
+                <label className="w-full sm:w-auto px-4 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer flex items-center justify-center gap-1.5 shrink-0">
                   <Upload size={14} /> {isHeroUploading ? "Uploading..." : "Upload MP4"}
                   <input type="file" accept="video/*" onChange={handleHeroVideoUpload} className="hidden" disabled={isHeroUploading} />
                 </label>
@@ -270,7 +270,7 @@ export default function HeroSettingsModal({ onClose }) {
 
             <div>
               <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Card Image</label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <input 
                   type="text" 
                   value={campaigns.scooter?.image || ""} 
@@ -279,9 +279,9 @@ export default function HeroSettingsModal({ onClose }) {
                     scooter: { ...prev.scooter, image: e.target.value }
                   }))}
                   placeholder="https://..."
-                  className="flex-1 bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                  className="w-full sm:flex-1 bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
                 />
-                <label className="px-3.5 py-2 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1 shrink-0">
+                <label className="w-full sm:w-auto px-3.5 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer flex items-center justify-center gap-1 shrink-0">
                   <Upload size={13} /> {isUploadingImage && uploadingFor === 'scooter' ? "Uploading..." : "Upload Image"}
                   <input type="file" accept="image/*" onChange={(e) => handleCardImageUpload(e, 'scooter')} className="hidden" disabled={isUploadingImage} />
                 </label>
@@ -358,7 +358,7 @@ export default function HeroSettingsModal({ onClose }) {
 
             <div>
               <label className="text-[11px] font-black uppercase tracking-wider text-gray-500 mb-1 block">Card Image</label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <input 
                   type="text" 
                   value={campaigns.spa?.image || ""} 
@@ -367,9 +367,9 @@ export default function HeroSettingsModal({ onClose }) {
                     spa: { ...prev.spa, image: e.target.value }
                   }))}
                   placeholder="https://..."
-                  className="flex-1 bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
+                  className="w-full sm:flex-1 bg-white text-xs font-bold text-[#1c1c1c] rounded-xl px-3.5 py-2.5 border border-[#eaeaea] focus:border-black outline-none"
                 />
-                <label className="px-3.5 py-2 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1 shrink-0">
+                <label className="w-full sm:w-auto px-3.5 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer flex items-center justify-center gap-1 shrink-0">
                   <Upload size={13} /> {isUploadingImage && uploadingFor === 'spa' ? "Uploading..." : "Upload Image"}
                   <input type="file" accept="image/*" onChange={(e) => handleCardImageUpload(e, 'spa')} className="hidden" disabled={isUploadingImage} />
                 </label>
@@ -380,20 +380,20 @@ export default function HeroSettingsModal({ onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="p-5 bg-white border-t border-[#eaeaea] shrink-0 flex items-center justify-between">
-          <div>
+        <div className="p-5 bg-white border-t border-[#eaeaea] shrink-0 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="w-full sm:w-auto flex justify-center sm:justify-start">
             {savedToast && (
               <span className="text-xs font-extrabold text-black flex items-center gap-1">
-                <Check size={14} /> Settings Saved Successfully!
+                <Check size={14} /> Settings Saved!
               </span>
             )}
           </div>
-          <div className="flex items-center gap-3">
-            <button onClick={onClose} className="px-5 py-2.5 rounded-xl font-extrabold text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors">
+          <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
+            <button onClick={onClose} className="flex-1 sm:flex-none px-5 py-3 sm:py-2.5 rounded-xl font-extrabold text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 transition-colors text-center">
               Cancel
             </button>
-            <button onClick={handleSave} className="px-6 py-2.5 rounded-xl font-extrabold text-xs text-white bg-black hover:bg-neutral-800 transition-all flex items-center gap-2 shadow-sm">
-              <Save size={15} /> Save All Settings
+            <button onClick={handleSave} className="flex-1 sm:flex-none px-6 py-3 sm:py-2.5 rounded-xl font-extrabold text-xs text-white bg-black hover:bg-neutral-800 transition-all flex items-center justify-center gap-2 shadow-sm">
+              <Save size={15} /> Save All
             </button>
           </div>
         </div>
