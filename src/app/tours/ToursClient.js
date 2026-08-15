@@ -31,7 +31,7 @@ export default function ToursClient({ initialTours }) {
   });
 
   return (
-    <div className="w-full bg-background min-h-screen pt-20 md:pt-24 pb-20">
+    <div className="w-full bg-background min-h-screen pt-4 md:pt-6 pb-20">
       <div className="container mx-auto px-4 lg:max-w-7xl">
         
         {/* Header */}
@@ -41,7 +41,7 @@ export default function ToursClient({ initialTours }) {
         </div>
 
         {/* Sticky Filters */}
-        <div className="sticky top-[60px] md:top-[80px] z-30 bg-background pt-2 pb-4 flex flex-col gap-3">
+        <div className="sticky top-0 z-30 bg-background pt-2 pb-4 flex flex-col gap-3">
           <div className="w-full lg:max-w-xl">
             <div className="flex gap-2">
               <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[28px] p-2.5 flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors">
