@@ -10,6 +10,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning";
+    if (hour < 18) return "Good Afternoon";
+    return "Good Evening";
+  };
+  
   if (pathname?.startsWith('/admin')) {
     return null;
   }
@@ -102,49 +109,63 @@ export default function Navbar() {
         : "top-0 w-full bg-white pt-4 pb-4 md:bg-transparent md:w-[95%] md:max-w-[1400px] md:py-5"
     }`}>
       
-      {/* MOBILE LAYOUT (Inspired by the Reference Image) */}
-      <div className="md:hidden px-6 flex items-center justify-between">
-        <div className="relative z-50">
-          <button 
-            onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
-            className="px-3.5 h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft transition-colors font-extrabold text-[13px]"
-          >
-            <CircleDollarSign size={16} className="text-white" /> {activeCurrency}
-          </button>
-          {currencyDropdownOpen && (
-            <div className="absolute top-12 left-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
-              {currencies.map((curr) => (
-                <button
-                  key={curr.code}
-                  onClick={() => handleCurrencyChange(curr.code)}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeCurrency === curr.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
-                >
-                  <span className="w-5 text-center">{curr.symbol}</span> {curr.name}
-                </button>
-              ))}
-            </div>
-          )}
+      {/* MOBILE LAYOUT */}
+      <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
+        
+        {/* Left Side: Greeting & Location */}
+        <div className="flex flex-col justify-center">
+          <span className="text-[15px] sm:text-[16px] font-black text-[#1c1c1c] leading-tight tracking-tight">
+            {getGreeting()}
+          </span>
+          <span className="text-[10px] sm:text-[11px] font-extrabold text-gray-500 flex items-center gap-1 mt-0.5">
+            <MapPin size={10} strokeWidth={3} className="text-black" /> Bali, Indonesia
+          </span>
         </div>
-        <div className="relative z-50">
-          <button 
-            onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-            className="px-3.5 h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft transition-colors font-extrabold text-[13px]"
-          >
-            <Globe size={16} className={`text-white ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
-          </button>
-          {langDropdownOpen && (
-            <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
-                  className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
-                >
-                  {lang.name}
-                </button>
-              ))}
-            </div>
-          )}
+
+        {/* Right Side: Currency & Language */}
+        <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
+          <div className="relative">
+            <button 
+              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft transition-colors font-extrabold text-[11px] sm:text-[13px]"
+            >
+              <CircleDollarSign size={14} className="text-white" /> {activeCurrency}
+            </button>
+            {currencyDropdownOpen && (
+              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
+                {currencies.map((curr) => (
+                  <button
+                    key={curr.code}
+                    onClick={() => handleCurrencyChange(curr.code)}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeCurrency === curr.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                  >
+                    <span className="w-5 text-center">{curr.symbol}</span> {curr.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="relative">
+            <button 
+              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft transition-colors font-extrabold text-[11px] sm:text-[13px]"
+            >
+              <Globe size={14} className={`text-white ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
+            </button>
+            {langDropdownOpen && (
+              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
+                {languages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    onClick={() => handleLanguageChange(lang.code)}
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
+                  >
+                    {lang.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
