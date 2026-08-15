@@ -87,8 +87,32 @@ export default function AdminDashboard() {
     }
   };
 
-  const loadDiscounts = () => {
-    setDiscountCodes(getDiscountCodes());
+  const loadDiscounts = async () => {
+    try {
+      const res = await fetch('/api/discounts');
+      if (res.ok) {
+        const data = await res.json();
+        setDiscountCodes(data || []);
+      } else {
+        setDiscountCodes(getDiscountCodes()); // Fallback
+      }
+    } catch (err) {
+      console.error("Failed to fetch discounts", err);
+      setDiscountCodes(getDiscountCodes()); // Fallback
+    }
+  };
+
+  const syncDiscountsToApi = async (updated) => {
+    saveDiscountCodes(updated); // Keep local storage sync as backup
+    try {
+      await fetch('/api/discounts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      });
+    } catch (err) {
+      console.error("Failed to sync discounts to API:", err);
+    }
   };
 
   const fetchBookings = async () => {
@@ -138,7 +162,7 @@ export default function AdminDashboard() {
     };
     const updated = [entry, ...discountCodes];
     setDiscountCodes(updated);
-    saveDiscountCodes(updated);
+    syncDiscountsToApi(updated);
     setNewDiscount({ code: "", type: "percent", value: 10, active: true });
     setDiscountSavedToast(true);
     setTimeout(() => setDiscountSavedToast(false), 3000);
@@ -147,14 +171,14 @@ export default function AdminDashboard() {
   const handleDeleteDiscount = (idx) => {
     const updated = discountCodes.filter((_, i) => i !== idx);
     setDiscountCodes(updated);
-    saveDiscountCodes(updated);
+    syncDiscountsToApi(updated);
   };
 
   const handleToggleDiscount = (idx) => {
     const updated = [...discountCodes];
     updated[idx].active = !updated[idx].active;
     setDiscountCodes(updated);
-    saveDiscountCodes(updated);
+    syncDiscountsToApi(updated);
   };
 
   const handleCopyCode = (code) => {
@@ -704,7 +728,7 @@ export default function AdminDashboard() {
               </div>
 
               {/* Live Preview Column */}
-              <div className="lg:col-span-4 space-y-4">
+              <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-8 h-fit pb-12">
                 <span className="text-xs font-black uppercase tracking-wider text-gray-500 block">Campaign Cards Preview</span>
                 
                 {/* Scooter Card Preview */}
@@ -716,7 +740,7 @@ export default function AdminDashboard() {
                     </span>
                   </div>
                   {campaigns.scooter?.image && (
-                    <div className="w-full h-32 rounded-xl overflow-hidden bg-gray-100 relative">
+                    <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 relative">
                       <img src={campaigns.scooter.image} alt="Scooter" className="w-full h-full object-cover" />
                       <div className="absolute top-2 left-2 bg-white/90 text-black text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-xs">
                         {campaigns.scooter?.badge || "Scooter Rental"}
@@ -743,7 +767,7 @@ export default function AdminDashboard() {
                     </span>
                   </div>
                   {campaigns.spa?.image && (
-                    <div className="w-full h-32 rounded-xl overflow-hidden bg-gray-100 relative">
+                    <div className="w-full aspect-[4/3] rounded-xl overflow-hidden bg-gray-100 relative">
                       <img src={campaigns.spa.image} alt="Spa" className="w-full h-full object-cover" />
                       <div className="absolute top-2 left-2 bg-white/90 text-black text-[9px] font-black uppercase px-2 py-0.5 rounded shadow-xs">
                         {campaigns.spa?.badge || "Home Service Spa"}

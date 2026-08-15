@@ -43,37 +43,37 @@ export default function ListingCard({ item, linkTo, compact }) {
 
   let basePriceToUse = item.price;
   const dataObj = item.data || item || {};
-  if (dataObj.pricingType === "Per Group") {
-      if (dataObj.groupPricingMode === "flat" && dataObj.groupPrice) {
-          basePriceToUse = Number(String(dataObj.groupPrice).replace(/[^0-9]/g, ''));
-      } else if (dataObj.groupTiers && dataObj.groupTiers.length > 0) {
-          const validGroupTiers = dataObj.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
-          if (validGroupTiers.length > 0) {
-              validGroupTiers.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
-              basePriceToUse = Number(String(validGroupTiers[0].price).replace(/[^0-9]/g, ''));
-          }
+  // Find all possible tiers
+  let allTiers = [];
+  if (dataObj.tourTiers) allTiers = [...allTiers, ...dataObj.tourTiers];
+  if (dataObj.allInclusiveTiers) allTiers = [...allTiers, ...dataObj.allInclusiveTiers];
+  if (dataObj.groupTiers) allTiers = [...allTiers, ...dataObj.groupTiers];
+
+  const validTiers = allTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+
+  const cleanBasePriceVal = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
+
+  if (validTiers.length > 0) {
+      // Find the absolute lowest price PER PERSON equivalent
+      validTiers.sort((a, b) => {
+          const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (Number(a.pax) || 1);
+          const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (Number(b.pax) || 1);
+          return aPrice - bPrice;
+      });
+      const minTier = validTiers[0];
+      const minPricePerPax = Number(String(minTier.price).replace(/[^0-9]/g, '')) / (Number(minTier.pax) || 1);
+      
+      if (!basePriceToUse || basePriceToUse == 0 || minPricePerPax < cleanBasePriceVal) {
+          basePriceToUse = minPricePerPax;
       }
   } else {
-      const tiersToUse = (dataObj.tourTiers && dataObj.tourTiers.length > 0) ? dataObj.tourTiers : ((dataObj.allInclusiveTiers && dataObj.allInclusiveTiers.length > 0) ? dataObj.allInclusiveTiers : []);
-      const validTiers = tiersToUse.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
-      if (validTiers.length > 0) {
-          validTiers.sort((a, b) => {
-              const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (dataObj.pricingType !== "Per Group" ? (Number(a.pax) || 1) : 1);
-              const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (dataObj.pricingType !== "Per Group" ? (Number(b.pax) || 1) : 1);
-              return aPrice - bPrice;
-          });
-          const minTier = validTiers[0];
-          let priceNum = Number(String(minTier.price).replace(/[^0-9]/g, ''));
-          if (dataObj.pricingType !== "Per Group") {
-             priceNum = priceNum / (Number(minTier.pax) || 1);
+      if (dataObj.pricingType === "Per Group" && dataObj.groupPricingMode === "flat" && dataObj.groupPrice) {
+          const flatPrice = Number(String(dataObj.groupPrice).replace(/[^0-9]/g, ''));
+          if (!basePriceToUse || basePriceToUse == 0 || flatPrice < cleanBasePriceVal) {
+              basePriceToUse = flatPrice;
           }
-          if (!basePriceToUse || basePriceToUse == 0 || priceNum < basePriceToUse) {
-              basePriceToUse = priceNum;
-          }
-      } else if (!basePriceToUse || basePriceToUse == 0) {
-          if (dataObj.allInclusiveSurcharge) {
-              basePriceToUse = Number(String(dataObj.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
-          }
+      } else if (dataObj.allInclusiveSurcharge && (!basePriceToUse || basePriceToUse == 0)) {
+          basePriceToUse = Number(String(dataObj.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
       }
   }
 
