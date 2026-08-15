@@ -74,7 +74,13 @@ export default function AdminListings() {
                isBestTripPinned: d.metadata?.is_best_trip_pinned || false,
 
                itinerary: (d.itineraries || []).map(it => ({ title: it.title, description: it.description, time_label: it.time_label || "" })),
-               tourTiers: (d.pricing_tiers || []).map(pt => ({ pax: pt.min_pax, price: pt.price }))
+               tourTiers: (d.pricing_tiers || []).map(pt => ({ pax: pt.min_pax, price: pt.price })),
+               pricingType: d.metadata?.pricingType || "Per Person",
+               groupPricingMode: d.metadata?.groupPricingMode || "tiered",
+               groupPrice: d.metadata?.groupPrice || "",
+               allInclusiveTiers: d.metadata?.allInclusiveTiers || [],
+               groupTiers: d.metadata?.groupTiers || [],
+               allInclusiveSurcharge: d.metadata?.allInclusiveSurcharge || ""
             };
             if(grouped[frontendItem.service]) grouped[frontendItem.service].push(frontendItem);
          });
@@ -534,19 +540,38 @@ export default function AdminListings() {
           /* Regular Grid for All Other Tabs */
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {currentListings.map(item => {
-              let displayPrice = item.price;
-              if (item.pricingType === "Per Group" && item.groupTiers && item.groupTiers.length > 0) {
-                 const validGt = item.groupTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
-                 if (validGt.length > 0) {
-                    validGt.sort((a, b) => Number(String(a.price).replace(/[^0-9]/g, '')) - Number(String(b.price).replace(/[^0-9]/g, '')));
-                    displayPrice = validGt[0].price;
-                 }
-              } else if (!displayPrice || Number(String(displayPrice).replace(/[^0-9]/g, '')) === 0) {
-                 const tiersToUse = (item.tourTiers && item.tourTiers.length > 0) ? item.tourTiers : ((item.allInclusiveTiers && item.allInclusiveTiers.length > 0) ? item.allInclusiveTiers : []);
-                 const validTier = tiersToUse.find(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
-                 if (validTier) displayPrice = validTier.price;
+              let basePriceToUse = item.price || 0;
+              let allTiers = [];
+              if (item.tourTiers) allTiers = [...allTiers, ...item.tourTiers];
+              if (item.allInclusiveTiers) allTiers = [...allTiers, ...item.allInclusiveTiers];
+              if (item.groupTiers) allTiers = [...allTiers, ...item.groupTiers];
+            
+              const validTiers = allTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+              const cleanBasePriceVal = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
+            
+              if (validTiers.length > 0) {
+                  validTiers.sort((a, b) => {
+                      const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (Number(a.pax) || 1);
+                      const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (Number(b.pax) || 1);
+                      return aPrice - bPrice;
+                  });
+                  const minTier = validTiers[0];
+                  const minPricePerPax = Number(String(minTier.price).replace(/[^0-9]/g, '')) / (Number(minTier.pax) || 1);
+                  if (!basePriceToUse || basePriceToUse == 0 || minPricePerPax < cleanBasePriceVal) {
+                      basePriceToUse = minPricePerPax;
+                  }
+              } else {
+                  if (item.pricingType === "Per Group" && item.groupPricingMode === "flat" && item.groupPrice) {
+                      const flatPrice = Number(String(item.groupPrice).replace(/[^0-9]/g, ''));
+                      if (!basePriceToUse || basePriceToUse == 0 || flatPrice < cleanBasePriceVal) {
+                          basePriceToUse = flatPrice;
+                      }
+                  } else if (item.allInclusiveSurcharge && (!basePriceToUse || basePriceToUse == 0)) {
+                      basePriceToUse = Number(String(item.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
+                  }
               }
-              const cleanDisplayPrice = Number(String(displayPrice || 0).replace(/[^0-9]/g, ''));
+            
+              const cleanDisplayPrice = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
               return (
             <div key={item.id} className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] group hover:shadow-[0_8px_40px_rgb(0,0,0,0.08)] transition-all flex flex-col">
               {/* Image Section */}
