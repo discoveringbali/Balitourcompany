@@ -194,7 +194,7 @@ export default function MapComponent() {
     const fetchListings = async () => {
       try {
         const { supabase } = await import('@/lib/supabase');
-        const { data } = await supabase.from('listings').select('*').eq('status', 'Active');
+        const { data } = await supabase.from('listings').select('*, pricing_tiers(*)').eq('status', 'Active');
         if (data) {
           const trans = data.filter(d => d.type === 'Transport' || d.type === 'Car Rental');
           setTransportsData(trans.map(d => ({
@@ -206,13 +206,52 @@ export default function MapComponent() {
           })));
 
           const tours = data.filter(d => d.type === 'Tour' || d.type === 'Activities');
-          const mappedTours = tours.map(t => ({
-            id: t.id,
-            locationRaw: t.location || t.data?.location || "Bali",
-            price: Number(String(t.price || t.data?.price || 0).replace(/[^0-9]/g, '')),
-            name: t.title || t.data?.title,
-            image: t.image || t.data?.images?.[0] || 'https://images.unsplash.com/photo-1537996194471-e657df975ab4'
-          }));
+          const mappedTours = tours.map(t => {
+            const dataObj = t.metadata || t.data || {};
+            if (t.pricing_tiers) {
+              dataObj.tourTiers = t.pricing_tiers.map(pt => ({ pax: pt.min_pax, price: pt.price }));
+            }
+            
+            let basePriceToUse = t.base_price || t.price || 0;
+            let allTiers = [];
+            if (dataObj.tourTiers) allTiers = [...allTiers, ...dataObj.tourTiers];
+            if (dataObj.allInclusiveTiers) allTiers = [...allTiers, ...dataObj.allInclusiveTiers];
+            if (dataObj.groupTiers) allTiers = [...allTiers, ...dataObj.groupTiers];
+
+            const validTiers = allTiers.filter(tier => tier.price && Number(String(tier.price).replace(/[^0-9]/g, '')) > 0);
+            const cleanBasePriceVal = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
+
+            if (validTiers.length > 0) {
+                validTiers.sort((a, b) => {
+                    const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (Number(a.pax) || 1);
+                    const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (Number(b.pax) || 1);
+                    return aPrice - bPrice;
+                });
+                const minTier = validTiers[0];
+                const minPricePerPax = Number(String(minTier.price).replace(/[^0-9]/g, '')) / (Number(minTier.pax) || 1);
+                if (!basePriceToUse || basePriceToUse == 0 || minPricePerPax < cleanBasePriceVal) {
+                    basePriceToUse = minPricePerPax;
+                }
+            } else {
+                if (dataObj.pricingType === "Per Group" && dataObj.groupPricingMode === "flat" && dataObj.groupPrice) {
+                    const flatPrice = Number(String(dataObj.groupPrice).replace(/[^0-9]/g, ''));
+                    if (!basePriceToUse || basePriceToUse == 0 || flatPrice < cleanBasePriceVal) {
+                        basePriceToUse = flatPrice;
+                    }
+                } else if (dataObj.allInclusiveSurcharge && (!basePriceToUse || basePriceToUse == 0)) {
+                    basePriceToUse = Number(String(dataObj.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
+                }
+            }
+            const finalPrice = Math.floor(Number(String(basePriceToUse || 0).replace(/[^0-9]/g, '')));
+
+            return {
+              id: t.id,
+              locationRaw: t.location || dataObj.location || "Bali",
+              price: finalPrice,
+              name: t.title || dataObj.title,
+              image: t.thumbnail_image || t.image || dataObj.images?.[0] || 'https://images.unsplash.com/photo-1537996194471-e657df975ab4'
+            };
+          });
 
           const regionMap = new globalThis.Map();
           mappedTours.forEach(t => {
@@ -383,19 +422,16 @@ export default function MapComponent() {
       {activeMode !== "Transport" && selectedRegion && displayedTours.length > 0 && (
         <div className="absolute bottom-28 left-0 right-0 z-20 flex gap-4 overflow-x-auto pointer-events-auto px-6 snap-x snap-mandatory pb-4 hide-scroll animate-in slide-in-from-bottom-8 fade-in duration-300">
           {displayedTours.map(tour => (
-            <div key={tour.id} onClick={() => router.push(`/tours/${generateSlug(tour.name)}`)} className="w-[260px] md:w-[300px] shrink-0 bg-white rounded-[24px] shadow-[0_12px_40px_rgb(0,0,0,0.15)] snap-start overflow-hidden border border-gray-100 flex flex-col cursor-pointer active:scale-95 transition-transform hover:-translate-y-1">
-              <div className="relative w-full aspect-[16/10] bg-gray-200">
+            <div key={tour.id} onClick={() => router.push(`/tours/${generateSlug(tour.name)}`)} className="w-[280px] shrink-0 bg-white rounded-[20px] shadow-[0_8px_30px_rgb(0,0,0,0.12)] snap-start overflow-hidden border border-gray-100 flex items-center p-3 cursor-pointer active:scale-95 transition-transform hover:-translate-y-1 gap-3">
+              <div className="relative w-[72px] h-[72px] rounded-[12px] bg-gray-200 shrink-0 overflow-hidden">
                 <img src={tour.image} alt={tour.name} className="w-full h-full object-cover" />
-                <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-black uppercase text-primary shadow-sm">
-                  {selectedRegion.toUpperCase()}
-                </div>
               </div>
-              <div className="p-4 flex flex-col justify-between flex-1">
-                <h3 className="font-extrabold text-[14px] leading-snug text-primary line-clamp-2">{tour.name}</h3>
-                <div className="mt-3 flex items-end justify-between">
+              <div className="flex flex-col flex-1 min-w-0 justify-center">
+                <h3 className="font-extrabold text-[13px] leading-snug text-primary line-clamp-2 mb-1.5">{tour.name}</h3>
+                <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Starts From</span>
-                    <p className="font-black text-primary text-[15px]">{formatIDR(tour.price)}</p>
+                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Starts From</span>
+                    <span className="font-black text-primary text-[14px]">{formatIDR(tour.price)}</span>
                   </div>
                 </div>
               </div>
