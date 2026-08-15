@@ -122,6 +122,41 @@ function PopularTripCard({ trip }) {
     setIsSaved(newState);
   };
 
+  let basePriceToUse = trip.price;
+  const dataObj = trip.data || trip || {};
+  let allTiers = [];
+  if (dataObj.tourTiers) allTiers = [...allTiers, ...dataObj.tourTiers];
+  if (dataObj.allInclusiveTiers) allTiers = [...allTiers, ...dataObj.allInclusiveTiers];
+  if (dataObj.groupTiers) allTiers = [...allTiers, ...dataObj.groupTiers];
+
+  const validTiers = allTiers.filter(t => t.price && Number(String(t.price).replace(/[^0-9]/g, '')) > 0);
+  const cleanBasePriceVal = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
+
+  if (validTiers.length > 0) {
+      validTiers.sort((a, b) => {
+          const aPrice = Number(String(a.price).replace(/[^0-9]/g, '')) / (Number(a.pax) || 1);
+          const bPrice = Number(String(b.price).replace(/[^0-9]/g, '')) / (Number(b.pax) || 1);
+          return aPrice - bPrice;
+      });
+      const minTier = validTiers[0];
+      const minPricePerPax = Number(String(minTier.price).replace(/[^0-9]/g, '')) / (Number(minTier.pax) || 1);
+      if (!basePriceToUse || basePriceToUse == 0 || minPricePerPax < cleanBasePriceVal) {
+          basePriceToUse = minPricePerPax;
+      }
+  } else {
+      if (dataObj.pricingType === "Per Group" && dataObj.groupPricingMode === "flat" && dataObj.groupPrice) {
+          const flatPrice = Number(String(dataObj.groupPrice).replace(/[^0-9]/g, ''));
+          if (!basePriceToUse || basePriceToUse == 0 || flatPrice < cleanBasePriceVal) {
+              basePriceToUse = flatPrice;
+          }
+      } else if (dataObj.allInclusiveSurcharge && (!basePriceToUse || basePriceToUse == 0)) {
+          basePriceToUse = Number(String(dataObj.allInclusiveSurcharge).replace(/[^0-9]/g, ''));
+      }
+  }
+
+  const cleanBasePrice = Number(String(basePriceToUse || 0).replace(/[^0-9]/g, ''));
+  const displayPrice = Math.floor(cleanBasePrice > 1000 ? cleanBasePrice : cleanBasePrice * 1000);
+
   return (
     <Link href={`/tours/${generateSlug(trip.title)}`} className="block relative w-[240px] md:w-[280px] aspect-[4/5] rounded-[28px] overflow-hidden shadow-soft shrink-0 snap-start group border border-border bg-white">
       <Image src={trip.image} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
@@ -144,7 +179,7 @@ function PopularTripCard({ trip }) {
           </div>
           <div className="flex flex-col items-end shrink-0">
             <span className="font-extrabold text-[15px] text-primary tracking-tight pr-1">
-              IDR {Number(trip.price > 1000 ? trip.price : trip.price * 1000).toLocaleString('id-ID')}
+              IDR {displayPrice.toLocaleString('id-ID')}
             </span>
           </div>
         </div>
