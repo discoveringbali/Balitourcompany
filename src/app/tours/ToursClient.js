@@ -31,7 +31,7 @@ export default function ToursClient({ initialTours }) {
   });
 
   return (
-    <div className="w-full bg-background min-h-screen pt-4 md:pt-6 pb-20">
+    <div className="w-full bg-background min-h-screen -mt-20 md:-mt-24 pt-4 md:pt-6 pb-20">
       <div className="container mx-auto px-4 lg:max-w-7xl">
         
         {/* Header */}
