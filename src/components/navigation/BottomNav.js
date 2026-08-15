@@ -1,15 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Home, Map, CalendarCheck, Heart, User } from "lucide-react";
+import { Home, Compass, CalendarCheck, Heart, Map } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useSession, signIn } from "next-auth/react";
 
 export default function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
-  const { data: session } = useSession();
 
   if (pathname?.startsWith('/admin')) {
     return null;
@@ -18,19 +16,19 @@ export default function BottomNav() {
 
   const navItems = [
     { id: "home", icon: Home, path: "/" },
-    { id: "map", icon: Map, path: "/map" },
+    { id: "tours", icon: Compass, path: "/tours" },
     { id: "bookings", icon: CalendarCheck, path: "/bookings" },
     { id: "favorites", icon: Heart, path: "/favorites" },
-    { id: "profile", icon: User, path: "/profile" },
+    { id: "map", icon: Map, path: "/map" },
   ];
 
   // Map path to active tab on mount
   React.useEffect(() => {
     if (pathname === "/") setActiveTab("home");
+    else if (pathname === "/tours") setActiveTab("tours");
     else if (pathname.startsWith("/map")) setActiveTab("map");
     else if (pathname.startsWith("/bookings")) setActiveTab("bookings");
     else if (pathname.startsWith("/favorites")) setActiveTab("favorites");
-    else if (pathname.startsWith("/profile")) setActiveTab("profile");
   }, [pathname]);
 
   // Hide BottomNav on tour detail pages to prevent overlapping with booking bar
@@ -43,24 +41,6 @@ export default function BottomNav() {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
           
-          if (item.id === "profile" && !session) {
-            return (
-              <button 
-                key={item.id} 
-                onClick={() => signIn('google')}
-                className="relative flex flex-col items-center justify-center w-10 h-10"
-              >
-                {isActive && (
-                  <div className="absolute inset-0 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
-                )}
-                <Icon 
-                  size={22} 
-                  className={`relative z-10 transition-colors duration-300 ${isActive ? "text-black stroke-[2.5px]" : "text-white/70 hover:text-white"}`} 
-                />
-              </button>
-            );
-          }
-
           return (
             <Link 
               key={item.id} 
