@@ -1,155 +1,197 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function SplashScreen({ children }) {
-  const [showSplash, setShowSplash] = useState(false);
-  const [targetProgress, setTargetProgress] = useState(0);
+  const [isReady, setIsReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [contentVisible, setContentVisible] = useState(false);
+  const [targetProgress, setTargetProgress] = useState(0);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
+    setMounted(true);
 
-    const isMobileDevice = window.innerWidth < 768;
-    const hasSeenSplash = sessionStorage.getItem('hasSeenSplash');
-
-    if (isMobileDevice && !hasSeenSplash) {
-      setShowSplash(true);
-    } else {
-      setContentVisible(true);
+    if (sessionStorage.getItem("splashDone")) {
+      setShowSplash(false);
+      setIsReady(true);
     }
   }, []);
 
+  const checkReady = useCallback(() => {
+    if (document.readyState !== "complete") return false;
+    const images = document.querySelectorAll("img");
+    for (const img of images) {
+      if (img.loading === "lazy") continue;
+      if (!img.complete) return false;
+    }
+    return true;
+  }, []);
+
+  // Smooth progress interpolation — animates toward target
   useEffect(() => {
-    if (!showSplash) return;
+    if (!showSplash || isReady) return;
 
-    let isReady = false;
-    let minTimePassed = false;
-    let unmounted = false;
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        const diff = targetProgress - prev;
+        if (Math.abs(diff) < 0.5) return targetProgress;
+        // Ease toward target: fast when far, slow when close
+        return prev + diff * 0.08;
+      });
+    }, 16); // ~60fps
 
-    // Stage timers for artificial progress
-    const t1 = setTimeout(() => !unmounted && setTargetProgress(25), 200);
-    const t2 = setTimeout(() => !unmounted && setTargetProgress(45), 600);
-    const t3 = setTimeout(() => !unmounted && setTargetProgress(80), 1500);
+    return () => clearInterval(interval);
+  }, [targetProgress, showSplash, isReady]);
 
-    const attemptDismiss = (force = false) => {
-      if (unmounted) return;
-      if ((isReady && minTimePassed) || force) {
+  useEffect(() => {
+    if (!mounted || !showSplash) return;
+    if (!isMobile) {
+      setIsReady(true);
+      return;
+    }
+
+    const MIN_SPLASH_MS = 2000;
+    const MAX_SPLASH_MS = 6000;
+    const startTime = Date.now();
+    let minTimerDone = false;
+    let resourcesReady = false;
+
+    // Stage-based progress targets
+    const stageTimer1 = setTimeout(() => setTargetProgress(25), 200);
+    const stageTimer2 = setTimeout(() => setTargetProgress(45), 600);
+    const stageTimer3 = setTimeout(() => setTargetProgress(65), 1000);
+    const stageTimer4 = setTimeout(() => setTargetProgress(80), 1500);
+
+    const tryDismiss = () => {
+      if (minTimerDone && resourcesReady) {
         setTargetProgress(100);
         setTimeout(() => {
-          if (unmounted) return;
-          setShowSplash(false);
-          setContentVisible(true);
-          sessionStorage.setItem('hasSeenSplash', 'true');
-        }, 600); 
+          setIsReady(true);
+          sessionStorage.setItem("splashDone", "1");
+        }, 400);
       }
     };
 
     const minTimer = setTimeout(() => {
-      minTimePassed = true;
-      attemptDismiss();
-    }, 2000); 
+      minTimerDone = true;
+      tryDismiss();
+    }, MIN_SPLASH_MS);
 
     const maxTimer = setTimeout(() => {
-      isReady = true;
-      attemptDismiss(true);
-    }, 6000); 
+      setTargetProgress(100);
+      setTimeout(() => {
+        setIsReady(true);
+        sessionStorage.setItem("splashDone", "1");
+      }, 300);
+    }, MAX_SPLASH_MS);
 
-    const checkReady = () => {
-      if (document.readyState === 'complete') {
-        const images = Array.from(document.images).filter(
-          (img) => !img.hasAttribute('loading') || img.getAttribute('loading') !== 'lazy'
-        );
-        const allImagesLoaded = images.every((img) => img.complete);
-        
-        if (allImagesLoaded) {
-          isReady = true;
-          setTargetProgress((prev) => Math.max(prev, 92));
-          attemptDismiss();
-        }
+    const poll = setInterval(() => {
+      if (checkReady()) {
+        resourcesReady = true;
+        setTargetProgress(92);
+        clearInterval(poll);
+        tryDismiss();
       }
+    }, 150);
+
+    const onLoad = () => {
+      resourcesReady = true;
+      setTargetProgress(92);
+      clearInterval(poll);
+      tryDismiss();
     };
+    window.addEventListener("load", onLoad);
 
-    const pollInterval = setInterval(checkReady, 150);
-
-    const handleLoad = () => {
-      isReady = true;
-      setTargetProgress((prev) => Math.max(prev, 92));
-      attemptDismiss();
+    const onAppReady = () => {
+      resourcesReady = true;
+      setTargetProgress(92);
+      clearInterval(poll);
+      tryDismiss();
     };
-
-    window.addEventListener('load', handleLoad);
+    window.addEventListener("app-content-ready", onAppReady);
 
     return () => {
-      unmounted = true;
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
+      clearTimeout(stageTimer1);
+      clearTimeout(stageTimer2);
+      clearTimeout(stageTimer3);
+      clearTimeout(stageTimer4);
       clearTimeout(minTimer);
       clearTimeout(maxTimer);
-      clearInterval(pollInterval);
-      window.removeEventListener('load', handleLoad);
+      clearInterval(poll);
+      window.removeEventListener("load", onLoad);
+      window.removeEventListener("app-content-ready", onAppReady);
     };
-  }, [showSplash]);
+  }, [mounted, isMobile, showSplash, checkReady]);
 
-  useEffect(() => {
-    if (!showSplash) return;
-
-    let animationFrameId;
-
-    const updateProgress = () => {
-      setProgress((prev) => {
-        const diff = targetProgress - prev;
-        if (Math.abs(diff) < 0.1) return targetProgress;
-        return prev + diff * 0.08; 
-      });
-      animationFrameId = requestAnimationFrame(updateProgress);
-    };
-
-    animationFrameId = requestAnimationFrame(updateProgress);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [showSplash, targetProgress]);
+  if ((!isMobile && mounted) || !showSplash) return children;
+  if (!mounted) return <div style={{ visibility: "hidden" }}>{children}</div>;
 
   return (
     <>
       <AnimatePresence>
-        {showSplash && (
+        {!isReady && (
           <motion.div
+            key="splash"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
-            className="fixed inset-0 z-[999999] bg-black flex flex-col items-center justify-center overflow-hidden"
+            transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black"
+            style={{ touchAction: "none" }}
           >
-            {/* Ambient Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-white/10 blur-[120px] rounded-full pointer-events-none" />
-            <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-white/5 blur-[100px] rounded-full pointer-events-none" />
+            {/* Soft ambient gradient */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-white text-black/8 blur-[120px] opacity-10" />
+              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gray-200/20 blur-[100px] opacity-10" />
+            </div>
 
-            {/* Bottom Progress UI */}
-            <div className="absolute bottom-12 w-3/4 max-w-sm flex flex-col items-center gap-3 z-10">
-              <span className="text-white/70 font-mono text-xs tracking-[0.2em] font-light">
-                {Math.round(progress)}%
-              </span>
-              <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden">
-                <motion.div
-                  className="h-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)] rounded-full"
-                  style={{ width: `${progress}%` }}
+            {/* Logo container */}
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="relative mb-8">
+                <img
+                  src="/icon.png"
+                  alt="Balance Island"
+                  className="w-auto max-w-[320px] h-[120px] rounded-[24px] shadow-[0_0_80px_rgba(255,255,255,0.1)] object-contain"
                 />
               </div>
             </div>
+
+            {/* Progress section */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.4 }}
+              className="absolute bottom-[14%] flex flex-col items-center gap-3 w-[200px]"
+            >
+              <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-white rounded-full transition-none"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+
+              <span className="text-white/60 text-[11px] font-bold tabular-nums tracking-wide">
+                {Math.round(progress)}%
+              </span>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              transition={{ delay: 1.2, duration: 0.5 }}
+              className="absolute bottom-[6%] text-white text-[10px] font-semibold tracking-[0.15em] uppercase"
+            >
+              Bali, Indonesia
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div
-        style={{
-          visibility: contentVisible ? 'visible' : 'hidden',
-          height: contentVisible ? 'auto' : '100vh',
-          overflow: contentVisible ? 'visible' : 'hidden',
-        }}
-      >
+      <div style={{ visibility: isReady ? "visible" : "hidden" }}>
         {children}
       </div>
     </>
