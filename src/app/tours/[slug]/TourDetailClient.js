@@ -636,9 +636,15 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
           {/* Right Column: Sticky Booking Widget (Desktop) */}
           <div className="hidden md:block md:w-[35%] lg:w-[32%]">
             <div className={`sticky top-[120px] rounded-2xl p-6 shadow-lg z-10 w-full ${tourData.service === "Spa" ? "bg-white border border-[#ededed]" : "bg-white border border-gray-200"}`}>
-               <div className="mb-4 flex items-end gap-1">
-                  <span className={`text-[34px] font-extrabold leading-none ${tourData.service === "Spa" ? "text-[#383838] font-serif tracking-tight" : "text-primary"}`}>{formatPrice(getLowestPrice())}</span>
-                  <span className="text-text-secondary text-[15px] font-medium pb-1">/ {tourData.service === "Spa" ? "treatment" : tourData.service === "Scooter" ? scooterDuration.replace('daily', 'day').replace('weekly', 'week').replace('monthly', 'month') : tourData.pricingType === "Per Group" ? "group" : "person"}</span>
+               <div className="mb-4 flex flex-col gap-1">
+                  <span className="text-[12px] font-bold text-text-secondary uppercase tracking-widest block mb-0.5">
+                     {(tourData.service === "Tour" || tourData.service === "Activities") && (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? "Select your package" : "Price starting from"}
+                  </span>
+                  <div className="flex items-end gap-1">
+                     <span className={`text-[34px] font-extrabold leading-none ${tourData.service === "Spa" ? "text-[#383838] font-serif tracking-tight" : "text-primary"}`}>
+                        {formatPrice(selectedPackage === 'All Inclusive' && (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? getAllInclusivePriceForPax(desktopPax) : getLowestPrice())}
+                     </span>
+                  </div>
                </div>
                
                <p className="text-sm text-text-secondary font-medium mb-6">Reserve now and pay later to book your spot and pay nothing today.</p>
