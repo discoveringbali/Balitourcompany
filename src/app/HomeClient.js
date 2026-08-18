@@ -1232,7 +1232,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <section className="px-6 mb-20">
           <div className="flex justify-between items-end mb-4 md:mb-6">
             <h2 className="text-[20px] font-bold text-primary">Recommended Places</h2>
-            <span className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</span>
+            <Link href="/blog" className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
           </div>
           <div className="flex overflow-x-auto no-scrollbar gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 snap-x snap-mandatory">
             {recommendedPlaces.map((place, index) => {
