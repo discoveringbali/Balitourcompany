@@ -21,7 +21,7 @@ function AdminLoginScreen({ onLogin }) {
     const cleanEmail = email.trim().toLowerCase();
     const cleanPassword = password.trim();
     
-    if (cleanEmail === "bobbybaliguide@gmail.com" && (cleanPassword === "Poiuytrewq123" || cleanPassword === "Poiuytrewq123.")) {
+    if (cleanEmail === "putuedosantika@gmail.com" && cleanPassword === "Poiuytrewq123") {
       localStorage.setItem("admin_auth", "true");
       onLogin();
     } else {
@@ -48,7 +48,7 @@ function AdminLoginScreen({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-[#f9f9f9] border border-[#eaeaea] rounded-xl px-4 py-3 mt-1 text-sm font-bold outline-none focus:border-[#1c1c1c] transition-colors"
-              placeholder="bobbybaliguide@gmail.com"
+              placeholder="putuedosantika@gmail.com"
               required 
             />
           </div>
