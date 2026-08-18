@@ -82,10 +82,8 @@ export default function AdminLayout({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
   const [isChecking, setIsChecking] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isHeroModalOpen, setIsHeroModalOpen] = useState(false);
   const [isDiscountModalOpen, setIsDiscountModalOpen] = useState(false);
-  const [customAvatar, setCustomAvatar] = useState(null);
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [showInstallModal, setShowInstallModal] = useState(false);
 
@@ -94,11 +92,6 @@ export default function AdminLayout({ children }) {
       setIsAuthenticated(true);
     }
     setIsChecking(false);
-  }, []);
-
-  React.useEffect(() => {
-    const saved = localStorage.getItem("admin_avatar");
-    if (saved) setCustomAvatar(saved);
   }, []);
 
   React.useEffect(() => {
@@ -148,18 +141,6 @@ export default function AdminLayout({ children }) {
     }
   };
 
-  const handleAvatarUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setCustomAvatar(reader.result);
-        localStorage.setItem("admin_avatar", reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const navLinks = [
     { name: "Dashboard", href: "/admin", icon: Home },
     { name: "Manage Bookings", href: "/admin/bookings", icon: Calendar },
@@ -181,7 +162,6 @@ export default function AdminLayout({ children }) {
         {/* Brand Header */}
         <div className="h-20 px-6 border-b border-[#eaeaea] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-             <img src="/icon.png" alt="Logo" className="w-8 h-8 rounded-lg object-cover border border-[#eaeaea]" />
              <span className="font-black text-lg tracking-tight">Balance Island</span>
           </div>
           <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden p-1 text-gray-400 hover:text-[#1c1c1c] transition-colors">
@@ -249,68 +229,15 @@ export default function AdminLayout({ children }) {
 
         {/* System Settings */}
         <div className="p-5 border-t border-[#eaeaea] flex flex-col gap-1">
-           <button onClick={() => setIsSettingsOpen(true)} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-sm font-bold text-gray-500 hover:text-[#1c1c1c] hover:bg-[#f9f9f9] transition-all">
-              <Settings size={18} /> Account Settings
+            <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-sm font-bold text-[#1c1c1c] hover:bg-[#f9f9f9] transition-all">
+              <LogOut size={18} /> Log Out
             </button>
-            <Link href="/" className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-xl text-sm font-bold text-black hover:text-black hover:bg-gray-50 transition-all">
-              <LogOut size={18} /> Exit Admin Dashboard
-            </Link>
         </div>
       </aside>
 
       {/* Main Content Space */}
       <main className="flex-1 flex flex-col h-full overflow-hidden relative">
         
-        {/* Top Header Data Bar */}
-        <header className="h-20 bg-white border-b border-[#eaeaea] flex items-center justify-between px-4 sm:px-8 shrink-0 relative z-10 shadow-sm">
-          <div className="flex items-center gap-4">
-            <button onClick={() => setIsSidebarOpen(true)} className="lg:hidden p-2 -ml-2 text-[#1c1c1c] hover:bg-[#f9f9f9] rounded-xl transition-colors">
-              <Menu size={24} />
-            </button>
-            
-            {/* Global Search Simulator */}
-            <div className="hidden md:flex items-center bg-[#f9f9f9] rounded-xl px-4 py-2.5 w-72 border border-transparent focus-within:border-[#1c1c1c] focus-within:bg-white transition-all">
-               <Search size={18} className="text-gray-400 mr-2" />
-               <input type="text" placeholder="Search references..." className="bg-transparent border-none focus:ring-0 text-sm font-bold text-[#1c1c1c] w-full outline-none placeholder:font-medium placeholder:text-gray-400" />
-            </div>
-          </div>
-          
-          <div className="flex items-center gap-5">
-            <button className="relative p-2 text-gray-500 hover:bg-[#f9f9f9] rounded-full transition-colors">
-               <Bell size={22} />
-               <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-black text-white rounded-full border-2 border-white"></span>
-            </button>
-            <div className="h-8 w-px bg-[#eaeaea] hidden sm:block"></div>
-              <div className="flex items-center gap-3 group relative cursor-pointer">
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  onChange={handleAvatarUpload} 
-                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
-                  title="Upload Admin Logo"
-                />
-                <div className="hidden sm:block text-right pointer-events-none">
-                  <p className="text-sm font-extrabold text-[#1c1c1c]">Bobby Bali</p>
-                  <p className="text-[11px] text-gray-500 font-bold tracking-tight">Super Administrator</p>
-                </div>
-                <div className="flex items-center gap-2 pointer-events-none">
-                  <div className="w-10 h-10 rounded-xl overflow-hidden bg-[#f9f9f9] border border-[#eaeaea] relative group">
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                       <span className="text-white text-[8px] font-extrabold uppercase uppercase">Edit</span>
-                    </div>
-                    {customAvatar ? (
-                       <img src={customAvatar} alt="Admin" className="w-full h-full object-cover relative z-0" />
-                    ) : (
-                        <img src="https://ui-avatars.com/api/?name=Bobby+Bali&background=1C1C1E&color=D9FB41" alt="User" className="w-full h-full object-cover relative z-0" />
-                    )}
-                  </div>
-                  <ChevronDown size={14} className="text-gray-400 group-hover:text-[#1c1c1c] transition-colors" />
-                </div>
-              </div>
-          </div>
-        </header>
-
         {/* Dynamic Nested Content */}
         <div className="flex-1 overflow-y-auto pb-28 lg:pb-0">
           {children}
@@ -341,59 +268,11 @@ export default function AdminLayout({ children }) {
           </div>
           <span className="text-[10px] font-bold">Listings</span>
         </Link>
-        <button onClick={handleLogout} className="flex flex-col items-center gap-1.5 text-gray-400 hover:text-black transition-colors">
-          <LogOut size={22} strokeWidth={2.5} />
-          <span className="text-[10px] font-bold">Exit</span>
+        <button onClick={() => setIsSidebarOpen(true)} className="flex flex-col items-center gap-1.5 text-gray-400 hover:text-black transition-colors">
+          <Menu size={22} strokeWidth={2.5} />
+          <span className="text-[10px] font-bold">Menu</span>
         </button>
       </div>
-
-      {/* Account Settings Modal */}
-      {isSettingsOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center font-sans px-4">
-          <div className="fixed inset-0 bg-[#1c1c1c]/60 backdrop-blur-sm" onClick={() => setIsSettingsOpen(false)} />
-          <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl p-6 z-10 animate-scaleIn">
-             <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl font-black text-[#1c1c1c]">Account Settings</h3>
-                <button onClick={() => setIsSettingsOpen(false)} className="text-gray-400 hover:text-[#1c1c1c]">
-                  <X size={20} strokeWidth={3} />
-                </button>
-             </div>
-             
-             <div className="space-y-6">
-               {/* Profile Info */}
-               <div className="flex flex-col items-center gap-3">
-                 <div className="relative group cursor-pointer">
-                   <img src={customAvatar || "https://ui-avatars.com/api/?name=Bobby+Bali&background=1C1C1E&color=D9FB41"} alt="Avatar" className="w-20 h-20 rounded-full object-cover border-4 border-[#f9f9f9] shadow-sm transition-transform group-hover:scale-105" />
-                   <div className="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-[10px] font-bold">Edit</div>
-                   <input type="file" accept="image/*" onChange={handleAvatarUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-                 </div>
-                 <div className="text-center">
-                   <h4 className="font-extrabold text-base text-[#1c1c1c]">Bobby Bali Guide</h4>
-                   <p className="text-[11px] text-gray-500 font-bold">bobbybaliguide@gmail.com</p>
-                 </div>
-               </div>
-
-               <div className="h-px bg-[#eaeaea] w-full"></div>
-
-               {/* Password Form */}
-               <div className="space-y-3">
-                 <h4 className="font-extrabold text-sm text-[#1c1c1c] mb-2">Account Security</h4>
-                 
-                 <div className="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-100 flex items-start gap-2">
-                   <span className="text-gray-500 font-bold text-xs">Security:</span>
-                   <p className="text-[10px] font-bold text-gray-600 leading-relaxed">
-                     Your admin password is hardcoded securely in the application source code for maximum security.
-                   </p>
-                 </div>
-               </div>
-             </div>
-             
-             <button onClick={() => setIsSettingsOpen(false)} className="w-full mt-6 py-3.5 bg-[#1c1c1c] text-white font-extrabold rounded-xl hover:bg-black transition-colors flex items-center justify-center gap-2">
-               Close Settings
-             </button>
-          </div>
-        </div>
-      )}
 
       {/* iOS / Fallback Install Modal */}
       {showInstallModal && (
