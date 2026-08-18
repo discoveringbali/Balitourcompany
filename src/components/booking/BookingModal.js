@@ -183,51 +183,26 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     const sTitle = serviceData?.title?.toUpperCase() || "UNKNOWN";
     const divider = "━━━━━━━━━━━━━━━━━━━━━━";
     
-    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*BOOKING ID:* #${bookingId}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*WHATSAPP:* ${formData.phone}\n*DATE:* ${formData.date}`;
-    
-    if (serviceData?.type === "tour" || serviceData?.type === "activities") {
-      messageDetails += `\n*PACKAGE:* ${localPackage}`;
-    }
+    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*WHATSAPP:* ${formData.phone}\n*DATE:* ${formData.date}`;
     
     if (serviceData?.type === "tour") {
       messageDetails += `\n*GUESTS:* ${formData.guests} Pax\n*PICKUP:* ${formData.pickupLocation.name}`;
-      if (formData.pickupLocation.coords) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${formData.pickupLocation.coords[0]},${formData.pickupLocation.coords[1]}`;
-      } else if (formData.pickupLocation.name) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${encodeURIComponent(formData.pickupLocation.name + " Bali")}`;
-      }
     } else if (serviceData?.type === "spa") {
       messageDetails += `\n*TIME:* ${formData.time}\n*GUESTS:* ${formData.guests} Pax\n*LOCATION:* ${formData.pickupLocation.name}`;
-      if (formData.pickupLocation.coords) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${formData.pickupLocation.coords[0]},${formData.pickupLocation.coords[1]}`;
-      } else if (formData.pickupLocation.name) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${encodeURIComponent(formData.pickupLocation.name + " Bali")}`;
-      }
     } else if (serviceData?.type === "scooter") {
       messageDetails += `\n*DURATION:* ${formData.duration} Days\n*DELIVERY LOC:* ${formData.pickupLocation.name}`;
-      if (formData.pickupLocation.coords) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${formData.pickupLocation.coords[0]},${formData.pickupLocation.coords[1]}`;
-      } else if (formData.pickupLocation.name) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${encodeURIComponent(formData.pickupLocation.name + " Bali")}`;
-      }
     } else if (serviceData?.type === "transport") {
       messageDetails += `\n*TIME:* ${formData.time}\n*PASSENGERS:* ${formData.guests} Pax\n*PICKUP:* ${formData.pickupLocation.name}`;
-      if (formData.pickupLocation.coords) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${formData.pickupLocation.coords[0]},${formData.pickupLocation.coords[1]}`;
-      } else if (formData.pickupLocation.name) {
-         messageDetails += `\n*MAPS:* https://maps.google.com/?q=${encodeURIComponent(formData.pickupLocation.name + " Bali")}`;
-      }
       messageDetails += `\n*DROPOFF:* ${formData.dropoffLocation.name}`;
-      if (formData.dropoffLocation.coords) {
-         messageDetails += `\n*DESTINATION MAPS:* https://maps.google.com/?q=${formData.dropoffLocation.coords[0]},${formData.dropoffLocation.coords[1]}`;
-      } else if (formData.dropoffLocation.name) {
-         messageDetails += `\n*DESTINATION MAPS:* https://maps.google.com/?q=${encodeURIComponent(formData.dropoffLocation.name + " Bali")}`;
-      }
     }
 
-    messageDetails += `\n${divider}\n*TOTAL ESTIMATE:* ${formatIDR(total)}`;
+    messageDetails += `\n${divider}`;
     if (appliedDiscount) {
-      messageDetails += ` (Code: ${appliedDiscount.code})`;
+      messageDetails += `\n*ORIGINAL PRICE:* ${formatIDR(baseTotal)}`;
+      messageDetails += `\n*DISCOUNT:* -${formatIDR(discountAmt)}`;
+      messageDetails += `\n*TOTAL ESTIMATE:* ${formatIDR(total)} (Code: ${appliedDiscount.code})`;
+    } else {
+      messageDetails += `\n*TOTAL ESTIMATE:* ${formatIDR(total)}`;
     }
 
     const waUrl = `https://wa.me/6285174119423?text=${encodeURIComponent(messageDetails)}`;
