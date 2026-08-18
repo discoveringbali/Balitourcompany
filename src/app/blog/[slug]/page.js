@@ -159,7 +159,7 @@ export default async function BlogDetail({ params }) {
   return (
     <>
       <StructuredData data={jsonLd} />
-      <main className="min-h-screen bg-background pb-32 font-sans">
+      <main className="min-h-screen bg-background pb-32 font-sans -mt-20 md:-mt-24">
 
         {/* Hero Header Section */}
         <div className="relative w-full h-[50vh] md:h-[65vh] bg-black">

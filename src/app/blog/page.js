@@ -43,20 +43,7 @@ export default async function Blog() {
   return (
     <div className="w-full bg-background min-h-screen font-sans">
 
-      {/* Cinematic Header */}
-      <div className="relative w-full h-[40vh] md:h-[50vh] bg-black flex flex-col justify-center items-center text-center px-4">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center opacity-40"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-black/40 to-transparent"></div>
-        <div className="relative z-10 max-w-3xl mt-16">
-          <span className="text-accent font-extrabold uppercase tracking-[0.2em] text-sm mb-4 block">Travel Journal</span>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight mb-6 text-white drop-shadow-xl">Discover Bali</h1>
-          <p className="text-lg md:text-xl font-medium text-white/90 max-w-2xl mx-auto drop-shadow-md">
-            Insider guides, hidden gems, and inspiration from local experts to help you plan the perfect trip.
-          </p>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-4 lg:max-w-7xl -mt-12 md:-mt-16 relative z-20 pb-24">
+      <div className="container mx-auto px-4 lg:max-w-7xl relative z-20 pb-24 pt-4 md:pt-8">
         {articles.length === 0 ? (
           <div className="text-center py-24 bg-surface rounded-[32px] border border-border shadow-floating">
             <Sparkles size={48} className="mx-auto text-gray-300 mb-6" />
@@ -93,7 +80,7 @@ export default async function Blog() {
             {articles.length > 1 && (
               <>
                 <div className="flex items-center gap-4 mb-10">
-                  <h2 className="text-3xl lg:text-4xl font-black text-primary">Latest Articles</h2>
+                  <h1 className="text-3xl lg:text-4xl font-black text-primary">Latest Articles</h1>
                   <div className="h-0.5 flex-1 bg-gray-200 mt-2"></div>
                 </div>
 

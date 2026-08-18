@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function Loading() {
   return (
-    <main className="min-h-screen bg-background pb-32 font-sans animate-pulse">
+    <main className="min-h-screen bg-background pb-32 font-sans animate-pulse -mt-20 md:-mt-24">
       {/* Hero Header Section Skeleton */}
       <div className="relative w-full h-[50vh] md:h-[65vh] bg-gray-200">
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-black/5"></div>
