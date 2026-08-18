@@ -12,10 +12,13 @@ const locations = ["All", "Ubud", "Nusa Penida", "Kuta", "Seminyak", "Canggu", "
 export default function ToursClient({ initialTours }) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [activeLocation, setActiveLocation] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
 
   const filteredTours = initialTours.filter(tour => {
     let matchCat = true;
     let matchLoc = true;
+    let matchSearch = true;
 
     if (activeCategory !== "All") {
       const cat = tour.category || tour.data?.category || "";
@@ -27,7 +30,14 @@ export default function ToursClient({ initialTours }) {
       matchLoc = loc.includes(activeLocation.toLowerCase());
     }
 
-    return matchCat && matchLoc;
+    if (searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase();
+      const title = (tour.title || tour.data?.title || "").toLowerCase();
+      const desc = (tour.description || tour.data?.description || "").toLowerCase();
+      matchSearch = title.includes(q) || desc.includes(q);
+    }
+
+    return matchCat && matchLoc && matchSearch;
   });
 
   return (
@@ -44,16 +54,25 @@ export default function ToursClient({ initialTours }) {
         <div className="sticky top-0 z-30 bg-background pt-2 pb-4 flex flex-col gap-3">
           <div className="w-full lg:max-w-xl">
             <div className="flex gap-2">
-              <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[28px] p-2.5 flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors">
+              <div className="flex-1 bg-white/95 backdrop-blur-md rounded-[28px] p-2.5 flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 focus-within:ring-2 focus-within:ring-black transition-all">
                 <div className="w-10 h-10 bg-[#f4f4f4] rounded-full flex items-center justify-center shrink-0">
                    <Search size={16} strokeWidth={2.5} className="text-gray-400" />
                 </div>
-                <div className="ml-3 flex flex-col justify-center h-full">
-                  <span className="font-extrabold text-[13px] text-primary leading-none mb-1">Where to?</span>
-                  <span className="text-[11px] font-bold text-gray-400 leading-none">Anywhere • Any week • Add guests</span>
+                <div className="ml-3 flex flex-col justify-center h-full w-full pr-4">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Where to? Search tours..."
+                    className="w-full bg-transparent font-extrabold text-[13px] text-primary outline-none placeholder:text-gray-400 placeholder:font-extrabold"
+                  />
+                  <span className="text-[11px] font-bold text-gray-400 leading-none mt-1">Anywhere • Any week • Add guests</span>
                 </div>
               </div>
-              <button className="w-[60px] h-[60px] shrink-0 bg-white/95 backdrop-blur-md rounded-[28px] flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 hover:bg-gray-50 transition-colors">
+              <button 
+                onClick={() => setShowFilters(!showFilters)}
+                className={`w-[60px] h-[60px] shrink-0 bg-white/95 backdrop-blur-md rounded-[28px] flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border transition-colors ${showFilters ? 'border-black bg-gray-50' : 'border-gray-100 hover:bg-gray-50'}`}
+              >
                 <SlidersHorizontal size={16} strokeWidth={2.5} className="text-primary" />
               </button>
             </div>
@@ -86,6 +105,37 @@ export default function ToursClient({ initialTours }) {
               })}
             </div>
           </div>
+
+          {showFilters && (
+            <div className="bg-white rounded-[24px] p-1.5 shadow-sm self-start max-w-full border border-gray-200">
+              <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                <span className="text-[11px] font-bold text-gray-400 px-3 whitespace-nowrap uppercase tracking-wider">Location:</span>
+                {locations.map((loc) => {
+                  const isActive = activeLocation === loc;
+                  return (
+                    <button
+                      key={loc}
+                      onClick={() => setActiveLocation(loc)}
+                      className="relative flex items-center justify-center px-4 py-2 rounded-[20px] active:scale-95 outline-none shrink-0"
+                    >
+                      {isActive && (
+                        <motion.div
+                          layoutId="toursLocationIndicator"
+                          className="absolute inset-0 bg-black rounded-[20px] shadow-sm"
+                          transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                        />
+                      )}
+                      <div className="relative z-10 flex items-center justify-center">
+                          <span className={`text-[12px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                            {loc}
+                          </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
