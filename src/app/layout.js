@@ -21,10 +21,10 @@ export const metadata = {
   metadataBase: new URL("https://www.bobbybaliguide.com"),
   applicationName: "Balance Island",
   title: {
-    default: "Balance Island | Best Private Drivers & Premium Tours in Bali",
+    default: "Private Bali Tours & Experiences | Balance Island",
     template: "%s | Balance Island"
   },
-  description: "Experience the best of Bali and Ubud with Balance Island. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages. Book your unforgettable Bali adventure today!",
+  description: "Explore Bali with private tours and carefully planned experiences across Ubud, Uluwatu, Canggu, Nusa Penida and beyond.",
   keywords: ["Bali Private Driver", "Hire Driver in Bali", "Bali Car Charter", "Premium Bali Tours", "Ubud Day Tour", "Nusa Penida Tour Package", "Bali Airport Transfer", "Custom Bali Itinerary", "Local Bali Guide", "Best Driver in Ubud"],
   authors: [{ name: "Balance Island" }],
   creator: "Balance Island",
@@ -35,8 +35,8 @@ export const metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "Balance Island | Best Private Drivers & Premium Tours in Bali",
-    description: "Experience the best of Bali and Ubud with Balance Island. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages.",
+    title: "Balance Island | Private Tours & Experiences in Bali",
+    description: "Private tours. Remarkable places. A better way to experience Bali. Discover carefully planned experiences across the island with Balance Island.",
     url: "https://www.bobbybaliguide.com",
     siteName: "Balance Island",
     images: [
@@ -63,9 +63,12 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Balance Island | Best Private Drivers & Premium Tours in Bali",
-    description: "Experience the best of Bali and Ubud with Balance Island. Top-rated private car charters, experienced local guides, and bespoke luxury tour packages.",
+    title: "Balance Island | Private Tours & Experiences in Bali",
+    description: "Private tours. Remarkable places. A better way to experience Bali. Discover carefully planned experiences across the island with Balance Island.",
     images: ["/og-image.jpg"],
+  },
+  alternates: {
+    canonical: '/',
   },
 };
 
