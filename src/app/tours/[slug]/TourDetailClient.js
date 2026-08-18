@@ -190,6 +190,14 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
     setIsSaved(newState);
   };
 
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.history.length > 2) {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
     const nameToUse = reviewName;
@@ -261,7 +269,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
         </div>
         
         <div className="absolute top-0 left-0 right-0 w-full p-6 pt-[calc(env(safe-area-inset-top)+20px)] flex justify-between items-center z-30 pointer-events-none">
-          <button onClick={() => router.back()} className="pointer-events-auto w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors">
+          <button onClick={handleBack} className="pointer-events-auto w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors">
             <ChevronLeft size={24} className="text-primary pr-0.5" strokeWidth={2.5} />
           </button>
           <div className="flex gap-3 pointer-events-auto">
@@ -280,7 +288,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
         
         {/* Clean Header Row for Back/Share/Save */}
         <div className="flex justify-between items-center mb-5 pb-1">
-          <button onClick={() => router.back()} className="flex items-center gap-1.5 text-[15px] font-bold text-primary hover:text-accent transition-colors group">
+          <button onClick={handleBack} className="flex items-center gap-1.5 text-[15px] font-bold text-primary hover:text-accent transition-colors group">
             <ChevronLeft size={20} className="transition-transform group-hover:-translate-x-1" strokeWidth={2.5} />
             Back
           </button>
