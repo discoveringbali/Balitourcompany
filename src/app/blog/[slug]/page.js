@@ -53,12 +53,12 @@ const formatContent = (htmlOrText) => {
     if (isListItem) {
       if (!inList) {
         // Use a beautiful custom styled list
-        html += '<ul class="space-y-3 my-6 pl-2">';
+        html += '<ul class="space-y-4 my-8 pl-2 md:pl-4">';
         inList = true;
       }
       // Automatically bold text before a colon in a list item
       content = content.replace(/^([^:]+):/, '<strong>$1:</strong>');
-      html += `<li class="flex items-start gap-3"><div class="mt-2.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0"></div><span class="flex-1">${content}</span></li>`;
+      html += `<li class="flex items-start gap-3 md:gap-4"><div class="mt-2.5 md:mt-3 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent shrink-0"></div><span class="flex-1">${content}</span></li>`;
       return;
     } else if (inList) {
       html += '</ul>';
@@ -67,18 +67,18 @@ const formatContent = (htmlOrText) => {
 
     if (isBoldedLine) {
       if (index === 0 || html.indexOf('<h2') === -1) {
-        html += `<h2>${cleanLine}</h2>`;
+        html += `<h2 class="text-2xl md:text-3xl font-black mt-10 mb-5 text-black leading-tight tracking-tight">${cleanLine}</h2>`;
       } else {
-        html += `<h3>${cleanLine}</h3>`;
+        html += `<h3 class="text-xl md:text-2xl font-black mt-8 mb-4 text-black leading-snug tracking-tight">${cleanLine}</h3>`;
       }
       expectList = false; // Reset implicit list detection
     } else {
       if (cleanLine.endsWith(':')) {
         expectList = true; // The next lines are an implicit list!
-        html += `<p class="font-bold text-xl text-primary mt-8 mb-4">${line}</p>`;
+        html += `<p class="font-bold text-xl md:text-2xl text-primary mt-8 mb-4 tracking-tight">${line}</p>`;
       } else {
         expectList = false;
-        html += `<p>${line}</p>`;
+        html += `<p class="leading-relaxed mb-6">${line}</p>`;
       }
     }
   });
@@ -202,7 +202,7 @@ export default async function BlogDetail({ params }) {
         <div className="max-w-3xl mx-auto px-6 md:px-12 pt-10 md:pt-16 pb-12">
           {/* Formatted Smart Body */}
           <div
-            className="newsletter-content"
+            className="newsletter-content text-[17px] md:text-[20px] leading-[1.85] text-gray-800 space-y-6 md:space-y-8 tracking-tight font-medium"
             dangerouslySetInnerHTML={{ __html: smartLinkedHtml }}
           />
         </div>

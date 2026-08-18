@@ -99,8 +99,8 @@ export default function Navbar() {
     { id: "eSIM", icon: TowelsIcon },
   ];
 
-  // Hide the global Navbar on the tours page, individual tour detail pages, or the map page
-  if (pathname.startsWith('/tours') || pathname === '/map') return null;
+  // Hide the global Navbar on the tours page, individual tour detail pages, the map page, or blog pages
+  if (pathname.startsWith('/tours') || pathname === '/map' || pathname.startsWith('/blog')) return null;
 
   return (
     <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
