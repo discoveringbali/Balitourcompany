@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { revalidateTag } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
 
 const getSupabase = () => createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -32,6 +35,8 @@ export async function POST(req) {
        console.error("Save Discounts Error:", error);
        return NextResponse.json({ error: error.message }, { status: 500 });
     }
+    
+    revalidateTag('homepage_settings');
     
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
