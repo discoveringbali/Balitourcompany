@@ -18,7 +18,7 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL("https://www.bobbybaliguide.com"),
+  metadataBase: new URL("https://www.balanceisland.com"),
   applicationName: "Balance Island",
   title: {
     default: "Private Bali Tours & Experiences | Balance Island",
@@ -37,7 +37,7 @@ export const metadata = {
   openGraph: {
     title: "Balance Island | Private Tours & Experiences in Bali",
     description: "Private tours. Remarkable places. A better way to experience Bali. Discover carefully planned experiences across the island with Balance Island.",
-    url: "https://www.bobbybaliguide.com",
+    url: "https://www.balanceisland.com",
     siteName: "Balance Island",
     images: [
       {

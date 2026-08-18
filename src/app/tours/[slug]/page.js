@@ -18,7 +18,8 @@ export async function generateMetadata({ params }) {
   if (!listing) {
     return {
       title: "Tour Not Found | Balance Island",
-      description: "This tour could not be found."
+      description: "This tour could not be found.",
+      robots: { index: false, follow: false }
     };
   }
 
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }) {
     title: `${listing.title} | Balance Island`,
     description: optimizedDescription,
     openGraph: {
-      title: listing.title,
+      title: `${listing.title} | Balance Island`,
       description: optimizedDescription,
       images: [
         {
@@ -43,9 +44,12 @@ export async function generateMetadata({ params }) {
     },
     twitter: {
       card: 'summary_large_image',
-      title: listing.title,
+      title: `${listing.title} | Balance Island`,
       description: optimizedDescription,
       images: [coverImg],
+    },
+    alternates: {
+      canonical: `/tours/${slug}`,
     },
   };
 }

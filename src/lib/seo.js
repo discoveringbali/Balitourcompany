@@ -1,6 +1,6 @@
 import { generateSlug } from "./utils";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.bobbybaliguide.com';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.balanceisland.com';
 
 export function getSeoDescription(text, maxLength = 160) {
   if (!text) return "Book your premium Bali experience with Balance Island.";
@@ -21,34 +21,60 @@ export function generateTourJsonLd(tour) {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'TouristTrip',
-    'name': tour.title,
-    'description': getSeoDescription(tour.data?.description || tour.data?.highlights || ""),
-    'image': tour.image || `${BASE_URL}/logo.png`,
-    'touristType': [
-      'Families', 'Couples', 'Solo travelers'
-    ],
-    'provider': {
-      '@type': 'LocalBusiness',
-      'name': 'Balance Island',
-      'url': BASE_URL
-    },
-    'offers': {
-      '@type': 'Offer',
-      'priceCurrency': 'IDR',
-      'price': minPrice,
-      'availability': 'https://schema.org/InStock',
-      'url': `${BASE_URL}/tours/${generateSlug(tour.title)}`
-    }
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': BASE_URL
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Tours',
+            'item': `${BASE_URL}/tours`
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': tour.title,
+            'item': `${BASE_URL}/tours/${generateSlug(tour.title)}`
+          }
+        ]
+      },
+      {
+        '@type': 'TouristTrip',
+        'name': tour.title,
+        'description': getSeoDescription(tour.data?.description || tour.data?.highlights || ""),
+        'image': tour.image || `${BASE_URL}/logo.png`,
+        'touristType': [
+          'Families', 'Couples', 'Solo travelers'
+        ],
+        'provider': {
+          '@type': 'LocalBusiness',
+          'name': 'Balance Island',
+          'url': BASE_URL
+        },
+        'offers': {
+          '@type': 'Offer',
+          'priceCurrency': 'IDR',
+          'price': minPrice,
+          'availability': 'https://schema.org/InStock',
+          'url': `${BASE_URL}/tours/${generateSlug(tour.title)}`
+        },
+        ...(tour.rating ? {
+          'aggregateRating': {
+            '@type': 'AggregateRating',
+            'ratingValue': tour.rating,
+            'reviewCount': tour.reviews || 10
+          }
+        } : {})
+      }
+    ]
   };
-
-  if (tour.rating) {
-    jsonLd.aggregateRating = {
-      '@type': 'AggregateRating',
-      'ratingValue': tour.rating,
-      'reviewCount': tour.reviews || 10
-    };
-  }
 
   return JSON.stringify(jsonLd);
 }
