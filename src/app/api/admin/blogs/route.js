@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { revalidateTag } from 'next/cache';
 
 export const runtime = 'edge';
 
@@ -58,6 +59,9 @@ export async function POST(req) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    // Revalidate the Next.js cache so the public website updates instantly
+    revalidateTag('blogs');
+
     return NextResponse.json(data, { status: 201 });
   } catch (error) {
     console.error("POST Blogs server error:", error);
@@ -98,6 +102,9 @@ export async function PUT(req) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
+    // Revalidate the Next.js cache so the public website updates instantly
+    revalidateTag('blogs');
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("PUT Blogs server error:", error);
@@ -124,6 +131,9 @@ export async function DELETE(req) {
       console.error("DELETE Blogs error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
+
+    // Revalidate the Next.js cache so the public website updates instantly
+    revalidateTag('blogs');
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
