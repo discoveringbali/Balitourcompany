@@ -1235,8 +1235,34 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             <span className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</span>
           </div>
           <div className="flex overflow-x-auto no-scrollbar gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 snap-x snap-mandatory">
-            {recommendedPlaces.map((place, index) => (
-              <a href={place.slug ? (place.slug.startsWith('http') ? place.slug : `https://www.bobbybaliguide.com${place.slug.startsWith('/') ? place.slug : '/' + place.slug}`) : "#"} key={place.id} className={`block relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] group cursor-pointer border border-border shrink-0 snap-center ${index === 0 ? 'w-[85vw] md:w-auto md:col-span-2 aspect-[4/3] md:aspect-[2/1]' : 'w-[200px] md:w-auto aspect-[3/4] md:aspect-square'}`}>
+            {recommendedPlaces.map((place, index) => {
+              // Ensure the slug is cleanly formatted for the /blog/ route
+              let cleanSlug = place.slug || "";
+              if (cleanSlug.startsWith('http')) {
+                // If it's an external link, use a normal anchor
+                return (
+                  <a href={cleanSlug} target="_blank" rel="noopener noreferrer" key={place.id} className={`block relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] group cursor-pointer border border-border shrink-0 snap-center ${index === 0 ? 'w-[85vw] md:w-auto md:col-span-2 aspect-[4/3] md:aspect-[2/1]' : 'w-[200px] md:w-auto aspect-[3/4] md:aspect-square'}`}>
+                    {place.image && <Image src={place.image} alt={place.title || "Place Image"} fill sizes="(max-width: 768px) 50vw, 20vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                    <div className="absolute top-4 left-4 z-20">
+                      <span className="inline-block px-3 py-1.5 bg-white/20 backdrop-blur-md text-white border border-white/20 text-[10px] font-extrabold uppercase tracking-widest shadow-sm rounded-xl">{place.category || 'Featured'}</span>
+                    </div>
+                    <div className="absolute bottom-3 inset-x-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-[24px] p-4 flex flex-col z-20 transition-all duration-300 group-hover:bg-white/20">
+                      <h3 className={`font-black text-white leading-tight ${index === 0 ? 'text-[18px] md:text-[22px]' : 'text-[14px] line-clamp-2'}`}>{place.title}</h3>
+                      <div className="flex items-center gap-1.5 mt-2 opacity-90 text-white">
+                        <MapPin size={12} className="shrink-0" />
+                        <span className="text-[11px] font-bold tracking-wide uppercase truncate">{place.location}</span>
+                      </div>
+                    </div>
+                  </a>
+                );
+              }
+              
+              cleanSlug = cleanSlug.replace(/^\/?(blog\/)?/i, '');
+              const href = cleanSlug ? `/blog/${cleanSlug}` : '#';
+
+              return (
+              <Link href={href} key={place.id} className={`block relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] group cursor-pointer border border-border shrink-0 snap-center ${index === 0 ? 'w-[85vw] md:w-auto md:col-span-2 aspect-[4/3] md:aspect-[2/1]' : 'w-[200px] md:w-auto aspect-[3/4] md:aspect-square'}`}>
                 {place.image && <Image src={place.image} alt={place.title || "Place Image"} fill sizes="(max-width: 768px) 50vw, 20vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
@@ -1250,11 +1276,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <h3 className={`font-black text-white leading-tight ${index === 0 ? 'text-[18px] md:text-[22px]' : 'text-[14px] line-clamp-2'}`}>{place.title}</h3>
                   <div className="flex items-center gap-1.5 mt-2 opacity-90 text-white">
                     <MapPin size={12} className="shrink-0" />
-                    <span className="text-[11px] font-bold tracking-wide uppercase truncate">{place.location}</span>
+                    <span className="text-[11px] font-bold tracking-wide uppercase truncate">{place.location || "Bali, Indonesia"}</span>
                   </div>
                 </div>
-              </a>
-            ))}
+              </Link>
+            )})}
           </div>
         </section>
 
