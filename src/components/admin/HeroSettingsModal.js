@@ -19,7 +19,6 @@ export default function HeroSettingsModal({ onClose }) {
 
   useEffect(() => {
     fetchSettings();
-    setCampaigns(getCampaignSettings());
   }, []);
 
   const fetchSettings = async () => {
@@ -31,9 +30,17 @@ export default function HeroSettingsModal({ onClose }) {
           campaignVideo: data.campaign_video || "",
           campaignYoutubeLink: data.campaign_youtube_link || ""
         });
+        if (data.metadata?.campaigns) {
+          setCampaigns(data.metadata.campaigns);
+        } else {
+          setCampaigns(getCampaignSettings());
+        }
+      } else {
+        setCampaigns(getCampaignSettings());
       }
     } catch (err) {
       console.error("Error fetching homepage settings:", err.message);
+      setCampaigns(getCampaignSettings());
     }
   };
 
