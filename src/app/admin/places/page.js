@@ -31,10 +31,7 @@ export default function SEOPlacesManagement() {
     }
   };
 
-  const handleEditorInput = (e) => {
-    setFormData(prev => ({...prev, content: e.currentTarget.innerHTML}));
-  };
-
+  
   const initialPlaces = [
     { 
       id: "PLC-001", 
@@ -172,6 +169,9 @@ export default function SEOPlacesManagement() {
   const handleSaveModal = async () => {
     // Generate a default slug if empty
     const payload = { ...formData };
+    if (editorRef.current) {
+      payload.content = editorRef.current.innerHTML;
+    }
     if (!payload.slug || payload.slug === '/blog/') {
       payload.slug = `/blog/${payload.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
     }
@@ -420,8 +420,7 @@ export default function SEOPlacesManagement() {
                       <div 
                          ref={editorRef}
                          contentEditable
-                         onInput={handleEditorInput}
-                         onBlur={handleEditorInput}
+                         
                          className="flex-1 w-full p-4 overflow-y-auto outline-none text-[14px] text-gray-700 font-medium leading-relaxed font-sans focus:bg-[#fafafa]"
                          style={{ minHeight: '250px' }}
                          suppressContentEditableWarning={true}
