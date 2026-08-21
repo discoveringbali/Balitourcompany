@@ -114,11 +114,11 @@ export default function Navbar() {
         
         {/* Left Side: Greeting & Location */}
         <div className="flex flex-col justify-center">
-          <span className={`text-[15px] sm:text-[16px] font-black leading-tight tracking-tight transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1c]' : 'text-white'}`}>
+          <span className="text-[15px] sm:text-[16px] font-black text-[#1c1c1c] leading-tight tracking-tight">
             {getGreeting()}
           </span>
-          <span className={`text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1 mt-0.5 transition-colors duration-500 ${isScrolled ? 'text-gray-500' : 'text-white/80'}`}>
-            <MapPin size={10} strokeWidth={3} className={`transition-colors duration-500 ${isScrolled ? 'text-black' : 'text-white'}`} /> Bali, Indonesia
+          <span className="text-[10px] sm:text-[11px] font-extrabold text-gray-500 flex items-center gap-1 mt-0.5">
+            <MapPin size={10} strokeWidth={3} className="text-black" /> Bali, Indonesia
           </span>
         </div>
 
@@ -127,7 +127,7 @@ export default function Navbar() {
           <div className="relative">
             <button 
               onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
-              className={`px-2.5 sm:px-3.5 h-9 sm:h-10 rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[11px] sm:text-[13px] ${isScrolled ? 'bg-black text-white hover:bg-neutral-800' : 'border border-white/30 bg-black/20 backdrop-blur-md text-white hover:bg-white/20'}`}
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <CircleDollarSign size={14} className="text-white" /> {activeCurrency}
             </button>
@@ -148,7 +148,7 @@ export default function Navbar() {
           <div className="relative">
             <button 
               onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
-              className={`px-2.5 sm:px-3.5 h-9 sm:h-10 rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[11px] sm:text-[13px] ${isScrolled ? 'bg-black text-white hover:bg-neutral-800' : 'border border-white/30 bg-black/20 backdrop-blur-md text-white hover:bg-white/20'}`}
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <Globe size={14} className={`text-white ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
             </button>
