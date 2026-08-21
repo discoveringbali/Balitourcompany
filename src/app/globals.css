@@ -47,7 +47,7 @@
 
   /* Newsletter Article Typography */
   .newsletter-content {
-    @apply text-lg leading-[1.8] text-[#535353] font-serif;
+    @apply text-lg leading-[1.8] text-gray-700 font-sans;
   }
 
   .newsletter-content h1,
@@ -70,9 +70,6 @@
     @apply mb-6;
   }
 
-  .newsletter-content p:first-of-type::first-letter {
-    @apply text-5xl font-black float-left mr-3 mt-1.5 text-primary font-sans leading-none;
-  }
 
   .newsletter-content ul {
     @apply list-disc pl-6 mb-6 space-y-2;
