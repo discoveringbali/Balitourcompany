@@ -5,7 +5,8 @@ import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Discover Bali | Premium Island Blog",
+  title: "Bali Travel Blog & Guide: Expert Tips, Tours & Hidden Gems",
+  description: "Read the Balance Island Bali travel blog for local itineraries, expert tips, top private tours, and hidden gems to make your trip to Bali unforgettable.",
 };
 
 // Helper to strip HTML and get excerpt
