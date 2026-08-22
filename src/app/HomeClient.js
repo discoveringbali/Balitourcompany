@@ -980,7 +980,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
         </section>
         )}
-      </div> {/* End Top White Section */}
 
         {/* Desktop/iPad Full-Screen Cinematic Hero */}
         {displayCampaigns.length > 0 && (
