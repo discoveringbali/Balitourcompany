@@ -10,12 +10,16 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   
-  const getGreeting = () => {
+  const [greeting, setGreeting] = useState("Good Day");
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
     const hour = new Date().getHours();
-    if (hour < 12) return "Good Morning";
-    if (hour < 18) return "Good Afternoon";
-    return "Good Evening";
-  };
+    if (hour < 12) setGreeting("Good Morning");
+    else if (hour < 18) setGreeting("Good Afternoon");
+    else setGreeting("Good Evening");
+  }, []);
   
   if (pathname?.startsWith('/admin')) {
     return null;
@@ -138,7 +142,7 @@ export default function Navbar() {
             )}
           </Link>
           <div className="flex flex-col justify-center px-1">
-            <span className="text-[10px] sm:text-[11px] font-bold text-black/80 leading-tight drop-shadow-sm">{getGreeting()}</span>
+            <span className="text-[10px] sm:text-[11px] font-bold text-black/80 leading-tight drop-shadow-sm">{mounted ? greeting : "Good Day"}</span>
             <span className="text-[11px] sm:text-[12px] font-extrabold text-black leading-tight mt-[1px] drop-shadow-sm">Bali, Indonesia</span>
           </div>
         </div>
