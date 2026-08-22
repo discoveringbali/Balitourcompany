@@ -142,8 +142,8 @@ export default function Navbar() {
             )}
           </Link>
           <div className="flex flex-col justify-center px-1">
-            <span className="text-[10px] sm:text-[11px] font-bold text-black/80 leading-tight drop-shadow-sm">{mounted ? greeting : "Good Day"}</span>
-            <span className="text-[11px] sm:text-[12px] font-extrabold text-black leading-tight mt-[1px] drop-shadow-sm">Bali, Indonesia</span>
+            <span className="text-[10px] sm:text-[11px] font-bold leading-tight drop-shadow-sm" style={{ color: '#000000', opacity: 0.8 }}>{mounted ? greeting : "Good Day"}</span>
+            <span className="text-[11px] sm:text-[12px] font-extrabold leading-tight mt-[1px] drop-shadow-sm" style={{ color: '#000000' }}>Bali, Indonesia</span>
           </div>
         </div>
 
