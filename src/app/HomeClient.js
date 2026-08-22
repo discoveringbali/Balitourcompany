@@ -921,8 +921,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       </svg>
 
                       {/* Heart Button */}
-                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-800" aria-label="Save campaign">
-                        <Heart size={19} strokeWidth={2.5} className="text-white" />
+                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-50 border border-gray-100/50" aria-label="Save campaign">
+                        <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
                       </button>
 
                       {camp.isExternalCampaign ? (
@@ -930,18 +930,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           href={camp.externalUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-800"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-50 border border-gray-100/50"
                           aria-label="Open partner website"
                         >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-white" />
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
                         </a>
                       ) : (
                         <Link
                           href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-800"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-50 border border-gray-100/50"
                           aria-label="View tour details"
                         >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-white" />
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
                         </Link>
                       )}
                     </div>
@@ -975,7 +975,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 onClick={() => {
                   setCurrentCampIdx(idx);
                 }}
-                className={`h-1.5 rounded-full transition-all duration-300 pointer-events-none ${idx === currentCampIdx ? 'w-5 bg-accent' : 'w-1.5 bg-border'}`}
+                className={`rounded-full transition-all duration-300 pointer-events-none ${idx === currentCampIdx ? 'w-1.5 h-1.5 bg-[#000000]' : 'w-1.5 h-1.5 bg-gray-300'}`}
               />
             ))}
           </div>
