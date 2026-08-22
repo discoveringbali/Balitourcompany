@@ -104,7 +104,7 @@ export default function PersonalInfoPage() {
   return (
     <div className="min-h-[100dvh] bg-[#000000] pb-32 font-sans font-medium text-white">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#000000]/90 backdrop-blur-md shadow-sm border-b border-white/10 px-6 pt-12 pb-4">
+      <div className="sticky top-0 z-50 bg-[#000000]/90 backdrop-blur-md shadow-sm border-b border-white/10 px-6 pt-4 pb-4">
         <div className="flex items-center justify-between relative">
           <button type="button" onClick={() => router.back()} className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors z-10">
             <ChevronLeft size={24} className="text-white" strokeWidth={2.5} />

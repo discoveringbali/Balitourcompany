@@ -137,9 +137,9 @@ export default function Navbar() {
               <User size={18} strokeWidth={2.5} className="text-white" />
             )}
           </Link>
-          <div className="flex flex-col justify-center bg-black/25 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/10 shadow-sm">
-            <span className="text-[10px] sm:text-[11px] font-medium text-white/90 leading-tight drop-shadow-md">{getGreeting()}</span>
-            <span className="text-[11px] sm:text-[12px] font-bold text-white leading-tight mt-[2px] drop-shadow-md">Bali, Indonesia</span>
+          <div className="flex flex-col justify-center px-1">
+            <span className="text-[10px] sm:text-[11px] font-bold text-black/80 leading-tight drop-shadow-sm">{getGreeting()}</span>
+            <span className="text-[11px] sm:text-[12px] font-extrabold text-black leading-tight mt-[1px] drop-shadow-sm">Bali, Indonesia</span>
           </div>
         </div>
 
