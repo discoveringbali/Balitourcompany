@@ -112,15 +112,14 @@ export default function Navbar() {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Profile Icon */}
-        <div className="flex flex-col justify-center">
+        {/* Left Side: Empty to maintain justify-between layout */}
+        <div className="flex flex-col justify-center"></div>
+
+        {/* Right Side: Profile & Currency & Language */}
+        <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
           <Link href="/admin/bookings" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
             <User size={18} strokeWidth={2.5} className="text-white" />
           </Link>
-        </div>
-
-        {/* Right Side: Currency & Language */}
-        <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
           <div className="relative">
             <button 
               onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}

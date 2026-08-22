@@ -30,7 +30,7 @@ function AdminLoginScreen({ onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9] flex flex-col items-center justify-center p-4">
+    <div className="admin-wrapper min-h-screen bg-[#f9f9f9] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-[#eaeaea]">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-[#1c1c1c] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
@@ -149,7 +149,7 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#f9f9f9] flex overflow-hidden font-sans text-[#1c1c1c]">
+    <div className="admin-wrapper fixed inset-0 z-[100] bg-[#f9f9f9] flex overflow-hidden font-sans text-[#1c1c1c]">
       
       {/* Mobile Overlay */}
       {isSidebarOpen && (

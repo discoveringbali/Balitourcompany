@@ -138,6 +138,23 @@ a.bg-accent:hover {
   background-color: #d1ed00 !important; /* Slightly darker on hover */
 }
 
+/* ADMIN REVERT OVERRIDES */
+.admin-wrapper .bg-white, .admin-wrapper.bg-white { background-color: #ffffff !important; }
+.admin-wrapper .bg-\[\#fbfbfb\], .admin-wrapper.bg-\[\#fbfbfb\] { background-color: #fbfbfb !important; }
+.admin-wrapper .text-black, .admin-wrapper.text-black { color: #000000 !important; }
+.admin-wrapper .text-gray-900 { color: #111827 !important; }
+.admin-wrapper .text-\[\#383838\] { color: #383838 !important; }
+.admin-wrapper .bg-gray-50 { background-color: #f9fafb !important; }
+.admin-wrapper .bg-gray-100 { background-color: #f3f4f6 !important; }
+.admin-wrapper .border-gray-100 { border-color: #f3f4f6 !important; }
+.admin-wrapper .border-gray-200 { border-color: #e5e7eb !important; }
+.admin-wrapper .text-gray-500 { color: #6b7280 !important; }
+.admin-wrapper .text-gray-600 { color: #4b5563 !important; }
+.admin-wrapper button.bg-\[\#1c1c1c\], .admin-wrapper a.bg-\[\#1c1c1c\] { background-color: #1c1c1c !important; color: #ffffff !important; }
+.admin-wrapper button.bg-black, .admin-wrapper a.bg-black { background-color: #000000 !important; color: #ffffff !important; }
+.admin-wrapper button.bg-\[\#1c1c1c\]:hover, .admin-wrapper a.bg-\[\#1c1c1c\]:hover { background-color: #000000 !important; }
+.admin-wrapper button.bg-black:hover, .admin-wrapper a.bg-black:hover { background-color: #333333 !important; }
+
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
