@@ -68,9 +68,9 @@ const formatContent = (htmlOrText) => {
 
     if (isBoldedLine) {
       if (index === 0 || html.indexOf('<h2') === -1) {
-        html += `<h2 class="text-2xl md:text-3xl font-black mt-10 mb-5 text-black leading-tight tracking-tight">${cleanLine}</h2>`;
+        html += `<h2 class="text-2xl md:text-3xl font-black mt-10 mb-5 text-white leading-tight tracking-tight">${cleanLine}</h2>`;
       } else {
-        html += `<h3 class="text-xl md:text-2xl font-black mt-8 mb-4 text-black leading-snug tracking-tight">${cleanLine}</h3>`;
+        html += `<h3 class="text-xl md:text-2xl font-black mt-8 mb-4 text-white leading-snug tracking-tight">${cleanLine}</h3>`;
       }
       expectList = false; // Reset implicit list detection
     } else {
@@ -204,7 +204,7 @@ export default async function BlogDetail({ params }) {
         <div className="max-w-3xl mx-auto px-6 md:px-12 pt-10 md:pt-16 pb-12">
           {/* Formatted Smart Body */}
           <div
-            className="newsletter-content text-[17px] md:text-[20px] leading-[1.85] text-gray-800 space-y-6 md:space-y-8 tracking-tight font-medium"
+            className="newsletter-content text-[17px] md:text-[20px] leading-[1.85] text-white/90 space-y-6 md:space-y-8 tracking-tight font-medium"
             dangerouslySetInnerHTML={{ __html: smartLinkedHtml }}
           />
         </div>

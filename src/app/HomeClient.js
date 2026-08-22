@@ -624,7 +624,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
+                        className="absolute inset-0 bg-[#ffffff] rounded-[24px] shadow-sm"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -1198,7 +1198,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
               </div>
               <div className="flex justify-center w-full overflow-hidden">
-                <div className="bg-black rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">
+                <div className="bg-surface border border-white/10 rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">
                   <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     {currentCategories.map((c) => {
                       const Icon = c.icon;
@@ -1212,7 +1212,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           {isActive && (
                             <motion.div
                               layoutId="categoryActiveIndicator"
-                              className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
+                              className="absolute inset-0 bg-[#ffffff] rounded-[24px] shadow-sm"
                               transition={{ type: "spring", stiffness: 400, damping: 28 }}
                             />
                           )}

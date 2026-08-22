@@ -112,15 +112,8 @@ export default function Navbar() {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Greeting & Location */}
-        <div className="flex flex-col justify-center">
-          <span className="text-[15px] sm:text-[16px] font-black text-[#1c1c1c] leading-tight tracking-tight">
-            {getGreeting()}
-          </span>
-          <span className="text-[10px] sm:text-[11px] font-extrabold text-gray-500 flex items-center gap-1 mt-0.5">
-            <MapPin size={10} strokeWidth={3} className="text-black" /> Bali, Indonesia
-          </span>
-        </div>
+        {/* Left Side: Empty to maintain justify-between layout */}
+        <div className="flex flex-col justify-center"></div>
 
         {/* Right Side: Currency & Language */}
         <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
