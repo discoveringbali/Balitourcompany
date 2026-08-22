@@ -500,22 +500,22 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                )}
                
                {step === 1 && (
-                  <div className="flex justify-between items-center mb-6 px-1">
-                    <span className="text-[14px] font-bold text-gray-500">
-                      Expected Total
-                    </span>
-                    <div className="flex flex-col items-end">
-                       {appliedDiscount && (
-                         <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
-                           {formatPrice(getBaseTotal())}
-                         </span>
-                       )}
-                       <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
-                         {formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}
-                       </span>
-                    </div>
-                  </div>
-                )}
+                 <div className="flex justify-between items-center mb-6 px-1">
+                   <span className="text-[14px] font-bold text-gray-500">
+                     {serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? "Price per person" : "Expected Total"}
+                   </span>
+                   <div className="flex flex-col items-end">
+                      {appliedDiscount && (
+                        <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
+                          {formatPrice(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal())}
+                        </span>
+                      )}
+                      <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
+                        {formatPrice((serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal()) - calculateDiscount(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal(), appliedDiscount))}
+                      </span>
+                   </div>
+                 </div>
+               )}
              </>
            )}
            {step === 2 && (
@@ -534,7 +534,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
              </div>
            )}
            <button form="bookingForm" type="submit" className="w-full bg-black hover:bg-neutral-800 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white transition-all active:scale-95 text-[16px] shadow-sm">
-             {step === 1 ? 'Continue to Details' : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
+             {step === 1 ? (
+                (serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat") ? 
+                (serviceData ? `Continue • ${formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}` : 'Continue to Details') : 
+                'Continue to Details'
+             ) : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
            </button>
            {step === 2 && (
              <p className="text-center text-[12px] font-medium text-gray-400 mt-4 px-4 leading-snug">
