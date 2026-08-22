@@ -369,7 +369,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                        <button 
                          type="button"
                          onClick={() => handleGuestsChange(parseInt(formData.guests || 1) - 1)} 
-                         className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
+                         className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-primary shadow-sm hover:bg-white/20 active:scale-95 transition-all"
                        >
                          <Minus size={16} strokeWidth={3} />
                        </button>
@@ -377,7 +377,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                        <button 
                          type="button"
                          onClick={() => handleGuestsChange(parseInt(formData.guests || 1) + 1)} 
-                         className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
+                         className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-primary shadow-sm hover:bg-white/20 active:scale-95 transition-all"
                        >
                          <Plus size={16} strokeWidth={3} />
                        </button>
@@ -406,7 +406,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                        <button 
                          type="button"
                          onClick={() => setFormData(p => ({...p, duration: String(Math.max(1, parseInt(p.duration || 1) - 1))}))} 
-                         className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
+                         className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-primary shadow-sm hover:bg-white/20 active:scale-95 transition-all"
                        >
                          <Minus size={16} strokeWidth={3} />
                        </button>
@@ -414,7 +414,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                        <button 
                          type="button"
                          onClick={() => setFormData(p => ({...p, duration: String(parseInt(p.duration || 1) + 1)}))} 
-                         className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-primary shadow-sm hover:bg-gray-50 active:scale-95 transition-all"
+                         className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-primary shadow-sm hover:bg-white/20 active:scale-95 transition-all"
                        >
                          <Plus size={16} strokeWidth={3} />
                        </button>
@@ -473,7 +473,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         </div>
 
         {/* Footer / Actions */}
-        <div className="p-6 border-t border-gray-100 shrink-0 bg-white rounded-b-[32px] mt-auto">
+        <div className="p-6 border-t border-white/5 shrink-0 bg-transparent rounded-b-[32px] mt-auto">
            {serviceData && (
              <>
                {step === 1 && (
@@ -484,7 +484,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                         placeholder="Promo Code" 
                         value={promoCode} 
                         onChange={(e) => setPromoCode(e.target.value.toUpperCase())} 
-                        className="bg-[#f9f9f9] border border-[#eaeaea] rounded-xl px-4 py-3 flex-1 text-sm font-bold outline-none focus:border-[#1c1c1c] uppercase"
+                        className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex-1 text-sm font-bold text-primary placeholder:text-white/40 outline-none focus:border-white/30 uppercase transition-colors"
                       />
                       <button 
                         type="button" 
