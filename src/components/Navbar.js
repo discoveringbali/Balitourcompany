@@ -100,7 +100,23 @@ export default function Navbar() {
   ];
 
   // Hide the global Navbar on the tours page, individual tour detail pages, the map page, or blog pages
-  if (pathname.startsWith('/tours') || pathname === '/map' || pathname.startsWith('/blog')) return null;
+  if (pathname.startsWith('/tours') || pathname === '/map' || pathname.startsWith('/blog') || pathname.startsWith('/profile')) return null;
+
+  const [profileImage, setProfileImage] = useState(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("balance_island_profile");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.image) {
+          setProfileImage(parsed.image);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
 
   return (
     <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
@@ -114,12 +130,16 @@ export default function Navbar() {
         
         {/* Left Side: Profile Icon & Greeting */}
         <div className="flex items-center gap-2 sm:gap-3">
-          <Link href="/profile/personal-info" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
-            <User size={18} strokeWidth={2.5} className="text-white" />
+          <Link href="/profile/personal-info" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5 overflow-hidden">
+            {profileImage ? (
+              <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <User size={18} strokeWidth={2.5} className="text-white" />
+            )}
           </Link>
-          <div className="flex flex-col justify-center">
-            <span className="text-[12px] sm:text-[13px] font-bold text-white drop-shadow-sm leading-tight">Bali, Indonesia</span>
-            <span className="text-[10px] sm:text-[11px] font-medium text-white/70 drop-shadow-sm leading-tight">{getGreeting()}</span>
+          <div className="flex flex-col justify-center bg-black/25 backdrop-blur-md px-2.5 py-1 rounded-xl border border-white/10 shadow-sm">
+            <span className="text-[10px] sm:text-[11px] font-medium text-white/90 leading-tight drop-shadow-md">{getGreeting()}</span>
+            <span className="text-[11px] sm:text-[12px] font-bold text-white leading-tight mt-[2px] drop-shadow-md">Bali, Indonesia</span>
           </div>
         </div>
 
