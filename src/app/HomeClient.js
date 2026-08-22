@@ -673,7 +673,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {/* Filter Modal Toggle */}
             <button
               onClick={() => setIsFilterModalOpen(true)}
-              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-black text-white hover:bg-neutral-800 hover:scale-105`}
+              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-[#ffffff] text-[#000000] hover:bg-gray-100 hover:scale-105`}
             >
               <Settings2 size={16} strokeWidth={2.5} className="text-[#000000]" />
             </button>

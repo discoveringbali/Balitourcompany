@@ -47,7 +47,7 @@
 
   /* Newsletter Article Typography */
   .newsletter-content {
-    @apply text-lg leading-[1.8] text-gray-700 font-sans;
+    @apply text-lg leading-[1.8] text-gray-300 font-sans;
   }
 
   .newsletter-content h1,
@@ -89,11 +89,11 @@
   }
 
   .newsletter-content a {
-    @apply text-black underline decoration-2 underline-offset-4 hover:text-gray-700 transition-colors font-semibold;
+    @apply text-accent underline decoration-2 underline-offset-4 hover:text-white transition-colors font-semibold;
   }
 
   .newsletter-content blockquote {
-    @apply border-l-4 border-accent pl-6 py-2 my-8 italic text-xl text-primary bg-gray-50 rounded-r-xl;
+    @apply border-l-4 border-accent pl-6 py-2 my-8 italic text-xl text-primary bg-white/5 rounded-r-xl;
   }
 }
 
