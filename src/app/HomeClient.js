@@ -605,10 +605,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   return (
     <div className="w-full bg-background min-h-[100dvh] font-sans pb-32">
       
-      {/* Top White Section (Mobile) */}
-      <div className="w-full bg-[#ffffff] md:bg-transparent rounded-b-[40px] md:rounded-none pt-[28px] md:pt-[100px] pb-8 md:pb-4 relative z-20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] md:shadow-none">
-        {/* Mobile Top Header Search (Hidden on Desktop) */}
-        <div className="md:hidden relative z-40 px-5">
+      <div className="w-full md:pt-[100px] pb-4">
+        {/* Mobile Top White Section */}
+        <div className="md:hidden bg-[#ffffff] -mt-20 pt-[108px] pb-8 rounded-b-[40px] relative z-20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] w-full">
+          {/* Mobile Top Header Search */}
+          <div className="relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
           <div className="bg-surface border border-white/10 rounded-[32px] p-1.5 shadow-md mb-4">
@@ -909,19 +910,19 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Top Right Click Button with Curve Cutout Effect */}
                 {!camp.isHeroSlide && (
                   <div className="absolute top-0 right-0 z-20 pointer-events-auto">
-                    <div className="bg-[#000000] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
+                    <div className="bg-[#ffffff] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
                       {/* Left Curve SVG */}
-                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
+                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
                       {/* Bottom Curve SVG */}
-                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
+                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
 
                       {/* Heart Button */}
-                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100" aria-label="Save campaign">
-                        <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
+                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-800" aria-label="Save campaign">
+                        <Heart size={19} strokeWidth={2.5} className="text-white" />
                       </button>
 
                       {camp.isExternalCampaign ? (
@@ -929,18 +930,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           href={camp.externalUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-800"
                           aria-label="Open partner website"
                         >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-white" />
                         </a>
                       ) : (
                         <Link
                           href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black text-white flex items-center justify-center shadow-lg active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-800"
                           aria-label="View tour details"
                         >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-white" />
                         </Link>
                       )}
                     </div>
@@ -980,6 +981,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
         </section>
         )}
+        </div> {/* End Mobile Top White Section */}
 
         {/* Desktop/iPad Full-Screen Cinematic Hero */}
         {displayCampaigns.length > 0 && (
