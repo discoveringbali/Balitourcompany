@@ -105,15 +105,19 @@ export default function Navbar() {
   return (
     <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
       isScrolled 
-        ? "top-2 w-[95%] max-w-[95%] rounded-full bg-white/90 backdrop-blur-md shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-gray-100 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px]" 
+        ? "top-2 w-[95%] max-w-[95%] rounded-full bg-[#111111]/80 backdrop-blur-xl shadow-[inset_1px_1px_2px_rgba(255,255,255,0.05),0_8px_30px_rgba(0,0,0,0.5)] border border-white/10 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px]" 
         : "top-0 w-full bg-transparent pt-4 pb-4 md:w-[95%] md:max-w-[1400px] md:py-5"
     }`}>
       
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Empty to maintain justify-between layout */}
-        <div className="flex flex-col justify-center"></div>
+        {/* Left Side: Profile Icon */}
+        <div className="flex flex-col justify-center">
+          <Link href="/admin/bookings" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
+            <User size={18} strokeWidth={2.5} className="text-white" />
+          </Link>
+        </div>
 
         {/* Right Side: Currency & Language */}
         <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">

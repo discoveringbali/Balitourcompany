@@ -632,7 +632,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {/* Text Label or Icon */}
                     <div className="relative z-10 flex items-center justify-center">
                       {loc === "All Bali" ? (
-                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} />
+                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-[#000000]' : 'text-white/70 hover:text-white'}`} />
                       ) : (
                         <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#000000] font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
                           {loc}
@@ -1217,7 +1217,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                             />
                           )}
                           <div className="relative z-10 flex items-center justify-center gap-1.5">
-                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
+                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#000000]' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
                             <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#000000] font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
                               {c.id}
                             </span>
