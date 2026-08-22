@@ -634,7 +634,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       {loc === "All Bali" ? (
                         <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} />
                       ) : (
-                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#000000] font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
                           {loc}
                         </span>
                       )}
@@ -673,7 +673,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               onClick={() => setIsFilterModalOpen(true)}
               className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-black text-white hover:bg-neutral-800 hover:scale-105`}
             >
-              <Settings2 size={16} strokeWidth={2.5} className="text-white" />
+              <Settings2 size={16} strokeWidth={2.5} className="text-[#000000]" />
             </button>
 
             {/* Mobile Service Dropdown */}
@@ -829,7 +829,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Badge top left */}
                 <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
                   {!camp.isHeroSlide && (
-                    <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-black text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
+                    <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-[#000000] text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
                       {camp.badge || "OFFICIAL PARTNER"}
                     </span>
                   )}
@@ -914,18 +914,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           href={camp.externalUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
                           aria-label="Open partner website"
                         >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
                         </a>
                       ) : (
                         <Link
                           href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
                           aria-label="View tour details"
                         >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
                         </Link>
                       )}
                     </div>
@@ -1218,7 +1218,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           )}
                           <div className="relative z-10 flex items-center justify-center gap-1.5">
                             {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
-                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#000000] font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
                               {c.id}
                             </span>
                           </div>

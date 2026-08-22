@@ -69,11 +69,11 @@ export default function WeeklyCalendar({ value, onChange }) {
                  key={i} 
                  onClick={() => handleSelect(d)}
                  className={`flex-none snap-center flex flex-col items-center justify-center w-[60px] h-[75px] rounded-[18px] cursor-pointer transition-all active:scale-95 ${
-                   selected ? "bg-black text-white shadow-sm" : "bg-white border border-gray-100 hover:bg-gray-50 text-gray-400"
+                   selected ? "bg-accent text-[#000000] shadow-sm" : "bg-white/5 border border-white/10 hover:bg-white/10 text-gray-400"
                  }`}
                >
-                 <span className={`text-[11px] font-bold uppercase mb-1 tracking-wider ${selected ? "text-white/70" : "text-gray-400"}`}>{getDayName(d)}</span>
-                 <span className={`text-[20px] font-extrabold leading-none ${selected ? "text-white" : "text-primary"}`}>{d.getDate()}</span>
+                 <span className={`text-[11px] font-bold uppercase mb-1 tracking-wider ${selected ? "text-[#000000]/70" : "text-gray-400"}`}>{getDayName(d)}</span>
+                 <span className={`text-[20px] font-extrabold leading-none ${selected ? "text-[#000000]" : "text-primary"}`}>{d.getDate()}</span>
                </div>
              )
           })}

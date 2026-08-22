@@ -269,7 +269,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           
           {/* Service Summary snippet */}
           {serviceData && (
-            <div className="flex gap-4 items-center mb-8 bg-[#f4f4f4] p-3 pl-4 rounded-2xl">
+            <div className="flex gap-4 items-center mb-8 bg-white/5 p-3 pl-4 rounded-2xl">
               <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
                 <Calendar className="text-primary" size={24} />
               </div>
@@ -305,7 +305,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                        <label className="text-[13px] font-bold text-primary ml-1">Preferred Time</label>
                        <div className="relative flex items-center">
                          <Clock className="absolute left-4 text-gray-400" size={18} />
-                         <input required type="time" name="time" value={formData.time} onChange={handleInputChange} className="w-full bg-[#f4f4f4] rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all appearance-none" style={{ colorScheme: 'light' }} />
+                         <input required type="time" name="time" value={formData.time} onChange={handleInputChange} className="w-full bg-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all appearance-none" style={{ colorScheme: 'light' }} />
                        </div>
                     </div>
                   )}
@@ -318,7 +318,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                     <div className="flex flex-col gap-2">
                       <div 
                          onClick={() => handlePackageSelect('Standard')}
-                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-black bg-black text-white/10' : 'border-[#f4f4f4] bg-[#f4f4f4] hover:border-gray-200'}`}
+                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-black bg-black text-white/10' : 'border-white/10 bg-white/5 hover:border-gray-200'}`}
                       >
                          <div className="flex justify-between items-center mb-1">
                             <span className="font-bold text-primary text-[14px]">Standard Journey</span>
@@ -328,7 +328,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                       </div>
                       <div 
                          onClick={() => handlePackageSelect('All Inclusive')}
-                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-black bg-black text-white/10' : 'border-[#f4f4f4] bg-[#f4f4f4] hover:border-gray-200'}`}
+                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-black bg-black text-white/10' : 'border-white/10 bg-white/5 hover:border-gray-200'}`}
                       >
                          <div className="flex justify-between items-center mb-1">
                             <span className="font-bold text-primary text-[14px]">All-Inclusive Experience</span>
@@ -358,7 +358,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
 
                 {/* Guests / Pax */}
                 {(["tour", "spa", "transport"].includes(serviceData?.type)) && (
-                   <div className="flex items-center justify-between mt-1 bg-[#f4f4f4] p-3 rounded-2xl border border-transparent hover:border-gray-200 transition-colors">
+                   <div className="flex items-center justify-between mt-1 bg-white/5 p-3 rounded-2xl border border-transparent hover:border-gray-200 transition-colors">
                      <div className="flex items-center gap-3">
                        <div className="bg-white p-2 rounded-xl shadow-sm">
                          <Users className="text-primary" size={18} />
@@ -395,7 +395,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
 
                 {/* Duration (Scooter) */}
                 {(serviceData?.type === "scooter") && (
-                   <div className="flex items-center justify-between mt-1 bg-[#f4f4f4] p-3 rounded-2xl border border-transparent hover:border-gray-200 transition-colors">
+                   <div className="flex items-center justify-between mt-1 bg-white/5 p-3 rounded-2xl border border-transparent hover:border-gray-200 transition-colors">
                      <div className="flex items-center gap-3">
                        <div className="bg-white p-2 rounded-xl shadow-sm">
                          <Clock className="text-primary" size={18} />
@@ -431,7 +431,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                    <label className="text-[13px] font-bold text-primary ml-1">Full Name</label>
                    <div className="relative flex items-center">
                      <User className="absolute left-4 text-gray-400" size={18} />
-                     <input required type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="John Doe" className="w-full bg-[#f4f4f4] rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
+                     <input required type="text" name="name" value={formData.name} onChange={handleInputChange} placeholder="John Doe" className="w-full bg-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
                    </div>
                 </div>
 
@@ -439,7 +439,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                    <label className="text-[13px] font-bold text-primary ml-1">WhatsApp Number</label>
                    <div className="relative flex items-center">
                      <Phone className="absolute left-4 text-gray-400" size={18} />
-                     <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="+62 812 3456 7890" className="w-full bg-[#f4f4f4] rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
+                     <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="+62 812 3456 7890" className="w-full bg-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
                    </div>
                 </div>
 
