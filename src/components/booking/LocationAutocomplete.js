@@ -121,7 +121,7 @@ export default function LocationAutocomplete({ value, onChange, placeholder, ico
             onChange({ name: e.target.value, url: "" });
           }} 
           placeholder={placeholder} 
-          className="w-full bg-[#f4f4f4] rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-black/10 transition-all placeholder:text-gray-400" 
+          className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-white outline-none focus:border-accent transition-colors placeholder:text-gray-500" 
         />
         {isLoading && (
           <div className="absolute right-4 w-4 h-4 border-2 border-gray-300 border-t-black rounded-full animate-spin" />
@@ -129,8 +129,8 @@ export default function LocationAutocomplete({ value, onChange, placeholder, ico
       </div>
 
       {isOpen && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl p-2 shadow-2xl border border-border z-50 max-h-60 overflow-y-auto no-scrollbar animate-in fade-in zoom-in-95 duration-150">
-          <div className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider px-3 py-1">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-[#1c1c1c] rounded-2xl p-2 shadow-2xl border border-white/10 z-50 max-h-60 overflow-y-auto no-scrollbar animate-in fade-in zoom-in-95 duration-150">
+          <div className="text-[10px] font-extrabold text-gray-500 uppercase tracking-wider px-3 py-1">
             Suggested Locations
           </div>
           {suggestions.map((item, idx) => (
@@ -138,9 +138,9 @@ export default function LocationAutocomplete({ value, onChange, placeholder, ico
               key={idx}
               type="button"
               onClick={() => handleSelect(item)}
-              className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-gray-100 transition-colors flex flex-col gap-0.5 outline-none active:bg-gray-200"
+              className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/10 transition-colors flex flex-col gap-0.5 outline-none active:bg-white/20"
             >
-              <span className="font-bold text-[14px] text-primary">{item.name}</span>
+              <span className="font-bold text-[14px] text-white">{item.name}</span>
               {item.subtitle && (
                 <span className="text-[11px] text-gray-400 truncate">{item.subtitle}</span>
               )}

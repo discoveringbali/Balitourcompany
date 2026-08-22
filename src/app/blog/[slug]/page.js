@@ -204,7 +204,7 @@ export default async function BlogDetail({ params }) {
         <div className="max-w-3xl mx-auto px-6 md:px-12 pt-10 md:pt-16 pb-12">
           {/* Formatted Smart Body */}
           <div
-            className="newsletter-content text-[17px] md:text-[20px] leading-[1.85] text-white/90 space-y-6 md:space-y-8 tracking-tight font-medium"
+            className="newsletter-content bg-white p-6 md:p-10 rounded-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] text-[17px] md:text-[20px] leading-[1.85] text-black space-y-6 md:space-y-8 tracking-tight font-medium"
             dangerouslySetInnerHTML={{ __html: smartLinkedHtml }}
           />
         </div>

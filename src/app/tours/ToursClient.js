@@ -64,7 +64,7 @@ export default function ToursClient({ initialTours }) {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Where to? Search tours..."
-                    className="w-full bg-transparent font-extrabold text-[13px] text-primary outline-none placeholder:text-gray-400 placeholder:font-extrabold"
+                    className="w-full bg-transparent font-extrabold text-[13px] text-[#000000] outline-none placeholder:text-gray-400 placeholder:font-extrabold"
                   />
                   <span className="text-[11px] font-bold text-gray-400 leading-none mt-1">Anywhere • Any week • Add guests</span>
                 </div>
@@ -73,7 +73,7 @@ export default function ToursClient({ initialTours }) {
                 onClick={() => setShowFilters(!showFilters)}
                 className={`w-[60px] h-[60px] shrink-0 bg-white/95 backdrop-blur-md rounded-[28px] flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.08)] border transition-colors ${showFilters ? 'border-black bg-gray-50' : 'border-gray-100 hover:bg-gray-50'}`}
               >
-                <SlidersHorizontal size={16} strokeWidth={2.5} className="text-primary" />
+                <SlidersHorizontal size={16} strokeWidth={2.5} className="text-[#000000]" />
               </button>
             </div>
           </div>
