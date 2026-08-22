@@ -604,8 +604,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   return (
     <div className="w-full bg-background min-h-[100dvh] font-sans pb-32">
-
-      <div className="w-full pt-[28px] md:pt-[100px] pb-4">
+      
+      {/* Top White Section (Mobile) */}
+      <div className="w-full bg-[#ffffff] md:bg-transparent rounded-b-[40px] md:rounded-none pt-[28px] md:pt-[100px] pb-8 md:pb-4 relative z-20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] md:shadow-none">
         {/* Mobile Top Header Search (Hidden on Desktop) */}
         <div className="md:hidden relative z-40 px-5">
 
@@ -979,6 +980,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
         </section>
         )}
+      </div> {/* End Top White Section */}
 
         {/* Desktop/iPad Full-Screen Cinematic Hero */}
         {displayCampaigns.length > 0 && (
