@@ -97,6 +97,30 @@
   }
 }
 
+/* Apply neon yellow palette to main action buttons across the site */
+button.bg-\[\#1c1c1c\],
+button.bg-black,
+button.bg-primary,
+button.bg-accent,
+a.bg-\[\#1c1c1c\],
+a.bg-black,
+a.bg-primary,
+a.bg-accent {
+  background-color: #E2FF00 !important;
+  color: #000000 !important;
+}
+
+button.bg-\[\#1c1c1c\]:hover,
+button.bg-black:hover,
+button.bg-primary:hover,
+button.bg-accent:hover,
+a.bg-\[\#1c1c1c\]:hover,
+a.bg-black:hover,
+a.bg-primary:hover,
+a.bg-accent:hover {
+  background-color: #d1ed00 !important; /* Slightly darker on hover */
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);

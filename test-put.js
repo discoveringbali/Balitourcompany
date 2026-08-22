@@ -1,18 +1,29 @@
-const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config({ path: '.env.local' });
+const http = require('http');
 
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+const data = JSON.stringify({
+  id: 'ed7792ae-a93d-4282-9b64-0dbd45e96abe',
+  title: '25 Best Things to Do in Ubud, Bali: The Complete 2026 Guide',
+  slug: '/blog/25-best-things-to-do-in-ubud-bali',
+  content: '<h2>Test Content</h2>',
+  status: 'Published'
+});
 
-async function run() {
-  const { data, error } = await supabase.from('blogs').update({
-    title: "Test Update",
-    location: "Bali",
-    category: "Beach",
-    slug: "/blog/test-update",
-    status: "Published",
-    image: "",
-    content: "Content test"
-  }).eq('id', '6c8ea3c5-ff45-4c8c-abd8-0ccd4040fb0e').select();
-  console.log({data, error});
-}
-run();
+const options = {
+  hostname: 'localhost',
+  port: 3000,
+  path: '/api/admin/blogs',
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': data.length
+  }
+};
+
+const req = http.request(options, res => {
+  console.log(`statusCode: ${res.statusCode}`);
+  res.on('data', d => process.stdout.write(d));
+});
+
+req.on('error', error => console.error(error));
+req.write(data);
+req.end();

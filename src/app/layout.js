@@ -70,6 +70,11 @@ export const metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: '/favicon.PNG',
+    shortcut: '/favicon.PNG',
+    apple: '/favicon.PNG',
+  },
 };
 
 export default function RootLayout({ children }) {

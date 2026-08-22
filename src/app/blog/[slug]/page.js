@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import StructuredData from '@/components/seo/StructuredData';
 import { getSeoDescription, generateBlogJsonLd, injectSmartLinks } from '@/lib/seo';
 import { generateSlug } from '@/lib/utils';
+import ShareButton from '@/components/ShareButton';
 
 const formatContent = (htmlOrText) => {
   if (!htmlOrText) return '<p>No content available for this article yet.</p>';
@@ -171,9 +172,10 @@ export default async function BlogDetail({ params }) {
             <Link href="/blog" className="w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-colors border border-white/10 shadow-sm">
               <ArrowLeft size={20} />
             </Link>
-            <button className="w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-colors border border-white/10 shadow-sm">
-              <Share2 size={18} />
-            </button>
+            <ShareButton 
+              title={post.title} 
+              className="w-10 h-10 bg-white/20 hover:bg-white/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-colors border border-white/10 shadow-sm"
+            />
           </div>
 
           {/* Title / Meta Area */}
