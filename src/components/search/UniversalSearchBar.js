@@ -21,7 +21,7 @@ const UniversalSearchBar = () => {
         High-End Airbnb Authentic Search Widget 
         Deep drop shadow, incredibly stark border-border outlines, clean white/gray contrasts 
       */}
-      <div className="bg-white md:rounded-[2.5rem] rounded-3xl p-5 md:p-6 shadow-[0_12px_45px_rgba(0,0,0,0.08)] border border-black/5 md:border-border">
+      <div className="bg-[#1a1a1a] md:rounded-[2.5rem] rounded-3xl p-5 md:p-6 shadow-[inset_2px_2px_4px_rgba(255,255,255,0.05),inset_-2px_-2px_4px_rgba(0,0,0,0.5),0_12px_45px_rgba(0,0,0,0.5)] border border-white/10">
         
         {/* Responsive Service Tabs */}
         <div className="flex overflow-x-auto no-scrollbar gap-2 mb-6 md:mb-5 pb-3">
@@ -50,11 +50,11 @@ const UniversalSearchBar = () => {
           Desktop: Single row pill
           Mobile: Stacked cards with thin internal dividers
         */}
-        <div className="flex flex-col md:flex-row bg-white md:bg-[#f7f7f7] md:border border-gray-200 md:rounded-full rounded-2xl gap-3 md:gap-0 lg:p-0">
+        <div className="flex flex-col md:flex-row bg-[#111111] md:bg-[#111111] md:border border-white/10 md:rounded-full rounded-2xl gap-3 md:gap-0 lg:p-0">
           
           {/* Location Input */}
           {activeService !== "esim" && (
-            <div className="flex-1 bg-white md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-gray-200 shadow-sm md:border-none md:shadow-none hover:bg-gray-100 transition-colors cursor-text group relative">
+            <div className="flex-1 bg-transparent md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-white/5 shadow-none md:border-none md:shadow-none hover:bg-white/5 transition-colors cursor-text group relative">
               <MapPin size={22} className="text-primary md:hidden shrink-0" strokeWidth={2}/>
               <div className="flex flex-col w-full md:pl-4">
                 <span className="text-[11px] md:text-xs font-bold text-primary tracking-wider uppercase mb-0.5">Where</span>
@@ -64,13 +64,13 @@ const UniversalSearchBar = () => {
                   className="bg-transparent border-none outline-none text-[15px] font-medium w-full text-text-secondary placeholder-text-secondary p-0"
                 />
               </div>
-              <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3/5 bg-gray-300"></div>
+              <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3/5 bg-white/10"></div>
             </div>
           )}
 
           {/* eSIM Destination */}
           {activeService === "esim" && (
-            <div className="flex-[2] bg-white md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-gray-200 shadow-sm md:border-none md:shadow-none hover:bg-gray-100 transition-colors cursor-text group relative">
+            <div className="flex-[2] bg-transparent md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-white/5 shadow-none md:border-none md:shadow-none hover:bg-white/5 transition-colors cursor-text group relative">
               <MapPin size={22} className="text-primary md:hidden shrink-0" strokeWidth={2}/>
               <div className="flex flex-col w-full md:pl-4">
                 <span className="text-[11px] md:text-xs font-bold text-primary tracking-wider uppercase mb-0.5">Destination</span>
@@ -80,12 +80,12 @@ const UniversalSearchBar = () => {
                   className="bg-transparent border-none outline-none text-[15px] font-medium w-full text-text-secondary placeholder-text-secondary p-0"
                 />
               </div>
-              <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3/5 bg-gray-300"></div>
+              <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3/5 bg-white/10"></div>
             </div>
           )}
 
           {/* Date Input */}
-          <div className="flex-1 bg-white md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-gray-200 shadow-sm md:border-none md:shadow-none hover:bg-gray-100 transition-colors cursor-text group relative">
+          <div className="flex-1 bg-transparent md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-white/5 shadow-none md:border-none md:shadow-none hover:bg-white/5 transition-colors cursor-text group relative">
             <Calendar size={22} className="text-primary md:hidden shrink-0" strokeWidth={2}/>
             <div className="flex flex-col w-full md:pl-4">
               <span className="text-[11px] md:text-xs font-bold text-primary tracking-wider uppercase mb-0.5">
@@ -101,12 +101,12 @@ const UniversalSearchBar = () => {
                 }}
               />
             </div>
-            <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3/5 bg-gray-300"></div>
+            <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-3/5 bg-white/10"></div>
           </div>
 
           {/* Guests Input */}
           {activeService !== "esim" && (
-            <div className="flex-1 bg-white md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-gray-200 shadow-sm md:border-none md:shadow-none hover:bg-gray-100 transition-colors cursor-text group relative">
+            <div className="flex-1 bg-transparent md:bg-transparent rounded-2xl md:rounded-full p-4 md:p-4 pb-3 flex items-center md:items-start gap-4 border border-white/5 shadow-none md:border-none md:shadow-none hover:bg-white/5 transition-colors cursor-text group relative">
               <Users size={22} className="text-primary md:hidden shrink-0" strokeWidth={2}/>
               <div className="flex flex-col w-full md:pl-4">
                 <span className="text-[11px] md:text-xs font-bold text-primary tracking-wider uppercase mb-0.5">Who</span>

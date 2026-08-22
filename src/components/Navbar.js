@@ -129,7 +129,7 @@ export default function Navbar() {
               onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
               className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
-              <CircleDollarSign size={14} className="text-white" /> {activeCurrency}
+              <CircleDollarSign size={14} /> {activeCurrency}
             </button>
             {currencyDropdownOpen && (
               <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
@@ -150,7 +150,7 @@ export default function Navbar() {
               onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
               className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
-              <Globe size={14} className={`text-white ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
+              <Globe size={14} className={isTranslating ? 'animate-spin' : ''} /> {activeLang}
             </button>
             {langDropdownOpen && (
               <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">

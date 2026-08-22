@@ -170,7 +170,7 @@ function PopularTripCard({ trip }) {
       </button>
 
       {/* Bottom Overlay Card */}
-      <div className="absolute left-3 right-3 bottom-3 bg-white/95 backdrop-blur-md px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
+      <div className="absolute left-3 right-3 bottom-3 bg-[#111111]/95 border border-white/10 backdrop-blur-md px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
         <h3 className="font-extrabold text-[15px] leading-snug text-primary line-clamp-2">{trip.title}</h3>
         <div className="flex justify-between items-end mt-1">
           <div className="flex items-center gap-1.5 shrink-0">
@@ -610,7 +610,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <div className="md:hidden relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-black rounded-[32px] p-1.5 shadow-md mb-4">
+          <div className="bg-surface border border-white/10 rounded-[32px] p-1.5 shadow-md mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -645,7 +645,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </div>
           </div>
 
-          <div className="flex items-center bg-white border border-border shadow-soft rounded-full pl-2 pr-2 py-2 relative mb-6">
+          <div className="flex items-center bg-surface border border-white/10 shadow-soft rounded-full pl-2 pr-2 py-2 relative mb-6">
 
             {/* Mobile Service Dropdown Trigger inside Search Bar */}
             <button
@@ -905,7 +905,34 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
 
-                {/* Text and right-bottom click icon button */}
+                {/* Top Right Click Button with Curve Cutout Effect */}
+                {!camp.isHeroSlide && (
+                  <div className="absolute top-0 right-0 z-20 pointer-events-auto">
+                    <div className="bg-[#000000] rounded-bl-[24px] pl-3 pb-3">
+                      {camp.isExternalCampaign ? (
+                        <a
+                          href={camp.externalUrl || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
+                          aria-label="Open partner website"
+                        >
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
+                        </a>
+                      ) : (
+                        <Link
+                          href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100"
+                          aria-label="View tour details"
+                        >
+                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Text at the bottom */}
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
                     <div className="flex-1 min-w-0 pr-2">
@@ -918,26 +945,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                         </p>
                       )}
                     </div>
-
-                    {camp.isExternalCampaign ? (
-                      <a
-                        href={camp.externalUrl || "#"}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
-                        aria-label="Open partner website"
-                      >
-                        <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
-                      </a>
-                    ) : (
-                      <Link
-                        href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                        className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-black flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto shrink-0 hover:bg-neutral-100"
-                        aria-label="View tour details"
-                      >
-                        <ArrowUpRight size={19} strokeWidth={2.5} className="text-black" />
-                      </Link>
-                    )}
                   </div>
                 )}
               </div>
