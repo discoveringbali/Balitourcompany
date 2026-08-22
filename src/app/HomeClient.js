@@ -908,7 +908,21 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Top Right Click Button with Curve Cutout Effect */}
                 {!camp.isHeroSlide && (
                   <div className="absolute top-0 right-0 z-20 pointer-events-auto">
-                    <div className="bg-[#000000] rounded-bl-[24px] pl-3 pb-3">
+                    <div className="bg-[#000000] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
+                      {/* Left Curve SVG */}
+                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
+                        <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
+                      </svg>
+                      {/* Bottom Curve SVG */}
+                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
+                        <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
+                      </svg>
+
+                      {/* Heart Button */}
+                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-2xl active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-100" aria-label="Save campaign">
+                        <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
+                      </button>
+
                       {camp.isExternalCampaign ? (
                         <a
                           href={camp.externalUrl || "#"}

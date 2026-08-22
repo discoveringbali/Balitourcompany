@@ -112,14 +112,8 @@ export default function Navbar() {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Empty to maintain justify-between layout */}
-        <div className="flex flex-col justify-center"></div>
-
-        {/* Right Side: Profile & Currency & Language */}
+        {/* Left Side: Currency & Language */}
         <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
-          <Link href="/admin/bookings" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
-            <User size={18} strokeWidth={2.5} className="text-white" />
-          </Link>
           <div className="relative">
             <button 
               onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
@@ -128,7 +122,7 @@ export default function Navbar() {
               <CircleDollarSign size={14} /> {activeCurrency}
             </button>
             {currencyDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute top-12 left-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
                 {currencies.map((curr) => (
                   <button
                     key={curr.code}
@@ -149,7 +143,7 @@ export default function Navbar() {
               <Globe size={14} className={isTranslating ? 'animate-spin' : ''} /> {activeLang}
             </button>
             {langDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute top-12 left-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
@@ -162,6 +156,13 @@ export default function Navbar() {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Right Side: Profile Icon */}
+        <div className="flex flex-col justify-center">
+          <Link href="/admin/bookings" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
+            <User size={18} strokeWidth={2.5} className="text-white" />
+          </Link>
         </div>
       </div>
 
