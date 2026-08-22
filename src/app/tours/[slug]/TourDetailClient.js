@@ -269,15 +269,15 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
         </div>
         
         <div className="absolute top-0 left-0 right-0 w-full p-6 pt-[calc(env(safe-area-inset-top)+20px)] flex justify-between items-center z-30 pointer-events-none">
-          <button onClick={handleBack} className="pointer-events-auto w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors">
-            <ChevronLeft size={24} className="text-primary pr-0.5" strokeWidth={2.5} />
+          <button onClick={handleBack} className="pointer-events-auto w-10 h-10 bg-[#ffffff] rounded-full flex items-center justify-center shadow-md hover:bg-neutral-100 transition-colors">
+            <ChevronLeft size={24} className="text-[#000000] pr-0.5" strokeWidth={2.5} />
           </button>
           <div className="flex gap-3 pointer-events-auto">
-            <button onClick={handleShare} className="w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors">
-              <Share size={20} className="text-primary" strokeWidth={2.5} />
+            <button onClick={handleShare} className="w-10 h-10 bg-[#ffffff] rounded-full flex items-center justify-center shadow-md hover:bg-neutral-100 transition-colors">
+              <Share size={20} className="text-[#000000]" strokeWidth={2.5} />
             </button>
-            <button onClick={handleSave} className="w-10 h-10 bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm hover:bg-white transition-colors">
-              <Heart size={20} className={isSaved ? "text-black fill-black" : "text-primary"} strokeWidth={2.5} />
+            <button onClick={handleSave} className="w-10 h-10 bg-[#ffffff] rounded-full flex items-center justify-center shadow-md hover:bg-neutral-100 transition-colors">
+              <Heart size={20} className={isSaved ? "text-[#000000] fill-[#000000]" : "text-[#000000]"} strokeWidth={2.5} />
             </button>
           </div>
         </div>

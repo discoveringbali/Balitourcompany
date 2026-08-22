@@ -124,7 +124,7 @@ export default function Navbar() {
           <div className="relative">
             <button 
               onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-[#000000] text-[#ffffff] rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <CircleDollarSign size={14} /> {activeCurrency}
             </button>
@@ -145,7 +145,7 @@ export default function Navbar() {
           <div className="relative">
             <button 
               onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-black text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-[#000000] text-[#ffffff] rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <Globe size={14} className={isTranslating ? 'animate-spin' : ''} /> {activeLang}
             </button>

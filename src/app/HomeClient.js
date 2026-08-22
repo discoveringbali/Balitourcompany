@@ -803,7 +803,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {displayCampaigns.map((camp, idx) => (
               <div 
                 key={camp.id} 
-                className={`relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-soft border border-border bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
+                className={`relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-2xl bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
                 onClick={(e) => {
                   if (camp.isExternalCampaign && camp.externalUrl) {
                     if (e.target.closest('a') || e.target.closest('button')) return;
