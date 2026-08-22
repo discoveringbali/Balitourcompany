@@ -9,9 +9,7 @@ export default function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
 
-  if (pathname?.startsWith('/admin')) {
-    return null;
-  }
+
   const [activeTab, setActiveTab] = useState("home");
 
   const navItems = [
@@ -30,6 +28,8 @@ export default function BottomNav() {
     else if (pathname.startsWith("/bookings")) setActiveTab("bookings");
     else if (pathname.startsWith("/favorites")) setActiveTab("favorites");
   }, [pathname]);
+
+  if (pathname?.startsWith('/admin')) return null;
 
   // Hide BottomNav on tour detail pages to prevent overlapping with booking bar
   if (pathname.startsWith("/tours/")) return null;

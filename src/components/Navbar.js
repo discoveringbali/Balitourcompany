@@ -21,9 +21,7 @@ export default function Navbar() {
     else setGreeting("Good Evening");
   }, []);
   
-  if (pathname?.startsWith('/admin')) {
-    return null;
-  }
+
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -103,8 +101,6 @@ export default function Navbar() {
     { id: "eSIM", icon: TowelsIcon },
   ];
 
-  // Hide the global Navbar on the tours page, individual tour detail pages, the map page, or blog pages
-  if (pathname.startsWith('/tours') || pathname === '/map' || pathname.startsWith('/blog') || pathname.startsWith('/profile')) return null;
 
   const [profileImage, setProfileImage] = useState(null);
 
@@ -121,6 +117,9 @@ export default function Navbar() {
       // ignore
     }
   }, []);
+
+  if (pathname?.startsWith('/admin')) return null;
+  if (pathname?.startsWith('/tours') || pathname === '/map' || pathname?.startsWith('/blog') || pathname?.startsWith('/profile')) return null;
 
   return (
     <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
