@@ -47,7 +47,8 @@
 
   /* Newsletter Article Typography */
   .newsletter-content {
-    @apply text-lg leading-[1.8] text-gray-800 font-sans;
+    @apply text-lg leading-[1.8] font-sans;
+    color: #000000 !important;
   }
 
   .newsletter-content h1,
@@ -89,7 +90,8 @@
   }
 
   .newsletter-content a {
-    @apply text-black underline decoration-2 underline-offset-4 hover:text-gray-600 transition-colors font-semibold;
+    @apply underline decoration-2 underline-offset-4 hover:text-gray-600 transition-colors font-semibold;
+    color: #000000 !important;
   }
 
   .newsletter-content blockquote {
