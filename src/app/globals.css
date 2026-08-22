@@ -142,6 +142,7 @@ a.bg-accent:hover {
 .admin-wrapper .bg-white, .admin-wrapper.bg-white { background-color: #ffffff !important; }
 .admin-wrapper .bg-\[\#fbfbfb\], .admin-wrapper.bg-\[\#fbfbfb\] { background-color: #fbfbfb !important; }
 .admin-wrapper .text-black, .admin-wrapper.text-black { color: #000000 !important; }
+.admin-wrapper .text-primary, .admin-wrapper.text-primary { color: #000000 !important; }
 .admin-wrapper .text-gray-900 { color: #111827 !important; }
 .admin-wrapper .text-\[\#383838\] { color: #383838 !important; }
 .admin-wrapper .bg-gray-50 { background-color: #f9fafb !important; }
@@ -154,6 +155,10 @@ a.bg-accent:hover {
 .admin-wrapper button.bg-black, .admin-wrapper a.bg-black { background-color: #000000 !important; color: #ffffff !important; }
 .admin-wrapper button.bg-\[\#1c1c1c\]:hover, .admin-wrapper a.bg-\[\#1c1c1c\]:hover { background-color: #000000 !important; }
 .admin-wrapper button.bg-black:hover, .admin-wrapper a.bg-black:hover { background-color: #333333 !important; }
+
+html {
+  background-color: #ffffff;
+}
 
 body {
   background-color: var(--color-background);
