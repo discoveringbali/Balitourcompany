@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, Save, ShieldCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -9,15 +9,50 @@ export default function PersonalInfoPage() {
   const router = useRouter();
   const { data: session } = useSession();
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Extract name parts (rough estimate)
-  const names = (session?.user?.name || "").split(" ");
-  const firstName = names[0] || "";
-  const lastName = names.slice(1).join(" ") || "";
+  // Form State
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    nationality: "",
+    emergencyName: "",
+    emergencyPhone: ""
+  });
+
+  // Load from LocalStorage or Session on mount
+  useEffect(() => {
+    const savedData = localStorage.getItem("balance_island_profile");
+    if (savedData) {
+      try {
+        setFormData(JSON.parse(savedData));
+      } catch (e) {
+        console.error("Failed to parse profile data");
+      }
+    } else if (session?.user?.name) {
+      const names = session.user.name.split(" ");
+      setFormData(prev => ({
+        ...prev,
+        firstName: names[0] || "",
+        lastName: names.slice(1).join(" ") || ""
+      }));
+    }
+    setIsLoaded(true);
+  }, [session]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const handleSave = (e) => {
     e.preventDefault();
     setIsSaving(true);
+    
+    // Save to local storage
+    localStorage.setItem("balance_island_profile", JSON.stringify(formData));
+
     // Mock save delay
     setTimeout(() => {
       setIsSaving(false);
@@ -25,16 +60,18 @@ export default function PersonalInfoPage() {
     }, 800);
   };
 
+  if (!isLoaded) return null; // Prevent hydration mismatch
+
   return (
     <div className="min-h-[100dvh] bg-[#fafafa] pb-32 font-sans font-medium">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-border px-6 pt-12 pb-4">
         <div className="flex items-center justify-between">
-          <button onClick={() => router.back()} className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
+          <button type="button" onClick={() => router.back()} className="w-10 h-10 -ml-2 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors">
             <ChevronLeft size={24} className="text-primary" strokeWidth={2.5} />
           </button>
           <span className="font-extrabold text-[17px] text-primary absolute left-1/2 -translate-x-1/2">Personal Info</span>
-          <button onClick={handleSave} className="font-bold text-accent px-4 py-2 hover:bg-accent/10 rounded-full transition-colors flex items-center gap-2">
+          <button type="button" onClick={handleSave} className="font-bold text-accent px-4 py-2 hover:bg-accent/10 rounded-full transition-colors flex items-center gap-2">
             {isSaving ? "Saving..." : "Save"}
           </button>
         </div>
@@ -63,7 +100,9 @@ export default function PersonalInfoPage() {
                 <label className="text-[13px] font-bold text-text-secondary pl-1">First Name</label>
                 <input 
                   type="text" 
-                  defaultValue={firstName}
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
                   className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                   placeholder="e.g. John" 
                 />
@@ -72,7 +111,9 @@ export default function PersonalInfoPage() {
                 <label className="text-[13px] font-bold text-text-secondary pl-1">Last Name</label>
                 <input 
                   type="text" 
-                  defaultValue={lastName}
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
                   className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                   placeholder="e.g. Doe" 
                 />
@@ -99,6 +140,9 @@ export default function PersonalInfoPage() {
                   </div>
                   <input 
                     type="tel" 
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
                     className="w-full bg-[#fafafa] border border-border rounded-r-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                     placeholder="123 456 7890" 
                   />
@@ -109,6 +153,9 @@ export default function PersonalInfoPage() {
                 <label className="text-[13px] font-bold text-text-secondary pl-1">Nationality</label>
                 <input 
                   type="text" 
+                  name="nationality"
+                  value={formData.nationality}
+                  onChange={handleChange}
                   className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                   placeholder="e.g. Australian" 
                 />
@@ -124,6 +171,9 @@ export default function PersonalInfoPage() {
               <label className="text-[13px] font-bold text-text-secondary pl-1">Contact Name & Relationship</label>
               <input 
                 type="text" 
+                name="emergencyName"
+                value={formData.emergencyName}
+                onChange={handleChange}
                 className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                 placeholder="e.g. Jane Doe (Wife)" 
               />
@@ -133,6 +183,9 @@ export default function PersonalInfoPage() {
               <label className="text-[13px] font-bold text-text-secondary pl-1">Contact Phone Number</label>
               <input 
                 type="tel" 
+                name="emergencyPhone"
+                value={formData.emergencyPhone}
+                onChange={handleChange}
                 className="w-full bg-[#fafafa] border border-border rounded-xl px-4 py-3.5 text-[15px] text-primary focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent transition-all placeholder:text-gray-400" 
                 placeholder="Include country code" 
               />

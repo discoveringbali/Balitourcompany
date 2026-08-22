@@ -112,11 +112,18 @@ export default function Navbar() {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Profile Icon */}
-        <div className="flex flex-col justify-center">
-          <Link href="/admin/bookings" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
+        {/* Left Side: Profile Icon & Greeting */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link href="/profile/personal-info" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5">
             <User size={18} strokeWidth={2.5} className="text-white" />
           </Link>
+          <div className="flex flex-col">
+            <span className="text-[11px] sm:text-[12px] font-extrabold text-white/90 drop-shadow-sm">{getGreeting()},</span>
+            <div className="flex items-center gap-1 opacity-80 mt-[1px]">
+              <MapPin size={10} className="text-white drop-shadow-sm" />
+              <span className="text-[10px] sm:text-[11px] font-semibold text-white drop-shadow-sm">Bali, Indonesia</span>
+            </div>
+          </div>
         </div>
 
         {/* Right Side: Currency & Language */}

@@ -39,10 +39,27 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     if (isOpen) {
       setStep(startStep);
       const minP = serviceData?.minPax || 1;
+      
+      // Auto-fill from local profile
+      let savedName = "";
+      let savedPhone = "";
+      try {
+        const savedProfile = localStorage.getItem("balance_island_profile");
+        if (savedProfile) {
+          const parsed = JSON.parse(savedProfile);
+          savedName = `${parsed.firstName || ""} ${parsed.lastName || ""}`.trim();
+          savedPhone = parsed.phone || "";
+        }
+      } catch (e) {
+        // ignore parse error
+      }
+
       setFormData(prev => ({ 
         ...prev, 
         guests: String(Math.max(minP, initialPax)),
-        date: initialDate || prev.date
+        date: initialDate || prev.date,
+        name: prev.name || savedName,
+        phone: prev.phone || savedPhone
       }));
       setLocalPackage(serviceData?.selectedPackage || "Standard");
     }
