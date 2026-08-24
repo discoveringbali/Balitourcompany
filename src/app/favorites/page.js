@@ -53,17 +53,24 @@ export default function FavoritesPage() {
 
   return (
     <div className="min-h-[100dvh] bg-[#000000] pb-32 font-sans">
-      <div className="px-6 pt-6 pb-6 max-w-7xl mx-auto">
-        <div className="bg-[#111111] rounded-2xl flex gap-3 items-center px-5 py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white/10 mb-8">
-          <Search size={20} className="text-gray-400" />
-          <input 
-            type="text" 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search your saved trips..." 
-            className="flex-1 outline-none font-bold text-[14px] bg-transparent text-white placeholder:text-gray-400 placeholder:font-medium"
-          />
+      {/* Sticky Search Bar Header */}
+      <div className="sticky top-0 z-10 bg-[#000000] px-6 pt-4 pb-4 border-b border-white/10">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-[#111111] rounded-2xl flex gap-3 items-center px-5 py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white/10">
+            <Search size={20} className="text-gray-400" />
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search your saved trips..." 
+              className="flex-1 outline-none font-bold text-[14px] bg-transparent text-white placeholder:text-gray-400 placeholder:font-medium"
+            />
+          </div>
         </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="px-6 pt-6 pb-6 max-w-7xl mx-auto">
 
         {filteredFavorites.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">

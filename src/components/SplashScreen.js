@@ -145,7 +145,7 @@ export default function SplashScreen({ children }) {
           >
             {/* Soft ambient gradient */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-white text-black/8 blur-[120px] opacity-10" />
+              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-[#ffffff] text-black/8 blur-[120px] opacity-10" />
               <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gray-200/20 blur-[100px] opacity-10" />
             </div>
 
@@ -153,7 +153,7 @@ export default function SplashScreen({ children }) {
             <div className="relative z-10 flex flex-col items-center">
               <div className="relative mb-8">
                 <img
-                  src="/icon.png"
+                  src="/favicon.PNG"
                   alt="Balance Island"
                   className="w-auto max-w-[320px] h-[120px] rounded-[24px] shadow-[0_0_80px_rgba(255,255,255,0.1)] object-contain"
                 />
@@ -167,9 +167,9 @@ export default function SplashScreen({ children }) {
               transition={{ delay: 0.7, duration: 0.4 }}
               className="absolute bottom-[14%] flex flex-col items-center gap-3 w-[200px]"
             >
-              <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden">
+              <div className="w-full h-[3px] bg-[#ffffff]/10 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-white rounded-full transition-none"
+                  className="h-full bg-[#ffffff] rounded-full transition-none"
                   style={{ width: `${progress}%` }}
                 />
               </div>
