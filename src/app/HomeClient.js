@@ -506,9 +506,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       (activeCat === "Day Spa" && t.spaSetting === "Real Spa")
     ));
 
-  // Exclude trips that are already shown in the Top Picks section
+  // Identify trips that are already shown in the Top Picks section
   const topPickIds = displayPopularTrips.map(t => t.id);
-  filteredTours = filteredTours.filter(t => !topPickIds.includes(t.id));
 
   // Apply Text Search Filter
   if (searchQuery) {
@@ -521,9 +520,17 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   // Apply Price Filter
   filteredTours = filteredTours.filter(t => t.price >= priceFilter[0] && t.price <= priceFilter[1]);
 
-  // Pseudo-randomize the filtered tours based on id and active category
-  // This gives a random appearance that is stable per category to prevent jittering on re-renders
+  // Pseudo-randomize the filtered tours based on id and active category,
+  // but push items that are in Top Picks to the end of the list.
   filteredTours.sort((a, b) => {
+    const aIsTopPick = topPickIds.includes(a.id);
+    const bIsTopPick = topPickIds.includes(b.id);
+    
+    // Top picks go last
+    if (aIsTopPick && !bIsTopPick) return 1;
+    if (!aIsTopPick && bIsTopPick) return -1;
+    
+    // Otherwise apply stable pseudo-randomization
     const hash = (str) => {
       let h = 0;
       for (let i = 0; i < str.length; i++) {
