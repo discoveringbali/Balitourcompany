@@ -495,6 +495,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   const isValidService = (t) => t.service === activeService || (activeService === "Tour" && t.service === "Activities");
 
+  const bestTrips = allListings.filter(t => t.isBestTripPinned && t.service === activeService);
+  const displayPopularTrips = bestTrips.length > 0 ? bestTrips : popularTrips;
+
   let filteredTours = activeCat === "All"
     ? allListings.filter(isValidService)
     : allListings.filter(t => isValidService(t) && (
@@ -502,6 +505,10 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       t.spaSetting === activeCat ||
       (activeCat === "Day Spa" && t.spaSetting === "Real Spa")
     ));
+
+  // Exclude trips that are already shown in the Top Picks section
+  const topPickIds = displayPopularTrips.map(t => t.id);
+  filteredTours = filteredTours.filter(t => !topPickIds.includes(t.id));
 
   // Apply Text Search Filter
   if (searchQuery) {
@@ -513,6 +520,19 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   // Apply Price Filter
   filteredTours = filteredTours.filter(t => t.price >= priceFilter[0] && t.price <= priceFilter[1]);
+
+  // Pseudo-randomize the filtered tours based on id and active category
+  // This gives a random appearance that is stable per category to prevent jittering on re-renders
+  filteredTours.sort((a, b) => {
+    const hash = (str) => {
+      let h = 0;
+      for (let i = 0; i < str.length; i++) {
+        h = Math.imul(31, h) + str.charCodeAt(i) | 0;
+      }
+      return h;
+    };
+    return (hash(String(a.id) + activeCat) % 100) - (hash(String(b.id) + activeCat) % 100);
+  });
 
   const pinnedCampaigns = allListings.filter(t => t.isCampaignPinned).map((t, idx) => ({
     id: t.id || idx,
@@ -584,9 +604,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   }
 
   // Removed defaultTourCampaigns fallback to prevent mock data from showing
-
-  const bestTrips = allListings.filter(t => t.isBestTripPinned && t.service === activeService);
-  const displayPopularTrips = bestTrips.length > 0 ? bestTrips : popularTrips;
 
   // Suggestions for smart keyboard integration
   const availableSuggestions = Array.from(new Set(
