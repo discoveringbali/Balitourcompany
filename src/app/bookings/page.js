@@ -75,10 +75,10 @@ export default function BookingsPage() {
   const filteredBookings = bookings.filter(b => getBookingType(b) === activeTab);
 
   return (
-    <div className="min-h-[100dvh] bg-[#000000] pb-32 font-sans overflow-x-hidden">
+    <div className="min-h-[100dvh] bg-[#000000] pb-32 font-sans -mt-20 md:-mt-24">
       
       {/* Header & Tabs */}
-      <div className="px-6 pt-4 pb-0 bg-[#000000] z-10 sticky top-0 border-b border-white/10">
+      <div className="px-6 pt-14 pb-0 bg-[#000000] z-10 sticky top-0 border-b border-white/10">
         <div className="flex justify-between items-center">
         </div>
         
