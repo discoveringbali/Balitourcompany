@@ -264,10 +264,10 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in transition-opacity" onClick={onClose} />
       
       {/* Modal Surface */}
-      <div className="relative w-full md:w-[500px] max-h-[90dvh] bg-white rounded-t-[32px] md:rounded-[32px] flex flex-col shadow-2xl animate-in slide-in-from-bottom-10 md:zoom-in-95 duration-300">
+      <div className="relative w-full h-[100dvh] md:h-auto md:max-h-[90dvh] md:w-[500px] bg-white rounded-none md:rounded-[32px] flex flex-col shadow-2xl animate-in slide-in-from-bottom-10 md:zoom-in-95 duration-300">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 shrink-0">
+        <div className="flex items-center justify-between px-6 pt-14 pb-5 md:py-5 border-b border-gray-100 shrink-0">
           {step === 2 && startStep === 1 ? (
             <button onClick={() => setStep(1)} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
               <ChevronLeft size={20} strokeWidth={2.5} className="pr-0.5" />
