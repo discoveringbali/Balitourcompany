@@ -85,12 +85,12 @@ function PlaceAutocompleteInput({ placeholder, onPlaceSelect, value, onChange, i
 
   return (
     <div className="relative w-full" ref={containerRef}>
-      <div className="flex gap-3 items-center bg-[#f4f4f4] px-4 py-3 rounded-xl border border-border/50">
-        {Icon ? <Icon size={16} className="text-gray-500 shrink-0" /> : <div className="w-2.5 h-2.5 rounded-full bg-black shrink-0 relative after:absolute after:w-0.5 after:h-5 after:bg-border after:top-2.5 after:left-1"></div>}
+      <div className="flex gap-3 items-center bg-white/5 px-4 py-3 rounded-xl border border-white/10">
+        {Icon ? <Icon size={16} className="text-white shrink-0" /> : <div className="w-2.5 h-2.5 rounded-full bg-white shrink-0 relative after:absolute after:w-0.5 after:h-5 after:bg-white/20 after:top-2.5 after:left-1"></div>}
         <input 
           type="text" 
           placeholder={placeholder} 
-          className="flex-1 outline-none font-semibold text-[14px] bg-transparent text-primary placeholder:text-gray-400"
+          className="flex-1 outline-none font-semibold text-[14px] bg-transparent text-white placeholder:text-gray-400"
           value={value}
           onFocus={() => {
             if (!value) setSuggestions(BALI_HOTSPOTS);
@@ -101,15 +101,15 @@ function PlaceAutocompleteInput({ placeholder, onPlaceSelect, value, onChange, i
       </div>
 
       {isOpen && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-2xl p-1.5 shadow-2xl border border-border z-50 max-h-48 overflow-y-auto no-scrollbar">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-[#000000] border border-white/20 rounded-2xl p-1.5 shadow-2xl z-50 max-h-48 overflow-y-auto no-scrollbar">
           {suggestions.map((item, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => handleSelect(item)}
-              className="w-full text-left px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors flex flex-col gap-0.5 outline-none"
+              className="w-full text-left px-3 py-2 rounded-xl hover:bg-white/10 transition-colors flex flex-col gap-0.5 outline-none"
             >
-              <span className="font-bold text-[13px] text-primary">{item.name}</span>
+              <span className="font-bold text-[13px] text-white">{item.name}</span>
               {item.area && <span className="text-[11px] text-gray-400">{item.area}</span>}
             </button>
           ))}
@@ -377,27 +377,34 @@ export default function MapComponent() {
       <div className="absolute top-0 left-0 right-0 p-6 z-20 pt-12 flex flex-col items-center gap-3 pointer-events-none">
         {activeMode === "Transport" ? (
           isTransportMinimized && activeRouteInfo ? (
-            <button onClick={() => setIsTransportMinimized(false)} className="bg-white/95 backdrop-blur-md rounded-full shadow-xl px-5 py-4 flex items-center gap-4 pointer-events-auto">
-              <div className="w-3 h-3 rounded-full bg-black" />
+            <button onClick={() => setIsTransportMinimized(false)} className="bg-black text-white backdrop-blur-md rounded-full shadow-xl px-5 py-4 flex items-center gap-4 pointer-events-auto border border-white/20">
+              <div className="w-3 h-3 rounded-full bg-white" />
               <span className="font-bold text-sm truncate">{pickup.split(',')[0]} → {dropoff.split(',')[0]}</span>
             </button>
           ) : (
-            <div className="bg-white/95 backdrop-blur-md rounded-[28px] p-5 shadow-2xl pointer-events-auto w-full max-w-[400px]">
+            <div className="bg-[#000000] text-white backdrop-blur-md rounded-[28px] p-5 shadow-2xl pointer-events-auto w-full max-w-[400px] border border-white/20">
               <div className="flex justify-between items-center px-1 mb-3">
                 <h3 className="font-extrabold text-lg">Discover Ride</h3>
-                <button onClick={() => setFilterOpen(!filterOpen)} className="p-2 rounded-full bg-gray-100"><SlidersHorizontal size={14} /></button>
+                <button onClick={() => setFilterOpen(!filterOpen)} className="p-2 rounded-full bg-white/10 hover:bg-white/20"><SlidersHorizontal size={14} /></button>
               </div>
               <PlaceAutocompleteInput placeholder="Pick-up..." value={pickup} onChange={setPickup} onPlaceSelect={(item) => setPickupCoords({lat: item.lat, lng: item.lng})} />
+              <div className="h-3" />
               <PlaceAutocompleteInput placeholder="Where to?" value={dropoff} onChange={setDropoff} onPlaceSelect={(item) => setDropoffCoords({lat: item.lat, lng: item.lng})} icon={MapPin} />
-              <button onClick={handleRouteSearch} className="w-full bg-black text-white font-bold py-3 rounded-xl mt-3">Calculate Route</button>
+              <button onClick={handleRouteSearch} className="w-full bg-[#1c1c1c] hover:bg-neutral-800 text-white font-bold py-3 rounded-xl mt-4 border border-white/10">Calculate Route</button>
             </div>
           )
         ) : (
-          <div className="bg-white/95 backdrop-blur-md rounded-full flex gap-3 items-center px-4 py-3 shadow-xl pointer-events-auto">
-            <button onClick={() => setFilterOpen(!filterOpen)} className="flex items-center gap-1.5 px-2 font-extrabold text-sm">{activeMode} <ChevronDown size={14} /></button>
+          <div className="relative">
+            <div className="bg-black text-white backdrop-blur-md rounded-full flex gap-3 items-center px-4 py-3 shadow-xl pointer-events-auto border border-white/20">
+              <button onClick={() => setFilterOpen(!filterOpen)} className="flex items-center gap-1.5 px-2 font-extrabold text-sm">{activeMode} <ChevronDown size={14} /></button>
+            </div>
             {filterOpen && (
-              <div className="absolute top-16 left-6 bg-white rounded-xl shadow-xl p-2">
-                {CATEGORIES.map(cat => <button key={cat} onClick={() => {setActiveMode(cat); setFilterOpen(false)}} className="block px-4 py-2 text-sm font-bold">{cat}</button>)}
+              <div className="absolute top-14 left-0 bg-[#000000] border border-white/20 rounded-xl shadow-xl p-2 min-w-[140px] pointer-events-auto z-50">
+                {CATEGORIES.map(cat => (
+                  <button key={cat} onClick={() => {setActiveMode(cat); setFilterOpen(false)}} className="block w-full text-left px-4 py-2 text-sm font-bold text-white hover:bg-white/10 rounded-lg">
+                    {cat}
+                  </button>
+                ))}
               </div>
             )}
           </div>
