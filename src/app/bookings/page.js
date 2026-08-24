@@ -80,7 +80,6 @@ export default function BookingsPage() {
       {/* Header & Tabs */}
       <div className="px-6 pt-12 pb-2 bg-white relative z-10 sticky top-0 border-b border-gray-100">
         <div className="flex justify-between items-center">
-           <h1 className="text-3xl md:text-4xl font-extrabold text-primary tracking-tight">Trips</h1>
         </div>
         
         <div className="flex mt-6 gap-6">
