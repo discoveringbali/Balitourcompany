@@ -76,13 +76,9 @@ export default function BookingsPage() {
 
   return (
     <div className="min-h-[100dvh] bg-white pb-32 font-sans overflow-x-hidden">
-      
       {/* Header & Tabs */}
-      <div className="px-6 pt-12 pb-2 bg-white relative z-10 sticky top-0 border-b border-gray-100">
-        <div className="flex justify-between items-center">
-        </div>
-        
-        <div className="flex mt-6 gap-6">
+      <div className="px-6 pt-6 pb-2 bg-white relative z-10 sticky top-0 border-b border-gray-100">
+        <div className="flex gap-6">
           <button 
             onClick={() => setActiveTab("upcoming")}
             className={`pb-3 text-[15px] font-bold transition-all relative ${activeTab === "upcoming" ? "text-primary" : "text-gray-400"}`}

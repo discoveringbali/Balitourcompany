@@ -53,8 +53,8 @@ export default function FavoritesPage() {
 
   return (
     <div className="min-h-[100dvh] bg-[#000000] pb-32 font-sans">
-      <div className="px-6 pt-12 pb-6 max-w-7xl mx-auto">
-        <div className="bg-[#111111] rounded-2xl flex gap-3 items-center px-5 py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white/10 mb-8 mt-4">
+      <div className="px-6 pt-6 pb-6 max-w-7xl mx-auto">
+        <div className="bg-[#111111] rounded-2xl flex gap-3 items-center px-5 py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-white/10 mb-8">
           <Search size={20} className="text-gray-400" />
           <input 
             type="text" 
