@@ -1,4 +1,5 @@
 import { Inter, Playfair_Display } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -95,16 +96,26 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${inter.className} ${playfair.variable} min-h-screen flex flex-col bg-background selection:bg-accent selection:text-primary pb-24 md:pb-0`}>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=AW-18408986681" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-18408986681');
+          `}
+        </Script>
         <AuthProvider>
           <SplashScreen>
             <GoogleTranslate />
             {/* Navbar handles its own desktop/mobile responsive states now */}
             <Navbar />
-            
+
             <main className="flex-grow w-full relative pt-20 md:pt-24">
               {children}
             </main>
-            
+
             {/* New App-style floating bottom navigation */}
             <BottomNav />
 
