@@ -113,7 +113,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
         <div className="flex items-center">
           <button 
             onClick={() => setSidebarOpen(true)}
-            className="w-10 h-10 rounded-full bg-black/40 border border-white/20 backdrop-blur-xl flex items-center justify-center text-white hover:bg-black/60 transition-all shadow-[0_4px_12px_rgba(0,0,0,0.1)] outline-none"
+            className="w-10 h-10 rounded-full bg-white/70 border border-white/60 backdrop-blur-2xl flex items-center justify-center text-primary hover:bg-white/90 transition-all shadow-sm outline-none"
           >
             <Menu size={18} strokeWidth={2.5} />
           </button>
@@ -124,7 +124,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           <div className="relative">
             <button 
               onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-[#000000] text-[#ffffff] rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <CircleDollarSign size={14} /> {activeCurrency}
             </button>
@@ -145,7 +145,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           <div className="relative">
             <button 
               onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-[#000000] text-[#ffffff] rounded-full flex items-center gap-1.5 justify-center hover:bg-neutral-800 shadow-soft font-extrabold text-[11px] sm:text-[13px] transition-colors"
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <Globe size={14} className={isTranslating ? 'animate-spin' : ''} /> {activeLang}
             </button>

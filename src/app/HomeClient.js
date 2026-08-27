@@ -631,12 +631,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       
       <div className="w-full md:pt-[100px] pb-4">
         {/* Mobile Top White Section */}
-        <div className="md:hidden bg-gradient-to-b from-gray-50 to-white -mt-20 pt-[108px] pb-8 rounded-b-[40px] relative z-20 shadow-[0_10px_30px_rgba(0,0,0,0.05)] w-full">
+        <div className="md:hidden bg-background -mt-20 pt-[108px] pb-8 relative z-20 w-full">
           {/* Mobile Top Header Search */}
           <div className="relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-white/60 backdrop-blur-2xl border border-white rounded-[32px] p-1.5 shadow-lg mb-4">
+          <div className="bg-black/5 backdrop-blur-3xl border border-white/60 rounded-[32px] p-1.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -672,7 +672,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
 
           {/* Apple Glass Search Bar */}
-          <div className="flex items-center bg-white/60 backdrop-blur-2xl border border-white shadow-lg rounded-full pl-2 pr-2 py-2 relative mb-6">
+          <div className="flex items-center bg-black/5 backdrop-blur-3xl border border-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.04)] rounded-full pl-2 pr-2 py-2 relative mb-6">
 
             {/* Mobile Service Dropdown Trigger inside Search Bar */}
             <button
@@ -935,13 +935,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Top Right Click Button with Curve Cutout Effect */}
                 {!camp.isHeroSlide && (
                   <div className="absolute top-0 right-0 z-20 pointer-events-auto">
-                    <div className="bg-[#000000] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
+                    <div className="bg-[#ffffff] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
                       {/* Left Curve SVG */}
-                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
+                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
                       {/* Bottom Curve SVG */}
-                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
+                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
 
