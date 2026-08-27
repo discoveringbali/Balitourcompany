@@ -249,7 +249,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       }
       
       setTimeout(() => {
-        const el = document.getElementById("categories-section");
+        const el = document.getElementById("filtered-tours-section");
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     };
@@ -1301,13 +1301,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </section>
 
             {/* Filtered Experiences */}
-            <section className="mt-6 mb-12 relative">
+            <section id="filtered-tours-section" className="mt-6 mb-12 relative">
               {appliedPromoFilter && (
                 <div className="px-6 mb-4 flex justify-center">
-                  <div className="inline-flex items-center gap-3 bg-[#111111] px-4 py-2 rounded-2xl shadow-lg border border-[#2a2a2a]">
-                    <Sparkles size={16} className="text-yellow-400" />
+                  <div className="inline-flex items-center gap-3 bg-black px-5 py-3 rounded-2xl shadow-lg border border-gray-800">
                     <span className="text-[13px] font-bold text-white">
-                      Showing tours valid for <span className="text-yellow-400">{appliedPromoFilter.code}</span>
+                      Showing tours valid for <span className="font-black underline decoration-white/40 underline-offset-4">{appliedPromoFilter.code}</span>
                     </span>
                     <button 
                       onClick={() => setAppliedPromoFilter(null)}
