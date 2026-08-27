@@ -42,15 +42,15 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Drawer */}
       <div 
-        className={`fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-white z-[100] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-[#000000] border-r border-white/10 z-[100] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-[#1c1c1c]">
+        <div className="flex items-center justify-between p-6 border-b border-white/10">
+          <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-white">
             Balance Island
           </Link>
           <button 
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-100 hover:text-black transition-colors"
+            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
           >
             <X size={20} strokeWidth={2.5} />
           </button>
@@ -71,8 +71,8 @@ export default function Sidebar({ isOpen, onClose }) {
                   onClick={onClose}
                   className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold transition-colors ${
                     isActive 
-                      ? 'bg-black text-white' 
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-black'
+                      ? 'bg-white text-black' 
+                      : 'text-gray-400 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
@@ -82,7 +82,7 @@ export default function Sidebar({ isOpen, onClose }) {
             })}
           </div>
 
-          <div className="h-px bg-gray-100 mx-4" />
+          <div className="h-px bg-white/10 mx-4" />
 
           {/* Policy Navigation */}
           <div className="space-y-1">
@@ -97,8 +97,8 @@ export default function Sidebar({ isOpen, onClose }) {
                   onClick={onClose}
                   className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold transition-colors ${
                     isActive 
-                      ? 'bg-black text-white' 
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-black'
+                      ? 'bg-white text-black' 
+                      : 'text-gray-400 hover:bg-white/5 hover:text-white'
                   }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
@@ -110,7 +110,7 @@ export default function Sidebar({ isOpen, onClose }) {
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-gray-100 bg-gray-50">
+        <div className="p-6 border-t border-white/10 bg-[#111111]">
           <p className="text-xs font-bold text-gray-400 text-center">
             © {new Date().getFullYear()} Balance Island Tours
           </p>
