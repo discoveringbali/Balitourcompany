@@ -22,6 +22,13 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   const [promoCode, setPromoCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [promoError, setPromoError] = useState("");
+
+  useEffect(() => {
+    const saved = localStorage.getItem('savedPromoCode');
+    if (saved) {
+      setPromoCode(saved);
+    }
+  }, []);
   
   // Form State
   const [formData, setFormData] = useState({

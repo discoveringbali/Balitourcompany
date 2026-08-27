@@ -305,13 +305,33 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                         {promo.type === 'percent' ? `${promo.value}% OFF` : `Rp ${promo.value.toLocaleString('id-ID')} OFF`}
                       </span>
                       <span className="text-[18px] font-black tracking-widest text-primary">{promo.code}</span>
-                      <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          localStorage.setItem('savedPromoCode', promo.code);
+                          setPromoDropdownOpen(false);
+                          alert(`Promo code ${promo.code} has been applied! It will be automatically filled at checkout.`);
+                        }}
+                        className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
+                      >
+                        Apply Code
+                      </button>
                     </div>
                   )) : (
                     <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
                       <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
                       <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
-                      <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
+                          setPromoDropdownOpen(false);
+                          alert(`Promo code ${promoCode || "BALI2026"} has been applied! It will be automatically filled at checkout.`);
+                        }}
+                        className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
+                      >
+                        Apply Code
+                      </button>
                     </div>
                   )}
                 </div>
@@ -384,13 +404,33 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                   {promo.type === 'percent' ? `${promo.value}% OFF` : `Rp ${promo.value.toLocaleString('id-ID')} OFF`}
                 </span>
                 <span className="text-[20px] font-black tracking-widest text-primary">{promo.code}</span>
-                <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    localStorage.setItem('savedPromoCode', promo.code);
+                    setPromoDropdownOpen(false);
+                    alert(`Promo code ${promo.code} has been applied! It will be automatically filled at checkout.`);
+                  }}
+                  className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
+                >
+                  Apply Code
+                </button>
               </div>
             )) : (
               <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
                 <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
                 <span className="text-[20px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
-                <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
+                    setPromoDropdownOpen(false);
+                    alert(`Promo code ${promoCode || "BALI2026"} has been applied! It will be automatically filled at checkout.`);
+                  }}
+                  className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
+                >
+                  Apply Code
+                </button>
               </div>
             )}
           </div>
