@@ -25,7 +25,7 @@ export default function ToursClient({ initialTours }) {
       fetch('/api/discounts')
         .then(res => res.json())
         .then(data => {
-          const promo = data.discounts?.find(d => d.code === promoCode);
+          const promo = (Array.isArray(data) ? data : []).find(d => d.code === promoCode);
           if (promo && promo.applicableTours && promo.applicableTours.length > 0) {
             setAppliedPromoFilter(promo);
           }
