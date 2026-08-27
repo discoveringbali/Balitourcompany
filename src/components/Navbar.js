@@ -99,7 +99,8 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   if (pathname?.startsWith('/tours') || pathname === '/map' || pathname?.startsWith('/blog') || pathname?.startsWith('/profile') || pathname?.startsWith('/favorites') || pathname?.startsWith('/bookings')) return null;
 
   return (
-    <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
+    <>
+      <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
       isScrolled 
         ? "top-2 w-[95%] max-w-[95%] rounded-full bg-white/20 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] border border-white/20 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px] md:bg-[#111111]/80 md:shadow-[inset_1px_1px_2px_rgba(255,255,255,0.05),0_8px_30px_rgba(0,0,0,0.5)] md:border-white/10" 
         : "top-0 w-full bg-transparent pt-4 pb-4 md:w-[95%] md:max-w-[1400px] md:py-5"
@@ -278,10 +279,10 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
         </div>
       </div>
-      
-      {/* Sidebar Component */}
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      
     </header>
+    
+    {/* Sidebar Component */}
+    <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    </>
   );
 }
