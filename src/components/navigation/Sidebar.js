@@ -44,10 +44,7 @@ export default function Sidebar({ isOpen, onClose }) {
       <div 
         className={`fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-[#000000] border-r border-white/10 z-[100] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
-          <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-white uppercase">
-            BALANCE ISLAND
-          </Link>
+        <div className="flex items-center justify-end p-6 border-b border-white/10">
           <button 
             onClick={onClose}
             className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-colors shrink-0"
@@ -60,7 +57,6 @@ export default function Sidebar({ isOpen, onClose }) {
           
           {/* Main Navigation */}
           <div className="space-y-1">
-            <span className="px-4 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Menu</span>
             {mainLinks.map((link) => {
               const Icon = link.icon;
               const isActive = pathname === link.path;
@@ -86,7 +82,6 @@ export default function Sidebar({ isOpen, onClose }) {
 
           {/* Policy Navigation */}
           <div className="space-y-1">
-            <span className="px-4 text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Support & Legal</span>
             {policyLinks.map((link) => {
               const Icon = link.icon;
               const isActive = pathname === link.path;
@@ -107,13 +102,6 @@ export default function Sidebar({ isOpen, onClose }) {
               );
             })}
           </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-6 border-t border-white/10 bg-[#111111]">
-          <p className="text-xs font-bold text-gray-400 text-center">
-            © {new Date().getFullYear()} Balance Island Tours
-          </p>
         </div>
       </div>
     </>
