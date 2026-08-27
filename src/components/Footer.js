@@ -6,22 +6,8 @@ const Footer = () => {
   return (
     <footer className="w-full pt-16 pb-8 border-t border-border bg-surface">
       <div className="container mx-auto px-4 lg:max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
           
-          <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-extrabold tracking-tight flex items-center text-black" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Balance Island
-            </h2>
-            <p className="text-sm text-text-secondary">
-              Your ultimate premium gateway to explore the magical island of Bali. Discover tours, rentals, and hidden gems seamlessly.
-            </p>
-            <div className="flex items-center gap-4 mt-2 font-bold text-sm text-primary">
-              <a href="#" className="hover:text-accent transition-colors">IG</a>
-              <a href="#" className="hover:text-accent transition-colors">FB</a>
-              <a href="#" className="hover:text-accent transition-colors">X</a>
-            </div>
-          </div>
-
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">Explore</h3>
             <div className="flex flex-col gap-3">
