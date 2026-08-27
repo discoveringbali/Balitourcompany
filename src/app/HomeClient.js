@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import useSWR from "swr";
-import { TreePine, Umbrella, Mountain, Droplets, Search, Plane, Building, Building2, Train, Bus, BriefcaseBusiness, Heart, HeartOff, MapPin, Map, Car, Bike, Wifi, Navigation, Sparkles, Landmark, Camera, Waves, Compass, ChevronDown, ChevronLeft, ChevronRight, Settings2, Star, Zap, Home as HomeIcon, Flower2, Globe, ArrowUpRight, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { TreePine, Umbrella, Mountain, Droplets, Search, Plane, Building, Building2, Train, Bus, BriefcaseBusiness, Heart, HeartOff, MapPin, Map, Car, Bike, Wifi, Navigation, Sparkles, Landmark, Camera, Waves, Compass, ChevronDown, ChevronLeft, ChevronRight, Settings2, Star, Zap, Home as HomeIcon, Flower2, Globe, ArrowUpRight, Play, Pause, Volume2, VolumeX, X } from "lucide-react";
 import { TourIcon, SpaIcon, TransportIcon, ScooterIcon, ThinSparklesIcon, TowelsIcon, LotusIcon, CreattieTourIcon, CreattieSpaIcon, CreattieScooterIcon, CreattieTransportIcon, CreattieEsimIcon, AirbnbTourIcon, AirbnbSpaIcon, AirbnbScooterIcon, AirbnbTransportIcon, AirbnbEsimIcon } from "@/components/icons/CategoryIcons";
 import ListingCard from "@/components/listing/ListingCard";
 import Link from "next/link";
@@ -235,6 +235,29 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
   const [priceFilter, setPriceFilter] = useState([0, 5000000]);
+  const [appliedPromoFilter, setAppliedPromoFilter] = useState(null);
+
+  useEffect(() => {
+    const handlePromoApplied = (e) => {
+      const promo = e.detail;
+      if (promo && promo.applicableTours && promo.applicableTours.length > 0) {
+        setAppliedPromoFilter(promo);
+        setActiveService("Tour");
+        setActiveCat("All");
+      } else {
+        setAppliedPromoFilter(null);
+      }
+      
+      setTimeout(() => {
+        const el = document.getElementById("categories-section");
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    };
+    
+    window.addEventListener('promoApplied', handlePromoApplied);
+    return () => window.removeEventListener('promoApplied', handlePromoApplied);
+  }, []);
+
   // SWR Fetchers
   const fetcherListings = async () => {
     const { supabase } = await import('@/lib/supabase');
@@ -519,6 +542,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   // Apply Price Filter
   filteredTours = filteredTours.filter(t => t.price >= priceFilter[0] && t.price <= priceFilter[1]);
+
+  // Apply Promo Filter
+  if (appliedPromoFilter && appliedPromoFilter.applicableTours && appliedPromoFilter.applicableTours.length > 0) {
+    filteredTours = filteredTours.filter(t => appliedPromoFilter.applicableTours.includes(t.id));
+  }
 
   // Pseudo-randomize the filtered tours based on id and active category,
   // but push items that are in Top Picks to the end of the list.
@@ -1273,7 +1301,23 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </section>
 
             {/* Filtered Experiences */}
-            <section className="mt-6 mb-12">
+            <section className="mt-6 mb-12 relative">
+              {appliedPromoFilter && (
+                <div className="px-6 mb-4 flex justify-center">
+                  <div className="inline-flex items-center gap-3 bg-[#111111] px-4 py-2 rounded-2xl shadow-lg border border-[#2a2a2a]">
+                    <Sparkles size={16} className="text-yellow-400" />
+                    <span className="text-[13px] font-bold text-white">
+                      Showing tours valid for <span className="text-yellow-400">{appliedPromoFilter.code}</span>
+                    </span>
+                    <button 
+                      onClick={() => setAppliedPromoFilter(null)}
+                      className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors ml-2"
+                    >
+                      <X size={12} strokeWidth={3} />
+                    </button>
+                  </div>
+                </div>
+              )}
               <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-5 px-6 pb-8 md:grid md:grid-cols-3 md:px-6 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {filteredTours.length > 0 ? (
                   filteredTours.map(tour => (
