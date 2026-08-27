@@ -26,7 +26,8 @@ export default function AdminDashboard() {
   // Hero & Campaign Cards Data (Dedicated Private Section)
   const [heroSettings, setHeroSettings] = useState({
     campaignVideo: "",
-    campaignYoutubeLink: ""
+    campaignYoutubeLink: "",
+    promoCode: "BALI2026"
   });
   const [campaigns, setCampaigns] = useState(DEFAULT_CAMPAIGNS);
   const [isHeroUploading, setIsHeroUploading] = useState(false);
@@ -70,7 +71,8 @@ export default function AdminDashboard() {
       if (data) {
         setHeroSettings({
           campaignVideo: data.campaign_video || "",
-          campaignYoutubeLink: data.campaign_youtube_link || ""
+          campaignYoutubeLink: data.campaign_youtube_link || "",
+          promoCode: data.metadata?.promoCode || "BALI2026"
         });
         if (data.metadata?.campaigns) {
           setCampaigns(data.metadata.campaigns);
@@ -198,7 +200,7 @@ export default function AdminDashboard() {
         id: 1,
         campaign_video: heroSettings.campaignVideo,
         campaign_youtube_link: heroSettings.campaignYoutubeLink,
-        metadata: { ...metadata, campaigns: campaigns },
+        metadata: { ...metadata, campaigns: campaigns, promoCode: heroSettings.promoCode },
         updated_at: new Date().toISOString()
       };
       const { error } = await supabase.from('homepage_settings').upsert(payload, { onConflict: 'id' });
@@ -493,6 +495,25 @@ export default function AdminDashboard() {
               {/* Form Column */}
               <div className="lg:col-span-8 space-y-6">
                 
+                {/* Part 0: Header Promo Code */}
+                <div className="bg-white rounded-2xl border border-[#eaeaea] p-6 space-y-5 shadow-xs">
+                  <h3 className="text-base font-black text-[#1c1c1c] flex items-center gap-2">
+                    <Tag size={18} /> Header Promo Code
+                  </h3>
+                  <div className="space-y-2">
+                    <label className="text-xs font-black uppercase tracking-wider text-gray-500">
+                      Promo Code Text
+                    </label>
+                    <input 
+                      type="text" 
+                      value={heroSettings.promoCode}
+                      onChange={(e) => setHeroSettings({ ...heroSettings, promoCode: e.target.value.toUpperCase() })}
+                      placeholder="BALI2026"
+                      className="w-full px-4 py-3 bg-[#fafafa] border border-[#eaeaea] focus:border-black focus:bg-white rounded-xl text-sm font-bold text-[#1c1c1c] outline-none"
+                    />
+                  </div>
+                </div>
+
                 {/* Part 1: Hero Media Background */}
                 <div className="bg-white rounded-2xl border border-[#eaeaea] p-6 space-y-5 shadow-xs">
                   <h3 className="text-base font-black text-[#1c1c1c] flex items-center gap-2">

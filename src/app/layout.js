@@ -7,6 +7,7 @@ import BottomNav from "@/components/navigation/BottomNav";
 import AuthProvider from "@/components/providers/AuthProvider";
 import GoogleTranslate from "@/components/GoogleTranslate";
 import SplashScreen from "@/components/SplashScreen";
+import { supabase } from "@/lib/supabase";
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: '--font-playfair' });
 
@@ -78,7 +79,7 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -86,6 +87,16 @@ export default function RootLayout({ children }) {
     "alternateName": ["Balance Island Bali", "Balance Island Tours"],
     "url": "https://www.bobbybaliguide.com/"
   };
+
+  let promoCode = "BALI2026";
+  try {
+    const { data } = await supabase.from('homepage_settings').select('metadata').eq('id', 1).single();
+    if (data?.metadata?.promoCode) {
+      promoCode = data.metadata.promoCode;
+    }
+  } catch (error) {
+    console.error("Error fetching promo code:", error);
+  }
 
   return (
     <html lang="en">
@@ -110,7 +121,7 @@ export default function RootLayout({ children }) {
           <SplashScreen>
             <GoogleTranslate />
             {/* Navbar handles its own desktop/mobile responsive states now */}
-            <Navbar />
+            <Navbar promoCode={promoCode} />
 
             <main className="flex-grow w-full relative pt-20 md:pt-24">
               {children}

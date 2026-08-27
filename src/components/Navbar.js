@@ -6,20 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, CircleDollarSign } from "lucide-react";
 import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
 
-export default function Navbar() {
+export default function Navbar({ promoCode = "BALI2026" }) {
   const pathname = usePathname();
   const router = useRouter();
-  
-  const [greeting, setGreeting] = useState("Good Day");
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-    const hour = new Date().getHours();
-    if (hour < 12) setGreeting("Good Morning");
-    else if (hour < 18) setGreeting("Good Afternoon");
-    else setGreeting("Good Evening");
-  }, []);
   
 
   const [isScrolled, setIsScrolled] = useState(false);
@@ -102,21 +91,7 @@ export default function Navbar() {
   ];
 
 
-  const [profileImage, setProfileImage] = useState(null);
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("balance_island_profile");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.image) {
-          setProfileImage(parsed.image);
-        }
-      }
-    } catch (e) {
-      // ignore
-    }
-  }, []);
 
   if (pathname?.startsWith('/admin')) return null;
   if (pathname?.startsWith('/tours') || pathname === '/map' || pathname?.startsWith('/blog') || pathname?.startsWith('/profile') || pathname?.startsWith('/favorites') || pathname?.startsWith('/bookings')) return null;
@@ -131,18 +106,18 @@ export default function Navbar() {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Profile Icon & Greeting */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Link href="/profile/personal-info" className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-full bg-[#111111] border border-white/10 flex items-center justify-center text-white active:scale-95 transition-all shadow-sm hover:bg-white/5 overflow-hidden">
-            {profileImage ? (
-              <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
-            ) : (
-              <User size={18} strokeWidth={2.5} className="text-white" />
-            )}
-          </Link>
-          <div className="flex flex-col justify-center px-1">
-            <span className="text-[10px] sm:text-[11px] font-bold leading-tight drop-shadow-sm" style={{ color: '#ffffff', opacity: 0.8 }}>{mounted ? greeting : "Good Day"}</span>
-            <span className="text-[11px] sm:text-[12px] font-extrabold leading-tight mt-[1px] drop-shadow-sm" style={{ color: '#ffffff' }}>Bali, Indonesia</span>
+        {/* Left Side: Promo Code Display */}
+        <div className="flex items-center">
+          <div className="flex items-center bg-black/40 border border-white/20 backdrop-blur-xl pl-1.5 pr-3.5 py-1.5 rounded-full hover:bg-black/60 transition-all cursor-pointer group shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-200 flex items-center justify-center text-black shadow-inner group-hover:scale-105 transition-transform">
+              <Sparkles size={14} strokeWidth={2.5} />
+            </div>
+            <div className="flex flex-col justify-center pl-2.5">
+              <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-widest text-white/80 leading-none mb-[3px]">Promo Code</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[12px] sm:text-[13px] font-black text-white leading-none tracking-wider">{promoCode}</span>
+              </div>
+            </div>
           </div>
         </div>
 
