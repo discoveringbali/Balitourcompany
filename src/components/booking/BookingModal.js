@@ -501,7 +501,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                         placeholder="Promo Code" 
                         value={promoCode} 
                         onChange={(e) => setPromoCode(e.target.value.toUpperCase())} 
-                        className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 flex-1 text-sm font-bold text-primary placeholder:text-white/40 outline-none focus:border-white/30 uppercase transition-colors"
+                        className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 flex-1 text-sm font-bold text-primary placeholder:text-gray-400 outline-none focus:border-black uppercase transition-colors"
                       />
                       <button 
                         type="button" 
