@@ -5,11 +5,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, CircleDollarSign } from "lucide-react";
 import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
+import Sidebar from "@/components/navigation/Sidebar";
 
 export default function Navbar({ promoCode = "BALI2026" }) {
   const pathname = usePathname();
   const router = useRouter();
   
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -106,14 +108,14 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       {/* MOBILE LAYOUT */}
       <div className="md:hidden px-5 sm:px-6 flex items-center justify-between">
         
-        {/* Left Side: Promo Code Display */}
+        {/* Left Side: Hamburger Menu */}
         <div className="flex items-center">
-          <div className="flex items-center bg-black/40 border border-white/20 backdrop-blur-xl px-4 py-1.5 rounded-full hover:bg-black/60 transition-all cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
-            <div className="flex flex-col justify-center text-center">
-              <span className="text-[8px] sm:text-[9px] font-extrabold uppercase tracking-[0.2em] text-white/60 leading-none mb-[3px]">Promo Code</span>
-              <span className="text-[12px] sm:text-[13px] font-black text-white leading-none tracking-widest">{promoCode}</span>
-            </div>
-          </div>
+          <button 
+            onClick={() => setSidebarOpen(true)}
+            className="w-10 h-10 rounded-full bg-black/40 border border-white/20 backdrop-blur-xl flex items-center justify-center text-white hover:bg-black/60 transition-all shadow-[0_4px_12px_rgba(0,0,0,0.1)] outline-none"
+          >
+            <Menu size={18} strokeWidth={2.5} />
+          </button>
         </div>
 
         {/* Right Side: Currency & Language */}
@@ -276,6 +278,9 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
         </div>
       </div>
+      
+      {/* Sidebar Component */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
     </header>
   );
