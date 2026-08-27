@@ -75,10 +75,10 @@ export default function BookingsPage() {
   const filteredBookings = bookings.filter(b => getBookingType(b) === activeTab);
 
   return (
-    <div className="min-h-[100dvh] bg-[#000000] pb-32 font-sans -mt-20 md:-mt-24">
+    <div className="min-h-[100dvh] bg-surface pb-32 font-sans -mt-20 md:-mt-24">
       
       {/* Header & Tabs */}
-      <div className="px-6 pt-14 pb-0 bg-[#000000] z-10 sticky top-0 border-b border-white/10">
+      <div className="px-6 pt-14 pb-0 bg-surface z-10 sticky top-0 border-b border-gray-100">
         <div className="flex justify-between items-center">
         </div>
         
@@ -158,7 +158,7 @@ export default function BookingsPage() {
 
                   {/* Actions Area */}
                   {activeTab === "upcoming" && (
-                    <div className="mt-5 pt-4 border-t border-gray-100 flex gap-3">
+                    <div key={b.id} className="mt-5 bg-white rounded-[24px] border border-gray-100 p-5 shadow-sm flex gap-3">
                       <a 
                         href={`https://wa.me/6285174119423?text=${encodeURIComponent(`Hello Balance Island, regarding my booking:\n\n*BALANCE ISLAND BOOKING*\n\n*ID:* #${b.id}\n*TITLE:* ${b.service_name.toUpperCase()}\n*DATE:* ${b.booking_date}\n*PRICE:* ${b.amount}\n\nPlease assist me to confirm.`)}`} 
                         target="_blank" 
@@ -193,7 +193,7 @@ export default function BookingsPage() {
              <div className="w-24 h-24 bg-[#111111] rounded-full flex items-center justify-center mb-6 shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-white/10">
                 <Navigation className="w-10 h-10 text-gray-500 ml-1 mt-1" strokeWidth={2} />
              </div>
-             <h3 className="text-[22px] font-black text-white mb-3 tracking-tight">No upcoming trips</h3>
+             <h3 className="text-[22px] font-black text-primary mb-3 tracking-tight">No upcoming trips</h3>
              <p className="text-gray-500 text-[15px] max-w-[280px] leading-relaxed mb-8 font-medium">
                Start exploring our collection of premium tours, transport, and experiences in Bali.
              </p>

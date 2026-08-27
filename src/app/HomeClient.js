@@ -170,7 +170,7 @@ function PopularTripCard({ trip }) {
       </button>
 
       {/* Bottom Overlay Card */}
-      <div className="absolute left-3 right-3 bottom-3 bg-[#111111]/95 border border-white/10 backdrop-blur-md px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgb(0,0,0,0.5)]">
+      <div className="absolute left-3 right-3 bottom-3 bg-white/70 border border-white/50 backdrop-blur-2xl px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
         <h3 className="font-extrabold text-[15px] leading-snug text-primary line-clamp-2">{trip.title}</h3>
         <div className="flex justify-between items-end mt-1">
           <div className="flex items-center gap-1.5 shrink-0">
@@ -1240,7 +1240,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
               </div>
               <div className="flex justify-center w-full overflow-hidden">
-                <div className="bg-surface border border-white/10 rounded-[32px] p-1.5 shadow-md w-fit max-w-full mx-auto">
+                <div className="bg-white/60 backdrop-blur-2xl border border-white rounded-[32px] p-1.5 shadow-lg w-fit max-w-full mx-auto">
                   <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     {currentCategories.map((c) => {
                       const Icon = c.icon;
@@ -1259,8 +1259,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                             />
                           )}
                           <div className="relative z-10 flex items-center justify-center gap-1.5">
-                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#000000]' : 'text-white/70 hover:text-white'}`} strokeWidth={2} />}
-                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#000000] font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-gray-500 hover:text-black'}`} strokeWidth={2} />}
+                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
                               {c.id}
                             </span>
                           </div>

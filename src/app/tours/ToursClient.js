@@ -78,7 +78,7 @@ export default function ToursClient({ initialTours }) {
             </div>
           </div>
 
-          <div className="bg-black rounded-[32px] p-1.5 shadow-md self-start max-w-full">
+          <div className="bg-white/60 backdrop-blur-2xl rounded-[32px] p-1.5 shadow-lg border border-white self-start max-w-full">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {categories.map((cat) => {
                 const isActive = activeCategory === cat;
@@ -91,12 +91,12 @@ export default function ToursClient({ initialTours }) {
                     {isActive && (
                       <motion.div
                         layoutId="toursCategoryIndicator"
-                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm"
+                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm border border-gray-100"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
                     <div className="relative z-10 flex items-center justify-center">
-                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
                           {cat}
                         </span>
                     </div>
