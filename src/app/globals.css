@@ -2,23 +2,20 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme {
-  --color-primary: #ffffff;
-  /* Deep dark grey/black used in the reference UI */
-  --color-primary-inverse: #000000;
+  --color-primary: #1c1c1c;
+  --color-primary-inverse: #ffffff;
 
   /* Redesign Signature Lime Accent */
   --color-accent: #000000;
   --color-accent-hover: #333333;
 
-  --color-background: #000000;
-  /* Slightly off-white for contrast with white cards */
-  --color-surface: #111111;
+  --color-background: #ffffff;
+  --color-surface: #fafafa;
   --color-dark-surface: #2f2f2f;
-  /* Dark floating elements */
 
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #aaaaaa;
-  --color-border: #222222;
+  --color-text-primary: #1c1c1c;
+  --color-text-secondary: #717171;
+  --color-border: #f0f0f0;
 
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
   --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -99,22 +96,7 @@
   }
 }
 
-/* Global Dark Mode Overrides for Hardcoded Light Classes */
-.bg-white, .bg-\[\#fbfbfb\] {
-  background-color: #000000 !important;
-}
-.text-black, .text-gray-900, .text-\[\#383838\] {
-  color: #ffffff !important;
-}
-.bg-gray-50, .bg-gray-100 {
-  background-color: #111111 !important;
-}
-.border-gray-100, .border-gray-200 {
-  border-color: #222222 !important;
-}
-.text-gray-500, .text-gray-600 {
-  color: #aaaaaa !important;
-}
+
 
 /* Apply neon yellow palette to main action buttons across the site */
 button.bg-\[\#1c1c1c\],

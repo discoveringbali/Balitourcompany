@@ -35,24 +35,24 @@ export default function FAQPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#000000] flex flex-col pt-32 pb-16">
+    <div className="min-h-screen bg-surface flex flex-col pt-32 pb-16">
       <div className="container mx-auto px-6 flex-grow max-w-3xl">
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight mb-4">Frequently Asked Questions</h1>
-          <p className="text-gray-400 font-medium">Find answers to common questions about booking, payments, and our tours.</p>
+          <h1 className="text-3xl md:text-5xl font-black text-primary tracking-tight mb-4">Frequently Asked Questions</h1>
+          <p className="text-text-secondary font-medium">Find answers to common questions about booking, payments, and our tours.</p>
         </div>
 
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div 
               key={index} 
-              className="bg-[#111111] rounded-2xl border border-white/10 overflow-hidden shadow-sm transition-all hover:border-white/30"
+              className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm transition-all hover:shadow-md"
             >
               <button
                 onClick={() => toggleAccordion(index)}
                 className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
               >
-                <span className="font-bold text-white text-sm md:text-base pr-4">{faq.question}</span>
+                <span className="font-bold text-primary text-sm md:text-base pr-4">{faq.question}</span>
                 <ChevronDown 
                   size={20} 
                   className={`text-gray-400 transition-transform duration-300 shrink-0 ${openIndex === index ? 'rotate-180' : ''}`}
@@ -64,7 +64,7 @@ export default function FAQPage() {
                   openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
                 }`}
               >
-                <div className="px-6 pb-5 pt-1 text-gray-400 text-sm leading-relaxed border-t border-white/10 mx-6">
+                <div className="px-6 pb-5 pt-1 text-gray-500 text-sm leading-relaxed border-t border-gray-50 mx-6">
                   {faq.answer}
                 </div>
               </div>
@@ -73,10 +73,10 @@ export default function FAQPage() {
         </div>
 
         <div className="mt-16 text-center">
-          <p className="text-gray-400 font-medium text-sm mb-4">Still have questions?</p>
+          <p className="text-gray-500 font-medium text-sm mb-4">Still have questions?</p>
           <a 
             href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 bg-white text-black rounded-full font-bold text-sm hover:bg-gray-200 transition-colors shadow-lg active:scale-95"
+            className="inline-flex items-center justify-center px-8 py-3.5 bg-black text-white rounded-full font-bold text-sm hover:bg-neutral-800 transition-colors shadow-lg active:scale-95"
           >
             Contact Support
           </a>

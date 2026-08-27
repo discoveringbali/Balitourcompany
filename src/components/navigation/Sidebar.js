@@ -42,12 +42,15 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Drawer */}
       <div 
-        className={`fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-[#000000] border-r border-white/10 z-[100] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-white/90 backdrop-blur-2xl border-r border-gray-100 z-[100] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex items-center justify-end p-6 border-b border-white/10">
+        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+          <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-primary uppercase">
+            BALANCE ISLAND
+          </Link>
           <button 
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 hover:bg-white/10 hover:text-white transition-colors shrink-0"
+            className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-gray-500 hover:bg-black/10 hover:text-black transition-colors shrink-0"
           >
             <X size={20} strokeWidth={2.5} />
           </button>

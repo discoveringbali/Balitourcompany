@@ -631,12 +631,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       
       <div className="w-full md:pt-[100px] pb-4">
         {/* Mobile Top White Section */}
-        <div className="md:hidden bg-[#000000] -mt-20 pt-[108px] pb-8 rounded-b-[40px] relative z-20 shadow-[0_10px_30px_rgba(0,0,0,0.15)] w-full">
+        <div className="md:hidden bg-gradient-to-b from-gray-50 to-white -mt-20 pt-[108px] pb-8 rounded-b-[40px] relative z-20 shadow-[0_10px_30px_rgba(0,0,0,0.05)] w-full">
           {/* Mobile Top Header Search */}
           <div className="relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-surface border border-white/10 rounded-[32px] p-1.5 shadow-md mb-4">
+          <div className="bg-white/60 backdrop-blur-2xl border border-white rounded-[32px] p-1.5 shadow-lg mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -646,11 +646,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     onClick={() => setSearchQuery(loc === "All Bali" ? "" : loc)}
                     className="relative flex items-center justify-center px-5 py-2.5 rounded-[24px] active:scale-95 outline-none shrink-0"
                   >
-                    {/* Animated Sliding White Pill */}
+                    {/* Animated Sliding Pill */}
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-[#ffffff] rounded-[24px] shadow-sm"
+                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm border border-gray-100"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -658,9 +658,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {/* Text Label or Icon */}
                     <div className="relative z-10 flex items-center justify-center">
                       {loc === "All Bali" ? (
-                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-[#000000]' : 'text-white/70 hover:text-white'}`} />
+                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-black' : 'text-gray-500 hover:text-black'}`} />
                       ) : (
-                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#000000] font-extrabold' : 'text-white/70 font-bold hover:text-white'}`}>
+                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
                           {loc}
                         </span>
                       )}
@@ -671,7 +671,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </div>
           </div>
 
-          <div className="flex items-center bg-surface border border-white/10 shadow-soft rounded-full pl-2 pr-2 py-2 relative mb-6">
+          {/* Apple Glass Search Bar */}
+          <div className="flex items-center bg-white/60 backdrop-blur-2xl border border-white shadow-lg rounded-full pl-2 pr-2 py-2 relative mb-6">
 
             {/* Mobile Service Dropdown Trigger inside Search Bar */}
             <button
@@ -697,9 +698,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {/* Filter Modal Toggle */}
             <button
               onClick={() => setIsFilterModalOpen(true)}
-              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-[#ffffff] text-[#000000] hover:bg-gray-100 hover:scale-105`}
+              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-black text-white hover:bg-neutral-800 hover:scale-105`}
             >
-              <Settings2 size={16} strokeWidth={2.5} className="text-[#000000]" />
+              <Settings2 size={16} strokeWidth={2.5} className="text-white" />
             </button>
 
             {/* Mobile Service Dropdown */}
