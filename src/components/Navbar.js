@@ -304,7 +304,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                       
                       <div className="flex flex-col px-2">
                         <span className="text-[14px] font-extrabold text-black">
-                          {promo.type === 'percent' ? `Save ${promo.value}% on your booking` : `Save Rp ${promo.value.toLocaleString('id-ID')}${promo.scope === 'per_person' ? ' per person' : ' on your booking'}`}
+                          {promo.type === 'percent' ? `Save ${promo.value}% on your booking` : `Save IDR ${promo.value.toLocaleString('id-ID')}${promo.scope === 'per_person' ? ' per person' : ' on your booking'}`}
                         </span>
                         <span className="text-[11px] font-bold text-gray-500 mt-0.5">
                           {(!promo.applicableTours || promo.applicableTours.length === 0) ? 'Applicable to all experiences.' : 'Applicable to selected experiences.'}
@@ -431,7 +431,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                 
                 <div className="flex flex-col px-2">
                   <span className="text-[14px] font-extrabold text-black">
-                    {promo.type === 'percent' ? `Save ${promo.value}% on your booking` : `Save Rp ${promo.value.toLocaleString('id-ID')}${promo.scope === 'per_person' ? ' per person' : ' on your booking'}`}
+                    {promo.type === 'percent' ? `Save ${promo.value}% on your booking` : `Save IDR ${promo.value.toLocaleString('id-ID')}${promo.scope === 'per_person' ? ' per person' : ' on your booking'}`}
                   </span>
                   <span className="text-[11px] font-bold text-gray-500 mt-0.5">
                     {(!promo.applicableTours || promo.applicableTours.length === 0) ? 'Applicable to all experiences.' : 'Applicable to selected experiences.'}
