@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, CircleDollarSign } from "lucide-react";
+import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, CircleDollarSign, Gift, Tag } from "lucide-react";
 import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
 import Sidebar from "@/components/navigation/Sidebar";
 
@@ -25,6 +25,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   const [activeService, setActiveService] = useState("Tour");
   
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [promoDropdownOpen, setPromoDropdownOpen] = useState(false);
   const [activeLang, setActiveLang] = useState("EN");
   const [isTranslating, setIsTranslating] = useState(false);
   const languages = [
@@ -123,7 +124,29 @@ export default function Navbar({ promoCode = "BALI2026" }) {
         <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
           <div className="relative">
             <button 
-              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); }}
+              onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setLangDropdownOpen(false); setCurrencyDropdownOpen(false); }}
+              className="w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative"
+            >
+              <Gift size={16} />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
+            </button>
+            {promoDropdownOpen && (
+              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl flex flex-col min-w-[200px] border border-border animate-in fade-in zoom-in-95 duration-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <Tag size={16} className="text-primary" />
+                  <span className="font-bold text-[14px]">Available Promos</span>
+                </div>
+                <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center">
+                  <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
+                  <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                  <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="relative">
+            <button 
+              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); setPromoDropdownOpen(false); }}
               className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <CircleDollarSign size={14} /> {activeCurrency}
@@ -144,7 +167,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
           <div className="relative">
             <button 
-              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); }}
+              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); setPromoDropdownOpen(false); }}
               className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors"
             >
               <Globe size={14} className={isTranslating ? 'animate-spin' : ''} /> {activeLang}
@@ -236,7 +259,29 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </Link>
           <div className="relative">
             <button 
-              onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+              onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setLangDropdownOpen(false); setCurrencyDropdownOpen(false); }}
+              className={`w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft relative ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+            >
+              <Gift size={15} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
+            </button>
+            {promoDropdownOpen && (
+              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl flex flex-col min-w-[200px] border border-border animate-in fade-in zoom-in-95 duration-200 z-50">
+                <div className="flex items-center gap-2 mb-3">
+                  <Tag size={16} className="text-primary" />
+                  <span className="font-bold text-[14px]">Available Promos</span>
+                </div>
+                <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center">
+                  <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
+                  <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                  <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="relative">
+            <button 
+              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setPromoDropdownOpen(false); setCurrencyDropdownOpen(false); }}
               className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
             >
               <Globe size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'} ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
@@ -258,7 +303,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           
           <div className="relative">
             <button 
-              onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
+              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); setPromoDropdownOpen(false); }}
               className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
             >
               <CircleDollarSign size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} /> {activeCurrency}

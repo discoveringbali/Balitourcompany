@@ -91,7 +91,7 @@ export default function ToursClient({ initialTours }) {
                     {isActive && (
                       <motion.div
                         layoutId="toursCategoryIndicator"
-                        className="absolute inset-0 bg-gray-50/80 backdrop-blur-2xl border border-white shadow-md rounded-[24px]"
+                        className="absolute inset-0 bg-black/5 backdrop-blur-3xl border border-white/60 shadow-sm rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -121,7 +121,7 @@ export default function ToursClient({ initialTours }) {
                       {isActive && (
                         <motion.div
                           layoutId="toursLocationIndicator"
-                          className="absolute inset-0 bg-gray-50/80 backdrop-blur-2xl border border-white shadow-md rounded-[20px]"
+                          className="absolute inset-0 bg-black/5 backdrop-blur-3xl border border-white/60 shadow-sm rounded-[20px]"
                           transition={{ type: "spring", stiffness: 400, damping: 28 }}
                         />
                       )}
