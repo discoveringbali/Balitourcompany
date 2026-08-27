@@ -650,7 +650,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-white/70 backdrop-blur-2xl border border-white/60 shadow-sm rounded-[24px]"
+                        className="absolute inset-0 bg-gray-50/80 backdrop-blur-2xl border border-white shadow-md rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -946,7 +946,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       </svg>
 
                       {/* Heart Button */}
-                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-50 border border-gray-100/50" aria-label="Save campaign">
+                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-gray-100" aria-label="Save campaign">
                         <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
                       </button>
 
@@ -955,7 +955,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           href={camp.externalUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-50 border border-gray-100/50"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-gray-100"
                           aria-label="Open partner website"
                         >
                           <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
@@ -963,7 +963,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       ) : (
                         <Link
                           href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.15)] active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-neutral-50 border border-gray-100/50"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-gray-100"
                           aria-label="View tour details"
                         >
                           <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
@@ -1254,7 +1254,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           {isActive && (
                             <motion.div
                               layoutId="categoryActiveIndicator"
-                              className="absolute inset-0 bg-white/70 backdrop-blur-2xl border border-white/60 shadow-sm rounded-[24px]"
+                              className="absolute inset-0 bg-gray-50/80 backdrop-blur-2xl border border-white shadow-md rounded-[24px]"
                               transition={{ type: "spring", stiffness: 400, damping: 28 }}
                             />
                           )}
