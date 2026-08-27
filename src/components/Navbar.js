@@ -108,15 +108,10 @@ export default function Navbar({ promoCode = "BALI2026" }) {
         
         {/* Left Side: Promo Code Display */}
         <div className="flex items-center">
-          <div className="flex items-center bg-black/40 border border-white/20 backdrop-blur-xl pl-1.5 pr-3.5 py-1.5 rounded-full hover:bg-black/60 transition-all cursor-pointer group shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr from-amber-400 to-yellow-200 flex items-center justify-center text-black shadow-inner group-hover:scale-105 transition-transform">
-              <Sparkles size={14} strokeWidth={2.5} />
-            </div>
-            <div className="flex flex-col justify-center pl-2.5">
-              <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-widest text-white/80 leading-none mb-[3px]">Promo Code</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-[12px] sm:text-[13px] font-black text-white leading-none tracking-wider">{promoCode}</span>
-              </div>
+          <div className="flex items-center bg-black/40 border border-white/20 backdrop-blur-xl px-4 py-1.5 rounded-full hover:bg-black/60 transition-all cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+            <div className="flex flex-col justify-center text-center">
+              <span className="text-[8px] sm:text-[9px] font-extrabold uppercase tracking-[0.2em] text-white/60 leading-none mb-[3px]">Promo Code</span>
+              <span className="text-[12px] sm:text-[13px] font-black text-white leading-none tracking-widest">{promoCode}</span>
             </div>
           </div>
         </div>

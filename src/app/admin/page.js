@@ -203,8 +203,17 @@ export default function AdminDashboard() {
         metadata: { ...metadata, campaigns: campaigns, promoCode: heroSettings.promoCode },
         updated_at: new Date().toISOString()
       };
-      const { error } = await supabase.from('homepage_settings').upsert(payload, { onConflict: 'id' });
-      if (error) throw error;
+      
+      const res = await fetch('/api/admin/homepage-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Failed to save settings");
+      }
 
       // Save campaigns to local storage and sync
       saveCampaignSettings(campaigns);
