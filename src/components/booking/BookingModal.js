@@ -115,6 +115,12 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       const found = codes.find(c => c.code.toUpperCase() === promoCode.trim().toUpperCase() && c.active);
       
       if (found) {
+        if (found.applicableTours && found.applicableTours.length > 0 && !found.applicableTours.includes(serviceData?.id)) {
+           setAppliedDiscount(null);
+           setPromoError('This promo code is not valid for this tour.');
+           return;
+        }
+
         setAppliedDiscount(found);
         setPromoError('');
       } else {
@@ -198,7 +204,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     e.preventDefault();
     
     const baseTotal = getBaseTotal();
-    const discountAmt = calculateDiscount(baseTotal, appliedDiscount);
+    const discountAmt = calculateDiscount(baseTotal, appliedDiscount, parseInt(formData.guests) || 1);
     const total = baseTotal - discountAmt;
     
     // Generate Random Booking ID
@@ -535,7 +541,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                         </span>
                       )}
                       <span className="text-[22px] font-black tracking-tight text-[#1c1c1c]">
-                        {formatPrice((serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal()) - calculateDiscount(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal(), appliedDiscount))}
+                        {formatPrice((serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal()) - calculateDiscount(serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat" ? getPerPersonPrice() : getBaseTotal(), appliedDiscount, parseInt(formData.guests) || 1))}
                       </span>
                    </div>
                  </div>
@@ -552,7 +558,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                     </span>
                   )}
                   <span className="text-[22px] font-black tracking-tight text-primary">
-                    {formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}
+                    {formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount, parseInt(formData.guests) || 1))}
                   </span>
                </div>
              </div>
@@ -560,7 +566,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
            <button form="bookingForm" type="submit" className="w-full bg-black hover:bg-neutral-800 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white transition-all active:scale-95 text-[16px] shadow-sm">
              {step === 1 ? (
                 (serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat") ? 
-                (serviceData ? `Continue • ${formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount))}` : 'Continue to Details') : 
+                (serviceData ? `Continue • ${formatPrice(getBaseTotal() - calculateDiscount(getBaseTotal(), appliedDiscount, parseInt(formData.guests) || 1))}` : 'Continue to Details') : 
                 'Continue to Details'
              ) : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
            </button>

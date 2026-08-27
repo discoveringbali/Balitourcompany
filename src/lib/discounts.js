@@ -36,13 +36,17 @@ export const validateDiscountCode = (code) => {
   return found || null;
 };
 
-export const calculateDiscount = (baseTotal, discount) => {
+export const calculateDiscount = (baseTotal, discount, pax = 1) => {
   if (!discount) return 0;
   
   if (discount.type === 'percent') {
     return (baseTotal * discount.value) / 100;
   } else if (discount.type === 'fixed') {
-    return discount.value > baseTotal ? baseTotal : discount.value;
+    let finalDiscount = discount.value;
+    if (discount.scope === 'per_person') {
+      finalDiscount = discount.value * pax;
+    }
+    return finalDiscount > baseTotal ? baseTotal : finalDiscount;
   }
   
   return 0;

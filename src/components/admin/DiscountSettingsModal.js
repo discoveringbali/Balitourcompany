@@ -7,6 +7,7 @@ const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', c
 
 export default function DiscountSettingsModal({ isOpen, onClose }) {
   const [codes, setCodes] = useState([]);
+  const [listings, setListings] = useState([]);
   const [copiedCode, setCopiedCode] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -18,6 +19,13 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
            setCodes(Array.isArray(data) ? data : []);
         })
         .catch(err => console.error("Error fetching discounts:", err));
+        
+      import('@/lib/supabase').then(({ supabase }) => {
+        supabase.from('listings').select('id, title').eq('type', 'Tour').then(({ data }) => {
+          if (data) setListings(data);
+        });
+      });
+
       setIsSaved(false);
       document.body.style.overflow = "hidden";
     } else {
@@ -49,9 +57,19 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
       code: `PROMO${Math.floor(10 + Math.random() * 90)}`,
       type: "percent",
       value: 10,
-      active: true
+      active: true,
+      applicableTours: [],
+      scope: 'per_booking'
     };
     setCodes([newEntry, ...codes]);
+  };
+
+  const toggleApplicableTour = (idx, tourId) => {
+    const current = codes[idx].applicableTours || [];
+    const updatedTours = current.includes(tourId) 
+      ? current.filter(id => id !== tourId)
+      : [...current, tourId];
+    updateCode(idx, "applicableTours", updatedTours);
   };
 
   const updateCode = (idx, field, val) => {
@@ -248,6 +266,71 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
                         className="w-full bg-white border border-[#eaeaea] rounded-xl pl-9 pr-3 py-2 text-xs sm:text-sm font-black text-[#1c1c1c] outline-none focus:border-[#1c1c1c] focus:ring-1 focus:ring-black"
                         placeholder={c.type === "percent" ? "10" : "50000"}
                       />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Advanced Settings Row: Scope & Applicable Tours */}
+                <div className="flex flex-col gap-3 pt-3 border-t border-gray-200/60 mt-3">
+                  {/* Scope Selector (Only for Fixed IDR) */}
+                  {c.type === "fixed" && (
+                    <div className="flex items-center justify-between">
+                      <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">
+                        Discount Scope
+                      </label>
+                      <div className="flex bg-gray-100 rounded-lg p-0.5">
+                        <button
+                          onClick={() => updateCode(idx, "scope", "per_booking")}
+                          className={`px-3 py-1 text-[10px] font-bold rounded-md transition-all ${(!c.scope || c.scope === 'per_booking') ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}
+                        >
+                          Per Booking
+                        </button>
+                        <button
+                          onClick={() => updateCode(idx, "scope", "per_person")}
+                          className={`px-3 py-1 text-[10px] font-bold rounded-md transition-all ${c.scope === 'per_person' ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}
+                        >
+                          Per Person
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Applicable Tours Multi-select */}
+                  <div className="flex flex-col gap-1.5">
+                    <div className="flex items-center justify-between">
+                      <label className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">
+                        Applicable Tours
+                      </label>
+                      <span className="text-[10px] font-bold text-gray-500">
+                        {(!c.applicableTours || c.applicableTours.length === 0) ? 'All Tours' : `${c.applicableTours.length} Selected`}
+                      </span>
+                    </div>
+                    <div className="bg-white border border-[#eaeaea] rounded-xl p-2 max-h-32 overflow-y-auto hide-scroll flex flex-col gap-1">
+                      <button 
+                        onClick={() => updateCode(idx, "applicableTours", [])}
+                        className="flex items-center gap-2 w-full text-left p-1.5 hover:bg-gray-50 rounded-lg transition-colors group"
+                      >
+                        <div className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${(!c.applicableTours || c.applicableTours.length === 0) ? 'bg-black border-black text-white' : 'border-gray-300'}`}>
+                          {(!c.applicableTours || c.applicableTours.length === 0) && <Check size={10} strokeWidth={4} />}
+                        </div>
+                        <span className={`text-[11px] font-bold ${(!c.applicableTours || c.applicableTours.length === 0) ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>Apply to All Tours</span>
+                      </button>
+                      
+                      {listings.map(tour => {
+                        const isSelected = (c.applicableTours || []).includes(tour.id);
+                        return (
+                          <button 
+                            key={tour.id}
+                            onClick={() => toggleApplicableTour(idx, tour.id)}
+                            className="flex items-center gap-2 w-full text-left p-1.5 hover:bg-gray-50 rounded-lg transition-colors group"
+                          >
+                            <div className={`w-4 h-4 rounded-md border flex items-center justify-center shrink-0 transition-colors ${isSelected ? 'bg-black border-black text-white' : 'border-gray-300'}`}>
+                              {isSelected && <Check size={10} strokeWidth={4} />}
+                            </div>
+                            <span className={`text-[11px] font-bold truncate ${isSelected ? 'text-black' : 'text-gray-500 group-hover:text-black'}`}>{tour.title}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
