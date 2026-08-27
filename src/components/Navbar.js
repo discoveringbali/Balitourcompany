@@ -322,7 +322,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                           onClick={(e) => {
                             e.stopPropagation();
                             localStorage.setItem('savedPromoCode', promo.code);
-                            window.dispatchEvent(new CustomEvent('promoApplied', { detail: promo }));
+                            router.push(`/tours?promo=${promo.code}`);
                             setPromoDropdownOpen(false);
                           }}
                           className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
@@ -352,7 +352,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                           onClick={(e) => {
                             e.stopPropagation();
                             localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
-                            window.dispatchEvent(new CustomEvent('promoApplied', { detail: { code: promoCode || "BALI2026" } }));
+                            router.push(`/tours?promo=${promoCode || "BALI2026"}`);
                             setPromoDropdownOpen(false);
                           }}
                           className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
@@ -449,7 +449,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                     onClick={(e) => {
                       e.stopPropagation();
                       localStorage.setItem('savedPromoCode', promo.code);
-                      window.dispatchEvent(new CustomEvent('promoApplied', { detail: promo }));
+                      router.push(`/tours?promo=${promo.code}`);
                       setPromoDropdownOpen(false);
                     }}
                     className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[12px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
@@ -479,7 +479,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                     onClick={(e) => {
                       e.stopPropagation();
                       localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
-                      window.dispatchEvent(new CustomEvent('promoApplied', { detail: { code: promoCode || "BALI2026" } }));
+                      router.push(`/tours?promo=${promoCode || "BALI2026"}`);
                       setPromoDropdownOpen(false);
                     }}
                     className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[12px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"

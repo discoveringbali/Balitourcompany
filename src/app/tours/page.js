@@ -1,9 +1,9 @@
+import { Suspense } from "react";
 import React from "react";
 import { getActiveListings } from "@/lib/cache";
 import ToursClient from "./ToursClient";
 
 export const revalidate = 3600; // Cache on server for 1 hour
-
 
 export default async function Tours() {
   const allListings = await getActiveListings();
@@ -11,5 +11,9 @@ export default async function Tours() {
     .filter(t => t.type === 'Tour')
     .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-  return <ToursClient initialTours={tours || []} />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <ToursClient initialTours={tours || []} />
+    </Suspense>
+  );
 }

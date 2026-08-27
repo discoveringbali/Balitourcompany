@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import ListingCard from "@/components/listing/ListingCard";
-import { ChevronDown, Search, SlidersHorizontal } from "lucide-react";
+import { ChevronDown, Search, SlidersHorizontal, X } from "lucide-react";
 import { generateSlug } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation";
 
 const categories = ["All", "Adventure", "Water", "Nature", "Culture"];
 const locations = ["All", "Ubud", "Nusa Penida", "Kuta", "Seminyak", "Canggu", "Uluwatu", "Bedugul"];
@@ -15,7 +16,27 @@ export default function ToursClient({ initialTours }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
 
-  const filteredTours = initialTours.filter(tour => {
+  const searchParams = useSearchParams();
+  const promoCode = searchParams ? searchParams.get('promo') : null;
+  const [appliedPromoFilter, setAppliedPromoFilter] = useState(null);
+
+  React.useEffect(() => {
+    if (promoCode) {
+      fetch('/api/discounts')
+        .then(res => res.json())
+        .then(data => {
+          const promo = data.discounts?.find(d => d.code === promoCode);
+          if (promo && promo.applicableTours && promo.applicableTours.length > 0) {
+            setAppliedPromoFilter(promo);
+          }
+        })
+        .catch(console.error);
+    } else {
+      setAppliedPromoFilter(null);
+    }
+  }, [promoCode]);
+
+  let filteredTours = initialTours.filter(tour => {
     let matchCat = true;
     let matchLoc = true;
     let matchSearch = true;
@@ -39,6 +60,10 @@ export default function ToursClient({ initialTours }) {
 
     return matchCat && matchLoc && matchSearch;
   });
+
+  if (appliedPromoFilter && appliedPromoFilter.applicableTours && appliedPromoFilter.applicableTours.length > 0) {
+    filteredTours = filteredTours.filter(t => appliedPromoFilter.applicableTours.includes(t.id));
+  }
 
   return (
     <div className="w-full bg-background min-h-screen -mt-20 md:-mt-24 pt-4 md:pt-6 pb-20">
@@ -151,6 +176,25 @@ export default function ToursClient({ initialTours }) {
                 </button>
               </div>
             </div>
+
+            {appliedPromoFilter && (
+              <div className="mb-6 flex justify-start">
+                <div className="inline-flex items-center gap-3 bg-black px-5 py-3 rounded-2xl shadow-lg border border-gray-800">
+                  <span className="text-[13px] font-bold text-white">
+                    Showing tours valid for <span className="font-black underline decoration-white/40 underline-offset-4">{appliedPromoFilter.code}</span>
+                  </span>
+                  <button 
+                    onClick={() => {
+                      setAppliedPromoFilter(null);
+                      // Clear the URL query param if we want, or just hide the banner. Hiding banner is fine.
+                    }}
+                    className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors ml-2"
+                  >
+                    <X size={12} strokeWidth={3} />
+                  </button>
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
               {filteredTours.map(tour => (
