@@ -18,6 +18,16 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
+
+    fetch('/api/discounts')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setPromos(data.filter(c => c.active));
+        }
+      })
+      .catch(err => console.error(err));
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -26,6 +36,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const [promoDropdownOpen, setPromoDropdownOpen] = useState(false);
+  const [promos, setPromos] = useState([]);
   const [activeLang, setActiveLang] = useState("EN");
   const [isTranslating, setIsTranslating] = useState(false);
   const languages = [
@@ -131,17 +142,38 @@ export default function Navbar({ promoCode = "BALI2026" }) {
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
             </button>
             {promoDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl flex flex-col min-w-[200px] border border-border animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center gap-2 mb-3">
-                  <Tag size={16} className="text-primary" />
-                  <span className="font-bold text-[14px]">Available Promos</span>
+              <>
+                <div className="fixed inset-0 bg-black/40 z-[90] sm:hidden backdrop-blur-sm animate-in fade-in" onClick={() => setPromoDropdownOpen(false)}></div>
+                <div className="fixed sm:absolute bottom-0 sm:bottom-auto left-0 sm:left-auto top-auto sm:top-12 sm:right-0 w-full sm:w-[320px] bg-white sm:bg-white/95 sm:backdrop-blur-xl rounded-t-3xl sm:rounded-2xl p-5 sm:p-4 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] sm:shadow-2xl flex flex-col border-t sm:border border-border animate-in slide-in-from-bottom-10 sm:slide-in-from-top-2 sm:fade-in zoom-in-95 duration-200 z-[100]">
+                  <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4 sm:hidden shrink-0" />
+                  <div className="flex items-center gap-2 mb-4">
+                    <Tag size={18} className="text-primary" />
+                    <span className="font-bold text-[16px] sm:text-[14px]">Available Promos</span>
+                  </div>
+                  <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto hide-scroll pb-4 sm:pb-0">
+                    {promos.length > 0 ? promos.map((promo, idx) => (
+                      <div key={idx} className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center relative overflow-hidden shrink-0">
+                        <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-r border-gray-200"></div>
+                        <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-l border-gray-200"></div>
+                        <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">
+                          {promo.type === 'percent' ? `${promo.value}% OFF` : `Rp ${promo.value.toLocaleString('id-ID')} OFF`}
+                        </span>
+                        <span className="text-[20px] sm:text-[18px] font-black tracking-widest text-primary">{promo.code}</span>
+                        <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                      </div>
+                    )) : (
+                      <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
+                        <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
+                        <span className="text-[20px] sm:text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                        <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                      </div>
+                    )}
+                  </div>
+                  <button onClick={() => setPromoDropdownOpen(false)} className="mt-2 sm:hidden w-full py-3.5 bg-black text-white rounded-xl font-bold text-[15px] active:scale-95 transition-transform">
+                    Close
+                  </button>
                 </div>
-                <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center">
-                  <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
-                  <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
-                  <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
-                </div>
-              </div>
+              </>
             )}
           </div>
           <div className="relative">
@@ -266,17 +298,38 @@ export default function Navbar({ promoCode = "BALI2026" }) {
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
             </button>
             {promoDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl flex flex-col min-w-[200px] border border-border animate-in fade-in zoom-in-95 duration-200 z-50">
-                <div className="flex items-center gap-2 mb-3">
-                  <Tag size={16} className="text-primary" />
-                  <span className="font-bold text-[14px]">Available Promos</span>
+              <>
+                <div className="fixed inset-0 bg-black/40 z-[90] sm:hidden backdrop-blur-sm animate-in fade-in" onClick={() => setPromoDropdownOpen(false)}></div>
+                <div className="fixed sm:absolute bottom-0 sm:bottom-auto left-0 sm:left-auto top-auto sm:top-12 sm:right-0 w-full sm:w-[320px] bg-white sm:bg-white/95 sm:backdrop-blur-xl rounded-t-3xl sm:rounded-2xl p-5 sm:p-4 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] sm:shadow-2xl flex flex-col border-t sm:border border-border animate-in slide-in-from-bottom-10 sm:slide-in-from-top-2 sm:fade-in zoom-in-95 duration-200 z-[100]">
+                  <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4 sm:hidden shrink-0" />
+                  <div className="flex items-center gap-2 mb-4">
+                    <Tag size={18} className="text-primary" />
+                    <span className="font-bold text-[16px] sm:text-[14px]">Available Promos</span>
+                  </div>
+                  <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto hide-scroll pb-4 sm:pb-0">
+                    {promos.length > 0 ? promos.map((promo, idx) => (
+                      <div key={idx} className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center relative overflow-hidden shrink-0">
+                        <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-r border-gray-200"></div>
+                        <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-l border-gray-200"></div>
+                        <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">
+                          {promo.type === 'percent' ? `${promo.value}% OFF` : `Rp ${promo.value.toLocaleString('id-ID')} OFF`}
+                        </span>
+                        <span className="text-[20px] sm:text-[18px] font-black tracking-widest text-primary">{promo.code}</span>
+                        <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                      </div>
+                    )) : (
+                      <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
+                        <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
+                        <span className="text-[20px] sm:text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                        <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
+                      </div>
+                    )}
+                  </div>
+                  <button onClick={() => setPromoDropdownOpen(false)} className="mt-2 sm:hidden w-full py-3.5 bg-black text-white rounded-xl font-bold text-[15px] active:scale-95 transition-transform">
+                    Close
+                  </button>
                 </div>
-                <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center">
-                  <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
-                  <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
-                  <span className="text-[10px] text-gray-400 mt-1 font-medium">Use at checkout</span>
-                </div>
-              </div>
+              </>
             )}
           </div>
           <div className="relative">

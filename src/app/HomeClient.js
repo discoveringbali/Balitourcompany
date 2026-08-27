@@ -650,7 +650,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-black/5 backdrop-blur-3xl border border-white/60 shadow-sm rounded-[24px]"
+                        className="absolute inset-0 bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/20 shadow-md rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -658,9 +658,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {/* Text Label or Icon */}
                     <div className="relative z-10 flex items-center justify-center">
                       {loc === "All Bali" ? (
-                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-black' : 'text-gray-500 hover:text-black'}`} />
+                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-500 hover:text-black'}`} />
                       ) : (
-                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
                           {loc}
                         </span>
                       )}
@@ -1254,13 +1254,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           {isActive && (
                             <motion.div
                               layoutId="categoryActiveIndicator"
-                              className="absolute inset-0 bg-black/5 backdrop-blur-3xl border border-white/60 shadow-sm rounded-[24px]"
+                              className="absolute inset-0 bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/20 shadow-md rounded-[24px]"
                               transition={{ type: "spring", stiffness: 400, damping: 28 }}
                             />
                           )}
-                          <div className="relative z-10 flex items-center justify-center gap-1.5">
-                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-black' : 'text-gray-500 hover:text-black'}`} strokeWidth={2} />}
-                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                          <div className="relative z-10 flex items-center justify-center gap-2">
+                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-500'}`} />}
+                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
                               {c.id}
                             </span>
                           </div>
