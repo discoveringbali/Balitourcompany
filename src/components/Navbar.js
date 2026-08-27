@@ -298,40 +298,66 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                 </div>
                 <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto hide-scroll">
                   {promos.length > 0 ? promos.map((promo, idx) => (
-                    <div key={idx} className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center relative overflow-hidden shrink-0">
-                      <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-r border-gray-200"></div>
-                      <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-l border-gray-200"></div>
-                      <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">
-                        {promo.type === 'percent' ? `${promo.value}% OFF` : `Rp ${promo.value.toLocaleString('id-ID')} OFF`}
-                      </span>
-                      <span className="text-[18px] font-black tracking-widest text-primary">{promo.code}</span>
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          localStorage.setItem('savedPromoCode', promo.code);
-                          setPromoDropdownOpen(false);
-                          alert(`Promo code ${promo.code} has been applied! It will be automatically filled at checkout.`);
-                        }}
-                        className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
-                      >
-                        Apply Code
-                      </button>
+                    <div key={idx} className="bg-[#fcfcfc] border border-gray-200 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
+                      <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                      <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                      
+                      <div className="flex flex-col px-2">
+                        <span className="text-[14px] font-extrabold text-black">
+                          {promo.type === 'percent' ? `${promo.value}% Special Discount` : `Flat Rp ${promo.value.toLocaleString('id-ID')} Off`}
+                        </span>
+                        <span className="text-[11px] font-bold text-gray-500 mt-0.5">Valid for all upcoming tours</span>
+                      </div>
+                      
+                      <div className="border-t border-dashed border-gray-200 my-3"></div>
+                      
+                      <div className="flex items-center justify-between px-2">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
+                          <span className="text-[18px] font-black tracking-widest text-primary">{promo.code}</span>
+                        </div>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            localStorage.setItem('savedPromoCode', promo.code);
+                            setPromoDropdownOpen(false);
+                            alert(`Promo code ${promo.code} has been applied! It will be automatically filled at checkout.`);
+                          }}
+                          className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
+                        >
+                          Apply Code
+                        </button>
+                      </div>
                     </div>
                   )) : (
-                    <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
-                      <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
-                      <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
-                          setPromoDropdownOpen(false);
-                          alert(`Promo code ${promoCode || "BALI2026"} has been applied! It will be automatically filled at checkout.`);
-                        }}
-                        className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
-                      >
-                        Apply Code
-                      </button>
+                    <div className="bg-[#fcfcfc] border border-gray-200 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
+                      <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                      <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                      
+                      <div className="flex flex-col px-2">
+                        <span className="text-[14px] font-extrabold text-black">Special Promo</span>
+                        <span className="text-[11px] font-bold text-gray-500 mt-0.5">Valid for all upcoming tours</span>
+                      </div>
+                      
+                      <div className="border-t border-dashed border-gray-200 my-3"></div>
+                      
+                      <div className="flex items-center justify-between px-2">
+                        <div className="flex flex-col">
+                          <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
+                          <span className="text-[18px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                        </div>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
+                            setPromoDropdownOpen(false);
+                            alert(`Promo code ${promoCode || "BALI2026"} has been applied! It will be automatically filled at checkout.`);
+                          }}
+                          className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
+                        >
+                          Apply Code
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -397,40 +423,66 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
           <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto hide-scroll pb-4">
             {promos.length > 0 ? promos.map((promo, idx) => (
-              <div key={idx} className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center relative overflow-hidden shrink-0">
-                <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-r border-gray-200"></div>
-                <div className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full border-l border-gray-200"></div>
-                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">
-                  {promo.type === 'percent' ? `${promo.value}% OFF` : `Rp ${promo.value.toLocaleString('id-ID')} OFF`}
-                </span>
-                <span className="text-[20px] font-black tracking-widest text-primary">{promo.code}</span>
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    localStorage.setItem('savedPromoCode', promo.code);
-                    setPromoDropdownOpen(false);
-                    alert(`Promo code ${promo.code} has been applied! It will be automatically filled at checkout.`);
-                  }}
-                  className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
-                >
-                  Apply Code
-                </button>
+              <div key={idx} className="bg-[#fcfcfc] border border-gray-200 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
+                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                
+                <div className="flex flex-col px-2">
+                  <span className="text-[14px] font-extrabold text-black">
+                    {promo.type === 'percent' ? `${promo.value}% Special Discount` : `Flat Rp ${promo.value.toLocaleString('id-ID')} Off`}
+                  </span>
+                  <span className="text-[11px] font-bold text-gray-500 mt-0.5">Valid for all upcoming tours</span>
+                </div>
+                
+                <div className="border-t border-dashed border-gray-200 my-3"></div>
+                
+                <div className="flex items-center justify-between px-2">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
+                    <span className="text-[20px] font-black tracking-widest text-primary">{promo.code}</span>
+                  </div>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      localStorage.setItem('savedPromoCode', promo.code);
+                      setPromoDropdownOpen(false);
+                      alert(`Promo code ${promo.code} has been applied! It will be automatically filled at checkout.`);
+                    }}
+                    className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[12px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
+                  >
+                    Apply Code
+                  </button>
+                </div>
               </div>
             )) : (
-              <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
-                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wide mb-1">Current Code</span>
-                <span className="text-[20px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
-                <button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
-                    setPromoDropdownOpen(false);
-                    alert(`Promo code ${promoCode || "BALI2026"} has been applied! It will be automatically filled at checkout.`);
-                  }}
-                  className="mt-2 bg-black text-white px-5 py-2 rounded-full text-[11px] font-bold active:scale-95 transition-transform"
-                >
-                  Apply Code
-                </button>
+              <div className="bg-[#fcfcfc] border border-gray-200 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
+                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
+                
+                <div className="flex flex-col px-2">
+                  <span className="text-[14px] font-extrabold text-black">Special Promo</span>
+                  <span className="text-[11px] font-bold text-gray-500 mt-0.5">Valid for all upcoming tours</span>
+                </div>
+                
+                <div className="border-t border-dashed border-gray-200 my-3"></div>
+                
+                <div className="flex items-center justify-between px-2">
+                  <div className="flex flex-col">
+                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
+                    <span className="text-[20px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                  </div>
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
+                      setPromoDropdownOpen(false);
+                      alert(`Promo code ${promoCode || "BALI2026"} has been applied! It will be automatically filled at checkout.`);
+                    }}
+                    className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[12px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
+                  >
+                    Apply Code
+                  </button>
+                </div>
               </div>
             )}
           </div>
