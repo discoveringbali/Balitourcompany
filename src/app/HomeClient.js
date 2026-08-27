@@ -636,7 +636,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           <div className="relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-black/5 backdrop-blur-3xl border border-white/60 rounded-[32px] p-1.5 shadow-[0_4px_16px_rgba(0,0,0,0.04)] mb-4">
+          <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -650,7 +650,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm border border-gray-100"
+                        className="absolute inset-0 bg-white/70 backdrop-blur-2xl border border-white/60 shadow-sm rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -672,7 +672,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
 
           {/* Apple Glass Search Bar */}
-          <div className="flex items-center bg-black/5 backdrop-blur-3xl border border-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.04)] rounded-full pl-2 pr-2 py-2 relative mb-6">
+          <div className="flex items-center bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-full pl-2 pr-2 py-2 relative mb-6">
 
             {/* Mobile Service Dropdown Trigger inside Search Bar */}
             <button
@@ -698,9 +698,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {/* Filter Modal Toggle */}
             <button
               onClick={() => setIsFilterModalOpen(true)}
-              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-black text-white hover:bg-neutral-800 hover:scale-105`}
+              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-white/70 backdrop-blur-2xl border border-white/60 hover:bg-white/90 hover:scale-105`}
             >
-              <Settings2 size={16} strokeWidth={2.5} className="text-white" />
+              <Settings2 size={16} strokeWidth={2.5} className="text-primary" />
             </button>
 
             {/* Mobile Service Dropdown */}
@@ -1240,7 +1240,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
               </div>
               <div className="flex justify-center w-full overflow-hidden">
-                <div className="bg-white/60 backdrop-blur-2xl border border-white rounded-[32px] p-1.5 shadow-lg w-fit max-w-full mx-auto">
+                <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 w-fit max-w-full mx-auto">
                   <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     {currentCategories.map((c) => {
                       const Icon = c.icon;
@@ -1254,7 +1254,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           {isActive && (
                             <motion.div
                               layoutId="categoryActiveIndicator"
-                              className="absolute inset-0 bg-[#ffffff] rounded-[24px] shadow-sm"
+                              className="absolute inset-0 bg-white/70 backdrop-blur-2xl border border-white/60 shadow-sm rounded-[24px]"
                               transition={{ type: "spring", stiffness: 400, damping: 28 }}
                             />
                           )}

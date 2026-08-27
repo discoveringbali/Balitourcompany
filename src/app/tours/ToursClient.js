@@ -78,7 +78,7 @@ export default function ToursClient({ initialTours }) {
             </div>
           </div>
 
-          <div className="bg-white/60 backdrop-blur-2xl rounded-[32px] p-1.5 shadow-lg border border-white self-start max-w-full">
+          <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 self-start max-w-full">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {categories.map((cat) => {
                 const isActive = activeCategory === cat;
@@ -91,7 +91,7 @@ export default function ToursClient({ initialTours }) {
                     {isActive && (
                       <motion.div
                         layoutId="toursCategoryIndicator"
-                        className="absolute inset-0 bg-white rounded-[24px] shadow-sm border border-gray-100"
+                        className="absolute inset-0 bg-white/70 backdrop-blur-2xl border border-white/60 shadow-sm rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -121,12 +121,12 @@ export default function ToursClient({ initialTours }) {
                       {isActive && (
                         <motion.div
                           layoutId="toursLocationIndicator"
-                          className="absolute inset-0 bg-black rounded-[20px] shadow-sm"
+                          className="absolute inset-0 bg-white/70 backdrop-blur-2xl border border-white/60 shadow-sm rounded-[20px]"
                           transition={{ type: "spring", stiffness: 400, damping: 28 }}
                         />
                       )}
                       <div className="relative z-10 flex items-center justify-center">
-                          <span className={`text-[12px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                          <span className={`text-[12px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-black font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
                             {loc}
                           </span>
                       </div>
