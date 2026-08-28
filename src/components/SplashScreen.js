@@ -143,19 +143,13 @@ export default function SplashScreen({ children }) {
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black"
             style={{ touchAction: "none" }}
           >
-            {/* Soft ambient gradient */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[400px] h-[400px] rounded-full bg-[#ffffff] text-black/8 blur-[120px] opacity-10" />
-              <div className="absolute bottom-[20%] left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-gray-200/20 blur-[100px] opacity-10" />
-            </div>
-
             {/* Logo container */}
             <div className="relative z-10 flex flex-col items-center">
               <div className="relative mb-8">
                 <img
                   src="/favicon.PNG"
                   alt="Balance Island"
-                  className="w-auto max-w-[320px] h-[120px] rounded-[24px] shadow-[0_0_80px_rgba(255,255,255,0.1)] object-contain"
+                  className="w-auto max-w-[320px] h-[120px] rounded-[24px] object-contain"
                 />
               </div>
             </div>
