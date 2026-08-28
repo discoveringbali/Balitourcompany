@@ -22,6 +22,8 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   const [promoCode, setPromoCode] = useState("");
   const [appliedDiscount, setAppliedDiscount] = useState(null);
   const [promoError, setPromoError] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showAgreementError, setShowAgreementError] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('savedPromoCode');
@@ -45,6 +47,8 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   useEffect(() => {
     if (isOpen) {
       setStep(startStep);
+      setAgreedToTerms(false);
+      setShowAgreementError(false);
       const minP = serviceData?.minPax || 1;
       
       // Auto-fill from local profile
@@ -202,6 +206,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
 
   const handleCheckout = async (e) => {
     e.preventDefault();
+    
+    if (!agreedToTerms) {
+      setShowAgreementError(true);
+      return;
+    }
     
     const baseTotal = getBaseTotal();
     const discountAmt = calculateDiscount(baseTotal, appliedDiscount, parseInt(formData.guests) || 1);
@@ -560,19 +569,45 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
              </>
            )}
            {step === 2 && (
-             <div className="flex justify-between items-center mb-6 px-1 py-4 border-y border-gray-100">
-               <span className="text-[14px] font-bold text-gray-500">Total Price</span>
-               <div className="flex flex-col items-end">
-                  {appliedDiscount && (
-                    <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
-                      {formatPrice(calcBaseTotal)}
+             <>
+               <div className="flex justify-between items-center mb-6 px-1 py-4 border-y border-gray-100">
+                 <span className="text-[14px] font-bold text-gray-500">Total Price</span>
+                 <div className="flex flex-col items-end">
+                    {appliedDiscount && (
+                      <span className="text-[12px] font-bold text-gray-400 line-through mb-0.5">
+                        {formatPrice(calcBaseTotal)}
+                      </span>
+                    )}
+                    <span className="text-[22px] font-black tracking-tight text-primary">
+                      {formatPrice(calcFinalTotal)}
                     </span>
-                  )}
-                  <span className="text-[22px] font-black tracking-tight text-primary">
-                    {formatPrice(calcFinalTotal)}
-                  </span>
+                 </div>
                </div>
-             </div>
+
+               <div className="mb-6 px-1 flex flex-col gap-2">
+                 <label className="flex items-start gap-3 cursor-pointer group">
+                   <div className="relative flex items-center justify-center shrink-0 mt-0.5">
+                     <input 
+                       type="checkbox" 
+                       className="peer appearance-none w-5 h-5 border-2 border-gray-200 rounded bg-white checked:bg-black checked:border-black transition-colors"
+                       checked={agreedToTerms}
+                       onChange={(e) => {
+                         setAgreedToTerms(e.target.checked);
+                         if (e.target.checked) setShowAgreementError(false);
+                       }}
+                     />
+                     <Check size={14} className="absolute text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" strokeWidth={3} />
+                   </div>
+                   <span className="text-[13px] text-gray-600 leading-snug font-medium">
+                     I confirm that my booking details are correct and agree to the Balance Island <a href="/terms" target="_blank" className="text-primary font-bold hover:underline">Terms & Conditions</a> and <a href="/cancellation-policy" target="_blank" className="text-primary font-bold hover:underline">Cancellation & Refund Policy</a>.
+                   </span>
+                 </label>
+                 {showAgreementError && (
+                   <span className="text-[12px] font-bold text-red-500 animate-in fade-in slide-in-from-top-1 ml-8">Please agree to the booking policies before continuing.</span>
+                 )}
+                 <span className="text-[11px] text-gray-400 mt-1 ml-8">Please review your booking details before confirming your booking.</span>
+               </div>
+             </>
            )}
            <button form="bookingForm" type="submit" className="w-full bg-black hover:bg-neutral-800 py-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-white transition-all active:scale-95 text-[16px] shadow-sm">
              {step === 1 ? (
