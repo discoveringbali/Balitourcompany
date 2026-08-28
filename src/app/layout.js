@@ -83,9 +83,9 @@ export default async function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Balance Island",
-    "alternateName": ["Balance Island Bali", "Balance Island Tours"],
-    "url": "https://www.bobbybaliguide.com/"
+    "name": "Balance Island Tour",
+    "alternateName": "Balance Island",
+    "url": "https://www.balanceisland.com/"
   };
 
   let promoCode = "BALI2026";
