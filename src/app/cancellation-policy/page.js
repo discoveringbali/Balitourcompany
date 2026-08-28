@@ -12,7 +12,7 @@ export default function CancellationPolicyPage() {
           <p className="text-text-secondary font-medium">Last Updated: 28 August 2026</p>
         </div>
 
-        <div className="bg-white rounded-3xl border border-gray-100 p-8 md:p-12 shadow-sm">
+        <div className="w-full">
           <div className="text-text-secondary space-y-6">
             <p>
               At <strong className="text-primary font-bold">Balance Island</strong>, we understand that travel plans can change. We aim to keep our cancellation and refund process fair, transparent, and easy to understand.
