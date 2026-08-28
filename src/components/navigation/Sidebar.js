@@ -42,7 +42,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
       {/* Drawer */}
       <div 
-        className={`fixed top-0 left-0 h-full w-[85%] max-w-[320px] bg-white/90 backdrop-blur-2xl border-r border-gray-100 z-[100] shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 h-full w-full bg-[#f4f5f6] z-[100] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-primary uppercase">
@@ -68,10 +68,10 @@ export default function Sidebar({ isOpen, onClose }) {
                   key={link.name} 
                   href={link.path}
                   onClick={onClose}
-                  className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold transition-colors ${
+                  className={`flex items-center gap-4 px-4 py-4 rounded-2xl font-bold transition-all active:scale-95 ${
                     isActive 
-                      ? 'bg-white text-black' 
-                      : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                      ? 'bg-white text-black shadow-sm' 
+                      : 'text-gray-500 hover:bg-white/60 hover:text-black'
                   }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
@@ -81,7 +81,7 @@ export default function Sidebar({ isOpen, onClose }) {
             })}
           </div>
 
-          <div className="h-px bg-white/10 mx-4" />
+          <div className="h-px bg-gray-200 mx-4" />
 
           {/* Policy Navigation */}
           <div className="space-y-1">
@@ -93,10 +93,10 @@ export default function Sidebar({ isOpen, onClose }) {
                   key={link.name} 
                   href={link.path}
                   onClick={onClose}
-                  className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold transition-colors ${
+                  className={`flex items-center gap-4 px-4 py-4 rounded-2xl font-bold transition-all active:scale-95 ${
                     isActive 
-                      ? 'bg-white text-black' 
-                      : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                      ? 'bg-white text-black shadow-sm' 
+                      : 'text-gray-500 hover:bg-white/60 hover:text-black'
                   }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
