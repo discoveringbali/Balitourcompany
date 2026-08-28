@@ -121,7 +121,7 @@ export default function LocationAutocomplete({ value, onChange, placeholder, ico
             onChange({ name: e.target.value, url: "" });
           }} 
           placeholder={placeholder} 
-          className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-white outline-none focus:border-accent transition-colors placeholder:text-gray-500" 
+          className="w-full bg-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" 
         />
         {isLoading && (
           <div className="absolute right-4 w-4 h-4 border-2 border-gray-300 border-t-black rounded-full animate-spin" />
