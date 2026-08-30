@@ -69,9 +69,7 @@ export const metadata = {
     description: "Private tours. Remarkable places. A better way to experience Bali. Discover carefully planned experiences across the island with Balance Island.",
     images: ["/og-image.jpg"],
   },
-  alternates: {
-    canonical: '/',
-  },
+
   icons: {
     icon: '/favicon.PNG',
     shortcut: '/favicon.PNG',
