@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Search, Plus, MapPin, MoreVertical, Trash2, Edit2, Newspaper, EyeOff, X, ImageIcon, Camera, Globe, Sparkles, Loader2 } from "lucide-react";
+import { generateSlug } from "@/lib/utils";
 
 export default function SEOPlacesManagement() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -173,7 +174,10 @@ export default function SEOPlacesManagement() {
       payload.content = editorRef.current.innerHTML;
     }
     if (!payload.slug || payload.slug === '/blog/') {
-      payload.slug = `/blog/${payload.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+      payload.slug = `/blog/${generateSlug(payload.title)}`;
+    } else {
+      const userSlug = payload.slug.replace(/^\/?blog\//, '').replace(/^\/+/, '');
+      payload.slug = `/blog/${generateSlug(userSlug)}`;
     }
 
     setIsSaving(true);
@@ -436,7 +440,7 @@ export default function SEOPlacesManagement() {
                          <label className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-1.5 block">URL Slug</label>
                          <div className="flex items-center">
                             <span className="bg-gray-100 border border-r-0 border-gray-200 text-gray-500 text-sm font-semibold px-3 py-2 rounded-l-xl">/blog/</span>
-                            <input type="text" value={formData.slug.replace('/blog/', '')} onChange={(e) => setFormData({...formData, slug: '/blog/' + e.target.value})} className="flex-1 bg-white text-sm font-bold text-primary rounded-r-xl px-3 py-2 border border-gray-200 outline-none focus:border-accent" placeholder="my-awesome-post" />
+                            <input type="text" value={formData.slug.replace(/^\/?blog\//, '').replace(/^\/+/, '')} onChange={(e) => setFormData({...formData, slug: '/blog/' + e.target.value})} className="flex-1 bg-white text-sm font-bold text-primary rounded-r-xl px-3 py-2 border border-gray-200 outline-none focus:border-accent" placeholder="my-awesome-post" />
                          </div>
                       </div>
                       <div>
