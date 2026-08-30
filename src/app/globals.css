@@ -98,31 +98,31 @@
   /* Professional Table Styling */
   .newsletter-content .TyagGW_tableWrapper,
   .newsletter-content .TyagGW_tableContainer {
-    @apply w-full overflow-x-auto block !important;
+    @apply w-full overflow-x-auto block;
   }
 
   .newsletter-content table {
-    @apply w-full my-8 border-collapse overflow-hidden rounded-2xl shadow-sm border border-gray-100 bg-white text-left !important;
+    @apply w-full my-8 border-collapse overflow-hidden rounded-2xl shadow-sm border border-gray-100 bg-white text-left;
   }
 
   .newsletter-content thead {
-    @apply bg-gray-50 border-b border-gray-100 !important;
+    @apply bg-gray-50 border-b border-gray-100;
   }
 
   .newsletter-content th {
-    @apply px-4 py-4 text-left text-sm font-extrabold text-gray-800 tracking-wider uppercase border-b border-gray-100 bg-gray-50 !important;
+    @apply px-4 py-4 text-left text-sm font-extrabold text-gray-800 tracking-wider uppercase border-b border-gray-100 bg-gray-50;
   }
 
   .newsletter-content td {
-    @apply px-4 py-4 text-[16px] md:text-[17px] border-b border-gray-50 font-medium text-gray-700 align-top !important;
+    @apply px-4 py-4 text-[16px] md:text-[17px] border-b border-gray-50 font-medium text-gray-700 align-top;
   }
 
   .newsletter-content tbody tr {
-    @apply hover:bg-gray-50/80 transition-colors !important;
+    @apply hover:bg-gray-50/80 transition-colors;
   }
 
   .newsletter-content tbody tr:last-child td {
-    @apply border-b-0 !important;
+    @apply border-b-0;
   }
 }
 
