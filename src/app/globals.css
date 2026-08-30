@@ -94,6 +94,36 @@
   .newsletter-content blockquote {
     @apply border-l-4 border-black pl-6 py-2 my-8 italic text-xl text-black bg-gray-50 rounded-r-xl;
   }
+
+  /* Professional Table Styling */
+  .newsletter-content .TyagGW_tableWrapper,
+  .newsletter-content .TyagGW_tableContainer {
+    @apply w-full overflow-x-auto block !important;
+  }
+
+  .newsletter-content table {
+    @apply w-full my-8 border-collapse overflow-hidden rounded-2xl shadow-sm border border-gray-100 bg-white text-left !important;
+  }
+
+  .newsletter-content thead {
+    @apply bg-gray-50 border-b border-gray-100 !important;
+  }
+
+  .newsletter-content th {
+    @apply px-4 py-4 text-left text-sm font-extrabold text-gray-800 tracking-wider uppercase border-b border-gray-100 bg-gray-50 !important;
+  }
+
+  .newsletter-content td {
+    @apply px-4 py-4 text-[16px] md:text-[17px] border-b border-gray-50 font-medium text-gray-700 align-top !important;
+  }
+
+  .newsletter-content tbody tr {
+    @apply hover:bg-gray-50/80 transition-colors !important;
+  }
+
+  .newsletter-content tbody tr:last-child td {
+    @apply border-b-0 !important;
+  }
 }
 
 
