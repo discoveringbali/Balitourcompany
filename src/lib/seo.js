@@ -46,17 +46,13 @@ export function generateTourJsonLd(tour) {
         ]
       },
       {
-        '@type': 'TouristTrip',
+        '@type': 'Product',
         'name': tour.title,
         'description': getSeoDescription(tour.data?.description || tour.data?.highlights || ""),
         'image': tour.image || `${BASE_URL}/logo.png`,
-        'touristType': [
-          'Families', 'Couples', 'Solo travelers'
-        ],
-        'provider': {
-          '@type': 'LocalBusiness',
-          'name': 'Balance Island',
-          'url': BASE_URL
+        'brand': {
+          '@type': 'Brand',
+          'name': 'Balance Island'
         },
         'offers': {
           '@type': 'Offer',
