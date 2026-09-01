@@ -655,11 +655,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   };
 
   return (
-    <div className="w-full bg-background min-h-[100dvh] font-sans pb-32">
+    <div className="w-full bg-[#f4f5f6] min-h-[100dvh] font-sans pb-32 relative">
+      {/* Green Gradient Background Layer */}
+      <div className="absolute top-0 left-0 right-0 h-[600px] bg-gradient-to-b from-[#D4F84E] via-[#D4F84E]/90 to-[#f4f5f6] z-0 pointer-events-none" />
       
-      <div className="w-full md:pt-[100px] pb-4">
-        {/* Mobile Top White Section */}
-        <div className="md:hidden bg-background -mt-20 pt-[108px] pb-8 relative z-20 w-full">
+      <div className="relative z-10 w-full md:pt-[100px] pb-4">
+        {/* Mobile Top Section */}
+        <div className="md:hidden bg-transparent -mt-20 pt-[108px] pb-8 relative z-20 w-full">
           {/* Mobile Top Header Search */}
           <div className="relative z-40 px-5">
 
