@@ -279,9 +279,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
         {/* Right Actions */}
         <div className="flex-1 items-center justify-end gap-3 flex">
-          <Link href="/about" className={`text-[13px] font-bold px-5 py-2.5 rounded-full transition-colors duration-500 ${isScrolled ? 'text-primary hover:bg-black/5' : 'text-white hover:bg-white/20'}`}>
-            Become a Partner
-          </Link>
+
           <div className="relative">
             <button 
               onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setLangDropdownOpen(false); setCurrencyDropdownOpen(false); }}
