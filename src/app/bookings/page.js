@@ -15,8 +15,19 @@ export default function BookingsPage() {
   const [activeTab, setActiveTab] = useState("upcoming");
   const [loadingBookings, setLoadingBookings] = useState(true);
   const [bookings, setBookings] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  // Generate 14 days of calendar dates (3 days past, 11 days future)
+  const [calendarDates, setCalendarDates] = useState([]);
   
   useEffect(() => {
+    const dates = [];
+    for (let i = -3; i <= 10; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+      dates.push(d);
+    }
+    setCalendarDates(dates);
     fetchBookingsAndTours();
   }, []);
 
@@ -68,7 +79,27 @@ export default function BookingsPage() {
      return <div className="min-h-[100dvh] flex items-center justify-center bg-white"><div className="w-8 h-8 rounded-full border-4 border-gray-200 border-t-primary animate-spin"></div></div>;
   }
 
-  const filteredBookings = bookings.filter(b => getBookingType(b) === activeTab);
+  const filteredBookings = bookings.filter(b => {
+    const isRightTab = getBookingType(b) === activeTab;
+    if (!isRightTab) return false;
+    
+    if (selectedDate) {
+      // Assuming booking_date is like "2026-09-01" or parseable date string
+      const bDate = new Date(b.booking_date);
+      return bDate.getDate() === selectedDate.getDate() && 
+             bDate.getMonth() === selectedDate.getMonth() && 
+             bDate.getFullYear() === selectedDate.getFullYear();
+    }
+    return true;
+  });
+
+  const getBookedDates = () => {
+    return bookings.map(b => {
+      const d = new Date(b.booking_date);
+      return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    });
+  };
+  const bookedDateStrings = getBookedDates();
 
   return (
     <div className="min-h-[100dvh] bg-surface pb-32 font-sans -mt-20 md:-mt-24">
@@ -100,6 +131,45 @@ export default function BookingsPage() {
                 <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-t-full"></div>
               )}
             </button>
+          </div>
+
+          {/* Floating Calendar */}
+          <div className="pt-4 pb-4">
+            <div className="flex gap-3 overflow-x-auto no-scrollbar max-w-6xl mx-auto px-1">
+              {calendarDates.map((date, i) => {
+                const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+                const hasBooking = bookedDateStrings.includes(dateStr);
+                const isSelected = selectedDate && selectedDate.getTime() === date.getTime();
+                const isToday = i === 3; // Since we started at -3
+
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedDate(isSelected ? null : date)}
+                    className={`flex flex-col items-center justify-center shrink-0 w-[60px] h-[75px] rounded-[20px] transition-all relative
+                      ${isSelected 
+                        ? 'bg-black text-white shadow-lg shadow-black/20 scale-105' 
+                        : hasBooking 
+                          ? 'bg-white border-2 border-primary text-black shadow-sm'
+                          : 'bg-white border border-gray-100 text-gray-500 hover:border-gray-300'
+                      }`}
+                  >
+                    <span className={`text-[11px] font-bold uppercase tracking-wider mb-1 ${isSelected ? 'text-gray-300' : 'text-gray-400'}`}>
+                      {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                    </span>
+                    <span className={`text-[20px] font-black leading-none ${isSelected ? 'text-white' : hasBooking ? 'text-primary' : 'text-gray-800'}`}>
+                      {date.getDate()}
+                    </span>
+                    {hasBooking && !isSelected && (
+                      <div className="absolute -bottom-1 w-1.5 h-1.5 bg-primary rounded-full"></div>
+                    )}
+                    {isToday && !isSelected && !hasBooking && (
+                      <div className="absolute -bottom-1 w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
