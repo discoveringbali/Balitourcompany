@@ -965,18 +965,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Top Right Click Button with Curve Cutout Effect */}
                 {!camp.isHeroSlide && (
                   <div className="absolute top-0 right-0 z-20 pointer-events-auto">
-                    <div className="bg-[#ffffff] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
+                    <div className="bg-[#D4F84E] rounded-bl-[24px] pl-3 pb-3 relative flex items-center gap-2">
                       {/* Left Curve SVG */}
-                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
+                      <svg className="absolute top-0 -left-[24px] w-[24px] h-[24px] fill-[#D4F84E]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
                       {/* Bottom Curve SVG */}
-                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
+                      <svg className="absolute -bottom-[24px] right-0 w-[24px] h-[24px] fill-[#D4F84E]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
 
                       {/* Heart Button */}
-                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-gray-100" aria-label="Save campaign">
+                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm" aria-label="Save campaign">
                         <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
                       </button>
 
@@ -985,7 +985,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           href={camp.externalUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-gray-100"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
                           aria-label="Open partner website"
                         >
                           <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
@@ -993,7 +993,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       ) : (
                         <Link
                           href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-gray-50 text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto hover:bg-gray-100"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
                           aria-label="View tour details"
                         >
                           <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
