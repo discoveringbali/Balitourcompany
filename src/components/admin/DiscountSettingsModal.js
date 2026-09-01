@@ -59,7 +59,8 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
       value: 10,
       active: true,
       applicableTours: [],
-      scope: 'per_booking'
+      scope: 'per_booking',
+      isSecret: false
     };
     setCodes([newEntry, ...codes]);
   };
@@ -186,6 +187,19 @@ export default function DiscountSettingsModal({ isOpen, onClose }) {
 
                   {/* Active Toggle & Delete */}
                   <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => updateCode(idx, "isSecret", !c.isSecret)}
+                      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black transition-colors ${
+                        c.isSecret 
+                          ? "bg-[#1c1c1c] text-white hover:bg-neutral-800" 
+                          : "bg-gray-200 text-gray-500 hover:bg-gray-300"
+                      }`}
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${c.isSecret ? "bg-white" : "bg-gray-400"}`} />
+                      {c.isSecret ? "Secret" : "Public"}
+                    </button>
+
                     <button
                       type="button"
                       onClick={() => updateCode(idx, "active", !c.active)}

@@ -42,7 +42,8 @@ export default function AdminDashboard() {
     code: "",
     type: "percent",
     value: 10,
-    active: true
+    active: true,
+    isSecret: false
   });
   const [discountSavedToast, setDiscountSavedToast] = useState(false);
 
@@ -160,12 +161,13 @@ export default function AdminDashboard() {
       code: cleanCode,
       type: newDiscount.type,
       value: Number(newDiscount.value) || 0,
-      active: true
+      active: true,
+      isSecret: newDiscount.isSecret || false
     };
     const updated = [entry, ...discountCodes];
     setDiscountCodes(updated);
     syncDiscountsToApi(updated);
-    setNewDiscount({ code: "", type: "percent", value: 10, active: true });
+    setNewDiscount({ code: "", type: "percent", value: 10, active: true, isSecret: false });
     setDiscountSavedToast(true);
     setTimeout(() => setDiscountSavedToast(false), 3000);
   };
@@ -179,6 +181,13 @@ export default function AdminDashboard() {
   const handleToggleDiscount = (idx) => {
     const updated = [...discountCodes];
     updated[idx].active = !updated[idx].active;
+    setDiscountCodes(updated);
+    syncDiscountsToApi(updated);
+  };
+
+  const handleToggleDiscountSecret = (idx) => {
+    const updated = [...discountCodes];
+    updated[idx].isSecret = !updated[idx].isSecret;
     setDiscountCodes(updated);
     syncDiscountsToApi(updated);
   };
@@ -888,6 +897,16 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
+                  <div className="flex items-center justify-between p-3 bg-[#fafafa] border border-[#eaeaea] rounded-xl cursor-pointer hover:border-gray-300 transition-colors" onClick={() => setNewDiscount({ ...newDiscount, isSecret: !newDiscount.isSecret })}>
+                    <div>
+                      <span className="text-xs font-black uppercase tracking-wider text-[#1c1c1c] block">Secret Promo</span>
+                      <span className="text-[10px] text-gray-500 font-bold">Hide from main website list</span>
+                    </div>
+                    <div className={`w-10 h-6 flex items-center rounded-full p-1 transition-colors ${newDiscount.isSecret ? 'bg-black' : 'bg-gray-300'}`}>
+                      <div className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${newDiscount.isSecret ? 'translate-x-4' : 'translate-x-0'}`} />
+                    </div>
+                  </div>
+
                   <button
                     type="submit"
                     className="w-full bg-black text-white py-3.5 rounded-xl font-black text-sm hover:bg-neutral-800 transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
@@ -924,13 +943,26 @@ export default function AdminDashboard() {
                                 {copiedCode === code.code ? <Check size={13} className="text-black" /> : <Copy size={13} />}
                               </button>
                             </div>
-                            <span className="text-xs font-bold text-gray-500">
-                              {code.type === "percent" ? `${code.value}% Discount` : `${formatIDR(code.value)} Off`}
-                            </span>
+                            <div className="flex items-center gap-1.5 mt-0.5">
+                              {code.isSecret && (
+                                <span className="bg-[#1c1c1c] text-white text-[9px] font-black uppercase px-1.5 py-0.5 rounded shadow-sm">Secret</span>
+                              )}
+                              <span className="text-xs font-bold text-gray-500">
+                                {code.type === "percent" ? `${code.value}% Discount` : `${formatIDR(code.value)} Off`}
+                              </span>
+                            </div>
                           </div>
                         </div>
 
                         <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => handleToggleDiscountSecret(idx)}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${
+                              code.isSecret ? "bg-[#1c1c1c] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            }`}
+                          >
+                            {code.isSecret ? "Secret" : "Public"}
+                          </button>
                           <button
                             onClick={() => handleToggleDiscount(idx)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all cursor-pointer ${

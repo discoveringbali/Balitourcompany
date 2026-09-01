@@ -23,7 +23,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
-          setPromos(data.filter(c => c.active));
+          setPromos(data.filter(c => c.active && !c.isSecret));
         }
       })
       .catch(err => console.error(err));
