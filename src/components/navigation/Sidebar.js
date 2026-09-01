@@ -36,13 +36,13 @@ export default function Sidebar({ isOpen, onClose }) {
     <>
       {/* Backdrop */}
       <div 
-        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        className={`fixed inset-0 bg-black/30 backdrop-blur-sm z-[90] transition-opacity duration-500 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={onClose}
       />
 
       {/* Drawer */}
       <div 
-        className={`fixed top-0 left-0 h-full w-full bg-[#f4f5f6] z-[100] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 h-full w-full sm:w-[400px] bg-white/75 backdrop-blur-3xl border-r border-white/60 shadow-[20px_0_40px_rgba(0,0,0,0.08)] z-[100] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-primary uppercase">
@@ -70,8 +70,8 @@ export default function Sidebar({ isOpen, onClose }) {
                   onClick={onClose}
                   className={`flex items-center gap-4 px-4 py-4 rounded-2xl font-bold transition-all active:scale-95 ${
                     isActive 
-                      ? 'bg-white text-black shadow-sm' 
-                      : 'text-gray-500 hover:bg-white/60 hover:text-black'
+                      ? 'bg-white/80 text-black shadow-sm border border-white/50' 
+                      : 'text-gray-600 hover:bg-white/50 hover:text-black border border-transparent'
                   }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
@@ -95,8 +95,8 @@ export default function Sidebar({ isOpen, onClose }) {
                   onClick={onClose}
                   className={`flex items-center gap-4 px-4 py-4 rounded-2xl font-bold transition-all active:scale-95 ${
                     isActive 
-                      ? 'bg-white text-black shadow-sm' 
-                      : 'text-gray-500 hover:bg-white/60 hover:text-black'
+                      ? 'bg-white/80 text-black shadow-sm border border-white/50' 
+                      : 'text-gray-600 hover:bg-white/50 hover:text-black border border-transparent'
                   }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
