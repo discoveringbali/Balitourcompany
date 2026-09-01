@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Clock, CheckCircle2, Navigation, MessageCircle, CalendarCheck, XCircle, LogOut, Send, Compass, Map, Loader2, ArrowRight } from "lucide-react";
+import { Clock, CheckCircle2, Navigation, MessageCircle, CalendarCheck, XCircle, LogOut, Send, Compass, Map, Loader2, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { getSavedBookings } from "@/lib/bookings";
@@ -45,6 +45,7 @@ export default function BookingsPage() {
         .from('listings')
         .select('*')
         .eq('type', 'Tour')
+        .eq('status', 'Active')
         .limit(20);
       if (!toursError) setAvailableTours(toursData || []);
       
@@ -260,72 +261,78 @@ export default function BookingsPage() {
       {/* ============================================================== */}
       {/* MOBILE VIEW (AI Trip Planner) */}
       {/* ============================================================== */}
-      <div className="block md:hidden min-h-[100dvh] pt-24 px-5">
+      <div className="block md:hidden min-h-[100dvh] pt-20 px-5 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
         
+        {/* Subtle background decoration */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-50 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
+
         {plannerStep === 'prompt' && (
-          <div className="flex flex-col h-full max-w-md mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="flex flex-col h-[calc(100vh-120px)] max-w-md mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 relative z-10 pt-4">
             <div className="mb-8">
-              <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center text-white shadow-[0_8px_20px_rgba(0,0,0,0.15)] mb-5">
-                <Compass size={24} strokeWidth={2} />
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-gray-900 to-black flex items-center justify-center text-white shadow-xl shadow-black/10 mb-6 transform -rotate-3">
+                <Sparkles size={22} strokeWidth={2.5} className="text-amber-300" />
               </div>
-              <h2 className="text-3xl font-black text-[#1c1c1c] leading-tight tracking-tight">
-                Where should we take you?
+              <h2 className="text-[32px] font-black text-[#1c1c1c] leading-[1.1] tracking-tight">
+                Where should we <br/> take you?
               </h2>
-              <p className="text-[15px] text-gray-500 font-medium mt-3 leading-relaxed">
+              <p className="text-[15px] text-gray-500 font-medium mt-3 leading-relaxed pr-4">
                 Describe your dream Bali experience, and we'll craft the perfect itinerary just for you.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 mb-8">
+            <div className="flex flex-col gap-3 mb-8 flex-1 overflow-y-auto hide-scroll pb-4">
               {presetPrompts.map((preset, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleRecommend(preset)}
-                  className="bg-white border border-gray-100 hover:border-gray-300 rounded-2xl px-5 py-4 text-left shadow-sm transition-all text-[14px] font-extrabold text-[#1c1c1c] active:scale-[0.98]"
+                  className="bg-white/70 backdrop-blur-md border border-gray-100 hover:border-gray-300 hover:bg-white rounded-2xl px-5 py-4 text-left shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-all text-[14px] font-extrabold text-[#1c1c1c] active:scale-[0.98] group flex items-center justify-between"
                 >
-                  {preset}
+                  <span>{preset}</span>
+                  <ArrowRight size={14} className="text-gray-300 group-hover:text-black transition-colors" />
                 </button>
               ))}
             </div>
 
-            <div className="relative mt-auto mb-6">
+            <div className="relative mt-auto mb-6 shrink-0">
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-200 to-gray-100 rounded-full blur-md opacity-50 translate-y-2 pointer-events-none"></div>
               <input 
                 type="text" 
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleRecommend()}
                 placeholder="Or type your own adventure..."
-                className="w-full bg-white border border-gray-200 rounded-full pl-5 pr-14 py-4 text-[14px] font-bold text-[#1c1c1c] shadow-[0_4px_20px_rgba(0,0,0,0.04)] focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all"
+                className="relative w-full bg-white/90 backdrop-blur-xl border border-gray-200 rounded-full pl-6 pr-14 py-4 text-[14px] font-bold text-[#1c1c1c] shadow-lg shadow-black/5 focus:outline-none focus:border-black focus:ring-1 focus:ring-black transition-all placeholder:text-gray-400 placeholder:font-medium"
               />
               <button 
                 onClick={() => handleRecommend()}
                 disabled={!promptText.trim()}
-                className="absolute right-2 top-2 bottom-2 aspect-square bg-black text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300 transition-colors"
+                className="absolute right-2 top-2 bottom-2 aspect-square bg-black text-white rounded-full flex items-center justify-center disabled:opacity-50 disabled:bg-gray-300 transition-colors shadow-md z-10"
               >
-                <Send size={16} strokeWidth={2.5} />
+                <Send size={16} strokeWidth={2.5} className="-ml-0.5" />
               </button>
             </div>
           </div>
         )}
 
         {plannerStep === 'thinking' && (
-          <div className="flex flex-col items-center justify-center h-[60vh] animate-in fade-in duration-500">
-            <div className="w-20 h-20 rounded-full bg-white shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center mb-6 relative">
-              <div className="absolute inset-0 rounded-full border-[3px] border-black/5 animate-ping"></div>
-              <Compass size={32} className="text-black animate-spin" style={{ animationDuration: '3s' }} />
+          <div className="flex flex-col items-center justify-center h-[70vh] animate-in fade-in duration-500 relative z-10">
+            <div className="w-24 h-24 rounded-3xl bg-white shadow-2xl shadow-black/5 border border-gray-100 flex items-center justify-center mb-8 relative">
+              <div className="absolute inset-0 rounded-3xl border-[3px] border-amber-300/30 animate-ping" style={{ animationDuration: '2s' }}></div>
+              <Sparkles size={36} className="text-amber-400 animate-pulse" />
             </div>
             <h3 className="text-xl font-black text-[#1c1c1c] tracking-tight">Curating your experience</h3>
-            <p className="text-[14px] text-gray-500 font-medium mt-2">Searching through our exclusive tours...</p>
+            <p className="text-[14px] text-gray-500 font-medium mt-2">Searching our exclusive tours...</p>
           </div>
         )}
 
         {plannerStep === 'result' && recommendedTour && (
-          <div className="flex flex-col pb-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="flex flex-col h-[calc(100vh-100px)] animate-in fade-in slide-in-from-bottom-8 duration-700 relative z-10 pt-2">
             <div className="mb-6 flex items-center justify-between">
               <div>
-                <span className="text-[11px] font-black uppercase tracking-wider text-gray-400 block mb-1">We recommend</span>
-                <h2 className="text-2xl font-black text-[#1c1c1c] tracking-tight leading-tight">
-                  Based on your <br/>preferences
+                <span className="text-[10px] font-black uppercase tracking-widest text-amber-500 block mb-1">Recommended for you</span>
+                <h2 className="text-[28px] font-black text-[#1c1c1c] tracking-tight leading-[1.1]">
+                  Your perfect <br/>match
                 </h2>
               </div>
               <button 
@@ -334,45 +341,52 @@ export default function BookingsPage() {
                   setPromptText('');
                   setRecommendedTour(null);
                 }}
-                className="w-10 h-10 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-black"
+                className="w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center text-gray-500 hover:text-black"
               >
-                <XCircle size={20} strokeWidth={2} />
+                <XCircle size={22} strokeWidth={2.5} />
               </button>
             </div>
 
-            <div className="bg-white rounded-[32px] p-2 shadow-[0_8px_30px_rgba(0,0,0,0.06)] border border-gray-100 relative group overflow-hidden">
-              <div className="w-full aspect-[4/5] rounded-[24px] overflow-hidden relative mb-4">
+            <div className="bg-white rounded-[32px] p-2.5 shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-gray-100/50 relative group overflow-hidden flex flex-col flex-1 max-h-[600px]">
+              <div className="w-full h-1/2 min-h-[220px] rounded-[24px] overflow-hidden relative mb-4 shrink-0 bg-gray-100">
                 <img 
-                  src={recommendedTour.images?.[0] || "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80"} 
+                  src={recommendedTour.images?.[0] || recommendedTour.thumbnail_image || "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?auto=format&fit=crop&w=800&q=80"} 
                   alt={recommendedTour.title} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 shadow-sm">
-                  <Map size={12} className="text-black" strokeWidth={3} />
-                  <span className="text-[10px] font-black uppercase tracking-wider text-black">
-                    {recommendedTour.location || "Bali"}
-                  </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                  <div className="bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 shadow-sm">
+                    <Map size={12} className="text-black" strokeWidth={3} />
+                    <span className="text-[10px] font-black uppercase tracking-wider text-black">
+                      {recommendedTour.location || "Bali"}
+                    </span>
+                  </div>
                 </div>
               </div>
               
-              <div className="px-4 pb-4">
-                <h3 className="font-extrabold text-[20px] text-[#1c1c1c] leading-tight line-clamp-2 mb-2">
+              <div className="px-4 pb-4 flex flex-col flex-1">
+                <h3 className="font-extrabold text-[22px] text-[#1c1c1c] leading-tight line-clamp-2 mb-2">
                   {recommendedTour.title}
                 </h3>
-                <p className="text-[13px] text-gray-500 font-medium line-clamp-2 leading-relaxed mb-4">
-                  {recommendedTour.description || "An unforgettable experience tailored just for you."}
+                <p className="text-[13.5px] text-gray-500 font-medium line-clamp-3 leading-relaxed mb-4 flex-1">
+                  {recommendedTour.description || "An unforgettable experience tailored just for you. Discover the beauty of Bali with our premium tours and expert guides."}
                 </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-black text-[18px] text-[#1c1c1c]">
-                    {formatIDR(recommendedTour.pricing?.adult || recommendedTour.price)}
-                  </span>
-                </div>
                 
-                <Link href={`/tours/${recommendedTour.slug}`}>
-                  <button className="mt-5 w-full py-4 bg-black text-white font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(0,0,0,0.15)] active:scale-[0.98] transition-transform">
-                    Explore Experience <ArrowRight size={18} strokeWidth={2.5} />
-                  </button>
-                </Link>
+                <div className="shrink-0">
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <span className="text-[11px] font-extrabold text-gray-400 uppercase tracking-wider">Starting from</span>
+                    <span className="font-black text-[20px] text-[#1c1c1c]">
+                      {formatIDR(recommendedTour.base_price || recommendedTour.price)}
+                    </span>
+                  </div>
+                  
+                  <Link href={`/tours/${recommendedTour.slug}`} className="block">
+                    <button className="w-full py-4 bg-gradient-to-r from-gray-900 to-black text-white font-extrabold rounded-2xl flex items-center justify-center gap-2 shadow-[0_8px_20px_rgba(0,0,0,0.15)] active:scale-[0.98] transition-transform">
+                      View Itinerary <ArrowRight size={18} strokeWidth={2.5} />
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
