@@ -7,6 +7,14 @@ import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, S
 import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
 import Sidebar from "@/components/navigation/Sidebar";
 
+const InstagramIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+  </svg>
+);
+
 export default function Navbar({ promoCode = "BALI2026" }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -133,6 +141,14 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
         {/* Right Side: Currency & Language */}
         <div className="flex items-center gap-1.5 sm:gap-2 relative z-50">
+          <a 
+            href="https://instagram.com/balanceislandtour"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative mr-1"
+          >
+            <InstagramIcon size={16} />
+          </a>
           <div className="relative">
             <button 
               onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setLangDropdownOpen(false); setCurrencyDropdownOpen(false); }}
@@ -279,6 +295,15 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
         {/* Right Actions */}
         <div className="flex-1 items-center justify-end gap-3 flex">
+
+          <a 
+            href="https://instagram.com/balanceislandtour"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft relative ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+          >
+            <InstagramIcon size={15} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} />
+          </a>
 
           <div className="relative">
             <button 

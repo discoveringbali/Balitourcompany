@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Clock, CheckCircle2, Navigation, MessageCircle, CalendarCheck, XCircle, LogOut, Send, Compass, Map, Loader2, ArrowRight, Sparkles } from "lucide-react";
+import { Clock, CheckCircle2, Navigation, MessageCircle, CalendarCheck, XCircle, LogOut, Map, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import { getSavedBookings } from "@/lib/bookings";
@@ -70,6 +70,8 @@ export default function BookingsPage() {
 
   const filteredBookings = bookings.filter(b => getBookingType(b) === activeTab);
 
+  return (
+    <div className="min-h-[100dvh] bg-surface pb-32 font-sans -mt-20 md:-mt-24">
       {/* ============================================================== */}
       {/* Bookings Layout */}
       {/* ============================================================== */}
