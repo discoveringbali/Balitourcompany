@@ -1,15 +1,11 @@
 const { createClient } = require('@supabase/supabase-js');
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+const supabaseUrl = "https://jnpyxizujvtbvqyvewbd.supabase.co";
+const supabaseKey = "sb_publishable_tpd3e-1kI6yxwZDGZpnd6A_ePwq2JMd";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function main() {
-  const { data, error } = await supabase.from('listings').select('*').eq('id', '44fddb1e-007b-4532-9143-f1a90f2efbad').single();
-  if (error) console.error(error);
-  else {
-    console.log("Type:", data.type);
-    console.log("Pricing Type:", data.data.pricingType);
-    console.log("All Inclusive Surcharge:", data.data.allInclusiveSurcharge);
-  }
+async function run() {
+  const { data, error } = await supabase.from('blogs').select('title, slug');
+  console.log(data);
 }
-main();
+run();
