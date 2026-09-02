@@ -134,8 +134,17 @@ export default function BookingsPage() {
           </div>
 
           {/* Floating Calendar */}
-          <div className="pt-4 pb-4">
-            <div className="flex gap-3 overflow-x-auto no-scrollbar max-w-6xl mx-auto px-1">
+          <div className="pt-6 pb-4 max-w-6xl mx-auto">
+            {/* Month Header - Apple Inspired */}
+            <div className="px-2 mb-4 flex items-center justify-between">
+              <h2 className="text-[22px] font-bold text-gray-900 tracking-tight">
+                {selectedDate 
+                  ? selectedDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+                  : new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </h2>
+            </div>
+            
+            <div className="flex gap-3 overflow-x-auto no-scrollbar px-1 pb-2">
               {calendarDates.map((date, i) => {
                 const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
                 const hasBooking = bookedDateStrings.includes(dateStr);
@@ -146,25 +155,25 @@ export default function BookingsPage() {
                   <button
                     key={i}
                     onClick={() => setSelectedDate(isSelected ? null : date)}
-                    className={`flex flex-col items-center justify-center shrink-0 w-[60px] h-[75px] rounded-[20px] transition-all relative
+                    className={`flex flex-col items-center justify-center shrink-0 w-[62px] h-[80px] rounded-[22px] transition-all duration-300 ease-out relative overflow-hidden
                       ${isSelected 
-                        ? 'bg-black text-white shadow-lg shadow-black/20 scale-105' 
+                        ? 'bg-gray-900 text-white shadow-[0_8px_20px_rgba(0,0,0,0.16)] scale-105' 
                         : hasBooking 
-                          ? 'bg-white border-2 border-primary text-black shadow-sm'
-                          : 'bg-white border border-gray-100 text-gray-500 hover:border-gray-300'
+                          ? 'bg-white border-[1.5px] border-gray-900 text-gray-900 shadow-sm'
+                          : 'bg-white/80 border border-gray-200 text-gray-500 hover:bg-white hover:shadow-sm'
                       }`}
                   >
-                    <span className={`text-[11px] font-bold uppercase tracking-wider mb-1 ${isSelected ? 'text-gray-300' : 'text-gray-400'}`}>
+                    <span className={`text-[11px] font-semibold uppercase tracking-wider mb-1 ${isSelected ? 'text-gray-300' : 'text-gray-400'}`}>
                       {date.toLocaleDateString('en-US', { weekday: 'short' })}
                     </span>
-                    <span className={`text-[20px] font-black leading-none ${isSelected ? 'text-white' : hasBooking ? 'text-primary' : 'text-gray-800'}`}>
+                    <span className={`text-[22px] font-bold leading-none tracking-tight ${isSelected ? 'text-white' : hasBooking ? 'text-gray-900' : 'text-gray-800'}`}>
                       {date.getDate()}
                     </span>
                     {hasBooking && !isSelected && (
-                      <div className="absolute -bottom-1 w-1.5 h-1.5 bg-primary rounded-full"></div>
+                      <div className="absolute bottom-2 w-1.5 h-1.5 bg-gray-900 rounded-full"></div>
                     )}
                     {isToday && !isSelected && !hasBooking && (
-                      <div className="absolute -bottom-1 w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                      <div className="absolute bottom-2 w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
                     )}
                   </button>
                 );
