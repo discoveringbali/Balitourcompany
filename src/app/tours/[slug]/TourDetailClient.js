@@ -39,9 +39,8 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
   const [expandedReviews, setExpandedReviews] = useState({});
   const [reviewMessage, setReviewMessage] = useState({ type: '', text: '' });
   const [localReviews, setLocalReviews] = useState(tourData?.reviewsList || []);
-  const tabsRef = React.useRef(null);
 
-  // Smart logic: trigger promo modal when scrolling to tabs if not applied
+  // Smart logic: trigger promo modal after 4 seconds on direct link
   useEffect(() => {
     const hasAppliedCode = localStorage.getItem('savedPromoCode');
     if (hasAppliedCode) return;
@@ -50,19 +49,12 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
     const hasShownPopup = sessionStorage.getItem('hasAutoShownPromo_Tour') === 'true';
     if (hasShownPopup) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        window.dispatchEvent(new Event('openPromoModal'));
-        sessionStorage.setItem('hasAutoShownPromo_Tour', 'true');
-        observer.disconnect();
-      }
-    }, { threshold: 0.1 });
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event('openPromoModal'));
+      sessionStorage.setItem('hasAutoShownPromo_Tour', 'true');
+    }, 4000);
 
-    if (tabsRef.current) {
-      observer.observe(tabsRef.current);
-    }
-
-    return () => observer.disconnect();
+    return () => clearTimeout(timer);
   }, []);
 
   const getMultiplierPrice = (rawPrice) => {
@@ -381,7 +373,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
             </div>
             
             {/* Scrollable Tabs */}
-            <div id="tour-details-tabs" ref={tabsRef} className="flex overflow-x-auto no-scrollbar gap-2 mb-8 -mx-6 px-6 md:mx-0 md:px-0 scroll-mt-24">
+            <div id="tour-details-tabs" className="flex overflow-x-auto no-scrollbar gap-2 mb-8 -mx-6 px-6 md:mx-0 md:px-0 scroll-mt-24">
               {tabs.map((tab) => {
                 const isActive = activeTab === tab;
                 return (
