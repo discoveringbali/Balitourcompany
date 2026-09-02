@@ -367,7 +367,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                           }}
                           className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
                         >
-                          Apply Code
+                          APPLY CODE
                         </button>
                       </div>
                     </div>
@@ -397,7 +397,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                           }}
                           className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
                         >
-                          Apply Code
+                          APPLY CODE
                         </button>
                       </div>
                     </div>
@@ -496,7 +496,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                     }}
                     className="bg-[#111111] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800 shrink-0"
                   >
-                    Apply Code
+                    APPLY CODE
                   </button>
                 </div>
               </div>
@@ -526,7 +526,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                     }}
                     className="bg-[#111111] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800 shrink-0"
                   >
-                    Apply Code
+                    APPLY CODE
                   </button>
                 </div>
               </div>
