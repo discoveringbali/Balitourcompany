@@ -461,7 +461,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     {/* Global Mobile Promo Modal */}
     {promoDropdownOpen && (
       <div className="sm:hidden font-sans">
-        <div className="fixed inset-0 bg-black/60 z-[990] backdrop-blur-sm animate-in fade-in flex items-center justify-center p-4" onClick={() => setPromoDropdownOpen(false)}>
+        <div className="fixed inset-0 bg-black/60 z-[990] backdrop-blur-sm animate-in fade-in flex items-center justify-center p-4">
           <div 
             className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl flex flex-col animate-in zoom-in-95 duration-200 z-[1000]"
             onClick={(e) => e.stopPropagation()}
