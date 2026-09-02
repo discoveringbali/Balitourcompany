@@ -258,6 +258,33 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     return () => window.removeEventListener('promoApplied', handlePromoApplied);
   }, []);
 
+  // Track scroll to categories to show promo modal
+  const categoriesRef = React.useRef(null);
+  useEffect(() => {
+    // Check if they already applied a code
+    const hasAppliedCode = localStorage.getItem('savedPromoCode');
+    if (hasAppliedCode || appliedPromoFilter) return;
+    
+    // Check if we already auto-showed it this session
+    const hasShownPopup = sessionStorage.getItem('hasAutoShownPromo') === 'true';
+    if (hasShownPopup) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // User scrolled to categories
+        window.dispatchEvent(new Event('openPromoModal'));
+        sessionStorage.setItem('hasAutoShownPromo', 'true');
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+
+    if (categoriesRef.current) {
+      observer.observe(categoriesRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [appliedPromoFilter]);
+
   // SWR Fetchers
   const fetcherListings = async () => {
     const { supabase } = await import('@/lib/supabase');
@@ -1262,7 +1289,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </section>
 
             {/* Categories */}
-            <section id="categories-section" className="px-6 mb-8 mt-2">
+            <section id="categories-section" ref={categoriesRef} className="px-6 mb-8 mt-2">
               <div className="flex justify-between items-end mb-4">
                 <h2 className="text-[20px] font-bold text-primary">Categories</h2>
                 <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>

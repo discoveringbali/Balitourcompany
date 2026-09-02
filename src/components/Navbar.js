@@ -25,7 +25,16 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    
+    // Add event listener for auto-opening promo modal
+    const handleOpenPromoModal = () => {
+      setPromoDropdownOpen(true);
+      setLangDropdownOpen(false);
+      setCurrencyDropdownOpen(false);
+    };
+
     window.addEventListener("scroll", handleScroll);
+    window.addEventListener('openPromoModal', handleOpenPromoModal);
 
     fetch('/api/discounts')
       .then(res => res.json())
@@ -36,7 +45,10 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       })
       .catch(err => console.error(err));
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('openPromoModal', handleOpenPromoModal);
+    };
   }, []);
 
   const [filterOpen, setFilterOpen] = useState(false);
@@ -436,12 +448,14 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       </div>
     </header>
 
-    {/* Global Mobile Promo Bottom Sheet */}
+    {/* Global Mobile Promo Modal */}
     {promoDropdownOpen && (
       <div className="sm:hidden font-sans">
-        <div className="fixed inset-0 bg-black/40 z-[990] backdrop-blur-sm animate-in fade-in" onClick={() => setPromoDropdownOpen(false)}></div>
-        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-3xl p-5 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] flex flex-col border-t border-border animate-in slide-in-from-bottom-10 duration-200 z-[1000]">
-          <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto mb-4 shrink-0" />
+        <div className="fixed inset-0 bg-black/60 z-[990] backdrop-blur-sm animate-in fade-in flex items-center justify-center p-4" onClick={() => setPromoDropdownOpen(false)}>
+          <div 
+            className="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl flex flex-col animate-in zoom-in-95 duration-200 z-[1000]"
+            onClick={(e) => e.stopPropagation()}
+          >
           <div className="flex items-center gap-2 mb-4">
             <Tag size={18} className="text-primary" />
             <span className="font-bold text-[16px]">Available Promos</span>
@@ -516,6 +530,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           <button onClick={() => setPromoDropdownOpen(false)} className="mt-2 w-full py-3.5 bg-black text-white rounded-xl font-bold text-[15px] active:scale-95 transition-transform">
             Close
           </button>
+        </div>
         </div>
       </div>
     )}
