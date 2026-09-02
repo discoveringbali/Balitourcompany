@@ -22,7 +22,7 @@ export default function BookingsPage() {
   
   useEffect(() => {
     const dates = [];
-    for (let i = -3; i <= 10; i++) {
+    for (let i = 0; i <= 13; i++) {
       const d = new Date();
       d.setDate(d.getDate() + i);
       dates.push(d);
@@ -108,7 +108,7 @@ export default function BookingsPage() {
       {/* ============================================================== */}
       <div className="w-full">
         {/* Header & Tabs */}
-        <div className="px-6 pt-14 pb-0 bg-surface z-10 sticky top-0 border-b border-gray-100">
+        <div className="px-6 pt-6 pb-0 bg-surface z-10 sticky top-0 border-b border-gray-100">
           <div className="flex justify-between items-center">
           </div>
           
@@ -149,31 +149,31 @@ export default function BookingsPage() {
                 const dateStr = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
                 const hasBooking = bookedDateStrings.includes(dateStr);
                 const isSelected = selectedDate && selectedDate.getTime() === date.getTime();
-                const isToday = i === 3; // Since we started at -3
+                const isToday = i === 0; // Since we started at 0 (today)
 
                 return (
                   <button
                     key={i}
                     onClick={() => setSelectedDate(isSelected ? null : date)}
-                    className={`flex flex-col items-center justify-center shrink-0 w-[62px] h-[80px] rounded-[22px] transition-all duration-300 ease-out relative overflow-hidden
+                    className={`flex flex-col items-center justify-center shrink-0 w-[54px] h-[72px] rounded-[18px] transition-all duration-300 ease-out relative overflow-hidden
                       ${isSelected 
-                        ? 'bg-gray-900 text-white shadow-[0_8px_20px_rgba(0,0,0,0.16)] scale-105' 
+                        ? 'bg-gray-900 text-white shadow-[0_6px_16px_rgba(0,0,0,0.14)] scale-105' 
                         : hasBooking 
                           ? 'bg-white border-[1.5px] border-gray-900 text-gray-900 shadow-sm'
                           : 'bg-white/80 border border-gray-200 text-gray-500 hover:bg-white hover:shadow-sm'
                       }`}
                   >
-                    <span className={`text-[11px] font-semibold uppercase tracking-wider mb-1 ${isSelected ? 'text-gray-300' : 'text-gray-400'}`}>
+                    <span className={`text-[10px] font-semibold uppercase tracking-wider mb-1 ${isSelected ? 'text-gray-300' : 'text-gray-400'}`}>
                       {date.toLocaleDateString('en-US', { weekday: 'short' })}
                     </span>
-                    <span className={`text-[22px] font-bold leading-none tracking-tight ${isSelected ? 'text-white' : hasBooking ? 'text-gray-900' : 'text-gray-800'}`}>
+                    <span className={`text-[20px] font-bold leading-none tracking-tight ${isSelected ? 'text-white' : hasBooking ? 'text-gray-900' : 'text-gray-800'}`}>
                       {date.getDate()}
                     </span>
                     {hasBooking && !isSelected && (
-                      <div className="absolute bottom-2 w-1.5 h-1.5 bg-gray-900 rounded-full"></div>
+                      <div className="absolute bottom-1.5 w-1 h-1 bg-gray-900 rounded-full"></div>
                     )}
                     {isToday && !isSelected && !hasBooking && (
-                      <div className="absolute bottom-2 w-1.5 h-1.5 bg-gray-300 rounded-full"></div>
+                      <div className="absolute bottom-1.5 w-1 h-1 bg-gray-300 rounded-full"></div>
                     )}
                   </button>
                 );
