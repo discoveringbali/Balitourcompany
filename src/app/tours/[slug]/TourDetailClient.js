@@ -40,22 +40,22 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
   const [reviewMessage, setReviewMessage] = useState({ type: '', text: '' });
   const [localReviews, setLocalReviews] = useState(tourData?.reviewsList || []);
 
-  // Smart logic: trigger promo modal after 4 seconds on direct link
+  // Smart logic: trigger promo modal after 2.5 seconds on direct link
   useEffect(() => {
     const hasAppliedCode = localStorage.getItem('savedPromoCode');
     if (hasAppliedCode) return;
     
-    // Separate key so it can trigger even if they saw it on the homepage
-    const hasShownPopup = sessionStorage.getItem('hasAutoShownPromo_Tour') === 'true';
+    // Separate key per tour so it triggers reliably on new tours
+    const hasShownPopup = sessionStorage.getItem(`hasAutoShownPromo_Tour_${slug}`) === 'true';
     if (hasShownPopup) return;
 
     const timer = setTimeout(() => {
       window.dispatchEvent(new Event('openPromoModal'));
-      sessionStorage.setItem('hasAutoShownPromo_Tour', 'true');
-    }, 4000);
+      sessionStorage.setItem(`hasAutoShownPromo_Tour_${slug}`, 'true');
+    }, 2500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [slug]);
 
   const getMultiplierPrice = (rawPrice) => {
     const p = Number(rawPrice);

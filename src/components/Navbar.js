@@ -87,6 +87,11 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     };
   }, []);
 
+  // Ensure modal closes on route change (e.g. clicking back button)
+  useEffect(() => {
+    setPromoDropdownOpen(false);
+  }, [pathname]);
+
   const handleCurrencyChange = (currCode) => {
     setActiveCurrency(currCode);
     setCurrencyDropdownOpen(false);
