@@ -24,7 +24,6 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
 
-
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeService, setActiveService] = useState("Tour");
   
@@ -33,6 +32,16 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   const [promos, setPromos] = useState([]);
   const [activeLang, setActiveLang] = useState("EN");
   const [isTranslating, setIsTranslating] = useState(false);
+
+  // Derived state to instantly close modal on route change
+  const [prevPath, setPrevPath] = useState(pathname);
+  if (pathname !== prevPath) {
+    setPrevPath(pathname);
+    if (promoDropdownOpen) {
+      setPromoDropdownOpen(false);
+    }
+  }
+
   const languages = [
     { code: 'EN', name: 'English' },
     { code: 'FR', name: 'French' },
@@ -86,11 +95,6 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       window.removeEventListener('openPromoModal', handleOpenPromoModal);
     };
   }, []);
-
-  // Ensure modal closes on route change (e.g. clicking back button)
-  useEffect(() => {
-    setPromoDropdownOpen(false);
-  }, [pathname]);
 
   const handleCurrencyChange = (currCode) => {
     setActiveCurrency(currCode);
