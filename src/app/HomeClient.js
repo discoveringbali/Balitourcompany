@@ -963,13 +963,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Top Right Click Button with Curve Cutout Effect */}
                 {!camp.isHeroSlide && (
                   <div className="absolute -top-[1px] -right-[1px] z-20 pointer-events-auto">
-                    <div className="bg-[#D4F84E] rounded-bl-[24px] pl-3 pb-3 pr-[1px] pt-[1px] relative flex items-center gap-2">
+                    <div className="bg-white rounded-bl-[24px] pl-3 pb-3 pr-[1px] pt-[1px] relative flex items-center gap-2">
                       {/* Left Curve SVG */}
-                      <svg className="absolute top-[1px] -left-[23.5px] w-[24px] h-[24px] fill-[#D4F84E]" viewBox="0 0 24 24">
+                      <svg className="absolute top-[1px] -left-[23.5px] w-[24px] h-[24px] fill-white" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
                       {/* Bottom Curve SVG */}
-                      <svg className="absolute -bottom-[23.5px] right-[1px] w-[24px] h-[24px] fill-[#D4F84E]" viewBox="0 0 24 24">
+                      <svg className="absolute -bottom-[23.5px] right-[1px] w-[24px] h-[24px] fill-white" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
 
