@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronLeft, Share, Heart, Star, Calendar, Clock, Plane, Building, Utensils, User, Bus, ArrowRight, MoreVertical, CheckCircle2, Languages, Car, Minus, Plus, Info } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -39,6 +39,25 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
   const [expandedReviews, setExpandedReviews] = useState({});
   const [reviewMessage, setReviewMessage] = useState({ type: '', text: '' });
   const [localReviews, setLocalReviews] = useState(tourData?.reviewsList || []);
+
+  // Smart logic: trigger promo modal after a short delay if visiting directly
+  useEffect(() => {
+    // Check if they already applied a code
+    const hasAppliedCode = localStorage.getItem('savedPromoCode');
+    if (hasAppliedCode) return;
+    
+    // Check if we already auto-showed it this session
+    const hasShownPopup = sessionStorage.getItem('hasAutoShownPromo') === 'true';
+    if (hasShownPopup) return;
+
+    // After 4 seconds of reading the tour, grab their attention with the promo
+    const timer = setTimeout(() => {
+      window.dispatchEvent(new Event('openPromoModal'));
+      sessionStorage.setItem('hasAutoShownPromo', 'true');
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const getMultiplierPrice = (rawPrice) => {
     const p = Number(rawPrice);

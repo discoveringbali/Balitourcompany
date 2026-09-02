@@ -462,13 +462,13 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
           <div className="flex flex-col gap-3 max-h-[60vh] overflow-y-auto hide-scroll pb-4">
             {promos.length > 0 ? promos.map((promo, idx) => (
-              <div key={idx} className="bg-[#fcfcfc] border border-gray-200 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
-                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
-                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
+              <div key={idx} className="bg-white/80 backdrop-blur-md border border-white/40 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-lg">
+                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-transparent rounded-full border-r border-gray-200"></div>
+                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-transparent rounded-full border-l border-gray-200"></div>
                 
                 <div className="flex flex-col px-2">
-                  <span className="text-[14px] font-extrabold text-black">
-                    {promo.type === 'percent' ? `Save ${promo.value}% on your booking` : `Save IDR ${promo.value.toLocaleString('id-ID')}${promo.scope === 'per_person' ? ' per person' : ' on your booking'}`}
+                  <span className="text-[14px] font-extrabold text-black uppercase tracking-wide">
+                    {promo.type === 'percent' ? `SAVE ${promo.value}% ON YOUR BOOKING` : `SAVE IDR ${promo.value.toLocaleString('id-ID')}${promo.scope === 'per_person' ? ' PER PERSON' : ' ON YOUR BOOKING'}`}
                   </span>
                   <span className="text-[11px] font-bold text-gray-500 mt-0.5">
                     {(!promo.applicableTours || promo.applicableTours.length === 0) ? 'Applicable to all experiences.' : 'Applicable to selected experiences.'}
@@ -480,7 +480,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                 <div className="flex items-center justify-between px-2">
                   <div className="flex flex-col">
                     <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
-                    <span className="text-[20px] font-black tracking-widest text-primary">{promo.code}</span>
+                    <span className="text-[16px] font-black tracking-widest text-primary">{promo.code}</span>
                   </div>
                   <button 
                     onClick={(e) => {
@@ -489,19 +489,19 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                       router.push(`/tours?promo=${promo.code}`);
                       setPromoDropdownOpen(false);
                     }}
-                    className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[12px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
+                    className="bg-[#111111] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800 shrink-0"
                   >
                     Apply Code
                   </button>
                 </div>
               </div>
             )) : (
-              <div className="bg-[#fcfcfc] border border-gray-200 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
-                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
-                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
+              <div className="bg-white/80 backdrop-blur-md border border-white/40 rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-lg">
+                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-transparent rounded-full border-r border-gray-200"></div>
+                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-transparent rounded-full border-l border-gray-200"></div>
                 
                 <div className="flex flex-col px-2">
-                  <span className="text-[14px] font-extrabold text-black">Special Promo</span>
+                  <span className="text-[14px] font-extrabold text-black uppercase tracking-wide">SPECIAL PROMO</span>
                   <span className="text-[11px] font-bold text-gray-500 mt-0.5">Valid for all upcoming tours</span>
                 </div>
                 
@@ -510,7 +510,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                 <div className="flex items-center justify-between px-2">
                   <div className="flex flex-col">
                     <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
-                    <span className="text-[20px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
+                    <span className="text-[16px] font-black tracking-widest text-primary">{promoCode || "BALI2026"}</span>
                   </div>
                   <button 
                     onClick={(e) => {
@@ -519,7 +519,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                       router.push(`/tours?promo=${promoCode || "BALI2026"}`);
                       setPromoDropdownOpen(false);
                     }}
-                    className="bg-[#111111] text-white px-5 py-2.5 rounded-xl text-[12px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800"
+                    className="bg-[#111111] text-white px-3 py-1.5 rounded-lg text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-800 shrink-0"
                   >
                     Apply Code
                   </button>
