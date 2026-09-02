@@ -23,33 +23,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
   const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    
-    // Add event listener for auto-opening promo modal
-    const handleOpenPromoModal = () => {
-      setPromoDropdownOpen(true);
-      setLangDropdownOpen(false);
-      setCurrencyDropdownOpen(false);
-    };
 
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener('openPromoModal', handleOpenPromoModal);
-
-    fetch('/api/discounts')
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) {
-          setPromos(data.filter(c => c.active && !c.isSecret));
-        }
-      })
-      .catch(err => console.error(err));
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener('openPromoModal', handleOpenPromoModal);
-    };
-  }, []);
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeService, setActiveService] = useState("Tour");
@@ -85,6 +59,34 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     if (savedCurrency) setActiveCurrency(savedCurrency);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
+    
+    // Add event listener for auto-opening promo modal
+    const handleOpenPromoModal = () => {
+      setPromoDropdownOpen(true);
+      setLangDropdownOpen(false);
+      setCurrencyDropdownOpen(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('openPromoModal', handleOpenPromoModal);
+
+    fetch('/api/discounts')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setPromos(data.filter(c => c.active && !c.isSecret));
+        }
+      })
+      .catch(err => console.error(err));
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener('openPromoModal', handleOpenPromoModal);
+    };
+  }, []);
+
   const handleCurrencyChange = (currCode) => {
     setActiveCurrency(currCode);
     setCurrencyDropdownOpen(false);
@@ -100,8 +102,11 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     const code = langCode.toLowerCase();
     
     // Set google translate cookies with and without domain for broader compatibility
+    // eslint-disable-next-line react-hooks/immutability
     document.cookie = `googtrans=/en/${code}; path=/; domain=${window.location.hostname}`;
+    // eslint-disable-next-line react-hooks/immutability
     document.cookie = `googtrans=/en/${code}; path=/; domain=.${window.location.hostname}`;
+    // eslint-disable-next-line react-hooks/immutability
     document.cookie = `googtrans=/en/${code}; path=/`;
 
     // Wait a brief moment to ensure cookie is set
