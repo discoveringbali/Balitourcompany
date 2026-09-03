@@ -490,9 +490,11 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                    {tourData.highlights ? tourData.highlights.split('\n').map((h, i) => <li key={i}>{h}</li>) : <li>No highlights defined yet.</li>}
                 </ul>
                 <h4 className="font-bold text-[16px] text-primary mb-3">Full description</h4>
-                <p className="text-sm text-text-secondary leading-relaxed font-medium mb-8 whitespace-pre-wrap">
-                  {tourData.description || "The administrator has not provided a description for this tour yet."}
-                </p>
+                <div className="text-sm md:text-[15px] text-text-secondary leading-relaxed md:leading-[1.7] font-medium mb-8 flex flex-col gap-4">
+                  {tourData.description ? tourData.description.split('\n').filter(p => p.trim() !== '').map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                  )) : <p>The administrator has not provided a description for this tour yet.</p>}
+                </div>
               </div>
             )}
 
