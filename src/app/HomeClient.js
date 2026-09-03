@@ -598,7 +598,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   const pinnedCampaigns = allListings.filter(t => t.isCampaignPinned).map((t, idx) => ({
     id: t.id || idx,
-    title: t.campaignTitle !== undefined ? t.campaignTitle : t.title,
+    title: t.campaignTitle || "",
     subtitle: t.campaignDescription || t.description, // Fallback to regular description
     location: t.location, // Explicitly pass location
     badge: t.campaignLabel !== undefined ? t.campaignLabel : "Featured Deal",
