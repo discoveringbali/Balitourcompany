@@ -1041,7 +1041,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
                     <div className="flex-1 min-w-0 pr-2">
-                      <h3 className="text-[20px] sm:text-[22px] font-serif italic text-white leading-tight mb-1 drop-shadow-xl line-clamp-1 tracking-wide">
+                      <h3 className={`${camp.title.length > 25 ? 'text-[16px] sm:text-[18px]' : 'text-[20px] sm:text-[22px]'} font-serif italic text-white leading-tight mb-1 drop-shadow-xl tracking-wide`}>
                         {camp.title}
                       </h3>
                       {(camp.subtitle || camp.description) && (
