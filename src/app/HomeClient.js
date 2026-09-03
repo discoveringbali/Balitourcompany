@@ -665,6 +665,15 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     displayCampaigns = [...partnerCards, ...tourCampaigns];
   }
 
+  // Ensure campaigns with the "EXCLUSIVE" badge are displayed first (number one display)
+  displayCampaigns.sort((a, b) => {
+    const aIsExclusive = a.badge && String(a.badge).toUpperCase() === "EXCLUSIVE";
+    const bIsExclusive = b.badge && String(b.badge).toUpperCase() === "EXCLUSIVE";
+    if (aIsExclusive && !bIsExclusive) return -1;
+    if (!aIsExclusive && bIsExclusive) return 1;
+    return 0;
+  });
+
   // Removed defaultTourCampaigns fallback to prevent mock data from showing
 
   // Suggestions for smart keyboard integration
