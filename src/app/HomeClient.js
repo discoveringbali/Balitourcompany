@@ -598,7 +598,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   const pinnedCampaigns = allListings.filter(t => t.isCampaignPinned).map((t, idx) => ({
     id: t.id || idx,
-    title: t.campaignTitle || t.title,
+    title: t.campaignTitle !== undefined ? t.campaignTitle : t.title,
     subtitle: t.campaignDescription || t.description, // Fallback to regular description
     location: t.location, // Explicitly pass location
     badge: t.campaignLabel !== undefined ? t.campaignLabel : "Featured Deal",
@@ -1041,9 +1041,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
                     <div className="flex-1 min-w-0 pr-2">
-                      <h3 className={`${camp.title.length > 25 ? 'text-[16px] sm:text-[18px]' : 'text-[20px] sm:text-[22px]'} font-serif italic text-white leading-tight mb-1 drop-shadow-xl tracking-wide`}>
-                        {camp.title}
-                      </h3>
+                      {camp.title ? (
+                        <h3 className={`${camp.title.length > 25 ? 'text-[16px] sm:text-[18px]' : 'text-[20px] sm:text-[22px]'} font-serif italic text-white leading-tight mb-1 drop-shadow-xl tracking-wide`}>
+                          {camp.title}
+                        </h3>
+                      ) : null}
                       {(camp.subtitle || camp.description) && (
                         <p className="text-white/80 text-[12px] sm:text-[13px] font-medium leading-relaxed line-clamp-2 pr-4 sm:pr-8">
                           {camp.subtitle || camp.description}
@@ -1187,12 +1189,14 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
                   {/* Left Side: Cinematic Title */}
                   <div className="absolute bottom-[18%] xl:bottom-[20%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[85%] md:max-w-[65%] lg:max-w-[50%] flex flex-col gap-4">
-                    <h1 
-                      className="text-[28px] md:text-[36px] lg:text-[42px] xl:text-[48px] font-extrabold text-white leading-[1.1] tracking-tight uppercase drop-shadow-xl font-sans"
-                      style={{ textWrap: 'balance' }}
-                    >
-                      {camp.title}
-                    </h1>
+                    {camp.title ? (
+                      <h1 
+                        className="text-[28px] md:text-[36px] lg:text-[42px] xl:text-[48px] font-extrabold text-white leading-[1.1] tracking-tight uppercase drop-shadow-xl font-sans"
+                        style={{ textWrap: 'balance' }}
+                      >
+                        {camp.title}
+                      </h1>
+                    ) : null}
                     
                     <div className="flex flex-col gap-4 items-start mt-1">
                       <span className="text-white/80 font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs drop-shadow-md">
