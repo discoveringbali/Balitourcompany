@@ -1037,18 +1037,24 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
 
-                {/* Text at the bottom */}
+                {/* Text at the bottom with Abstract Glass Background */}
                 {!camp.isHeroSlide && (
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
-                    <div className="flex-1 min-w-0 pr-2">
-                      <h3 className="text-[17px] sm:text-[19px] font-bold text-white leading-tight mb-1 font-sans drop-shadow-xl line-clamp-1">
-                        {camp.title}
-                      </h3>
-                      {(camp.subtitle || camp.description) && (
-                        <p className="text-white/80 text-[12px] sm:text-[13px] font-medium leading-relaxed line-clamp-2 pr-4 sm:pr-8">
-                          {camp.subtitle || camp.description}
-                        </p>
-                      )}
+                  <div className="absolute bottom-2 left-2 right-2 z-10 pointer-events-none rounded-[20px] overflow-hidden shadow-2xl">
+                    {/* Abstract Blur Orbs behind the glass */}
+                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/30 rounded-full blur-[40px] mix-blend-overlay"></div>
+                    <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-black/60 rounded-full blur-[30px] mix-blend-overlay"></div>
+                    
+                    <div className="bg-black/30 backdrop-blur-xl border border-white/20 p-4 relative z-10 flex items-end justify-between gap-3">
+                      <div className="flex-1 min-w-0 pr-2">
+                        <h3 className="text-[17px] sm:text-[19px] font-extrabold text-white leading-tight mb-1 font-sans drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] line-clamp-1 tracking-tight">
+                          {camp.title}
+                        </h3>
+                        {(camp.subtitle || camp.description) && (
+                          <p className="text-white/90 text-[12px] sm:text-[13px] font-medium leading-relaxed line-clamp-2 pr-4 sm:pr-8 drop-shadow-md">
+                            {camp.subtitle || camp.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
