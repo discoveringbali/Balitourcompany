@@ -1373,31 +1373,24 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </section>
 
         {/* About Us / SEO Section */}
-        <section className="px-6 mb-16">
-          <div className="bg-white rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-gray-100 flex flex-col lg:flex-row">
-            <div className="lg:w-1/2 relative h-[300px] lg:h-auto">
-              <Image 
-                src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=800"
-                alt="Authentic Bali Tour Company Experience"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-            <div className="lg:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-              <span className="text-[12px] font-extrabold text-gray-500 uppercase tracking-widest mb-3">About Balance Island</span>
-              <h2 className="text-[26px] md:text-[32px] font-black text-primary leading-tight mb-4">
-                Your Gateway to the Best Private Bali Tours & Authentic Experiences
-              </h2>
-              <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed mb-6">
+        <section className="px-6 mb-16 mt-6">
+          <div className="flex flex-col gap-2">
+            <span className="text-[12px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">About Balance Island</span>
+            <h2 className="text-[26px] md:text-[32px] font-black text-primary leading-tight mb-4 max-w-4xl">
+              Your Gateway to the Best Private Bali Tours & Authentic Experiences
+            </h2>
+            <div className="flex flex-col md:flex-row gap-4 md:gap-12">
+              <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed flex-1">
                 Welcome to <strong>Balance Island</strong>, a premier local travel agency dedicated to showing you the true heart of Bali. Unlike cookie-cutter travel packages, our <strong>Bali private tours</strong> are carefully crafted by passionate <strong>local Balinese guides</strong> who know the island's hidden gems, rich culture, and breathtaking landscapes better than anyone.
               </p>
-              <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed mb-8">
-                Whether you're chasing waterfalls in Ubud, seeking the perfect sunset in Uluwatu, or planning a serene temple hopping adventure, we guarantee a safe, memorable, and highly personalized journey. Choose the most trusted <strong>Bali Tour Company</strong> for an unforgettable island escape.
-              </p>
-              <Link href="/about" className="inline-flex items-center justify-center bg-black text-white px-6 py-3.5 rounded-full font-bold text-[14px] hover:bg-neutral-800 transition-colors w-fit">
-                Learn More About Us
-              </Link>
+              <div className="flex-1 flex flex-col items-start">
+                <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed mb-6">
+                  Whether you're chasing waterfalls in Ubud, seeking the perfect sunset in Uluwatu, or planning a serene temple hopping adventure, we guarantee a safe, memorable, and highly personalized journey. Choose the most trusted <strong>Bali Tour Company</strong> for an unforgettable island escape.
+                </p>
+                <Link href="/about" className="inline-flex items-center justify-center bg-black text-white px-6 py-3 rounded-full font-bold text-[14px] hover:bg-neutral-800 transition-colors">
+                  Learn More About Us
+                </Link>
+              </div>
             </div>
           </div>
         </section>
