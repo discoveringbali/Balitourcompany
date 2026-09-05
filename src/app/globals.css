@@ -147,16 +147,78 @@
 .admin-wrapper button.bg-black:hover, .admin-wrapper a.bg-black:hover { background-color: #333333 !important; }
 
 html {
-  background-color: #ffffff;
+  background-color: #f2f2f7;
 }
 
 body {
-  background-color: var(--color-background);
+  background: linear-gradient(135deg, #fceabb 0%, #f8b500 50%, #b8c6db 100%);
+  background-size: 400% 400%;
+  animation: liquidBg 15s ease infinite;
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Prevent Google Translate from pushing the body down */
   top: 0 !important;
+  position: relative;
+  min-height: 100vh;
+}
+
+@keyframes liquidBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Extra blurred orbs for Apple style liquid background */
+body::before, body::after {
+  content: "";
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  z-index: -1;
+  animation: floatOrb 20s infinite alternate ease-in-out;
+}
+
+body::before {
+  width: 50vw;
+  height: 50vw;
+  background: rgba(255, 100, 150, 0.4);
+  top: -10vh;
+  left: -10vw;
+}
+
+body::after {
+  width: 60vw;
+  height: 60vw;
+  background: rgba(100, 200, 255, 0.4);
+  bottom: -20vh;
+  right: -10vw;
+  animation-delay: -5s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(5vw, -5vh) scale(1.1); }
+  100% { transform: translate(-5vw, 5vh) scale(0.9); }
+}
+
+/* Apple Liquid Glass Buttons Globally */
+button, .glass-btn, a[role="button"] {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05) !important;
+  color: var(--color-text-primary) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+button:hover, .glass-btn:hover, a[role="button"]:hover {
+  background: rgba(255, 255, 255, 0.4) !important;
+  transform: scale(1.02) !important;
+}
+
+button:active, .glass-btn:active, a[role="button"]:active {
+  transform: scale(0.95) !important;
 }
 
 /* Hide Google Translate UI elements */

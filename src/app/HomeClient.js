@@ -691,7 +691,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   };
 
   return (
-    <div className="w-full bg-white min-h-[100dvh] font-sans pb-32 relative -mt-20 md:-mt-24">
+    <div className="w-full bg-transparent min-h-[100dvh] font-sans pb-32 relative -mt-20 md:-mt-24">
       
       <div className="relative z-10 w-full md:pt-[100px] pb-4">
         {/* Mobile Top Section */}
@@ -700,7 +700,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           <div className="relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 mb-4">
+          <div className="bg-white/30 backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/50 rounded-[32px] p-1.5 mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -736,7 +736,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
 
           {/* Apple Glass Search Bar */}
-          <div className="flex items-center bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-full pl-2 pr-2 py-2 relative mb-6">
+          <div className="flex items-center bg-white/30 backdrop-blur-3xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/50 rounded-full pl-2 pr-2 py-2 relative mb-6">
 
             {/* Mobile Service Dropdown Trigger inside Search Bar */}
             <button
@@ -769,7 +769,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
             {/* Mobile Service Dropdown */}
             {isServiceDropdownOpen && (
-              <div className="absolute top-[60px] left-0 bg-white rounded-2xl p-2 shadow-2xl flex flex-col min-w-[160px] border border-border animate-in fade-in zoom-in-95 duration-200 z-[70]">
+              <div className="absolute top-[60px] left-0 bg-white/40 backdrop-blur-3xl rounded-2xl p-2 shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/50 animate-in fade-in zoom-in-95 duration-200 z-[70]">
                 {services.map((s) => {
                   const Icon = s.icon;
                   return (
@@ -798,7 +798,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
           {/* Search Autocomplete Dropdown */}
           {isSearchFocused && searchQuery.length > 0 && (
-            <div className="absolute top-[100%] mt-2 left-6 right-6 bg-white rounded-2xl p-2 shadow-2xl border border-border animate-in fade-in zoom-in-95 duration-200 z-[60]">
+            <div className="absolute top-[100%] mt-2 left-6 right-6 bg-white/40 backdrop-blur-3xl rounded-2xl p-2 shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/50 animate-in fade-in zoom-in-95 duration-200 z-[60]">
               {searchSuggestions.length > 0 ? (
                 searchSuggestions.map((loc, idx) => (
                   <button
