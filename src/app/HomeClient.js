@@ -13,6 +13,7 @@ import { generateSlug } from "@/lib/utils";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
 import { getCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
 import CampaignServiceShowcase from "@/components/campaign/CampaignServiceShowcase";
+import FlashSaleCard from "@/components/home/FlashSaleCard";
 
 const InstagramIcon = ({ size = 24, className = "", strokeWidth = 2 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
@@ -188,19 +189,20 @@ function PopularTripCard({ trip }) {
   );
 }
 
-export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [], initialCampaigns = null }) {
+export default function HomeClient({ initialListings = [], initialSettings = null, initialBlogs = [], initialCampaigns = null, initialFlashSale = null }) {
   const router = useRouter();
   const [activeCat, setActiveCat] = useState("All");
   const [activeService, setActiveService] = useState("Tour");
   const [currentCampIdx, setCurrentCampIdx] = useState(0);
 
   // Use initialCampaigns from server or fallback to DEFAULT_CAMPAIGNS
-  const safeInitialCampaigns = initialCampaigns ? {
-    scooter: { ...DEFAULT_CAMPAIGNS.scooter, ...(initialCampaigns.scooter || {}) },
-    spa: { ...DEFAULT_CAMPAIGNS.spa, ...(initialCampaigns.spa || {}) }
-  } : DEFAULT_CAMPAIGNS;
+  const [campaigns, setCampaigns] = useState(initialCampaigns || DEFAULT_CAMPAIGNS);
+  const [flashSale, setFlashSale] = useState(initialFlashSale || null);
 
-  const [serviceCampaigns, setServiceCampaigns] = useState(safeInitialCampaigns);
+  const [serviceCampaigns, setServiceCampaigns] = useState({
+    scooter: { ...DEFAULT_CAMPAIGNS.scooter, ...(campaigns.scooter || {}) },
+    spa: { ...DEFAULT_CAMPAIGNS.spa, ...(campaigns.spa || {}) }
+  });
 
   useEffect(() => {
     // Only listen for changes if we're in the admin dashboard preview
@@ -472,6 +474,24 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     handleResize(); // Set initial value
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Listen for admin changes via local events (for realtime preview)
+  useEffect(() => {
+    const handleSettingsChange = () => {
+      fetch('/api/admin/homepage-settings')
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.metadata) {
+            if (data.metadata.campaigns) setCampaigns(data.metadata.campaigns);
+            if (data.metadata.flashSale !== undefined) setFlashSale(data.metadata.flashSale);
+          }
+        })
+        .catch(console.error);
+    };
+
+    window.addEventListener("homepage_hero_settings_changed", handleSettingsChange);
+    return () => window.removeEventListener("homepage_hero_settings_changed", handleSettingsChange);
   }, []);
 
   // Signal to SplashScreen that content is ready once SWR data has settled
@@ -1275,6 +1295,12 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       </div>
 
       <div id="showcase-section" className="max-w-[1400px] mx-auto min-h-screen">
+        
+        {/* Flash Sale Banner */}
+        {flashSale && flashSale.active && (
+          <FlashSaleCard data={flashSale} />
+        )}
+
         {/* Popular Trips */}
             <section className="pt-2 mb-8 relative">
               <div className="px-6 flex justify-between items-end mb-4">

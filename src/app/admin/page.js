@@ -30,6 +30,14 @@ export default function AdminDashboard() {
     promoCode: "BALI2026"
   });
   const [campaigns, setCampaigns] = useState(DEFAULT_CAMPAIGNS);
+  const [flashSale, setFlashSale] = useState({
+    active: false,
+    title: "",
+    discountText: "",
+    endTime: "",
+    image: "",
+    linkUrl: ""
+  });
   const [isHeroUploading, setIsHeroUploading] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [uploadingFor, setUploadingFor] = useState(null);
@@ -80,6 +88,9 @@ export default function AdminDashboard() {
           saveCampaignSettings(data.metadata.campaigns);
         } else {
           setCampaigns(getCampaignSettings());
+        }
+        if (data.metadata?.flashSale) {
+          setFlashSale(data.metadata.flashSale);
         }
       } else {
         setCampaigns(getCampaignSettings());
@@ -209,7 +220,7 @@ export default function AdminDashboard() {
         id: 1,
         campaign_video: heroSettings.campaignVideo,
         campaign_youtube_link: heroSettings.campaignYoutubeLink,
-        metadata: { ...metadata, campaigns: campaigns, promoCode: heroSettings.promoCode },
+        metadata: { ...metadata, campaigns: campaigns, promoCode: heroSettings.promoCode, flashSale: flashSale },
         updated_at: new Date().toISOString()
       };
       
@@ -260,35 +271,32 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleCardImageUpload = async (e, type) => {
+  const handleCampaignImageUpload = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
-    setIsUploadingImage(true);
     setUploadingFor(type);
     try {
       const fileExt = file.name.split('.').pop();
-      const fileName = `partner_${type}_${Date.now()}.${fileExt}`;
+      const fileName = `${type}_${Date.now()}.${fileExt}`;
       const { error: uploadError } = await supabase.storage
         .from('campaigns')
         .upload(fileName, file, { cacheControl: '3600', upsert: true });
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
-        .from('campaigns')
-        .getPublicUrl(fileName);
-
-      setCampaigns(prev => ({
-        ...prev,
-        [type]: {
-          ...(prev[type] || DEFAULT_CAMPAIGNS[type]),
-          image: publicUrl
-        }
-      }));
+      const { data: { publicUrl } } = supabase.storage.from('campaigns').getPublicUrl(fileName);
+      
+      if (type === 'flashSale') {
+        setFlashSale({ ...flashSale, image: publicUrl });
+      } else {
+        setCampaigns({
+          ...campaigns,
+          [type]: { ...campaigns[type], image: publicUrl }
+        });
+      }
     } catch (err) {
-      alert("Image upload failed: " + err.message);
+      alert(`Error uploading image: ${err.message}`);
     } finally {
-      setIsUploadingImage(false);
       setUploadingFor(null);
     }
   };
@@ -659,7 +667,7 @@ export default function AdminDashboard() {
                       />
                       <label className="px-4 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0">
                         <Upload size={14} /> {isUploadingImage && uploadingFor === 'scooter' ? "Uploading..." : "Upload Image"}
-                        <input type="file" accept="image/*" onChange={(e) => handleCardImageUpload(e, 'scooter')} className="hidden" disabled={isUploadingImage} />
+                        <input type="file" accept="image/*" onChange={(e) => handleCampaignImageUpload(e, 'scooter')} className="hidden" disabled={isUploadingImage} />
                       </label>
                     </div>
                   </div>
@@ -747,8 +755,67 @@ export default function AdminDashboard() {
                       />
                       <label className="px-4 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0">
                         <Upload size={14} /> {isUploadingImage && uploadingFor === 'spa' ? "Uploading..." : "Upload Image"}
-                        <input type="file" accept="image/*" onChange={(e) => handleCardImageUpload(e, 'spa')} className="hidden" disabled={isUploadingImage} />
+                        <input type="file" accept="image/*" onChange={(e) => handleCampaignImageUpload(e, 'spa')} className="hidden" disabled={isUploadingImage} />
                       </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Flash Sale Configuration */}
+                <div className="bg-white rounded-[24px] p-6 lg:p-8 border border-[#eaeaea] shadow-sm">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center">
+                      <Tag size={20} strokeWidth={2.5} />
+                    </div>
+                    <div>
+                      <h3 className="font-black text-lg text-[#1c1c1c]">Flash Sale Settings</h3>
+                      <p className="text-xs font-semibold text-gray-500">Configure the limited time offer banner.</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between bg-gray-50 p-4 rounded-xl border border-gray-100">
+                      <div>
+                        <span className="font-bold text-sm block">Enable Flash Sale</span>
+                        <span className="text-xs text-gray-500">Show the flash sale card on the homepage.</span>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" checked={flashSale.active} onChange={(e) => setFlashSale({ ...flashSale, active: e.target.checked })} className="sr-only peer" />
+                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-black"></div>
+                      </label>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-2">Title</label>
+                        <input type="text" value={flashSale.title} onChange={(e) => setFlashSale({ ...flashSale, title: e.target.value })} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-black transition-colors" placeholder="e.g. Secret Bali Deal" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-2">Discount Text</label>
+                        <input type="text" value={flashSale.discountText} onChange={(e) => setFlashSale({ ...flashSale, discountText: e.target.value })} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-black transition-colors" placeholder="e.g. 20% OFF" />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-2">End Time</label>
+                        <input type="datetime-local" value={flashSale.endTime ? new Date(flashSale.endTime).toISOString().slice(0, 16) : ""} onChange={(e) => setFlashSale({ ...flashSale, endTime: new Date(e.target.value).toISOString() })} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-black transition-colors" />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-2">Link URL</label>
+                        <input type="text" value={flashSale.linkUrl} onChange={(e) => setFlashSale({ ...flashSale, linkUrl: e.target.value })} className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm font-semibold outline-none focus:border-black transition-colors" placeholder="e.g. /tours" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-black uppercase tracking-wider text-gray-500 mb-2">Image</label>
+                      <div className="flex items-center gap-4 bg-gray-50 p-2 rounded-xl border border-gray-200">
+                        <input type="text" value={flashSale.image || ""} readOnly className="flex-1 bg-transparent px-2 text-xs font-medium text-gray-600 outline-none truncate" placeholder="No image uploaded" />
+                        <label className="px-4 py-2.5 bg-black text-white rounded-xl text-xs font-black hover:bg-neutral-800 transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0">
+                          <Upload size={14} /> {isUploadingImage && uploadingFor === 'flashSale' ? "Uploading..." : "Upload Image"}
+                          <input type="file" accept="image/*" onChange={(e) => handleCampaignImageUpload(e, 'flashSale')} className="hidden" disabled={isUploadingImage} />
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

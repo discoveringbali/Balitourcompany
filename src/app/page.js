@@ -41,6 +41,7 @@ export default async function Page() {
   } : null;
 
   const initialCampaigns = settingsData?.metadata?.campaigns || null;
+  const initialFlashSale = settingsData?.metadata?.flashSale || null;
 
   return (
     <HomeClient 
@@ -48,6 +49,7 @@ export default async function Page() {
       initialBlogs={initialBlogs || []} 
       initialSettings={initialSettings} 
       initialCampaigns={initialCampaigns}
+      initialFlashSale={initialFlashSale}
     />
   );
 }
