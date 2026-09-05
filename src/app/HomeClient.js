@@ -1376,7 +1376,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
 
         {/* Recommended Places */}
-        <section className="px-6 mb-20">
+        <section className="px-6 mb-6">
           <div className="flex justify-between items-end mb-4 md:mb-6">
             <h2 className="text-[20px] font-bold text-primary">Recommended Places</h2>
             <Link href="/blog" className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
@@ -1432,8 +1432,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         </section>
 
         {/* Footer */}
-        <footer className="px-6 pb-8 pt-4">
-          <div className="flex flex-col items-center justify-center pt-8 border-t border-gray-100">
+        <footer className="px-6 pb-6 pt-2">
+          <div className="flex flex-col items-center justify-center pt-6 border-t border-gray-100">
             <p className="text-[12px] font-semibold text-gray-400">© 2026 Balance Island. All rights reserved.</p>
           </div>
         </footer>

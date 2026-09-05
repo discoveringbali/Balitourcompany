@@ -31,9 +31,9 @@ export default function Sidebar({ isOpen, onClose }) {
         className={`fixed top-0 left-0 h-full w-full sm:w-[420px] bg-white z-[100] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-between p-6">
-          <Link href="/" onClick={onClose} className="font-extrabold text-[22px] tracking-tight text-primary flex items-center gap-2">
-            Balance Island
-          </Link>
+          <span className="font-extrabold text-[12px] tracking-[0.15em] text-gray-500 uppercase flex items-center gap-2">
+            Menu
+          </span>
           <div className="flex items-center gap-4">
             <button 
               onClick={onClose}
@@ -48,7 +48,6 @@ export default function Sidebar({ isOpen, onClose }) {
           
           {/* MENU Section */}
           <div className="space-y-5">
-            <h4 className="text-[11px] font-bold text-gray-500 tracking-[0.15em] uppercase">Menu</h4>
             <div className="flex flex-col space-y-5">
               <Link href="/" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
                 Home

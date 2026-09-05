@@ -12,23 +12,13 @@ export default function About() {
   return (
     <div className="w-full bg-white pb-20">
       {/* Hero Section */}
-      <div className="relative w-full h-[50vh] md:h-[60vh] lg:h-[70vh] mb-16">
-        <Image 
-          src="https://images.unsplash.com/photo-1554481923-a6918bd997bc?auto=format&fit=crop&q=80&w=2000"
-          alt="Beautiful Bali Rice Terraces - Balance Island Tours"
-          fill
-          priority
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40"></div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 pt-16">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-white tracking-tight drop-shadow-lg" style={{ fontFamily: 'var(--font-playfair)' }}>
-            About Balance Island
-          </h1>
-          <p className="text-lg md:text-2xl text-white/90 max-w-2xl font-medium drop-shadow-md">
-            Your Trusted Bali Travel Agency for Authentic & Premium Experiences
-          </p>
-        </div>
+      <div className="w-full pt-16 md:pt-24 mb-16 px-6 text-center">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 text-primary tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+          About Balance Island
+        </h1>
+        <p className="text-lg md:text-xl text-text-secondary max-w-2xl font-medium mx-auto">
+          Your Trusted Bali Travel Agency for Authentic & Premium Experiences
+        </p>
       </div>
 
       <div className="container mx-auto px-6 lg:max-w-7xl">
