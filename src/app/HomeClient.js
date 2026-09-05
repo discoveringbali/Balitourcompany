@@ -1372,12 +1372,109 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </section>
 
+            {/* Guest Reviews Section */}
+            <section className="px-6 mb-16 mt-4">
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                  <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-2">Guest Reviews</h2>
+                  <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed">
+                    See what our travelers are saying about their experiences with Balance Island.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <select className="bg-gray-50 border border-gray-200 text-black text-sm rounded-[16px] focus:ring-primary focus:border-primary block p-3 font-bold outline-none cursor-pointer">
+                    <option value="All">Filter by Trip: All Trips</option>
+                    <option value="Ubud Tour">Ubud Highlights Tour</option>
+                    <option value="Nusa Penida">Nusa Penida Day Trip</option>
+                    <option value="Mount Batur">Mount Batur Sunrise</option>
+                  </select>
+                  <button className="bg-black text-white px-5 py-3 rounded-[16px] font-bold text-[14px] hover:bg-neutral-800 transition-colors whitespace-nowrap">
+                    Write a Review
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Mock Review 1 */}
+                <div className="bg-white rounded-[24px] p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-1 text-[#f5a623]">
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-400">2 days ago</span>
+                  </div>
+                  <p className="text-[14px] text-text-secondary leading-relaxed flex-1">
+                    "Absolutely incredible experience! Our driver Putu was so friendly and knew all the best spots to avoid the crowds. Highly recommend the Ubud Highlights tour."
+                  </p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-500">S</div>
+                    <div>
+                      <p className="text-[13px] font-bold text-black">Sarah M.</p>
+                      <p className="text-[11px] font-semibold text-gray-400">Ubud Highlights Tour</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mock Review 2 */}
+                <div className="bg-white rounded-[24px] p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-1 text-[#f5a623]">
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-400">1 week ago</span>
+                  </div>
+                  <p className="text-[14px] text-text-secondary leading-relaxed flex-1">
+                    "The Mount Batur sunrise trek was breathtaking. Our guide was very patient and made sure we safely reached the top. Booking through Balance Island was seamless!"
+                  </p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-500">M</div>
+                    <div>
+                      <p className="text-[13px] font-bold text-black">Mark T.</p>
+                      <p className="text-[11px] font-semibold text-gray-400">Mount Batur Sunrise Trek</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mock Review 3 */}
+                <div className="bg-white rounded-[24px] p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex gap-1 text-[#f5a623]">
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                      <Star size={16} fill="currentColor" strokeWidth={0} />
+                    </div>
+                    <span className="text-xs font-bold text-gray-400">3 weeks ago</span>
+                  </div>
+                  <p className="text-[14px] text-text-secondary leading-relaxed flex-1">
+                    "Such a smooth and stress-free trip. The car was clean, AC worked perfectly, and we got to see the beautiful beaches in Uluwatu at our own pace."
+                  </p>
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-500">J</div>
+                    <div>
+                      <p className="text-[13px] font-bold text-black">Jessica W.</p>
+                      <p className="text-[11px] font-semibold text-gray-400">Uluwatu Sunset Tour</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+
         {/* About Us / SEO Section */}
         <section className="px-6 mb-16 mt-6">
           <div className="flex flex-col gap-2">
-            <span className="text-[12px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">About Balance Island</span>
-            <h2 className="text-[26px] md:text-[32px] font-black text-primary leading-tight mb-4 max-w-4xl">
-              Your Gateway to the Best Private Bali Tours & Authentic Experiences
+            <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              About Balance Island
             </h2>
             <div className="flex flex-col md:flex-row gap-4 md:gap-12">
               <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed flex-1">
