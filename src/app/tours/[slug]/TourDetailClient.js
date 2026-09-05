@@ -396,10 +396,8 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                   <button 
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`no-glass py-2.5 px-5 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${
-                      isActive 
-                        ? (tourData.service === "Spa" ? "bg-[#939393] text-white shadow-sm" : "bg-black text-white shadow-sm")
-                        : (tourData.service === "Spa" ? "bg-[#ededed] hover:bg-[#e2e2e2] text-[#909090]" : "bg-surface hover:bg-surface-hover text-text-secondary")
+                    className={`liquid-glass py-2.5 px-5 rounded-full whitespace-nowrap text-sm font-bold transition-colors ${
+                      isActive ? 'liquid-glass-active' : ''
                     }`}
                   >
                     {tab}
@@ -913,7 +911,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
               setModalStartStep(1);
               setIsBookingModalOpen(true);
             }} 
-            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
+            className={`liquid-glass px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap`}
           >
             {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
           </button>
