@@ -691,11 +691,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   };
 
   return (
-    <div className="w-full bg-white min-h-[100dvh] font-sans pb-32 relative">
+    <div className="w-full bg-white min-h-[100dvh] font-sans pb-32 relative -mt-20 md:-mt-24">
       
       <div className="relative z-10 w-full md:pt-[100px] pb-4">
         {/* Mobile Top Section */}
-        <div className="md:hidden bg-transparent -mt-20 pt-[108px] pb-8 relative z-20 w-full">
+        <div className="md:hidden bg-transparent pt-[108px] pb-8 relative z-20 w-full">
           {/* Mobile Top Header Search */}
           <div className="relative z-40 px-5">
 
