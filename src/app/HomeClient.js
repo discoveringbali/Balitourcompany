@@ -1377,22 +1377,27 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
         {/* About Us / SEO Section */}
         <section className="px-6 mb-16 mt-6">
-          <div className="flex flex-col gap-2">
-            <span className="text-[12px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">About Balance Island</span>
-            <h2 className="text-[26px] md:text-[32px] font-black text-primary leading-tight mb-4 max-w-4xl font-serif">
-              Your Gateway to the Best Private Bali Tours & Authentic Experiences
-            </h2>
-            <div className="flex flex-col md:flex-row gap-4 md:gap-12">
-              <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed flex-1">
-                Welcome to <strong>Balance Island</strong>, a premier local travel agency dedicated to showing you the true heart of Bali. Unlike cookie-cutter travel packages, our <strong>Bali private tours</strong> are carefully crafted by passionate <strong>local Balinese guides</strong> who know the island's hidden gems, rich culture, and breathtaking landscapes better than anyone.
-              </p>
-              <div className="flex-1 flex flex-col items-start">
-                <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed mb-6">
-                  Whether you're chasing waterfalls in Ubud, seeking the perfect sunset in Uluwatu, or planning a serene temple hopping adventure, we guarantee a safe, memorable, and highly personalized journey. Choose the most trusted <strong>Bali Tour Company</strong> for an unforgettable island escape.
+          <div className="bg-white rounded-[32px] p-6 md:p-10 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-2">
+                <span className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em]">About Balance Island</span>
+                <h2 className="text-[20px] md:text-[24px] font-semibold text-primary leading-snug max-w-3xl">
+                  Your gateway to the best private Bali tours and authentic experiences.
+                </h2>
+              </div>
+              
+              <div className="flex flex-col md:flex-row gap-6 md:gap-12">
+                <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed flex-1">
+                  Welcome to Balance Island, a premier local travel agency dedicated to showing you the true heart of Bali. Unlike cookie-cutter travel packages, our Bali private tours are carefully crafted by passionate local Balinese guides who know the island's hidden gems, rich culture, and breathtaking landscapes better than anyone.
                 </p>
-                <Link href="/about" className="inline-flex items-center justify-center bg-black text-white px-6 py-3 rounded-full font-bold text-[14px] hover:bg-neutral-800 transition-colors">
-                  Learn More About Us
-                </Link>
+                <div className="flex-1 flex flex-col items-start">
+                  <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed mb-6">
+                    Whether you're chasing waterfalls in Ubud, seeking the perfect sunset in Uluwatu, or planning a serene temple hopping adventure, we guarantee a safe, memorable, and highly personalized journey. Choose the most trusted Bali Tour Company for an unforgettable island escape.
+                  </p>
+                  <Link href="/about" className="inline-flex items-center justify-center bg-gray-50 text-black border border-gray-200 px-6 py-3 rounded-xl font-bold text-[14px] hover:bg-gray-100 transition-colors w-full md:w-auto">
+                    Learn More About Us
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

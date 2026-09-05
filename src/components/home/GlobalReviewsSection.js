@@ -27,10 +27,9 @@ export default function GlobalReviewsSection({ tours = [] }) {
     // 1. Extract real reviews from all tours
     let extractedReviews = [];
     tours.forEach(tour => {
-      // Look for reviewsList in metadata (or fallback to data)
-      const dataObj = tour.metadata || tour.data || {};
-      if (Array.isArray(dataObj.reviewsList)) {
-        dataObj.reviewsList.forEach(rev => {
+      const reviewsList = tour.reviewsList || (tour.metadata && tour.metadata.reviewsList) || (tour.data && tour.data.reviewsList);
+      if (Array.isArray(reviewsList)) {
+        reviewsList.forEach(rev => {
           extractedReviews.push({
             ...rev,
             tourTitle: tour.title
@@ -311,25 +310,25 @@ export default function GlobalReviewsSection({ tours = [] }) {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {allReviews.map((review) => (
-                <div key={`all-${review.id}`} className="bg-gray-50 rounded-[20px] p-6 border border-gray-100 flex flex-col h-full">
+                <div key={`all-${review.id}`} className="bg-white rounded-[24px] p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
                    <div className="flex items-center justify-between mb-4">
                     <div className="flex gap-1 text-[#f5a623]">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"} strokeWidth={i < review.rating ? 0 : 1} stroke="#e5e7eb" />
                       ))}
                     </div>
-                    <span className="text-xs font-bold text-gray-400">{formatDate(review.date)}</span>
+                    <span className="text-xs font-semibold text-gray-400 bg-gray-50 px-2 py-1 rounded-md">{formatDate(review.date)}</span>
                   </div>
-                  <p className="text-[14px] text-text-secondary leading-relaxed mb-6 flex-1 italic">
+                  <p className="text-[15px] text-text-secondary leading-relaxed mb-6 flex-1">
                     "{review.comment}"
                   </p>
-                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200 mt-auto">
-                    <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-gray-500 text-[14px] uppercase border border-gray-100">
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-50 mt-auto">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-100 to-gray-200 flex items-center justify-center font-bold text-gray-600 text-[14px] uppercase shadow-inner">
                       {review.user?.charAt(0) || 'U'}
                     </div>
                     <div>
-                      <p className="text-[13px] font-bold text-black">{review.user}</p>
-                      <p className="text-[11px] font-semibold text-gray-400 truncate max-w-[200px]">{review.tourTitle}</p>
+                      <p className="text-[14px] font-bold text-black tracking-tight">{review.user}</p>
+                      <p className="text-[12px] font-medium text-gray-400 truncate max-w-[200px]">{review.tourTitle}</p>
                     </div>
                   </div>
                 </div>
