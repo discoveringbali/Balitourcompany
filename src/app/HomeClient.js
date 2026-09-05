@@ -1376,7 +1376,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <section className="px-6 mb-16 mt-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-              <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-2">Why Choose Bali Tour Company?</h2>
+              <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-2">Why Choose Balance Island?</h2>
               <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed">
                 Experience the authentic beauty of the Island of Gods with the most trusted Bali travel agency. We provide premium Bali private tours crafted by local experts.
               </p>
