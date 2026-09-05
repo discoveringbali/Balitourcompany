@@ -3,72 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Star, ChevronLeft, ChevronRight, X, User } from 'lucide-react';
 import Image from 'next/image';
 
-const mockReviews = [
-  {
-    id: 'm1',
-    user: 'Sarah M.',
-    rating: 5,
-    comment: 'Absolutely incredible experience! Our driver Putu was so friendly and knew all the best spots to avoid the crowds. Highly recommend the Ubud Highlights tour.',
-    date: new Date(Date.now() - 2 * 86400000).toISOString(),
-    tourTitle: 'Ubud Highlights Tour'
-  },
-  {
-    id: 'm2',
-    user: 'Mark T.',
-    rating: 5,
-    comment: 'The Mount Batur sunrise trek was breathtaking. Our guide was very patient and made sure we safely reached the top. Booking through Balance Island was seamless!',
-    date: new Date(Date.now() - 7 * 86400000).toISOString(),
-    tourTitle: 'Mount Batur Sunrise Trek'
-  },
-  {
-    id: 'm3',
-    user: 'Jessica W.',
-    rating: 5,
-    comment: 'Such a smooth and stress-free trip. The car was clean, AC worked perfectly, and we got to see the beautiful beaches in Uluwatu at our own pace.',
-    date: new Date(Date.now() - 21 * 86400000).toISOString(),
-    tourTitle: 'Uluwatu Sunset Tour'
-  },
-  {
-    id: 'm4',
-    user: 'David K.',
-    rating: 5,
-    comment: 'Our trip to Nusa Penida was the highlight of our Bali holiday! Balance Island organized everything perfectly, from the fast boat to the local transport.',
-    date: new Date(Date.now() - 30 * 86400000).toISOString(),
-    tourTitle: 'Nusa Penida Day Trip'
-  },
-  {
-    id: 'm5',
-    user: 'Emma L.',
-    rating: 4,
-    comment: 'Great service overall. The guide was knowledgeable and the temples were stunning. Traffic in Bali is crazy but the driver handled it well.',
-    date: new Date(Date.now() - 45 * 86400000).toISOString(),
-    tourTitle: 'Ubud Highlights Tour'
-  },
-  {
-    id: 'm6',
-    user: 'Michael R.',
-    rating: 5,
-    comment: 'Booked the airport transfer and a day tour. Both were excellent. Very professional and the cars were immaculate.',
-    date: new Date(Date.now() - 50 * 86400000).toISOString(),
-    tourTitle: 'Private Car Charter'
-  },
-  {
-    id: 'm7',
-    user: 'Sophie B.',
-    rating: 5,
-    comment: 'An unforgettable spiritual journey. The water purification ritual was a deeply moving experience. Thank you Balance Island.',
-    date: new Date(Date.now() - 62 * 86400000).toISOString(),
-    tourTitle: 'Spiritual Healing Tour'
-  },
-  {
-    id: 'm8',
-    user: 'James H.',
-    rating: 5,
-    comment: 'Highly recommended! They customized our itinerary perfectly to fit exactly what we wanted to see in East Bali.',
-    date: new Date(Date.now() - 80 * 86400000).toISOString(),
-    tourTitle: 'Custom Bali Tour'
-  }
-];
+
 
 export default function GlobalReviewsSection({ tours = [] }) {
   const [allReviews, setAllReviews] = useState([]);
@@ -89,11 +24,13 @@ export default function GlobalReviewsSection({ tours = [] }) {
   });
 
   useEffect(() => {
-    // 1. Extract real reviews from tours
+    // 1. Extract real reviews from all tours
     let extractedReviews = [];
     tours.forEach(tour => {
-      if (tour.data && Array.isArray(tour.data.reviewsList)) {
-        tour.data.reviewsList.forEach(rev => {
+      // Look for reviewsList in metadata (or fallback to data)
+      const dataObj = tour.metadata || tour.data || {};
+      if (Array.isArray(dataObj.reviewsList)) {
+        dataObj.reviewsList.forEach(rev => {
           extractedReviews.push({
             ...rev,
             tourTitle: tour.title
@@ -105,8 +42,7 @@ export default function GlobalReviewsSection({ tours = [] }) {
     // 2. Sort by date descending
     extractedReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // 3. Always combine real reviews and mock reviews so the UI never looks empty
-    setAllReviews([...extractedReviews, ...mockReviews]);
+    setAllReviews(extractedReviews);
   }, [tours]);
 
   const scroll = (direction) => {
@@ -178,15 +114,11 @@ export default function GlobalReviewsSection({ tours = [] }) {
     }
   };
 
-  // SMART LOGIC: Realistic Trust Score
-  // We simulate a robust base of 42 perfect 5-star reviews to make the platform look established.
-  // When a user adds a real 1-star review, the math brings the average beautifully down to exactly 4.9.
-  const BASE_REVIEWS = 42;
-  const realReviews = allReviews.filter(r => !r.id.toString().startsWith('m'));
-  const realSum = realReviews.reduce((sum, r) => sum + r.rating, 0);
-  
-  const displayTotalCount = BASE_REVIEWS + realReviews.length;
-  const avgRating = (((BASE_REVIEWS * 5) + realSum) / displayTotalCount).toFixed(1);
+  // Calculate overall average and total directly from the database reviews
+  const displayTotalCount = tours.reduce((sum, tour) => sum + (Number(tour.reviews_count || tour.reviews) || 0), 0) + (allReviews.length > 0 ? 0 : 0);
+  const avgRating = allReviews.length > 0 
+    ? (allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length).toFixed(1)
+    : '5.0';
 
   return (
     <section className="px-6 mb-16 mt-4">

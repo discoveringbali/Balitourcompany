@@ -25,7 +25,7 @@ export async function POST(req) {
     // 4. Fetch the existing listing
     const { data: listing, error: fetchError } = await supabase
       .from('listings')
-      .select('rating, reviews, data')
+      .select('rating, reviews_count, metadata')
       .eq('id', id)
       .single();
 
@@ -33,8 +33,8 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Listing not found' }, { status: 404 });
     }
 
-    // 5. Append review to data.reviewsList
-    const dataObj = listing.data || {};
+    // 5. Append review to metadata.reviewsList
+    const dataObj = listing.metadata || {};
     const reviewsList = Array.isArray(dataObj.reviewsList) ? [...dataObj.reviewsList] : [];
     
     const newReview = {
@@ -60,8 +60,8 @@ export async function POST(req) {
       .from('listings')
       .update({
         rating: newAverage,
-        reviews: totalReviews,
-        data: dataObj
+        reviews_count: totalReviews,
+        metadata: dataObj
       })
       .eq('id', id);
 

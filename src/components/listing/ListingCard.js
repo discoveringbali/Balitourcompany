@@ -214,7 +214,7 @@ export default function ListingCard({ item, linkTo, compact }) {
         <div className="flex items-center gap-1 mb-3 md:mb-4">
           <Star size={compact ? 10 : 13} strokeWidth={2.5} className="fill-black text-black pb-[0.5px]" />
           <span className={`font-bold text-primary ${compact ? 'text-[11px] md:text-[13px]' : 'text-[13px]'}`}>{Number(item.rating || 5).toFixed(1)}</span>
-          <span className={`font-semibold text-text-secondary ${compact ? 'text-[10px] md:text-[13px]' : 'text-[13px]'}`}>({item.reviews || 0} reviews)</span>
+          <span className={`font-semibold text-text-secondary ${compact ? 'text-[10px] md:text-[13px]' : 'text-[13px]'}`}>({item.reviews_count || item.reviews || 0} reviews)</span>
         </div>
 
         {/* Footer (Price + Button/Date) */}
