@@ -164,7 +164,7 @@ function PopularTripCard({ trip }) {
       {/* Heart Button */}
       <button 
         onClick={handleSave}
-        className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110"
+        className="no-glass absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110"
       >
         <Heart size={16} strokeWidth={2.5} className={isSaved ? "text-black fill-black" : ""} />
       </button>
@@ -1317,7 +1317,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                         <button
                           key={c.id}
                           onClick={() => setActiveCat(c.id)}
-                          className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
+                          className="no-glass relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
                         >
                           {isActive && (
                             <motion.div

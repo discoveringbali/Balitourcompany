@@ -160,7 +160,7 @@ body {
 }
 
 /* Apple Liquid Glass Buttons Globally for Light Mode */
-button, .glass-btn, a[role="button"] {
+button:not(.no-glass), .glass-btn, a[role="button"]:not(.no-glass) {
   background: rgba(255, 255, 255, 0.6) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
@@ -172,14 +172,14 @@ button, .glass-btn, a[role="button"] {
   position: relative;
 }
 
-button:hover, .glass-btn:hover, a[role="button"]:hover {
+button:not(.no-glass):hover, .glass-btn:hover, a[role="button"]:not(.no-glass):hover {
   background: rgba(255, 255, 255, 0.9) !important;
   transform: scale(1.02) !important;
   border-color: rgba(0, 0, 0, 0.15) !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-button:active, .glass-btn:active, a[role="button"]:active {
+button:not(.no-glass):active, .glass-btn:active, a[role="button"]:not(.no-glass):active {
   transform: scale(0.92) !important;
   background: rgba(240, 240, 240, 0.6) !important;
   backdrop-filter: blur(30px) saturate(250%) !important;
