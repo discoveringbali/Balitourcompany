@@ -1473,8 +1473,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         {/* About Us / SEO Section */}
         <section className="px-6 mb-16 mt-6">
           <div className="flex flex-col gap-2">
-            <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-              About Balance Island
+            <span className="text-[12px] font-extrabold text-gray-500 uppercase tracking-widest mb-1">About Balance Island</span>
+            <h2 className="text-[26px] md:text-[32px] font-black text-primary leading-tight mb-4 max-w-4xl font-serif">
+              Your Gateway to the Best Private Bali Tours & Authentic Experiences
             </h2>
             <div className="flex flex-col md:flex-row gap-4 md:gap-12">
               <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed flex-1">
@@ -1496,7 +1497,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         <section className="px-6 mb-16 mt-4">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
-              <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-2">Why Choose Balance Island?</h2>
+              <h2 className="text-[26px] md:text-[32px] font-black text-primary tracking-tight mb-2 font-serif">Why Choose Balance Island?</h2>
               <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed">
                 Experience the authentic beauty of the Island of Gods with the most trusted Bali travel agency. We provide premium Bali private tours crafted by local experts.
               </p>
