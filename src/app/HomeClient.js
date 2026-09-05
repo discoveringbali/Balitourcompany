@@ -13,7 +13,7 @@ import { generateSlug } from "@/lib/utils";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
 import { getCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
 import CampaignServiceShowcase from "@/components/campaign/CampaignServiceShowcase";
-import SocialLinks from '@/components/layout/SocialLinks';
+
 const InstagramIcon = ({ size = 24, className = "", strokeWidth = 2 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -1373,91 +1373,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </section>
 
 
-        {/* About Us / SEO Section */}
-        <section className="px-6 mb-16 mt-6">
-          <div className="bg-white rounded-[32px] p-6 md:p-10 border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-2">
-                <span className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em]">About Balance Island</span>
-                <h2 className="text-[20px] md:text-[24px] font-semibold text-primary leading-snug max-w-3xl">
-                  Your gateway to the best private Bali tours and authentic experiences.
-                </h2>
-              </div>
-              
-              <div className="flex flex-col md:flex-row gap-6 md:gap-12">
-                <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed flex-1">
-                  Welcome to Balance Island, a premier local travel agency dedicated to showing you the true heart of Bali. Unlike cookie-cutter travel packages, our Bali private tours are carefully crafted by passionate local Balinese guides who know the island's hidden gems, rich culture, and breathtaking landscapes better than anyone.
-                </p>
-                <div className="flex-1 flex flex-col items-start">
-                  <p className="text-text-secondary text-[14px] md:text-[15px] leading-relaxed mb-6">
-                    Whether you're chasing waterfalls in Ubud, seeking the perfect sunset in Uluwatu, or planning a serene temple hopping adventure, we guarantee a safe, memorable, and highly personalized journey. Choose the most trusted Bali Tour Company for an unforgettable island escape.
-                  </p>
-                  <Link href="/about" className="inline-flex items-center justify-center bg-gray-50 text-black border border-gray-200 px-6 py-3 rounded-xl font-bold text-[14px] hover:bg-gray-100 transition-colors w-full md:w-auto">
-                    Learn More About Us
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Why Choose Us & Trust Section */}
-        <section className="px-6 mb-16 mt-4">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-            <div>
-              <h2 className="text-[26px] md:text-[32px] font-black text-primary tracking-tight mb-2 font-serif">Why Choose Balance Island?</h2>
-              <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed">
-                Experience the authentic beauty of the Island of Gods with the most trusted Bali travel agency. We provide premium Bali private tours crafted by local experts.
-              </p>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {/* Feature 1 */}
-            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
-              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
-                <Star size={24} className="fill-white" />
-              </div>
-              <h3 className="font-extrabold text-[16px] text-primary mb-2">Top-Rated Experiences</h3>
-              <p className="text-text-secondary text-[13px] leading-relaxed">
-                Consistently rated 5-stars by thousands of travelers. We guarantee the best Bali tours with unforgettable memories.
-              </p>
-            </div>
-
-            {/* Feature 2 */}
-            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
-              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
-                <Users size={24} />
-              </div>
-              <h3 className="font-extrabold text-[16px] text-primary mb-2">Local Balinese Guides</h3>
-              <p className="text-text-secondary text-[13px] leading-relaxed">
-                Explore hidden gems with our professional English-speaking drivers and knowledgeable local experts.
-              </p>
-            </div>
-
-            {/* Feature 3 */}
-            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
-              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
-                <ShieldCheck size={24} />
-              </div>
-              <h3 className="font-extrabold text-[16px] text-primary mb-2">Secure & Trusted Booking</h3>
-              <p className="text-text-secondary text-[13px] leading-relaxed">
-                Book with confidence. We are a registered Bali travel agency offering transparent pricing and secure payments.
-              </p>
-            </div>
-
-            {/* Feature 4 */}
-            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
-              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
-                <Clock size={24} />
-              </div>
-              <h3 className="font-extrabold text-[16px] text-primary mb-2">Flexible Cancellation</h3>
-              <p className="text-text-secondary text-[13px] leading-relaxed">
-                Travel plans change? Enjoy peace of mind with our flexible 24-hour cancellation policy on most activities.
-              </p>
-            </div>
-          </div>
-        </section>
 
         {/* Recommended Places */}
         <section className="px-6 mb-20">
@@ -1514,6 +1430,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             )})}
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="px-6 pb-8 pt-4">
+          <div className="flex flex-col items-center justify-center pt-8 border-t border-gray-100">
+            <p className="text-[12px] font-semibold text-gray-400">© 2026 Balance Island. All rights reserved.</p>
+          </div>
+        </footer>
 
       </div>
     </div>
