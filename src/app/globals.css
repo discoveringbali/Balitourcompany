@@ -2,26 +2,29 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme {
-  --color-primary: #ffffff;
-  --color-primary-inverse: #000000;
+  --color-primary: #1c1c1c;
+  --color-primary-inverse: #ffffff;
 
-  --color-accent: #ffffff;
-  --color-accent-hover: #cccccc;
+  /* Redesign Signature Lime Accent */
+  --color-accent: #000000;
+  --color-accent-hover: #333333;
 
-  --color-background: #000000;
-  --color-surface: rgba(255, 255, 255, 0.1);
-  --color-dark-surface: rgba(255, 255, 255, 0.15);
+  --color-background: #ffffff;
+  --color-surface: #fafafa;
+  --color-dark-surface: #2f2f2f;
 
-  --color-text-primary: #ffffff;
-  --color-text-secondary: rgba(255, 255, 255, 0.6);
-  --color-border: rgba(255, 255, 255, 0.2);
+  --color-text-primary: #1c1c1c;
+  --color-text-secondary: #717171;
+  --color-border: #f0f0f0;
 
-  --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --shadow-medium: 0 12px 40px rgba(0, 0, 0, 0.4);
-  --shadow-floating: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-floating: 0 10px 40px rgba(0, 0, 0, 0.15);
+  /* For float widgets */
 
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 
+  /* Enhanced Radii for App-like feel */
   --radius-xl: 0.75rem;
   --radius-2xl: 1.25rem;
   --radius-3xl: 2rem;
@@ -33,11 +36,97 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  /* Newsletter Article Typography */
+  .newsletter-content {
+    @apply text-lg leading-[1.8] font-sans;
+    color: #000000 !important;
+  }
+
+  .newsletter-content h1,
+  .newsletter-content h2,
+  .newsletter-content h3,
+  .newsletter-content h4 {
+    @apply font-sans font-black tracking-tight;
+    color: #000000 !important;
+  }
+
+  .newsletter-content h2 {
+    @apply text-3xl mt-12 mb-6;
+  }
+
+  .newsletter-content h3 {
+    @apply text-2xl mt-8 mb-4;
+  }
+
+  .newsletter-content p {
+    @apply mb-6;
+  }
+
+
+  .newsletter-content ul {
+    @apply list-disc pl-6 mb-6 space-y-2;
+  }
+
+  .newsletter-content ol {
+    @apply list-decimal pl-6 mb-6 space-y-2;
+  }
+
+  .newsletter-content li {
+    @apply mb-2 pl-2;
+  }
+
+  .newsletter-content strong {
+    @apply font-bold;
+    color: #000000 !important;
+  }
+
+  .newsletter-content a {
+    @apply underline decoration-2 underline-offset-4 hover:text-gray-600 transition-colors font-semibold;
+    color: #000000 !important;
+  }
+
+  .newsletter-content blockquote {
+    @apply border-l-4 border-black pl-6 py-2 my-8 italic text-xl text-black bg-gray-50 rounded-r-xl;
+  }
+
+  /* Professional Table Styling */
+  .newsletter-content .TyagGW_tableWrapper,
+  .newsletter-content .TyagGW_tableContainer {
+    @apply w-full overflow-x-auto block;
+  }
+
+  .newsletter-content table {
+    @apply w-full my-8 border-collapse overflow-hidden rounded-2xl shadow-sm border border-gray-100 bg-white text-left;
+  }
+
+  .newsletter-content thead {
+    @apply bg-gray-50 border-b border-gray-100;
+  }
+
+  .newsletter-content th {
+    @apply px-4 py-4 text-left text-sm font-extrabold text-gray-800 tracking-wider uppercase border-b border-gray-100 bg-gray-50;
+  }
+
+  .newsletter-content td {
+    @apply px-4 py-4 text-[16px] md:text-[17px] border-b border-gray-50 font-medium text-gray-700 align-top;
+  }
+
+  .newsletter-content tbody tr {
+    @apply hover:bg-gray-50/80 transition-colors;
+  }
+
+  .newsletter-content tbody tr:last-child td {
+    @apply border-b-0;
+  }
 }
+
+
 
 /* ADMIN REVERT OVERRIDES */
 .admin-wrapper .bg-white, .admin-wrapper.bg-white { background-color: #ffffff !important; }
@@ -58,76 +147,41 @@
 .admin-wrapper button.bg-black:hover, .admin-wrapper a.bg-black:hover { background-color: #333333 !important; }
 
 html {
-  background-color: #000000 !important;
+  background-color: #ffffff;
 }
 
 body {
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent Google Translate from pushing the body down */
   top: 0 !important;
-  position: relative;
-  min-height: 100vh;
 }
 
-/* Global Dark Liquid Glass Overrides for Front-end */
-body:not(.admin-wrapper) .bg-white, 
-body:not(.admin-wrapper) .bg-gray-50, 
-body:not(.admin-wrapper) .bg-white\/95,
-body:not(.admin-wrapper) .bg-white\/80,
-body:not(.admin-wrapper) .bg-white\/70,
-body:not(.admin-wrapper) .bg-white\/40,
-body:not(.admin-wrapper) .bg-white\/30 {
-  background: rgba(25, 25, 25, 0.4) !important;
-  backdrop-filter: blur(25px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(25px) saturate(200%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-  color: #ffffff !important;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-body:not(.admin-wrapper) .text-primary,
-body:not(.admin-wrapper) .text-black {
-  color: #ffffff !important;
-}
-
-body:not(.admin-wrapper) .text-text-secondary,
-body:not(.admin-wrapper) .text-gray-500,
-body:not(.admin-wrapper) .text-gray-600 {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-body:not(.admin-wrapper) .border-border,
-body:not(.admin-wrapper) .border-gray-100 {
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-/* Apple Liquid Glass Buttons Globally */
+/* Apple Liquid Glass Buttons Globally for Light Mode */
 button, .glass-btn, a[role="button"] {
-  background: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(20px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
-  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+  color: var(--color-text-primary) !important; /* Force text to dark for contrast */
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
   overflow: hidden;
   position: relative;
 }
 
-/* The requested click / hover liquid effect */
 button:hover, .glass-btn:hover, a[role="button"]:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
   transform: scale(1.02) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-button:active, .glass-btn:active, a[role="button"]:active,
-body:not(.admin-wrapper) .bg-white:active {
+button:active, .glass-btn:active, a[role="button"]:active {
   transform: scale(0.92) !important;
-  background: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(240, 240, 240, 0.6) !important;
   backdrop-filter: blur(30px) saturate(250%) !important;
 }
 
@@ -135,21 +189,27 @@ body:not(.admin-wrapper) .bg-white:active {
 .goog-te-banner-frame {
   display: none !important;
 }
+
 .goog-te-combo {
   display: none !important;
 }
+
 #google_translate_element {
   display: none !important;
 }
+
 .skiptranslate {
   display: none !important;
 }
+
 .goog-tooltip {
   display: none !important;
 }
+
 .goog-tooltip:hover {
   display: none !important;
 }
+
 .goog-text-highlight {
   background-color: transparent !important;
   border: none !important;
