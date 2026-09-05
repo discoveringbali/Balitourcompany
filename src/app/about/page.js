@@ -33,34 +33,21 @@ export default function About() {
 
       <div className="container mx-auto px-6 lg:max-w-7xl">
         {/* Our Story / Mission */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center mb-24">
-          <div className="lg:w-1/2">
-            <div className="relative w-full aspect-square rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
-              <Image
-                src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&q=80&w=1000"
-                alt="Balinese Local Culture and Guide"
-                fill
-                className="object-cover"
-              />
-            </div>
-          </div>
-          
-          <div className="lg:w-1/2 flex flex-col justify-center">
-            <span className="text-sm font-extrabold text-gray-500 uppercase tracking-[0.2em] mb-4">Our Story</span>
-            <h2 className="text-3xl md:text-4xl font-black text-primary leading-tight mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
-              Curating the Best Private Bali Tours
-            </h2>
-            <div className="space-y-4 text-text-secondary text-base md:text-lg leading-relaxed">
-              <p>
-                We are a premium platform dedicated to curating the best experiences on the island. From hidden temples and pristine beaches to luxury spa retreats and secure rentals, our goal is to streamline your perfect journey in Bali.
-              </p>
-              <p>
-                At <strong>Balance Island</strong>, we believe that traveling should be more than just visiting tourist spots; it should be an immersion into the local culture. As a leading <strong>Bali Tour Company</strong>, we partner with passionate, knowledgeable <strong>local Balinese guides</strong> who are eager to share the true spirit of the Island of Gods.
-              </p>
-              <p>
-                Whether you are looking for an adventurous waterfall trek, a serene yoga retreat, or a customized <strong>private Bali day tour</strong>, our dedicated team ensures every detail is handled with care, providing you with a safe, luxurious, and completely unforgettable holiday.
-              </p>
-            </div>
+        <div className="flex flex-col items-center mb-24 max-w-4xl mx-auto text-center">
+          <span className="text-sm font-extrabold text-gray-500 uppercase tracking-[0.2em] mb-4">Our Story</span>
+          <h2 className="text-3xl md:text-4xl font-black text-primary leading-tight mb-8" style={{ fontFamily: 'var(--font-playfair)' }}>
+            Curating the Best Private Bali Tours
+          </h2>
+          <div className="space-y-6 text-text-secondary text-base md:text-lg leading-relaxed text-left md:text-center">
+            <p>
+              We are a premium platform dedicated to curating the best experiences on the island. From hidden temples and pristine beaches to luxury spa retreats and secure rentals, our goal is to streamline your perfect journey in Bali.
+            </p>
+            <p>
+              At <strong>Balance Island</strong>, we believe that traveling should be more than just visiting tourist spots; it should be an immersion into the local culture. As a leading <strong>Bali Tour Company</strong>, we partner with passionate, knowledgeable <strong>local Balinese guides</strong> who are eager to share the true spirit of the Island of Gods.
+            </p>
+            <p>
+              Whether you are looking for an adventurous waterfall trek, a serene yoga retreat, or a customized <strong>private Bali day tour</strong>, our dedicated team ensures every detail is handled with care, providing you with a safe, luxurious, and completely unforgettable holiday.
+            </p>
           </div>
         </div>
 
@@ -124,7 +111,7 @@ export default function About() {
             <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-10">
               Browse our exclusive collection of private tours, activities, and transport options to start building your perfect itinerary.
             </p>
-            <Link href="/tours" className="inline-block bg-white text-black font-extrabold text-lg px-8 py-4 rounded-full hover:bg-gray-100 transition-colors shadow-lg hover:scale-105 active:scale-95 duration-200">
+            <Link href="/tours" className="inline-block bg-white text-black font-extrabold text-[14px] md:text-base px-6 py-3 rounded-full hover:bg-gray-100 transition-colors shadow-lg hover:scale-105 active:scale-95 duration-200 whitespace-nowrap">
               View All Tours & Activities
             </Link>
           </div>
