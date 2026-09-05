@@ -127,18 +127,10 @@ export default function GlobalReviewsSection({ tours = [] }) {
           <h2 className="text-[26px] md:text-[32px] font-black text-primary tracking-tight mb-2">
             Guest Reviews
           </h2>
-          <div className="flex items-center gap-4 mb-2">
-            <span className="text-[36px] font-black text-primary leading-none">{avgRating}</span>
-            <div className="flex flex-col justify-center">
-              <div className="flex text-[#f5a623] mb-0.5">
-                 <Star size={16} fill="currentColor" strokeWidth={0} />
-                 <Star size={16} fill="currentColor" strokeWidth={0} />
-                 <Star size={16} fill="currentColor" strokeWidth={0} />
-                 <Star size={16} fill="currentColor" strokeWidth={0} />
-                 <Star size={16} fill="currentColor" strokeWidth={0} />
-              </div>
-              <span className="text-[13px] text-gray-500 font-bold">{displayTotalCount} reviews</span>
-            </div>
+          <div className="flex items-center gap-1.5 mb-2 mt-1">
+            <Star size={20} strokeWidth={2.5} className="fill-black text-black pb-[1px]" />
+            <span className="font-bold text-primary text-[20px]">{avgRating}</span>
+            <span className="font-semibold text-text-secondary text-[20px]">({displayTotalCount} reviews)</span>
           </div>
           <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed mt-4">
             See what our travelers are saying about their experiences with Balance Island.
@@ -180,10 +172,9 @@ export default function GlobalReviewsSection({ tours = [] }) {
               className="snap-center shrink-0 w-[85vw] sm:w-[340px] bg-white rounded-[24px] p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] flex flex-col gap-4"
             >
               <div className="flex items-center justify-between">
-                <div className="flex gap-1 text-[#f5a623]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} fill={i < review.rating ? "currentColor" : "none"} strokeWidth={i < review.rating ? 0 : 1} stroke="#e5e7eb" />
-                  ))}
+                <div className="flex gap-1 items-center">
+                  <Star size={13} strokeWidth={2.5} className="fill-black text-black pb-[0.5px]" />
+                  <span className="font-bold text-primary text-[13px]">{Number(review.rating).toFixed(1)}</span>
                 </div>
                 <span className="text-xs font-bold text-gray-400">{formatDate(review.date)}</span>
               </div>
@@ -312,10 +303,9 @@ export default function GlobalReviewsSection({ tours = [] }) {
               {allReviews.map((review) => (
                 <div key={`all-${review.id}`} className="bg-white rounded-[24px] p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full">
                    <div className="flex items-center justify-between mb-4">
-                    <div className="flex gap-1 text-[#f5a623]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"} strokeWidth={i < review.rating ? 0 : 1} stroke="#e5e7eb" />
-                      ))}
+                    <div className="flex gap-1 items-center">
+                      <Star size={13} strokeWidth={2.5} className="fill-black text-black pb-[0.5px]" />
+                      <span className="font-bold text-primary text-[13px]">{Number(review.rating).toFixed(1)}</span>
                     </div>
                     <span className="text-xs font-semibold text-gray-400 bg-gray-50 px-2 py-1 rounded-md">{formatDate(review.date)}</span>
                   </div>
