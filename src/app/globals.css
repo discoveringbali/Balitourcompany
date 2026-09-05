@@ -147,58 +147,17 @@
 .admin-wrapper button.bg-black:hover, .admin-wrapper a.bg-black:hover { background-color: #333333 !important; }
 
 html {
-  background-color: #f2f2f7;
+  background-color: #000000;
 }
 
 body {
-  background: linear-gradient(135deg, #fceabb 0%, #f8b500 50%, #b8c6db 100%);
-  background-size: 400% 400%;
-  animation: liquidBg 15s ease infinite;
+  background-color: #000000;
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   top: 0 !important;
   position: relative;
   min-height: 100vh;
-}
-
-@keyframes liquidBg {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Extra blurred orbs for Apple style liquid background */
-body::before, body::after {
-  content: "";
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(100px);
-  z-index: -1;
-  animation: floatOrb 20s infinite alternate ease-in-out;
-}
-
-body::before {
-  width: 50vw;
-  height: 50vw;
-  background: rgba(255, 100, 150, 0.4);
-  top: -10vh;
-  left: -10vw;
-}
-
-body::after {
-  width: 60vw;
-  height: 60vw;
-  background: rgba(100, 200, 255, 0.4);
-  bottom: -20vh;
-  right: -10vw;
-  animation-delay: -5s;
-}
-
-@keyframes floatOrb {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(5vw, -5vh) scale(1.1); }
-  100% { transform: translate(-5vw, 5vh) scale(0.9); }
 }
 
 /* Apple Liquid Glass Buttons Globally */
