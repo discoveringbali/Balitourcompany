@@ -164,7 +164,7 @@ function PopularTripCard({ trip }) {
       {/* Heart Button */}
       <button 
         onClick={handleSave}
-        className="liquid-glass absolute top-4 right-4 w-[34px] h-[34px] rounded-full flex items-center justify-center text-white z-10"
+        className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110"
       >
         <Heart size={16} strokeWidth={2.5} className={isSaved ? "text-black fill-black" : ""} />
       </button>
@@ -708,7 +708,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <button
                     key={loc}
                     onClick={() => setSearchQuery(loc === "All Bali" ? "" : loc)}
-                    className={`liquid-glass relative flex items-center justify-center px-5 py-2.5 rounded-[24px] active:scale-95 outline-none shrink-0 transition-colors`}
+                    className="relative flex items-center justify-center px-5 py-2.5 rounded-[24px] active:scale-95 outline-none shrink-0"
                   >
                     {/* Animated Sliding Pill */}
                     {isActive && (
@@ -870,7 +870,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
                 <button
                   onClick={() => setIsFilterModalOpen(false)}
-                  className="liquid-glass w-full font-extrabold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2 mb-2"
+                  className="w-full bg-black text-white font-extrabold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2 mb-2 hover:bg-neutral-800"
                 >
                   Show {filteredTours.length} Results
                 </button>
@@ -1317,7 +1317,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                         <button
                           key={c.id}
                           onClick={() => setActiveCat(c.id)}
-                          className="liquid-glass relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
+                          className="relative flex items-center justify-center px-4 py-2 rounded-[24px] active:scale-95 outline-none shrink-0"
                         >
                           {isActive && (
                             <motion.div

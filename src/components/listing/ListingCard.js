@@ -120,7 +120,7 @@ export default function ListingCard({ item, linkTo, compact }) {
           {/* Heart Favorite Button */}
           <button 
             onClick={handleSave} 
-            className="liquid-glass absolute top-4 right-4 w-[36px] h-[36px] rounded-full flex items-center justify-center text-white z-10"
+            className="absolute top-4 right-4 w-[36px] h-[36px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-[#939393] shadow-sm z-10 transition-all active:scale-90 hover:bg-white hover:text-black"
           >
             <Heart size={18} strokeWidth={2.5} className={isSaved ? "text-black fill-black" : ""} />
           </button>
@@ -227,7 +227,7 @@ export default function ListingCard({ item, linkTo, compact }) {
               </span>
             </div>
           </div>
-          <button className={`liquid-glass font-extrabold rounded-xl shrink-0 transition-transform active:scale-95 group-hover:scale-105 ${compact ? 'text-[11px] px-3 py-1.5 md:text-[13px] md:px-4 md:py-2' : 'text-[13px] px-4 py-2'}`}>
+          <button className={`font-extrabold text-white bg-black rounded-xl shrink-0 shadow-sm transition-transform active:scale-95 group-hover:scale-105 ${compact ? 'text-[11px] px-3 py-1.5 md:text-[13px] md:px-4 md:py-2' : 'text-[13px] px-4 py-2'}`}>
             Book
           </button>
         </div>
