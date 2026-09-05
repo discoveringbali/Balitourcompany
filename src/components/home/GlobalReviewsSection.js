@@ -35,6 +35,38 @@ const mockReviews = [
     comment: 'Our trip to Nusa Penida was the highlight of our Bali holiday! Balance Island organized everything perfectly, from the fast boat to the local transport.',
     date: new Date(Date.now() - 30 * 86400000).toISOString(),
     tourTitle: 'Nusa Penida Day Trip'
+  },
+  {
+    id: 'm5',
+    user: 'Emma L.',
+    rating: 4,
+    comment: 'Great service overall. The guide was knowledgeable and the temples were stunning. Traffic in Bali is crazy but the driver handled it well.',
+    date: new Date(Date.now() - 45 * 86400000).toISOString(),
+    tourTitle: 'Ubud Highlights Tour'
+  },
+  {
+    id: 'm6',
+    user: 'Michael R.',
+    rating: 5,
+    comment: 'Booked the airport transfer and a day tour. Both were excellent. Very professional and the cars were immaculate.',
+    date: new Date(Date.now() - 50 * 86400000).toISOString(),
+    tourTitle: 'Private Car Charter'
+  },
+  {
+    id: 'm7',
+    user: 'Sophie B.',
+    rating: 5,
+    comment: 'An unforgettable spiritual journey. The water purification ritual was a deeply moving experience. Thank you Balance Island.',
+    date: new Date(Date.now() - 62 * 86400000).toISOString(),
+    tourTitle: 'Spiritual Healing Tour'
+  },
+  {
+    id: 'm8',
+    user: 'James H.',
+    rating: 5,
+    comment: 'Highly recommended! They customized our itinerary perfectly to fit exactly what we wanted to see in East Bali.',
+    date: new Date(Date.now() - 80 * 86400000).toISOString(),
+    tourTitle: 'Custom Bali Tour'
   }
 ];
 
@@ -156,15 +188,32 @@ export default function GlobalReviewsSection({ tours = [] }) {
     }
   };
 
+  const avgRating = allReviews.length > 0 
+    ? (allReviews.reduce((sum, r) => sum + r.rating, 0) / allReviews.length).toFixed(1)
+    : '5.0';
+
   return (
     <section className="px-6 mb-16 mt-4">
       {/* Header section */}
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
-          <h2 className="text-[26px] md:text-[32px] font-black text-primary tracking-tight mb-2 font-serif">
-            Guest Reviews <span className="text-gray-400 text-[20px]">({totalReviewCount})</span>
+          <h2 className="text-[26px] md:text-[32px] font-black text-primary tracking-tight mb-2">
+            Guest Reviews
           </h2>
-          <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed">
+          <div className="flex items-center gap-4 mb-2">
+            <span className="text-[36px] font-black text-primary leading-none">{avgRating}</span>
+            <div className="flex flex-col justify-center">
+              <div className="flex text-[#f5a623] mb-0.5">
+                 <Star size={16} fill="currentColor" strokeWidth={0} />
+                 <Star size={16} fill="currentColor" strokeWidth={0} />
+                 <Star size={16} fill="currentColor" strokeWidth={0} />
+                 <Star size={16} fill="currentColor" strokeWidth={0} />
+                 <Star size={16} fill="currentColor" strokeWidth={0} />
+              </div>
+              <span className="text-[13px] text-gray-500 font-bold">{totalReviewCount} reviews</span>
+            </div>
+          </div>
+          <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed mt-4">
             See what our travelers are saying about their experiences with Balance Island.
           </p>
         </div>
@@ -332,10 +381,10 @@ export default function GlobalReviewsSection({ tours = [] }) {
               </button>
             </div>
             
-            <div className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {allReviews.map((review) => (
-                <div key={`all-${review.id}`} className="bg-gray-50 rounded-[20px] p-5">
-                   <div className="flex items-center justify-between mb-3">
+                <div key={`all-${review.id}`} className="bg-gray-50 rounded-[20px] p-6 border border-gray-100 flex flex-col h-full">
+                   <div className="flex items-center justify-between mb-4">
                     <div className="flex gap-1 text-[#f5a623]">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} size={14} fill={i < review.rating ? "currentColor" : "none"} strokeWidth={i < review.rating ? 0 : 1} stroke="#e5e7eb" />
@@ -343,16 +392,16 @@ export default function GlobalReviewsSection({ tours = [] }) {
                     </div>
                     <span className="text-xs font-bold text-gray-400">{formatDate(review.date)}</span>
                   </div>
-                  <p className="text-[14px] text-text-secondary leading-relaxed mb-4">
+                  <p className="text-[14px] text-text-secondary leading-relaxed mb-6 flex-1 italic">
                     "{review.comment}"
                   </p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-500 text-xs uppercase">
+                  <div className="flex items-center gap-3 pt-4 border-t border-gray-200 mt-auto">
+                    <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center font-bold text-gray-500 text-[14px] uppercase border border-gray-100">
                       {review.user?.charAt(0) || 'U'}
                     </div>
                     <div>
-                      <p className="text-[12px] font-bold text-black">{review.user}</p>
-                      <p className="text-[10px] font-semibold text-gray-400">{review.tourTitle}</p>
+                      <p className="text-[13px] font-bold text-black">{review.user}</p>
+                      <p className="text-[11px] font-semibold text-gray-400 truncate max-w-[200px]">{review.tourTitle}</p>
                     </div>
                   </div>
                 </div>
