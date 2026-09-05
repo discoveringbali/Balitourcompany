@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import useSWR from "swr";
-import { TreePine, Umbrella, Mountain, Droplets, Search, Plane, Building, Building2, Train, Bus, BriefcaseBusiness, Heart, HeartOff, MapPin, Map, Car, Bike, Wifi, Navigation, Sparkles, Landmark, Camera, Waves, Compass, ChevronDown, ChevronLeft, ChevronRight, Settings2, Star, Zap, Home as HomeIcon, Flower2, Globe, ArrowUpRight, Play, Pause, Volume2, VolumeX, X } from "lucide-react";
+import { TreePine, Umbrella, Mountain, Droplets, Search, Plane, Building, Building2, Train, Bus, BriefcaseBusiness, Heart, HeartOff, MapPin, Map, Car, Bike, Wifi, Navigation, Sparkles, Landmark, Camera, Waves, Compass, ChevronDown, ChevronLeft, ChevronRight, Settings2, Star, Zap, Home as HomeIcon, Flower2, Globe, ArrowUpRight, Play, Pause, Volume2, VolumeX, X, ShieldCheck, Users, Clock } from "lucide-react";
 import { TourIcon, SpaIcon, TransportIcon, ScooterIcon, ThinSparklesIcon, TowelsIcon, LotusIcon, CreattieTourIcon, CreattieSpaIcon, CreattieScooterIcon, CreattieTransportIcon, CreattieEsimIcon, AirbnbTourIcon, AirbnbSpaIcon, AirbnbScooterIcon, AirbnbTransportIcon, AirbnbEsimIcon } from "@/components/icons/CategoryIcons";
 import ListingCard from "@/components/listing/ListingCard";
 import Link from "next/link";
@@ -1371,6 +1371,64 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 )}
               </div>
             </section>
+
+        {/* Why Choose Us & Trust Section */}
+        <section className="px-6 mb-16 mt-4">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+              <h2 className="text-[24px] md:text-[28px] font-black text-primary tracking-tight mb-2">Why Choose Bali Tour Company?</h2>
+              <p className="text-text-secondary text-[14px] md:text-[16px] max-w-2xl leading-relaxed">
+                Experience the authentic beauty of the Island of Gods with the most trusted Bali travel agency. We provide premium Bali private tours crafted by local experts.
+              </p>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {/* Feature 1 */}
+            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
+                <Star size={24} className="fill-white" />
+              </div>
+              <h3 className="font-extrabold text-[16px] text-primary mb-2">Top-Rated Experiences</h3>
+              <p className="text-text-secondary text-[13px] leading-relaxed">
+                Consistently rated 5-stars by thousands of travelers. We guarantee the best Bali tours with unforgettable memories.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
+                <Users size={24} />
+              </div>
+              <h3 className="font-extrabold text-[16px] text-primary mb-2">Local Balinese Guides</h3>
+              <p className="text-text-secondary text-[13px] leading-relaxed">
+                Explore hidden gems with our professional English-speaking drivers and knowledgeable local experts.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
+                <ShieldCheck size={24} />
+              </div>
+              <h3 className="font-extrabold text-[16px] text-primary mb-2">Secure & Trusted Booking</h3>
+              <p className="text-text-secondary text-[13px] leading-relaxed">
+                Book with confidence. We are a registered Bali travel agency offering transparent pricing and secure payments.
+              </p>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="bg-white rounded-[24px] p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-start group hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-shadow">
+              <div className="w-12 h-12 rounded-2xl bg-black flex items-center justify-center text-white mb-5 group-hover:scale-110 transition-transform duration-300">
+                <Clock size={24} />
+              </div>
+              <h3 className="font-extrabold text-[16px] text-primary mb-2">Flexible Cancellation</h3>
+              <p className="text-text-secondary text-[13px] leading-relaxed">
+                Travel plans change? Enjoy peace of mind with our flexible 24-hour cancellation policy on most activities.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Recommended Places */}
         <section className="px-6 mb-20">
