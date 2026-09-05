@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Link from "next/link";
-import { X, Home, Map, Sparkles, HelpCircle, FileText, Info, Phone, ShieldAlert } from "lucide-react";
+import { X, ChevronRight } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -18,93 +18,93 @@ export default function Sidebar({ isOpen, onClose }) {
     return () => { document.body.style.overflow = "unset"; };
   }, [isOpen]);
 
-  const mainLinks = [
-    { name: "Home", path: "/", icon: Home },
-    { name: "Tours", path: "/tours", icon: Map },
-    { name: "Activities", path: "/tours?category=Activities", icon: Sparkles },
-    { name: "About Us", path: "/about", icon: Info },
-    { name: "Contact Us", path: "/contact", icon: Phone },
-  ];
-
-  const policyLinks = [
-    { name: "FAQ", path: "/faq", icon: HelpCircle },
-    { name: "Cancellation Policy", path: "/cancellation-policy", icon: ShieldAlert },
-    { name: "Terms & Conditions", path: "/terms", icon: FileText },
-  ];
-
   return (
     <>
       {/* Backdrop */}
       <div 
-        className={`fixed inset-0 bg-black/30 backdrop-blur-sm z-[90] transition-opacity duration-500 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-[90] transition-opacity duration-500 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
         onClick={onClose}
       />
 
       {/* Drawer */}
       <div 
-        className={`fixed top-0 left-0 h-full w-full sm:w-[400px] bg-white/75 backdrop-blur-3xl border-r border-white/60 shadow-[20px_0_40px_rgba(0,0,0,0.08)] z-[100] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 h-full w-full sm:w-[420px] bg-white z-[100] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <Link href="/" onClick={onClose} className="font-black text-xl tracking-[0.1em] text-primary uppercase">
-            BALANCE ISLAND
+        <div className="flex items-center justify-between p-6">
+          <Link href="/" onClick={onClose} className="font-extrabold text-[22px] tracking-tight text-primary flex items-center gap-2">
+            Balance Island
           </Link>
-          <button 
-            onClick={onClose}
-            className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-gray-500 hover:bg-black/10 hover:text-black transition-colors shrink-0"
-          >
-            <X size={20} strokeWidth={2.5} />
-          </button>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={onClose}
+              className="w-10 h-10 flex items-center justify-center text-black hover:bg-gray-100 rounded-full transition-colors shrink-0"
+            >
+              <X size={24} strokeWidth={2} />
+            </button>
+          </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-6 px-4 space-y-8 no-scrollbar">
+        <div className="flex-1 overflow-y-auto px-6 pb-20 pt-2 space-y-8 no-scrollbar">
           
-          {/* Main Navigation */}
-          <div className="space-y-1">
-            {mainLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive = pathname === link.path;
-              return (
-                <Link 
-                  key={link.name} 
-                  href={link.path}
-                  onClick={onClose}
-                  className={`flex items-center gap-4 px-4 py-4 rounded-2xl font-bold transition-all active:scale-95 ${
-                    isActive 
-                      ? 'bg-white/80 text-black shadow-sm border border-white/50' 
-                      : 'text-gray-600 hover:bg-white/50 hover:text-black border border-transparent'
-                  }`}
-                >
-                  <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-                  <span>{link.name}</span>
-                </Link>
-              );
-            })}
+          {/* MENU Section */}
+          <div className="space-y-5">
+            <h4 className="text-[11px] font-bold text-gray-500 tracking-[0.15em] uppercase">Menu</h4>
+            <div className="flex flex-col space-y-5">
+              <Link href="/" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+                Home
+              </Link>
+              <Link href="/tours?category=Activities" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+                Activities & Attractions
+              </Link>
+              <Link href="/tours" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+                Tour packages
+              </Link>
+            </div>
           </div>
 
-          <div className="h-px bg-gray-200 mx-4" />
+          <div className="h-px bg-gray-200 w-full" />
 
-          {/* Policy Navigation */}
-          <div className="space-y-1">
-            {policyLinks.map((link) => {
-              const Icon = link.icon;
-              const isActive = pathname === link.path;
-              return (
-                <Link 
-                  key={link.name} 
-                  href={link.path}
-                  onClick={onClose}
-                  className={`flex items-center gap-4 px-4 py-4 rounded-2xl font-bold transition-all active:scale-95 ${
-                    isActive 
-                      ? 'bg-white/80 text-black shadow-sm border border-white/50' 
-                      : 'text-gray-600 hover:bg-white/50 hover:text-black border border-transparent'
-                  }`}
-                >
-                  <Icon size={18} strokeWidth={isActive ? 2.5 : 2} />
-                  <span>{link.name}</span>
-                </Link>
-              );
-            })}
+          {/* READ Section */}
+          <div className="space-y-5">
+            <h4 className="text-[11px] font-bold text-gray-500 tracking-[0.15em] uppercase">Read</h4>
+            <div className="flex flex-col space-y-5">
+              <Link href="/blog" onClick={onClose} className="font-serif italic text-[28px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+                Our Blog
+              </Link>
+              <Link href="/about" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+                About Us
+              </Link>
+            </div>
           </div>
+
+          <div className="h-px bg-gray-200 w-full" />
+
+          {/* ACCOUNT/SUPPORT Section */}
+          <div className="space-y-2">
+            <h4 className="text-[11px] font-bold text-gray-500 tracking-[0.15em] uppercase mb-2">Support</h4>
+            <div className="flex flex-col">
+              <Link href="/contact" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#1a1a1a] hover:bg-gray-50 transition-colors border-b border-gray-100">
+                <span>Contact Us</span>
+                <ChevronRight size={18} className="text-gray-400" />
+              </Link>
+              <Link href="/faq" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#1a1a1a] hover:bg-gray-50 transition-colors border-b border-gray-100">
+                <span>Help center</span>
+                <ChevronRight size={18} className="text-gray-400" />
+              </Link>
+              <Link href="/terms" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#1a1a1a] hover:bg-gray-50 transition-colors border-b border-gray-100">
+                <span>Terms & Conditions</span>
+                <ChevronRight size={18} className="text-gray-400" />
+              </Link>
+            </div>
+          </div>
+
+          {/* BOTTOM PILL */}
+          <div className="pt-6">
+            <button className="flex items-center justify-center bg-gray-100 hover:bg-gray-200 text-black px-4 py-2.5 rounded-[24px] text-[12px] font-extrabold transition-colors tracking-wide">
+              EN · IDR
+            </button>
+          </div>
+
         </div>
       </div>
     </>
