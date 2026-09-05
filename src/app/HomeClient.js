@@ -1370,9 +1370,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
               </div>
+              
+              <div className="mt-12">
+                <GlobalReviewsSection tours={filteredListings} />
+              </div>
             </section>
-
-            <GlobalReviewsSection tours={initialListings} />
 
 
         {/* About Us / SEO Section */}
