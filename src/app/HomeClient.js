@@ -1074,9 +1074,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         )}
         </div> {/* End Mobile Top White Section */}
 
-        {/* Global Full-Screen Cinematic Background */}
+        {/* Desktop/iPad Full-Screen Cinematic Hero */}
         {displayCampaigns.length > 0 && (
-        <section className="fixed top-0 left-0 w-full h-[100vh] overflow-hidden bg-black z-[-1]">
+        <section className="hidden md:block absolute top-0 left-0 w-full h-[100vh] min-h-[700px] overflow-hidden bg-black group">
           {displayCampaigns.map((camp, idx) => (
             <div
               key={camp.id}
