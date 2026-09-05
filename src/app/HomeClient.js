@@ -13,7 +13,7 @@ import { generateSlug } from "@/lib/utils";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
 import { getCampaignSettings, DEFAULT_CAMPAIGNS } from "@/lib/campaigns";
 import CampaignServiceShowcase from "@/components/campaign/CampaignServiceShowcase";
-import GlobalReviewsSection from "@/components/home/GlobalReviewsSection";
+import SocialLinks from '@/components/layout/SocialLinks';
 const InstagramIcon = ({ size = 24, className = "", strokeWidth = 2 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className}>
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -1369,10 +1369,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     No tours found for this category currently.
                   </div>
                 )}
-              </div>
-              
-              <div className="mt-12">
-                <GlobalReviewsSection tours={filteredListings} />
               </div>
             </section>
 
