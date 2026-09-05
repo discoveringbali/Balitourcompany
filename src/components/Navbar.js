@@ -266,24 +266,24 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
         {/* Center Compressed Search */}
         <div className="flex-1 justify-center flex relative z-[60]">
-          <div className="flex items-center bg-white border border-border shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full pl-2 pr-2 py-1.5 cursor-pointer transition-all w-full max-w-[420px] relative hover:shadow-[0_8px_30px_rgb(0,0,0,0.1)]">
+          <div className={`flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full pl-2 pr-2 py-1.5 cursor-pointer transition-all duration-500 w-full max-w-[420px] relative hover:shadow-[0_8px_30px_rgb(0,0,0,0.1)] ${isScrolled ? 'bg-white border border-border' : 'border border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20'}`}>
             <button 
               onClick={() => setFilterOpen(!filterOpen)} 
-              className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full hover:bg-gray-50 text-primary active:scale-95 transition-all outline-none"
+              className={`flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full active:scale-95 transition-all outline-none ${isScrolled ? 'hover:bg-gray-50 text-primary' : 'hover:bg-white/20 text-white'}`}
             >
               <span className="font-extrabold text-[13px] tracking-tight">{activeService}</span>
-              <ChevronDown size={14} className={`text-text-secondary transition-transform duration-300 ${filterOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown size={14} className={`transition-transform duration-300 ${filterOpen ? 'rotate-180' : ''} ${isScrolled ? 'text-text-secondary' : 'text-white'}`} />
             </button>
-            <div className="h-5 w-[1px] bg-border/80 mx-1 shrink-0"></div>
-            <Search size={16} className="text-text-secondary mx-2" />
+            <div className={`h-5 w-[1px] mx-1 shrink-0 transition-colors duration-500 ${isScrolled ? 'bg-border/80' : 'bg-white/30'}`}></div>
+            <Search size={16} className={`mx-2 transition-colors duration-500 ${isScrolled ? 'text-text-secondary' : 'text-white'}`} />
             <input 
               type="text" 
               placeholder={`Search ${activeService.toLowerCase()}s...`}
               onChange={(e) => window.dispatchEvent(new CustomEvent('searchQueryChanged', { detail: e.target.value }))}
-              className="flex-1 outline-none text-[13px] font-medium bg-transparent text-primary placeholder:text-text-secondary min-w-0" 
+              className={`flex-1 outline-none text-[13px] font-medium bg-transparent min-w-0 transition-colors duration-500 ${isScrolled ? 'text-primary placeholder:text-text-secondary' : 'text-white placeholder:text-white/80'}`} 
             />
-            <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center ml-2 shadow-sm transition-transform hover:scale-105 shrink-0">
-              <Settings2 size={15} strokeWidth={2.5} className="text-white" />
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-2 shadow-sm transition-all hover:scale-105 shrink-0 ${isScrolled ? 'bg-black text-white' : 'bg-white text-black'}`}>
+              <Settings2 size={15} strokeWidth={2.5} className={isScrolled ? 'text-white' : 'text-black'} />
             </div>
             
             {/* Desktop Navbar Dropdown */}
