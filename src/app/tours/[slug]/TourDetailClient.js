@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ChevronLeft, Share, Heart, Star, Calendar, Clock, Plane, Building, Utensils, User, Bus, ArrowRight, MoreVertical, CheckCircle2, Languages, Car, Minus, Plus, Info } from "lucide-react";
+import { ChevronLeft, Share, Heart, Star, Calendar, Clock, Plane, Building, Utensils, User, Bus, ArrowRight, MoreVertical, CheckCircle2, Languages, Car, Minus, Plus, Info, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -804,15 +804,27 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                  <span className="font-extrabold text-primary text-[24px]">{formatPrice(getTotalPrice())}</span>
                </div>
 
-               <button 
-                 onClick={() => {
-                   setModalStartStep(2);
-                   setIsBookingModalOpen(true);
-                 }} 
-                 className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
-               >
-                 Check availability
-               </button>
+               <div className="flex flex-col gap-3 mb-6">
+                 <button 
+                   onClick={() => {
+                     setModalStartStep(2);
+                     setIsBookingModalOpen(true);
+                   }} 
+                   className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
+                 >
+                   Check availability
+                 </button>
+                 <button 
+                   onClick={() => {
+                     import('@/lib/cart').then(mod => {
+                       mod.addToCart(tourData, { price: getTotalPrice() });
+                     });
+                   }} 
+                   className="w-full py-4 rounded-[20px] border-2 border-gray-200 hover:border-black flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] bg-white text-black"
+                 >
+                   <ShoppingCart size={18} /> Add to Cart
+                 </button>
+               </div>
 
                <div className="flex flex-col gap-4 border-t border-border pt-6">
                  <div className="flex gap-3 text-[15px] text-text-secondary font-medium">
@@ -908,15 +920,27 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                </span>
             </div>
           </div>
-          <button 
-            onClick={() => {
-              setModalStartStep(1);
-              setIsBookingModalOpen(true);
-            }} 
-            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
-          >
-            {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => {
+                import('@/lib/cart').then(mod => {
+                  mod.addToCart(tourData, { price: selectedPackage === 'All Inclusive' && (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? getAllInclusivePriceForPax(desktopPax) : getLowestPrice() });
+                });
+              }}
+              className="w-[48px] h-[48px] rounded-xl flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors shrink-0"
+            >
+              <ShoppingCart size={20} className="text-black" />
+            </button>
+            <button 
+              onClick={() => {
+                setModalStartStep(1);
+                setIsBookingModalOpen(true);
+              }} 
+              className={`px-6 py-3 h-[48px] rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap flex-1 ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
+            >
+              {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
+            </button>
+          </div>
         </div>
       </div>
       </div>

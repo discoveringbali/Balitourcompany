@@ -12,7 +12,6 @@ const formatIDR = (num) => {
 };
 
 export default function BookingsPage() {
-  const [activeTab, setActiveTab] = useState("upcoming");
   const [loadingBookings, setLoadingBookings] = useState(true);
   const [bookings, setBookings] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -66,22 +65,13 @@ export default function BookingsPage() {
     }
   };
 
-  const getBookingType = (b) => {
-    const bookingDate = new Date(b.booking_date);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    if (b.status === "Cancelled") return "past";
-    return bookingDate < today ? "past" : "upcoming";
-  };
+
 
   if (loadingBookings) {
      return <div className="min-h-[100dvh] flex items-center justify-center bg-white"><div className="w-8 h-8 rounded-full border-4 border-gray-200 border-t-primary animate-spin"></div></div>;
   }
 
   const filteredBookings = bookings.filter(b => {
-    const isRightTab = getBookingType(b) === activeTab;
-    if (!isRightTab) return false;
     
     if (selectedDate) {
       // Assuming booking_date is like "2026-09-01" or parseable date string
@@ -112,26 +102,7 @@ export default function BookingsPage() {
           <div className="flex justify-between items-center">
           </div>
           
-          <div className="flex gap-6 max-w-6xl mx-auto">
-            <button 
-              onClick={() => setActiveTab("upcoming")}
-              className={`pb-3 text-[15px] font-bold transition-all relative ${activeTab === "upcoming" ? "text-primary" : "text-gray-400"}`}
-            >
-              Upcoming
-              {activeTab === "upcoming" && (
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-t-full"></div>
-              )}
-            </button>
-            <button 
-              onClick={() => setActiveTab("past")}
-              className={`pb-3 text-[15px] font-bold transition-all relative ${activeTab === "past" ? "text-primary" : "text-gray-400"}`}
-            >
-              Past
-              {activeTab === "past" && (
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-t-full"></div>
-              )}
-            </button>
-          </div>
+
 
           {/* Floating Calendar */}
           <div className="pt-6 pb-4 max-w-6xl mx-auto">
@@ -233,29 +204,26 @@ export default function BookingsPage() {
                     </div>
 
                     {/* Actions Area */}
-                    {activeTab === "upcoming" && (
+                    {b.status === "Pending" && (
                       <div key={b.id} className="mt-5 bg-white rounded-[24px] border border-gray-100 p-5 shadow-sm flex gap-3">
                         <a 
-                          href={`https://wa.me/6285174119423?text=${encodeURIComponent(`Hello Balance Island, regarding my booking:\n\n*BALANCE ISLAND BOOKING*\n\n*ID:* #${b.id}\n*TITLE:* ${b.service_name.toUpperCase()}\n*DATE:* ${b.booking_date}\n*PRICE:* ${b.amount}\n\nPlease assist me to confirm.`)}`} 
+                          href={`https://wa.me/6285174119423?text=${encodeURIComponent(`Hello Balance Island, regarding my booking:\n\n*BALANCE ISLAND BOOKING*\n\n*ID:* #${b.id}\n*TITLE:* ${b.service_name?.toUpperCase?.() || b.service_name}\n*DATE:* ${b.booking_date}\n*PRICE:* ${b.amount}\n\nPlease assist me to confirm.`)}`} 
                           target="_blank" 
                           rel="noreferrer" 
                           className="flex-1 bg-gray-100 text-primary text-[14px] font-bold py-3.5 rounded-xl hover:bg-gray-200 transition-colors text-center"
                         >
                           Message
                         </a>
-                        {b.status === "Pending" && (
-                          <button 
-                            onClick={() => handleCancelBooking(b.id)}
-                            className="flex-1 bg-white border border-gray-300 text-black text-[14px] font-bold py-3.5 rounded-xl hover:bg-gray-50 hover:border-black transition-colors"
-                          >
-                            Cancel
-                          </button>
-                        )}
+                        <button 
+                          onClick={() => handleCancelBooking(b.id)}
+                          className="flex-1 bg-white border border-gray-300 text-black text-[14px] font-bold py-3.5 rounded-xl hover:bg-gray-50 hover:border-black transition-colors"
+                        >
+                          Cancel
+                        </button>
                       </div>
                     )}
 
-                    {/* Cancelled state label if in past */}
-                    {b.status === "Cancelled" && activeTab === "past" && (
+                    {b.status === "Cancelled" && (
                       <div className="mt-4 p-3 bg-gray-50 text-black text-[13px] font-bold rounded-xl text-center">
                         Booking Cancelled
                       </div>

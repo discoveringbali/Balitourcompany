@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, MapPin, Globe, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, CircleDollarSign, Gift, Tag } from "lucide-react";
+import { Search, MapPin, Menu, Bell, Settings2, ChevronDown, User, Map, Sparkles, Gift, Tag, ShoppingCart, Trash2, ArrowRight } from "lucide-react";
 import { ScooterIcon, SpaIcon, TowelsIcon } from "@/components/icons/CategoryIcons";
 import Sidebar from "@/components/navigation/Sidebar";
 
@@ -27,11 +27,11 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeService, setActiveService] = useState("Tour");
   
-  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
   const [promoDropdownOpen, setPromoDropdownOpen] = useState(false);
   const [promos, setPromos] = useState([]);
-  const [activeLang, setActiveLang] = useState("EN");
-  const [isTranslating, setIsTranslating] = useState(false);
 
   // Derived state to instantly close modal on route change
   const [prevPath, setPrevPath] = useState(pathname);
@@ -40,33 +40,26 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     if (promoDropdownOpen) {
       setPromoDropdownOpen(false);
     }
+    if (cartOpen) {
+      setCartOpen(false);
+    }
   }
 
-  const languages = [
-    { code: 'EN', name: 'English' },
-    { code: 'FR', name: 'French' },
-    { code: 'ES', name: 'Spanish' },
-    { code: 'ID', name: 'Indonesia' }
-  ];
-
-  const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
-  const [activeCurrency, setActiveCurrency] = useState("IDR");
-  const currencies = [
-    { code: 'IDR', symbol: 'Rp', name: 'Indonesian Rupiah' },
-    { code: 'USD', symbol: '$', name: 'US Dollar' },
-    { code: 'EUR', symbol: '€', name: 'Euro' },
-    { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
-    { code: 'GBP', symbol: '£', name: 'British Pound' }
-  ];
-
   useEffect(() => {
-    const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
-    if (match && match[1]) {
-      setActiveLang(match[1].toUpperCase());
-    }
-    const savedCurrency = localStorage.getItem('balance_island_currency');
-    if (savedCurrency) setActiveCurrency(savedCurrency);
+    import('@/lib/cart').then(mod => {
+      setCartItems(mod.getCart());
+    });
+    const handleCartUpdate = (e) => {
+      if (e.detail && e.detail.newCart) setCartItems(e.detail.newCart);
+    };
+    window.addEventListener("cartUpdated", handleCartUpdate);
+    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
   }, []);
+
+  const formatIDR = (num) => {
+    if (!num || isNaN(num)) return num;
+    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -74,8 +67,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     // Add event listener for auto-opening promo modal
     const handleOpenPromoModal = () => {
       setPromoDropdownOpen(true);
-      setLangDropdownOpen(false);
-      setCurrencyDropdownOpen(false);
+      setCartOpen(false);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -96,41 +88,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     };
   }, []);
 
-  const handleCurrencyChange = (currCode) => {
-    setActiveCurrency(currCode);
-    setCurrencyDropdownOpen(false);
-    localStorage.setItem('balance_island_currency', currCode);
-    window.dispatchEvent(new CustomEvent('currencyChanged', { detail: currCode }));
-  };
 
-  const handleLanguageChange = (langCode) => {
-    setActiveLang(langCode);
-    setLangDropdownOpen(false);
-    setIsTranslating(true);
-    
-    const code = langCode.toLowerCase();
-    
-    // Set google translate cookies with and without domain for broader compatibility
-    // eslint-disable-next-line react-hooks/immutability
-    document.cookie = `googtrans=/en/${code}; path=/; domain=${window.location.hostname}`;
-    // eslint-disable-next-line react-hooks/immutability
-    document.cookie = `googtrans=/en/${code}; path=/; domain=.${window.location.hostname}`;
-    // eslint-disable-next-line react-hooks/immutability
-    document.cookie = `googtrans=/en/${code}; path=/`;
-
-    // Wait a brief moment to ensure cookie is set
-    setTimeout(() => {
-      const select = document.querySelector('.goog-te-combo');
-      if (select) {
-        select.value = code;
-        select.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
-        setIsTranslating(false);
-      } else {
-        // Fallback: If combo box is not injected yet, reload the page so the script reads the newly set cookie
-        window.location.reload();
-      }
-    }, 150);
-  };
   
   const services = [
     { id: "Tour", icon: Map },
@@ -177,7 +135,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </a>
           <div className="relative">
             <button 
-              onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setLangDropdownOpen(false); setCurrencyDropdownOpen(false); }}
+              onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setCartOpen(false); }}
               className="w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative"
             >
               <Gift size={16} />
@@ -213,45 +171,16 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
           <div className="relative">
             <button 
-              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); setPromoDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors"
+              onClick={() => { setCartOpen(!cartOpen); setPromoDropdownOpen(false); }}
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors relative"
             >
-              <CircleDollarSign size={14} /> {activeCurrency}
+              <ShoppingCart size={15} /> 
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black animate-in zoom-in">
+                  {cartItems.length}
+                </span>
+              )}
             </button>
-            {currencyDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
-                {currencies.map((curr) => (
-                  <button
-                    key={curr.code}
-                    onClick={() => handleCurrencyChange(curr.code)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeCurrency === curr.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
-                  >
-                    <span className="w-5 text-center">{curr.symbol}</span> {curr.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <div className="relative">
-            <button 
-              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setCurrencyDropdownOpen(false); setPromoDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors"
-            >
-              <Globe size={14} className={isTranslating ? 'animate-spin' : ''} /> {activeLang}
-            </button>
-            {langDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
-                  >
-                    {lang.name}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -417,46 +346,16 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </div>
           <div className="relative">
             <button 
-              onClick={() => { setLangDropdownOpen(!langDropdownOpen); setPromoDropdownOpen(false); setCurrencyDropdownOpen(false); }}
-              className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+              onClick={() => { setCartOpen(!cartOpen); setPromoDropdownOpen(false); }}
+              className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] relative ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
             >
-              <Globe size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'} ${isTranslating ? 'animate-spin' : ''}`} /> {activeLang}
+              <ShoppingCart size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black animate-in zoom-in">
+                  {cartItems.length}
+                </span>
+              )}
             </button>
-            {langDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200 z-50">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => handleLanguageChange(lang.code)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeLang === lang.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
-                  >
-                    {lang.name}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-          
-          <div className="relative">
-            <button 
-              onClick={() => { setCurrencyDropdownOpen(!currencyDropdownOpen); setLangDropdownOpen(false); setPromoDropdownOpen(false); }}
-              className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
-            >
-              <CircleDollarSign size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} /> {activeCurrency}
-            </button>
-            {currencyDropdownOpen && (
-              <div className="absolute top-12 right-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl flex flex-col min-w-[140px] border border-border animate-in fade-in zoom-in-95 duration-200 z-50">
-                {currencies.map((curr) => (
-                  <button
-                    key={curr.code}
-                    onClick={() => handleCurrencyChange(curr.code)}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold text-[13px] text-left transition-colors ${activeCurrency === curr.code ? 'bg-black text-white' : 'bg-transparent text-text-secondary hover:bg-gray-50 hover:text-primary'} outline-none`}
-                  >
-                    <span className="w-5 text-center">{curr.symbol}</span> {curr.name}
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -545,6 +444,95 @@ export default function Navbar({ promoCode = "BALI2026" }) {
             Close
           </button>
         </div>
+        </div>
+      </div>
+    )}
+
+    {/* Shopping Cart Drawer */}
+    {cartOpen && (
+      <div className="fixed inset-0 z-[1000] flex justify-end font-sans">
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in"
+          onClick={() => setCartOpen(false)}
+        ></div>
+        
+        {/* Drawer */}
+        <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+          <div className="flex items-center justify-between p-6 border-b border-gray-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+                <ShoppingCart size={20} className="text-primary" />
+              </div>
+              <div>
+                <h2 className="font-black text-[18px] text-primary">Your Cart</h2>
+                <p className="text-[12px] text-gray-500 font-medium">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</p>
+              </div>
+            </div>
+            <button 
+              onClick={() => setCartOpen(false)}
+              className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
+            >
+              <Settings2 size={20} className="text-gray-400" /> {/* Just as close icon placeholder, could use X */}
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            {cartItems.length > 0 ? cartItems.map((item) => (
+              <div key={item.cartItemId} className="flex gap-4 p-4 bg-white border border-gray-100 rounded-2xl shadow-sm relative group">
+                <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0">
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex flex-col flex-1">
+                  <h3 className="font-bold text-[14px] text-primary line-clamp-2 leading-tight pr-6">{item.title}</h3>
+                  <span className="text-[12px] font-semibold text-gray-400 mt-1">{item.category}</span>
+                  <div className="mt-auto pt-2 flex items-center justify-between">
+                    <span className="font-extrabold text-[15px] text-primary">{formatIDR(item.price)}</span>
+                  </div>
+                </div>
+                <button 
+                  onClick={() => {
+                    import('@/lib/cart').then(mod => mod.removeFromCart(item.cartItemId));
+                  }}
+                  className="absolute top-4 right-4 text-gray-300 hover:text-red-500 transition-colors"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            )) : (
+              <div className="flex flex-col items-center justify-center h-full text-center opacity-60">
+                <ShoppingCart size={48} className="text-gray-300 mb-4" />
+                <h3 className="font-bold text-gray-500 text-[16px]">Your cart is empty</h3>
+                <p className="text-[13px] text-gray-400 mt-1 max-w-[200px]">Add tours or activities to build your perfect Bali itinerary.</p>
+              </div>
+            )}
+          </div>
+
+          {cartItems.length > 0 && (
+            <div className="p-6 border-t border-gray-100 bg-gray-50/50">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-bold text-gray-500">Total</span>
+                <span className="font-black text-[22px] text-primary">
+                  {formatIDR(cartItems.reduce((acc, item) => acc + (item.price || 0), 0))}
+                </span>
+              </div>
+              <button 
+                onClick={() => {
+                  const message = encodeURIComponent(
+                    `Hello Balance Island!\n\nI would like to book the following items from my cart:\n\n` +
+                    cartItems.map(item => `- ${item.title} (${formatIDR(item.price)})`).join('\n') +
+                    `\n\n*Total: ${formatIDR(cartItems.reduce((acc, item) => acc + (item.price || 0), 0))}*\n\nPlease assist me with the availability.`
+                  );
+                  window.open(`https://wa.me/6285174119423?text=${message}`, '_blank');
+                  import('@/lib/cart').then(mod => mod.clearCart());
+                  setCartOpen(false);
+                }}
+                className="w-full py-4 bg-primary text-white rounded-2xl font-black text-[15px] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2"
+              >
+                Checkout via WhatsApp <ArrowRight size={18} strokeWidth={2.5} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     )}
