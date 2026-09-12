@@ -1331,59 +1331,43 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
 
 
-        {/* Recommended Places */}
-        <section className="px-6 mb-6">
-          <div className="flex justify-between items-end mb-4 md:mb-6">
-            <h2 className="text-[20px] font-bold text-primary">Recommended Places</h2>
-            <Link href="/blog" className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
+        {/* Why Book With Us (OTA Section) */}
+        <section className="px-6 mb-12 mt-4 max-w-7xl mx-auto">
+          <div className="text-center mb-8 md:mb-10">
+            <h2 className="text-[22px] md:text-[28px] font-black text-primary">Why Book With Balance Island?</h2>
+            <p className="text-[14px] md:text-[16px] text-gray-500 font-medium mt-2">Your trusted partner for authentic and seamless Bali experiences.</p>
           </div>
-          <div className="flex overflow-x-auto no-scrollbar gap-4 pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-6 snap-x snap-mandatory">
-            {recommendedPlaces.map((place, index) => {
-              // Ensure the slug is cleanly formatted for the /blog/ route
-              let cleanSlug = place.slug || "";
-              if (cleanSlug.startsWith('http')) {
-                // If it's an external link, use a normal anchor
-                return (
-                  <a href={cleanSlug} target="_blank" rel="noopener noreferrer" key={place.id} className={`block relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] group cursor-pointer border border-border shrink-0 snap-center ${index === 0 ? 'w-[85vw] md:w-auto md:col-span-2 aspect-[4/3] md:aspect-[2/1]' : 'w-[200px] md:w-auto aspect-[3/4] md:aspect-square'}`}>
-                    {place.image && <Image src={place.image} alt={place.title || "Place Image"} fill sizes="(max-width: 768px) 50vw, 20vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    <div className="absolute top-4 left-4 z-20">
-                      <span className="inline-block px-3 py-1.5 bg-white/20 backdrop-blur-md text-white border border-white/20 text-[10px] font-extrabold uppercase tracking-widest shadow-sm rounded-xl">{place.category || 'Featured'}</span>
-                    </div>
-                    <div className="absolute bottom-3 inset-x-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-[24px] p-4 flex flex-col z-20 transition-all duration-300 group-hover:bg-white/20">
-                      <h3 className={`font-black text-white leading-tight ${index === 0 ? 'text-[18px] md:text-[22px]' : 'text-[14px] line-clamp-2'}`}>{place.title}</h3>
-                      <div className="flex items-center gap-1.5 mt-2 opacity-90 text-white">
-                        <MapPin size={12} className="shrink-0" />
-                        <span className="text-[11px] font-bold tracking-wide uppercase truncate">{place.location}</span>
-                      </div>
-                    </div>
-                  </a>
-                );
-              }
-              
-              cleanSlug = cleanSlug.replace(/^\/?(blog\/)?/i, '');
-              const href = cleanSlug ? `/blog/${cleanSlug}` : '#';
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-[28px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-green-50/80 flex items-center justify-center shrink-0">
+                <ShieldCheck size={28} className="text-green-600" strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="font-extrabold text-[16px] md:text-[18px] text-primary mb-1.5">Secure & Trusted</h3>
+                <p className="text-[13px] md:text-[14px] text-gray-500 font-medium leading-relaxed">Book with absolute confidence. We partner only with verified, high-quality local operators.</p>
+              </div>
+            </div>
 
-              return (
-              <Link href={href} key={place.id} className={`block relative rounded-[32px] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] group cursor-pointer border border-border shrink-0 snap-center ${index === 0 ? 'w-[85vw] md:w-auto md:col-span-2 aspect-[4/3] md:aspect-[2/1]' : 'w-[200px] md:w-auto aspect-[3/4] md:aspect-square'}`}>
-                {place.image && <Image src={place.image} alt={place.title || "Place Image"} fill sizes="(max-width: 768px) 50vw, 20vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+            <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-[28px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-blue-50/80 flex items-center justify-center shrink-0">
+                <Clock size={28} className="text-blue-600" strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="font-extrabold text-[16px] md:text-[18px] text-primary mb-1.5">Free Cancellation</h3>
+                <p className="text-[13px] md:text-[14px] text-gray-500 font-medium leading-relaxed">Plans change. Cancel up to 24 hours in advance for a full refund on most of our experiences.</p>
+              </div>
+            </div>
 
-                {/* Top Badge */}
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="inline-block px-3 py-1.5 bg-white/20 backdrop-blur-md text-white border border-white/20 text-[10px] font-extrabold uppercase tracking-widest shadow-sm rounded-xl">{place.category || 'Featured'}</span>
-                </div>
-
-                {/* Bottom Content Frosted Glass Pane */}
-                <div className="absolute bottom-3 inset-x-3 bg-white/10 backdrop-blur-xl border border-white/20 rounded-[24px] p-4 flex flex-col z-20 transition-all duration-300 group-hover:bg-white/20">
-                  <h3 className={`font-black text-white leading-tight ${index === 0 ? 'text-[18px] md:text-[22px]' : 'text-[14px] line-clamp-2'}`}>{place.title}</h3>
-                  <div className="flex items-center gap-1.5 mt-2 opacity-90 text-white">
-                    <MapPin size={12} className="shrink-0" />
-                    <span className="text-[11px] font-bold tracking-wide uppercase truncate">{place.location || "Bali, Indonesia"}</span>
-                  </div>
-                </div>
-              </Link>
-            )})}
+            <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-[28px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-orange-50/80 flex items-center justify-center shrink-0">
+                <Heart size={28} className="text-orange-500" strokeWidth={2.5} />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="font-extrabold text-[16px] md:text-[18px] text-primary mb-1.5">24/7 Local Support</h3>
+                <p className="text-[13px] md:text-[14px] text-gray-500 font-medium leading-relaxed">We are based locally in Bali. Connect with us anytime via WhatsApp for immediate assistance.</p>
+              </div>
+            </div>
           </div>
         </section>
 

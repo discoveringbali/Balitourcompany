@@ -15,6 +15,12 @@ const InstagramIcon = ({ size = 24, className = "" }) => (
   </svg>
 );
 
+const WhatsAppIcon = ({ size = 24, className = "" }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.029 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+);
+
 export default function Navbar({ promoCode = "BALI2026" }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -26,10 +32,6 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
   const [filterOpen, setFilterOpen] = useState(false);
   const [activeService, setActiveService] = useState("Tour");
-  
-  const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-
   const [promoDropdownOpen, setPromoDropdownOpen] = useState(false);
   const [promos, setPromos] = useState([]);
 
@@ -40,26 +42,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     if (promoDropdownOpen) {
       setPromoDropdownOpen(false);
     }
-    if (cartOpen) {
-      setCartOpen(false);
-    }
   }
-
-  useEffect(() => {
-    import('@/lib/cart').then(mod => {
-      setCartItems(mod.getCart());
-    });
-    const handleCartUpdate = (e) => {
-      if (e.detail && e.detail.newCart) setCartItems(e.detail.newCart);
-    };
-    window.addEventListener("cartUpdated", handleCartUpdate);
-    return () => window.removeEventListener("cartUpdated", handleCartUpdate);
-  }, []);
-
-  const formatIDR = (num) => {
-    if (!num || isNaN(num)) return num;
-    return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
-  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -67,7 +50,6 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     // Add event listener for auto-opening promo modal
     const handleOpenPromoModal = () => {
       setPromoDropdownOpen(true);
-      setCartOpen(false);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -135,7 +117,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           </a>
           <div className="relative">
             <button 
-              onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setCartOpen(false); }}
+              onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); }}
               className="w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative"
             >
               <Gift size={16} />
@@ -170,17 +152,15 @@ export default function Navbar({ promoCode = "BALI2026" }) {
             )}
           </div>
           <div className="relative">
-            <button 
-              onClick={() => { setCartOpen(!cartOpen); setPromoDropdownOpen(false); }}
-              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center gap-1.5 justify-center hover:bg-white/90 shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors relative"
+            <a 
+              href="https://wa.me/6285174119423?text=Hello%20Balance%20Island,%20I%20would%20like%20to%20inquire%20about%20a%20tour"
+              target="_blank"
+              rel="noreferrer"
+              className="px-2.5 sm:px-3.5 h-9 sm:h-10 bg-[#25D366] text-white rounded-full flex items-center gap-1.5 justify-center hover:bg-[#1ebd5a] shadow-sm font-extrabold text-[11px] sm:text-[13px] transition-colors relative"
             >
-              <ShoppingCart size={15} /> 
-              {cartItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black animate-in zoom-in">
-                  {cartItems.length}
-                </span>
-              )}
-            </button>
+              <WhatsAppIcon size={16} /> 
+              Contact Us
+            </a>
           </div>
         </div>
       </div>
@@ -345,17 +325,14 @@ export default function Navbar({ promoCode = "BALI2026" }) {
             )}
           </div>
           <div className="relative">
-            <button 
-              onClick={() => { setCartOpen(!cartOpen); setPromoDropdownOpen(false); }}
-              className={`px-3 h-9 border rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] relative ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+            <a 
+              href="https://wa.me/6285174119423?text=Hello%20Balance%20Island,%20I%20would%20like%20to%20inquire%20about%20a%20tour"
+              target="_blank"
+              rel="noreferrer"
+              className={`px-3.5 h-9 rounded-full flex items-center gap-1.5 justify-center transition-all duration-500 shadow-soft font-extrabold text-[12px] relative bg-[#25D366] hover:bg-[#1ebd5a] text-white`}
             >
-              <ShoppingCart size={14} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} />
-              {cartItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-black animate-in zoom-in">
-                  {cartItems.length}
-                </span>
-              )}
-            </button>
+              <WhatsAppIcon size={16} /> Contact Us
+            </a>
           </div>
         </div>
       </div>
@@ -448,94 +425,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       </div>
     )}
 
-    {/* Shopping Cart Drawer */}
-    {cartOpen && (
-      <div className="fixed inset-0 z-[1000] flex justify-end font-sans">
-        {/* Backdrop */}
-        <div 
-          className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in"
-          onClick={() => setCartOpen(false)}
-        ></div>
-        
-        {/* Drawer */}
-        <div className="relative w-full max-w-md bg-white h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
-          <div className="flex items-center justify-between p-6 border-b border-gray-100">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                <ShoppingCart size={20} className="text-primary" />
-              </div>
-              <div>
-                <h2 className="font-black text-[18px] text-primary">Your Cart</h2>
-                <p className="text-[12px] text-gray-500 font-medium">{cartItems.length} {cartItems.length === 1 ? 'item' : 'items'}</p>
-              </div>
-            </div>
-            <button 
-              onClick={() => setCartOpen(false)}
-              className="w-10 h-10 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
-            >
-              <Settings2 size={20} className="text-gray-400" /> {/* Just as close icon placeholder, could use X */}
-            </button>
-          </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            {cartItems.length > 0 ? cartItems.map((item) => (
-              <div key={item.cartItemId} className="flex gap-4 p-4 bg-white border border-gray-100 rounded-2xl shadow-sm relative group">
-                <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex flex-col flex-1">
-                  <h3 className="font-bold text-[14px] text-primary line-clamp-2 leading-tight pr-6">{item.title}</h3>
-                  <span className="text-[12px] font-semibold text-gray-400 mt-1">{item.category}</span>
-                  <div className="mt-auto pt-2 flex items-center justify-between">
-                    <span className="font-extrabold text-[15px] text-primary">{formatIDR(item.price)}</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => {
-                    import('@/lib/cart').then(mod => mod.removeFromCart(item.cartItemId));
-                  }}
-                  className="absolute top-4 right-4 text-gray-300 hover:text-red-500 transition-colors"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
-            )) : (
-              <div className="flex flex-col items-center justify-center h-full text-center opacity-60">
-                <ShoppingCart size={48} className="text-gray-300 mb-4" />
-                <h3 className="font-bold text-gray-500 text-[16px]">Your cart is empty</h3>
-                <p className="text-[13px] text-gray-400 mt-1 max-w-[200px]">Add tours or activities to build your perfect Bali itinerary.</p>
-              </div>
-            )}
-          </div>
-
-          {cartItems.length > 0 && (
-            <div className="p-6 border-t border-gray-100 bg-gray-50/50">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-bold text-gray-500">Total</span>
-                <span className="font-black text-[22px] text-primary">
-                  {formatIDR(cartItems.reduce((acc, item) => acc + (item.price || 0), 0))}
-                </span>
-              </div>
-              <button 
-                onClick={() => {
-                  const message = encodeURIComponent(
-                    `Hello Balance Island!\n\nI would like to book the following items from my cart:\n\n` +
-                    cartItems.map(item => `- ${item.title} (${formatIDR(item.price)})`).join('\n') +
-                    `\n\n*Total: ${formatIDR(cartItems.reduce((acc, item) => acc + (item.price || 0), 0))}*\n\nPlease assist me with the availability.`
-                  );
-                  window.open(`https://wa.me/6285174119423?text=${message}`, '_blank');
-                  import('@/lib/cart').then(mod => mod.clearCart());
-                  setCartOpen(false);
-                }}
-                className="w-full py-4 bg-primary text-white rounded-2xl font-black text-[15px] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center justify-center gap-2"
-              >
-                Checkout via WhatsApp <ArrowRight size={18} strokeWidth={2.5} />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    )}
     
     {/* Sidebar Component */}
     <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
