@@ -3,6 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BottomNav from "@/components/navigation/BottomNav";
 import AuthProvider from "@/components/providers/AuthProvider";
 import GoogleTranslate from "@/components/GoogleTranslate";
 import { getPromoCode } from "@/lib/cache";
@@ -114,8 +115,11 @@ export default async function RootLayout({ children }) {
               {children}
             </main>
 
-            {/* Default Footer is shown on all devices now */}
-            <div className="block">
+            {/* New App-style floating bottom navigation */}
+            <BottomNav />
+
+            {/* Hide default Footer on mobile as we rely on bottom nav */}
+            <div className="hidden md:block">
               <Footer />
             </div>
         </AuthProvider>
