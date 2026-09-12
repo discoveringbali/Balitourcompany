@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import useSWR from "swr";
+
 import { TreePine, Umbrella, Mountain, Droplets, Search, Plane, Building, Building2, Train, Bus, BriefcaseBusiness, Heart, HeartOff, MapPin, Map, Car, Bike, Wifi, Navigation, Sparkles, Landmark, Camera, Waves, Compass, ChevronDown, ChevronLeft, ChevronRight, Settings2, Star, Zap, Home as HomeIcon, Flower2, Globe, ArrowUpRight, Play, Pause, Volume2, VolumeX, X, ShieldCheck, Users, Clock } from "lucide-react";
 import { TourIcon, SpaIcon, TransportIcon, ScooterIcon, ThinSparklesIcon, TowelsIcon, LotusIcon, CreattieTourIcon, CreattieSpaIcon, CreattieScooterIcon, CreattieTransportIcon, CreattieEsimIcon, AirbnbTourIcon, AirbnbSpaIcon, AirbnbScooterIcon, AirbnbTransportIcon, AirbnbEsimIcon } from "@/components/icons/CategoryIcons";
 import ListingCard from "@/components/listing/ListingCard";
@@ -99,7 +99,7 @@ const campaigns = [
 
 const popularTrips = [];
 
-function PopularTripCard({ trip }) {
+function PopularTripCard({ trip, priority = false }) {
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
@@ -160,7 +160,7 @@ function PopularTripCard({ trip }) {
 
   return (
     <Link href={`/tours/${generateSlug(trip.title)}`} className="block relative w-[240px] md:w-[280px] aspect-[4/5] rounded-[28px] overflow-hidden shadow-soft shrink-0 snap-start group border border-border bg-white">
-      <Image src={trip.image} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
+      <Image src={trip.image} fill priority={priority} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
 
       {/* Heart Button */}
       <button 
@@ -288,85 +288,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   }, [appliedPromoFilter]);
 
   // SWR Fetchers
-  const fetcherListings = async () => {
-    const { supabase } = await import('@/lib/supabase');
-    const { data, error } = await supabase
-      .from('listings')
-      .select('id, type, title, location, price, duration, category, rating, reviews, status, image, company_name, originalService:data->originalService, isCampaignPinned:data->isCampaignPinned, campaignTitle:data->campaignTitle, campaignDescription:data->campaignDescription, campaignLabel:data->campaignLabel, campaignVideo:data->campaignVideo, campaignYoutubeLink:data->campaignYoutubeLink, campaignRecommendation:data->campaignRecommendation, campaignIgLink:data->campaignIgLink, isBestTripPinned:data->isBestTripPinned, spaSetting:data->spaSetting, tourTiers:data->tourTiers, groupTiers:data->groupTiers, minGroupPax:data->minGroupPax, maxGroupPax:data->maxGroupPax, groupPricingMode:data->groupPricingMode, allInclusiveTiers:data->allInclusiveTiers, allInclusiveSurcharge:data->allInclusiveSurcharge, pricingType:data->pricingType, min60:data->min60, min90:data->min90, min120:data->min120, dailyPrice:data->dailyPrice, weeklyPrice:data->weeklyPrice, monthlyPrice:data->monthlyPrice, badge:data->badge')
-      .eq('status', 'Active');
-
-    if (error) throw error;
-
-    return data.map(d => {
-      let parsedImage = d.image;
-      if (Array.isArray(d.image)) {
-        parsedImage = d.image[0] || "";
-      } else if (typeof d.image === 'string') {
-        try {
-          const parsed = JSON.parse(d.image);
-          if (Array.isArray(parsed)) parsedImage = parsed[0] || "";
-        } catch (e) {}
-      }
-      return {
-        ...d,
-        image: parsedImage,
-        service: d.originalService || d.type
-      };
-    });
-  };
-
-  const fetcherSettings = async () => {
-    const { supabase } = await import('@/lib/supabase');
-    const { data, error } = await supabase
-      .from('homepage_settings')
-      .select('campaign_video, campaign_youtube_link, campaign_recommendation, campaign_ig_link, campaign_recommendation_2, campaign_ig_link_2')
-      .eq('id', 1)
-      .single();
-
-    if (error && error.code !== 'PGRST116') throw error;
-
-    return data ? {
-      campaignVideo: data.campaign_video || "",
-      campaignYoutubeLink: data.campaign_youtube_link || "",
-      campaignRecommendation: data.campaign_recommendation || "",
-      campaignIgLink: data.campaign_ig_link || "",
-      campaignRecommendation2: data.campaign_recommendation_2 || "",
-      campaignIgLink2: data.campaign_ig_link_2 || ""
-    } : null;
-  };
-
-  const fetcherBlogs = async () => {
-    const { supabase } = await import('@/lib/supabase');
-    const { data, error } = await supabase
-      .from('blogs')
-      .select('id, title, slug, image, category')
-      .eq('status', 'Published')
-      .order('created_at', { ascending: false })
-      .limit(4);
-
-    if (error) throw error;
-    return data;
-  };
-
-  const { data: heroSettings = initialSettings, mutate: mutateSettings } = useSWR('homepage_settings', fetcherSettings, {
-    fallbackData: initialSettings,
-    revalidateOnMount: false,
-    keepPreviousData: true,
-  });
-
-  const { data: allListings = initialListings } = useSWR('listings', fetcherListings, {
-    fallbackData: initialListings,
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
-    keepPreviousData: true,
-  });
-
-  const { data: recommendedPlaces = initialBlogs } = useSWR('blogs', fetcherBlogs, {
-    fallbackData: initialBlogs,
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
-    keepPreviousData: true,
-  });
+  const [heroSettings, setHeroSettings] = useState(initialSettings);
+  const allListings = initialListings || [];
+  const recommendedPlaces = initialBlogs || [];
 
   const [isDesktop, setIsDesktop] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -486,6 +410,16 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             if (data.metadata.campaigns) setCampaigns(data.metadata.campaigns);
             if (data.metadata.flashSale !== undefined) setFlashSale(data.metadata.flashSale);
           }
+          if (data) {
+             setHeroSettings({
+               campaignVideo: data.campaign_video || "",
+               campaignYoutubeLink: data.campaign_youtube_link || "",
+               campaignRecommendation: data.campaign_recommendation || "",
+               campaignIgLink: data.campaign_ig_link || "",
+               campaignRecommendation2: data.campaign_recommendation_2 || "",
+               campaignIgLink2: data.campaign_ig_link_2 || ""
+             });
+          }
         })
         .catch(console.error);
     };
@@ -551,11 +485,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     }
   }, [showVideo]);
 
-  useEffect(() => {
-    const handler = () => mutateSettings();
-    window.addEventListener("homepage_hero_settings_changed", handler);
-    return () => window.removeEventListener("homepage_hero_settings_changed", handler);
-  }, [mutateSettings]);
+
 
 
   const nextCamp = () => setCurrentCampIdx((prev) => (prev + 1) % campaigns.length);
@@ -1317,8 +1247,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
               {/* Horizontal Scroll Area */}
               <div className="flex overflow-x-auto no-scrollbar gap-5 px-6 pb-6 snap-x snap-mandatory hide-scroll">
-                {displayPopularTrips.length > 0 ? displayPopularTrips.map((trip) => (
-                  <PopularTripCard key={trip.id} trip={trip} />
+                {displayPopularTrips.length > 0 ? displayPopularTrips.map((trip, idx) => (
+                  <PopularTripCard key={trip.id} trip={trip} priority={idx < 4} />
                 )) : (
                   <div className="w-full text-center py-6 text-gray-400 font-medium text-sm">
                     No items pinned as Best Trips for this category.

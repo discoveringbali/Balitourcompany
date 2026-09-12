@@ -149,3 +149,28 @@ export const getHomepageSettings = unstable_cache(
   ['homepage-settings'],
   { revalidate: 3600, tags: ['homepage_settings'] }
 );
+
+export const getPromoCode = unstable_cache(
+  async () => {
+    try {
+      const { createClient } = await import('@supabase/supabase-js');
+      const adminSupabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+        process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder'
+      );
+      
+      const { data, error } = await adminSupabase
+        .from('homepage_settings')
+        .select('metadata')
+        .eq('id', 1)
+        .single();
+        
+      if (error || !data) return "BALI2026";
+      return data?.metadata?.promoCode || "BALI2026";
+    } catch {
+      return "BALI2026";
+    }
+  },
+  ['promo-code-settings'],
+  { revalidate: 3600, tags: ['homepage_settings'] }
+);

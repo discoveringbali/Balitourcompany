@@ -6,8 +6,7 @@ import Footer from "@/components/Footer";
 import BottomNav from "@/components/navigation/BottomNav";
 import AuthProvider from "@/components/providers/AuthProvider";
 import GoogleTranslate from "@/components/GoogleTranslate";
-import SplashScreen from "@/components/SplashScreen";
-import { supabase } from "@/lib/supabase";
+import { getPromoCode } from "@/lib/cache";
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: '--font-playfair' });
 
@@ -86,15 +85,7 @@ export default async function RootLayout({ children }) {
     "url": "https://www.balanceisland.com/"
   };
 
-  let promoCode = "BALI2026";
-  try {
-    const { data } = await supabase.from('homepage_settings').select('metadata').eq('id', 1).single();
-    if (data?.metadata?.promoCode) {
-      promoCode = data.metadata.promoCode;
-    }
-  } catch (error) {
-    console.error("Error fetching promo code:", error);
-  }
+  const promoCode = await getPromoCode();
 
   return (
     <html lang="en">
@@ -116,7 +107,6 @@ export default async function RootLayout({ children }) {
           `}
         </Script>
         <AuthProvider>
-          <SplashScreen>
             <GoogleTranslate />
             {/* Navbar handles its own desktop/mobile responsive states now */}
             <Navbar promoCode={promoCode} />
@@ -132,7 +122,6 @@ export default async function RootLayout({ children }) {
             <div className="hidden md:block">
               <Footer />
             </div>
-          </SplashScreen>
         </AuthProvider>
       </body>
     </html>

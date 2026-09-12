@@ -6,7 +6,11 @@ export const revalidate = 3600;
 
 export default async function Page() {
 
-  const listingsData = await getHomepageListings();
+  const [listingsData, initialBlogs, settingsData] = await Promise.all([
+    getHomepageListings(),
+    getPublishedBlogs(4),
+    getHomepageSettings()
+  ]);
   
   const initialListings = (listingsData || []).map(d => {
     let parsedImage = d.image;
@@ -24,12 +28,6 @@ export default async function Page() {
       service: d.originalService || d.type
     };
   });
-
-  // Fetch blogs
-  const initialBlogs = await getPublishedBlogs(4);
-
-  // Fetch settings
-  const settingsData = await getHomepageSettings();
 
   const initialSettings = settingsData ? {
     campaignVideo: settingsData.campaign_video || "",
