@@ -159,30 +159,37 @@ function PopularTripCard({ trip, priority = false }) {
   const displayPrice = Math.floor(cleanBasePrice > 1000 ? cleanBasePrice : cleanBasePrice * 1000);
 
   return (
-    <Link href={`/tours/${generateSlug(trip.title)}`} className="block relative w-[240px] md:w-[280px] aspect-[4/5] rounded-[28px] overflow-hidden shadow-soft shrink-0 snap-start group border border-border bg-white">
-      <Image src={trip.image} fill priority={priority} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-110" alt={trip.title || "Trip Image"} />
+    <Link href={`/tours/${generateSlug(trip.title)}`} className="block relative w-[240px] md:w-[280px] shrink-0 snap-start group cursor-pointer">
+      {/* Image Container */}
+      <div className="relative w-full aspect-[4/3] rounded-[24px] overflow-hidden shadow-sm mb-4">
+        <Image src={trip.image} fill priority={priority} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover transition-transform duration-[8s] ease-out group-hover:scale-105" alt={trip.title || "Trip Image"} />
+        
+        {/* Heart Button */}
+        <button 
+          onClick={handleSave}
+          className="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110"
+        >
+          <Heart size={15} strokeWidth={2.5} className={isSaved ? "text-[#1c1c1c] fill-[#1c1c1c]" : ""} />
+        </button>
+      </div>
 
-      {/* Heart Button */}
-      <button 
-        onClick={handleSave}
-        className="absolute top-4 right-4 w-[34px] h-[34px] bg-white/80 backdrop-blur-md rounded-full flex items-center justify-center text-gray-400 shadow-xl z-10 transition-transform active:scale-95 hover:text-black hover:scale-110"
-      >
-        <Heart size={16} strokeWidth={2.5} className={isSaved ? "text-black fill-black" : ""} />
-      </button>
-
-      {/* Bottom Overlay Card */}
-      <div className="absolute left-3 right-3 bottom-3 bg-[#ffffff] border border-[#eaeaea] px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
-        <h3 className="font-extrabold text-[15px] leading-snug text-[#1c1c1c] line-clamp-2">{trip.title}</h3>
-        <div className="flex justify-between items-end mt-1">
-          <div className="flex items-center gap-1.5 shrink-0">
-            <Star size={12} strokeWidth={2.5} className="fill-[#1c1c1c] text-[#1c1c1c]" />
-            <span className="text-[12px] font-bold text-[#1c1c1c]">5.0</span>
-          </div>
-          <div className="flex flex-col items-end shrink-0">
-            <span className="font-extrabold text-[15px] text-[#1c1c1c] tracking-tight pr-1">
-              IDR {displayPrice.toLocaleString('id-ID')}
-            </span>
-          </div>
+      {/* Content Area */}
+      <div className="flex flex-col gap-1.5 px-1">
+        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-white uppercase tracking-[0.02em] line-clamp-2">
+          {trip.title}
+        </h3>
+        
+        <div className="flex items-center gap-1.5 text-gray-400 mt-0.5">
+          <Clock size={14} strokeWidth={2.5} />
+          <span className="text-[12px] font-bold uppercase tracking-wider">
+            {trip.duration || trip.reviews_count ? `${trip.duration || '2-4 HOURS'}` : "FLEXIBLE DURATION"}
+          </span>
+        </div>
+        
+        <div className="mt-1">
+          <span className="font-black text-[15px] md:text-[16px] text-white tracking-tight">
+            IDR {displayPrice.toLocaleString('id-ID')}
+          </span>
         </div>
       </div>
     </Link>
