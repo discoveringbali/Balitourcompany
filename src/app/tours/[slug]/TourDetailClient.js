@@ -554,14 +554,14 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
 
             {activeTab === "Reviews" && (
               <div className="animate-in fade-in duration-300">
-                <h3 className="font-bold text-[22px] md:text-[24px] text-primary mb-6">Customer Reviews</h3>
+                <h3 className="font-bold text-[22px] md:text-[24px] text-[#ffffff] mb-6">Customer Reviews</h3>
                 
                 {/* Review Form */}
-                <div className="bg-[#fbfbfb] p-6 rounded-2xl border border-gray-100 mb-8 shadow-sm">
-                   <h4 className="font-bold text-[18px] text-primary mb-4">Leave a Review</h4>
+                <div className="bg-[#ffffff] p-6 rounded-2xl border border-[#eaeaea] mb-8 shadow-sm">
+                   <h4 className="font-bold text-[18px] text-[#1c1c1c] mb-4">Leave a Review</h4>
                    
                    {reviewMessage.text && (
-                     <div className={`p-3 rounded-xl mb-4 text-sm font-bold ${reviewMessage.type === 'success' ? 'bg-gray-50 text-black' : 'bg-gray-50 text-black'}`}>
+                     <div className={`p-3 rounded-xl mb-4 text-sm font-bold ${reviewMessage.type === 'success' ? 'bg-[#d2ff00] text-[#1c1c1c]' : 'bg-red-100 text-red-600'}`}>
                        {reviewMessage.text}
                      </div>
                    )}
@@ -569,23 +569,23 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                    <form onSubmit={handleSubmitReview} className="space-y-4">
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                          <div>
-                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Your Name</label>
+                           <label className="block text-xs font-bold text-[#717171] uppercase tracking-wide mb-1">Your Name</label>
                            <input 
                              type="text" 
                              required 
                              placeholder="Enter your name"
-                             className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary transition-colors"
+                             className="w-full bg-[#f9f9f9] border border-[#eaeaea] text-[#1c1c1c] placeholder-[#a1a1aa] rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#1c1c1c] transition-colors"
                              value={reviewName}
                              onChange={(e) => setReviewName(e.target.value)}
                            />
                          </div>
                          <div>
-                           <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Access Code</label>
+                           <label className="block text-xs font-bold text-[#717171] uppercase tracking-wide mb-1">Access Code</label>
                            <input 
                              type="text" 
                              required 
                              placeholder="Enter access code"
-                             className="w-full bg-white border border-gray-200 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-primary transition-colors"
+                             className="w-full bg-[#f9f9f9] border border-[#eaeaea] text-[#1c1c1c] placeholder-[#a1a1aa] rounded-xl px-4 py-2.5 text-sm outline-none focus:border-[#1c1c1c] transition-colors"
                              value={reviewCode}
                              onChange={(e) => setReviewCode(e.target.value)}
                            />
@@ -593,7 +593,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                        </div>
                        
                        <div>
-                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Rating</label>
+                         <label className="block text-xs font-bold text-[#717171] uppercase tracking-wide mb-1">Rating</label>
                          <div className="flex gap-1">
                            {[1, 2, 3, 4, 5].map(star => (
                              <button 
@@ -602,18 +602,18 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                                onClick={() => setReviewRating(star)}
                                className="focus:outline-none"
                              >
-                               <Star size={24} className={star <= reviewRating ? "fill-black text-black" : "fill-gray-200 text-gray-200"} />
+                               <Star size={24} className={star <= reviewRating ? "fill-[#f59e0b] text-[#f59e0b]" : "fill-[#eaeaea] text-[#eaeaea]"} />
                              </button>
                            ))}
                          </div>
                        </div>
 
                        <div>
-                         <label className="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Comment</label>
+                         <label className="block text-xs font-bold text-[#717171] uppercase tracking-wide mb-1">Comment</label>
                          <textarea 
                            required 
                            rows={4}
-                           className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-primary transition-colors resize-none"
+                           className="w-full bg-[#f9f9f9] border border-[#eaeaea] text-[#1c1c1c] placeholder-[#a1a1aa] rounded-xl px-4 py-3 text-sm outline-none focus:border-[#1c1c1c] transition-colors resize-none"
                            value={reviewComment}
                            onChange={(e) => setReviewComment(e.target.value)}
                          ></textarea>
@@ -622,7 +622,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                        <button 
                          type="submit" 
                          disabled={isSubmittingReview}
-                         className="px-6 py-3 bg-primary text-white font-bold rounded-xl active:scale-95 transition-transform disabled:opacity-50"
+                         className="px-6 py-3 bg-[#d2ff00] text-[#1c1c1c] font-bold rounded-xl active:scale-95 transition-transform disabled:opacity-50 hover:bg-[#c4ed00]"
                        >
                          {isSubmittingReview ? "Submitting..." : "Submit Review"}
                        </button>
@@ -631,37 +631,37 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
 
                 {/* Display Live Reviews */}
                 <div className="space-y-4">
-                   <h4 className="font-bold text-[18px] text-primary mb-4">All Reviews ({localReviews.length})</h4>
+                   <h4 className="font-bold text-[18px] text-[#ffffff] mb-4">All Reviews ({localReviews.length})</h4>
                    {localReviews.length === 0 ? (
-                     <p className="text-gray-500 text-sm font-medium italic">No reviews yet. Be the first to leave one!</p>
+                     <p className="text-[#a1a1aa] text-sm font-medium italic">No reviews yet. Be the first to leave one!</p>
                    ) : (
                      <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
                        {[...localReviews].reverse().map(review => (
-                         <div key={review.id} className="min-w-[280px] max-w-[320px] snap-center bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col shrink-0">
+                         <div key={review.id} className="min-w-[280px] max-w-[320px] snap-center bg-[#ffffff] p-5 rounded-2xl border border-[#eaeaea] shadow-sm flex flex-col shrink-0">
                            <div className="flex items-center justify-between mb-3">
                               <div className="flex items-center gap-3">
                                  {review.userImage ? (
                                    <img src={review.userImage} alt={review.user} className="w-8 h-8 rounded-full shadow-sm object-cover" />
                                  ) : (
-                                   <div className="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xs shadow-sm">
+                                   <div className="w-8 h-8 rounded-full bg-[#1c1c1c] text-[#ffffff] flex items-center justify-center font-bold text-xs shadow-sm">
                                       {review.user?.charAt(0) || 'U'}
                                    </div>
                                  )}
-                                 <span className="font-bold text-primary text-sm">{review.user}</span>
+                                 <span className="font-bold text-[#1c1c1c] text-sm">{review.user}</span>
                               </div>
-                              <span className="text-[10px] font-bold text-gray-400">{new Date(review.date).toLocaleDateString()}</span>
+                              <span className="text-[10px] font-bold text-[#a1a1aa]">{new Date(review.date).toLocaleDateString()}</span>
                            </div>
                            <div className="flex items-center gap-0.5 mb-3">
                              {[...Array(5)].map((_, i) => (
-                               <Star key={i} size={12} className={i < review.rating ? "fill-black text-black" : "fill-gray-200 text-gray-200"} />
+                               <Star key={i} size={12} className={i < review.rating ? "fill-[#f59e0b] text-[#f59e0b]" : "fill-[#eaeaea] text-[#eaeaea]"} />
                              ))}
                            </div>
                            <div className="relative">
-                             <p className={`text-sm font-medium text-gray-600 leading-relaxed ${expandedReviews[review.id] ? '' : 'line-clamp-4'}`}>{review.comment}</p>
+                             <p className={`text-sm font-medium text-[#4b5563] leading-relaxed ${expandedReviews[review.id] ? '' : 'line-clamp-4'}`}>{review.comment}</p>
                              {review.comment && review.comment.length > 150 && (
                                <button 
                                  onClick={() => setExpandedReviews(prev => ({...prev, [review.id]: !prev[review.id]}))}
-                                 className="text-primary text-xs font-bold mt-1 hover:underline"
+                                 className="text-[#1c1c1c] text-xs font-bold mt-1 hover:underline"
                                >
                                  {expandedReviews[review.id] ? 'Read less' : 'Read more'}
                                </button>
