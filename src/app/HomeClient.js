@@ -175,19 +175,19 @@ function PopularTripCard({ trip, priority = false }) {
 
       {/* Content Area */}
       <div className="flex flex-col gap-1.5 px-1">
-        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-white uppercase tracking-[0.02em] line-clamp-2">
+        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-[#ffffff] uppercase tracking-[0.02em] line-clamp-2">
           {trip.title}
         </h3>
         
-        <div className="flex items-center gap-1.5 text-gray-400 mt-0.5">
-          <Clock size={14} strokeWidth={2.5} />
+        <div className="flex items-center gap-1.5 text-[#a1a1aa] mt-0.5">
+          <Star size={14} strokeWidth={2.5} className="fill-[#f59e0b] text-[#f59e0b]" />
           <span className="text-[12px] font-bold uppercase tracking-wider">
-            {trip.duration || trip.reviews_count ? `${trip.duration || '2-4 HOURS'}` : "FLEXIBLE DURATION"}
+            {Number(trip.rating || 5).toFixed(1)} ({trip.reviews_count || trip.reviews || 0} REVIEWS)
           </span>
         </div>
         
         <div className="mt-1">
-          <span className="font-black text-[15px] md:text-[16px] text-white tracking-tight">
+          <span className="font-black text-[15px] md:text-[16px] text-[#ffffff] tracking-tight">
             IDR {displayPrice.toLocaleString('id-ID')}
           </span>
         </div>
