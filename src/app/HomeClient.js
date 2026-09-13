@@ -175,14 +175,14 @@ function PopularTripCard({ trip, priority = false }) {
 
       {/* Content Area */}
       <div className="flex flex-col gap-1.5 px-1">
-        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-[#ffffff] uppercase tracking-[0.02em] line-clamp-2">
+        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-[#ffffff] line-clamp-2">
           {trip.title}
         </h3>
         
         <div className="flex items-center gap-1.5 text-[#a1a1aa] mt-0.5">
           <Star size={14} strokeWidth={2.5} className="fill-[#f59e0b] text-[#f59e0b]" />
-          <span className="text-[12px] font-bold uppercase tracking-wider">
-            {Number(trip.rating || 5).toFixed(1)} ({trip.reviews_count || trip.reviews || 0} REVIEWS)
+          <span className="text-[12px] font-bold">
+            {Number(trip.rating || 5).toFixed(1)} ({trip.reviews_count || trip.reviews || 0} reviews)
           </span>
         </div>
         
