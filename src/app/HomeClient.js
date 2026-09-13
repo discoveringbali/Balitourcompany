@@ -171,15 +171,15 @@ function PopularTripCard({ trip, priority = false }) {
       </button>
 
       {/* Bottom Overlay Card */}
-      <div className="absolute left-3 right-3 bottom-3 bg-white/70 border border-white/50 backdrop-blur-2xl px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
-        <h3 className="font-extrabold text-[15px] leading-snug text-primary line-clamp-2">{trip.title}</h3>
+      <div className="absolute left-3 right-3 bottom-3 bg-[#ffffff] border border-[#eaeaea] px-4 py-3.5 rounded-2xl flex flex-col gap-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+        <h3 className="font-extrabold text-[15px] leading-snug text-[#1c1c1c] line-clamp-2">{trip.title}</h3>
         <div className="flex justify-between items-end mt-1">
           <div className="flex items-center gap-1.5 shrink-0">
-            <Star size={12} strokeWidth={2.5} className="fill-black text-black" />
-            <span className="text-[12px] font-bold text-primary">5.0</span>
+            <Star size={12} strokeWidth={2.5} className="fill-[#1c1c1c] text-[#1c1c1c]" />
+            <span className="text-[12px] font-bold text-[#1c1c1c]">5.0</span>
           </div>
           <div className="flex flex-col items-end shrink-0">
-            <span className="font-extrabold text-[15px] text-primary tracking-tight pr-1">
+            <span className="font-extrabold text-[15px] text-[#1c1c1c] tracking-tight pr-1">
               IDR {displayPrice.toLocaleString('id-ID')}
             </span>
           </div>
@@ -664,7 +664,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/20 shadow-md rounded-[24px]"
+                        className="absolute inset-0 bg-[#ffffff] border border-[#eaeaea] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
@@ -1264,7 +1264,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
               </div>
               <div className="flex justify-center w-full overflow-hidden">
-                <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 w-fit max-w-full mx-auto">
+                <div className="bg-[#ffffff] shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-[#eaeaea] rounded-[32px] p-1.5 w-fit max-w-full mx-auto">
                   <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                     {currentCategories.map((c) => {
                       const Icon = c.icon;
@@ -1278,13 +1278,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           {isActive && (
                             <motion.div
                               layoutId="categoryActiveIndicator"
-                              className="absolute inset-0 bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/20 shadow-md rounded-[24px]"
+                              className="absolute inset-0 bg-[#ffffff] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
                               transition={{ type: "spring", stiffness: 400, damping: 28 }}
                             />
                           )}
                           <div className="relative z-10 flex items-center justify-center gap-2">
-                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-500'}`} />}
-                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#1c1c1c]' : 'text-[#717171]'}`} />}
+                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1c1c1c] font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
                               {c.id}
                             </span>
                           </div>
