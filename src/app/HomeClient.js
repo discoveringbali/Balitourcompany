@@ -792,18 +792,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 animate={{ y: 0 }}
                 exit={{ y: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 300, mass: 0.8 }}
-                className="bg-white w-full rounded-t-[32px] p-6 relative flex flex-col pointer-events-auto h-fit pb-12"
+                className="bg-[#ffffff] w-full rounded-t-[32px] p-6 relative flex flex-col pointer-events-auto h-fit pb-[100px]"
               >
-                <div className="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+                <div className="w-12 h-1.5 bg-[#eaeaea] rounded-full mx-auto mb-6"></div>
 
                 <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-[22px] font-extrabold text-primary tracking-tight">Filters</h3>
-                  <button onClick={() => setPriceFilter([0, 5000000])} className="text-secondary font-bold text-[15px] active:scale-95 transition-transform">Reset</button>
+                  <h3 className="text-[22px] font-extrabold text-[#1c1c1c] tracking-tight">Filters</h3>
+                  <button onClick={() => setPriceFilter([0, 5000000])} className="text-[#717171] font-bold text-[15px] active:scale-95 transition-transform hover:text-[#1c1c1c]">Reset</button>
                 </div>
 
                 {/* Price Filter Options */}
                 <div className="mb-8">
-                  <h4 className="text-[17px] font-extrabold text-primary mb-4">Price Range</h4>
+                  <h4 className="text-[17px] font-extrabold text-[#1c1c1c] mb-4">Price Range</h4>
                   <div className="flex flex-col gap-3">
                     {[
                       { label: "Any price", min: 0, max: 5000000 },
@@ -813,10 +813,10 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     ].map((opt, i) => {
                       const isSelected = priceFilter[0] === opt.min && priceFilter[1] === opt.max;
                       return (
-                        <label key={i} className={`flex items-center justify-between p-4 rounded-2xl border transition-all w-full cursor-pointer touch-manipulation active:scale-[0.98] ${isSelected ? 'border-primary bg-primary text-white shadow-md' : 'border-border bg-white text-primary hover:border-gray-300'}`}>
+                        <label key={i} className={`flex items-center justify-between p-4 rounded-2xl border transition-all w-full cursor-pointer touch-manipulation active:scale-[0.98] ${isSelected ? 'border-[#1c1c1c] bg-[#1c1c1c] text-[#ffffff] shadow-md' : 'border-[#eaeaea] bg-transparent text-[#1c1c1c] hover:border-[#d1d5db]'}`}>
                           <span className="font-bold text-[15px]">{opt.label}</span>
-                          <div className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-none bg-accent' : 'border border-gray-300'}`}>
-                            {isSelected && <MapPin size={12} className="text-primary" strokeWidth={3} />}
+                          <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors ${isSelected ? 'border-none bg-[#ffffff]' : 'border border-[#d1d5db]'}`}>
+                            {isSelected && <div className="w-2.5 h-2.5 rounded-full bg-[#1c1c1c]" />}
                           </div>
                           <input type="radio" className="hidden" name="price" checked={isSelected} onChange={() => setPriceFilter([opt.min, opt.max])} />
                         </label>
@@ -827,7 +827,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
                 <button
                   onClick={() => setIsFilterModalOpen(false)}
-                  className="w-full bg-black text-white font-extrabold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2 mb-2 hover:bg-neutral-800"
+                  className="w-full bg-[#d2ff00] text-[#1c1c1c] font-extrabold py-4 rounded-2xl shadow-lg active:scale-95 transition-transform flex justify-center items-center gap-2 mb-2 hover:bg-[#c4ed00]"
                 >
                   Show {filteredTours.length} Results
                 </button>
@@ -1339,12 +1339,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
 
 
-        {/* Footer */}
-        <footer className="px-6 pb-6 pt-2">
-          <div className="flex flex-col items-center justify-center pt-6 border-t border-gray-100">
-            <p className="text-[12px] font-semibold text-gray-400">© 2026 Balance Island. All rights reserved.</p>
-          </div>
-        </footer>
 
       </div>
     </div>
