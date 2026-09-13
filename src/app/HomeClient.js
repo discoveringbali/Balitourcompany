@@ -877,7 +877,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Badge top left */}
                 <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
                   {!camp.isHeroSlide && (
-                    <span className="inline-block px-3 py-1.5 w-max bg-white/95 backdrop-blur-md text-[#000000] text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
+                    <span className="inline-block px-3 py-1.5 w-max bg-[#d2ff00] text-[#1c1c1c] text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
                       {camp.badge || "OFFICIAL PARTNER"}
                     </span>
                   )}
@@ -1139,7 +1139,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <>
                   {/* Top Left Badge */}
                   <div className="absolute top-[12%] left-[6%] xl:left-[8%] z-20 pointer-events-none">
-                    <span className="inline-block px-4 py-2 bg-white/95 backdrop-blur-md text-black text-[12px] font-black uppercase tracking-wider shadow-md rounded-[10px]">
+                    <span className="inline-block px-4 py-2 bg-[#d2ff00] text-[#1c1c1c] text-[12px] font-black uppercase tracking-wider shadow-md rounded-[10px]">
                       {camp.badge || "OFFICIAL PARTNER"}
                     </span>
                   </div>
