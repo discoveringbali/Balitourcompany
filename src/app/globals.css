@@ -2,20 +2,20 @@
 @import "leaflet/dist/leaflet.css";
 
 @theme {
-  --color-primary: #1c1c1c;
-  --color-primary-inverse: #ffffff;
+  --color-primary: #ffffff;
+  --color-primary-inverse: #1c1c1c;
 
   /* Redesign Signature Lime Accent */
-  --color-accent: #000000;
-  --color-accent-hover: #333333;
+  --color-accent: #ffffff;
+  --color-accent-hover: #cccccc;
 
-  --color-background: #ffffff;
-  --color-surface: #fafafa;
+  --color-background: #000000;
+  --color-surface: #111111;
   --color-dark-surface: #2f2f2f;
 
-  --color-text-primary: #1c1c1c;
-  --color-text-secondary: #717171;
-  --color-border: #f0f0f0;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-border: #333333;
 
   --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
   --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -147,7 +147,7 @@
 .admin-wrapper button.bg-black:hover, .admin-wrapper a.bg-black:hover { background-color: #333333 !important; }
 
 html {
-  background-color: #ffffff;
+  background-color: #000000;
 }
 
 body {
@@ -184,8 +184,46 @@ body {
   display: none !important;
 }
 
-.goog-text-highlight {
+  .goog-text-highlight {
   background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}
+
+/* MAIN WEBSITE DARK OVERRIDES (Avoids admin-wrapper) */
+body:not(:has(.admin-wrapper)) .bg-white {
+  background-color: #000000 !important;
+}
+body:not(:has(.admin-wrapper)) .text-black, 
+body:not(:has(.admin-wrapper)) .text-primary,
+body:not(:has(.admin-wrapper)) .text-gray-900,
+body:not(:has(.admin-wrapper)) .text-gray-800 {
+  color: #ffffff !important;
+}
+body:not(:has(.admin-wrapper)) .bg-gray-50 {
+  background-color: #111111 !important;
+}
+body:not(:has(.admin-wrapper)) .bg-gray-100 {
+  background-color: #1a1a1a !important;
+}
+body:not(:has(.admin-wrapper)) .border-gray-100,
+body:not(:has(.admin-wrapper)) .border-gray-200,
+body:not(:has(.admin-wrapper)) .border-border,
+body:not(:has(.admin-wrapper)) .border-gray-50 {
+  border-color: #333333 !important;
+}
+body:not(:has(.admin-wrapper)) .text-gray-700,
+body:not(:has(.admin-wrapper)) .text-gray-600 {
+  color: #d1d5db !important;
+}
+body:not(:has(.admin-wrapper)) .text-gray-500,
+body:not(:has(.admin-wrapper)) .text-gray-400 {
+  color: #a0a0a0 !important;
+}
+body:not(:has(.admin-wrapper)) .bg-black {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+body:not(:has(.admin-wrapper)) .text-white {
+  color: #000000 !important;
 }
