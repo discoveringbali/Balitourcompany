@@ -99,7 +99,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
         <div className="flex items-center">
           <button 
             onClick={() => setSidebarOpen(true)}
-            className="w-10 h-10 rounded-full bg-white/70 border border-white/60 backdrop-blur-2xl flex items-center justify-center text-primary hover:bg-white/90 transition-all shadow-sm outline-none"
+            className="w-10 h-10 rounded-full bg-[#ffffff] border border-[#eaeaea] flex items-center justify-center text-[#1c1c1c] hover:bg-[#f9fafb] transition-all shadow-sm outline-none"
           >
             <Menu size={18} strokeWidth={2.5} />
           </button>
@@ -111,14 +111,14 @@ export default function Navbar({ promoCode = "BALI2026" }) {
             href="https://instagram.com/balanceislandtour"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative mr-1"
+            className="w-9 h-9 sm:w-10 sm:h-10 bg-[#ffffff] border border-[#eaeaea] text-[#1c1c1c] rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative mr-1"
           >
             <InstagramIcon size={16} />
           </a>
           <div className="relative">
             <button 
               onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); }}
-              className="w-9 h-9 sm:w-10 sm:h-10 bg-white/70 backdrop-blur-2xl border border-white/60 text-primary rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative"
+              className="w-9 h-9 sm:w-10 sm:h-10 bg-[#ffffff] border border-[#eaeaea] text-[#1c1c1c] rounded-full flex items-center justify-center hover:bg-white/90 shadow-sm transition-colors relative"
             >
               <Gift size={16} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
@@ -234,18 +234,17 @@ export default function Navbar({ promoCode = "BALI2026" }) {
           <a 
             href="https://instagram.com/balanceislandtour"
             target="_blank"
-            rel="noopener noreferrer"
-            className={`w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft relative ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+            className="w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft relative bg-[#ffffff] border-[#eaeaea] text-[#1c1c1c] hover:bg-[#f9fafb]"
           >
-            <InstagramIcon size={15} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} />
+            <InstagramIcon size={15} className="text-[#1c1c1c]" />
           </a>
 
           <div className="relative">
             <button 
               onClick={() => { setPromoDropdownOpen(!promoDropdownOpen); setLangDropdownOpen(false); setCurrencyDropdownOpen(false); }}
-              className={`w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft relative ${isScrolled ? 'border-border bg-white hover:bg-gray-50 text-primary' : 'border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20 text-white'}`}
+              className="w-9 h-9 border rounded-full flex items-center justify-center transition-all duration-500 shadow-soft relative bg-[#ffffff] border-[#eaeaea] text-[#1c1c1c] hover:bg-[#f9fafb]"
             >
-              <Gift size={15} className={`transition-colors duration-500 ${isScrolled ? 'text-primary' : 'text-white'}`} />
+              <Gift size={15} className="text-[#1c1c1c]" />
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-white animate-pulse"></span>
             </button>
             {promoDropdownOpen && (

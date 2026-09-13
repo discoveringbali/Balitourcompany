@@ -650,7 +650,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           <div className="relative z-40 px-5">
 
           {/* Location Filter (Animated Segmented Control Style) */}
-          <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 mb-4">
+          <div className="bg-[#ffffff] shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-[#eaeaea] rounded-[32px] p-1.5 mb-4">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {["All Bali", "Ubud", "Canggu", "Seminyak", "Nusa Penida", "Uluwatu"].map((loc) => {
                 const isActive = (searchQuery.toLowerCase() === loc.toLowerCase()) || (searchQuery === "" && loc === "All Bali");
@@ -672,9 +672,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {/* Text Label or Icon */}
                     <div className="relative z-10 flex items-center justify-center">
                       {loc === "All Bali" ? (
-                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-white' : 'text-gray-500 hover:text-black'}`} />
+                        <BaliGateIcon isActive={isActive} className={`w-5 h-5 transition-colors duration-300 ${isActive ? 'text-white' : 'text-[#717171] hover:text-[#1c1c1c]'}`} />
                       ) : (
-                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                        <span className={`text-[14px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
                           {loc}
                         </span>
                       )}
@@ -686,19 +686,19 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           </div>
 
           {/* Apple Glass Search Bar */}
-          <div className="flex items-center bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-full pl-2 pr-2 py-2 relative mb-6">
+          <div className="flex items-center bg-[#ffffff] shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-[#eaeaea] rounded-full pl-2 pr-2 py-2 relative mb-6">
 
             {/* Mobile Service Dropdown Trigger inside Search Bar */}
             <button
               onClick={() => setIsServiceDropdownOpen(!isServiceDropdownOpen)}
-              className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full hover:bg-gray-50 text-primary active:scale-95 transition-all outline-none"
+              className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full hover:bg-[#f9fafb] text-[#1c1c1c] active:scale-95 transition-all outline-none"
             >
               <span className="font-extrabold text-[14px] tracking-tight">{activeService}</span>
-              <ChevronDown size={14} className={`text-text-secondary transition-transform duration-300 ${isServiceDropdownOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown size={14} className={`text-[#717171] transition-transform duration-300 ${isServiceDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
-            <div className="h-5 w-[1px] bg-border/80 mx-1 shrink-0"></div>
+            <div className="h-5 w-[1px] bg-[#f0f0f0] mx-1 shrink-0"></div>
 
-            <Search size={18} className="text-text-secondary shrink-0 mr-2" />
+            <Search size={18} className="text-[#717171] shrink-0 mr-2" />
             <input
               type="text"
               value={searchQuery}
@@ -706,15 +706,15 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setTimeout(() => setIsSearchFocused(false), 200)}
               placeholder={`Search...`}
-              className="flex-1 min-w-0 outline-none text-[15px] font-medium bg-transparent text-primary placeholder:text-text-secondary pr-2"
+              className="flex-1 min-w-0 outline-none text-[15px] font-medium bg-transparent text-[#1c1c1c] placeholder:text-[#717171] pr-2"
             />
 
             {/* Filter Modal Toggle */}
             <button
               onClick={() => setIsFilterModalOpen(true)}
-              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-white/70 backdrop-blur-2xl border border-white/60 hover:bg-white/90 hover:scale-105`}
+              className={`w-[38px] h-[38px] rounded-full flex items-center justify-center shrink-0 shadow-sm transition-all active:scale-95 bg-[#ffffff] border border-[#eaeaea] hover:bg-[#f9fafb] hover:scale-105`}
             >
-              <Settings2 size={16} strokeWidth={2.5} className="text-primary" />
+              <Settings2 size={16} strokeWidth={2.5} className="text-[#1c1c1c]" />
             </button>
 
             {/* Mobile Service Dropdown */}
@@ -949,18 +949,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {/* Top Right Click Button with Curve Cutout Effect */}
                 {!camp.isHeroSlide && (
                   <div className="absolute -top-[1px] -right-[1px] z-20 pointer-events-auto">
-                    <div className="bg-white rounded-bl-[24px] pl-3 pb-3 pr-[1px] pt-[1px] relative flex items-center gap-2">
+                    <div className="bg-[#000000] rounded-bl-[24px] pl-3 pb-3 pr-[1px] pt-[1px] relative flex items-center gap-2">
                       {/* Left Curve SVG */}
-                      <svg className="absolute top-[1px] -left-[23.5px] w-[24px] h-[24px] fill-white" viewBox="0 0 24 24">
+                      <svg className="absolute top-[1px] -left-[23.5px] w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
                       {/* Bottom Curve SVG */}
-                      <svg className="absolute -bottom-[23.5px] right-[1px] w-[24px] h-[24px] fill-white" viewBox="0 0 24 24">
+                      <svg className="absolute -bottom-[23.5px] right-[1px] w-[24px] h-[24px] fill-[#000000]" viewBox="0 0 24 24">
                         <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
                       </svg>
 
                       {/* Heart Button */}
-                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm" aria-label="Save campaign">
+                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm" aria-label="Save campaign">
                         <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
                       </button>
 
@@ -969,7 +969,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           href={camp.externalUrl || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
                           aria-label="Open partner website"
                         >
                           <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
@@ -977,7 +977,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       ) : (
                         <Link
                           href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
+                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
                           aria-label="View tour details"
                         >
                           <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
