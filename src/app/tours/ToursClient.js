@@ -103,7 +103,7 @@ export default function ToursClient({ initialTours }) {
             </div>
           </div>
 
-          <div className="bg-white shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-gray-100 rounded-[32px] p-1.5 self-start max-w-full">
+          <div className="bg-[#ffffff] shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-[#eaeaea] rounded-[32px] p-1.5 self-start max-w-full">
             <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {categories.map((cat) => {
                 const isActive = activeCategory === cat;
@@ -116,12 +116,12 @@ export default function ToursClient({ initialTours }) {
                     {isActive && (
                       <motion.div
                         layoutId="toursCategoryIndicator"
-                        className="absolute inset-0 bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/20 shadow-md rounded-[24px]"
+                        className="absolute inset-0 bg-[#ffffff] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
                     <div className="relative z-10 flex items-center justify-center">
-                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1c1c1c] font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
                           {cat}
                         </span>
                     </div>
@@ -132,7 +132,7 @@ export default function ToursClient({ initialTours }) {
           </div>
 
           {showFilters && (
-            <div className="bg-white rounded-[24px] p-1.5 shadow-sm self-start max-w-full border border-gray-200">
+            <div className="bg-[#ffffff] rounded-[24px] p-1.5 shadow-sm self-start max-w-full border border-[#eaeaea]">
               <div className="flex items-center overflow-x-auto no-scrollbar hide-scroll" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 <span className="text-[11px] font-bold text-gray-400 px-3 whitespace-nowrap uppercase tracking-wider">Location:</span>
                 {locations.map((loc) => {
@@ -146,12 +146,12 @@ export default function ToursClient({ initialTours }) {
                       {isActive && (
                         <motion.div
                           layoutId="toursLocationIndicator"
-                          className="absolute inset-0 bg-[#1c1c1c]/90 backdrop-blur-xl border border-white/20 shadow-md rounded-[20px]"
+                          className="absolute inset-0 bg-[#ffffff] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[20px]"
                           transition={{ type: "spring", stiffness: 400, damping: 28 }}
                         />
                       )}
                       <div className="relative z-10 flex items-center justify-center">
-                          <span className={`text-[12px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-gray-500 font-bold hover:text-black'}`}>
+                          <span className={`text-[12px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1c1c1c] font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
                             {loc}
                           </span>
                       </div>

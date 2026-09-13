@@ -37,7 +37,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <div className="flex items-center gap-4">
             <button 
               onClick={onClose}
-              className="w-10 h-10 flex items-center justify-center text-black hover:bg-gray-100 rounded-full transition-colors shrink-0"
+              className="w-10 h-10 flex items-center justify-center text-[#ffffff] hover:bg-[#111111] rounded-full transition-colors shrink-0"
             >
               <X size={24} strokeWidth={2} />
             </button>
@@ -49,13 +49,13 @@ export default function Sidebar({ isOpen, onClose }) {
           {/* MENU Section */}
           <div className="space-y-5">
             <div className="flex flex-col space-y-5">
-              <Link href="/" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+              <Link href="/" onClick={onClose} className="font-serif text-[26px] text-[#ffffff] hover:text-[#eaeaea] transition-colors">
                 Home
               </Link>
-              <Link href="/tours?category=Activities" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+              <Link href="/tours?category=Activities" onClick={onClose} className="font-serif text-[26px] text-[#ffffff] hover:text-[#eaeaea] transition-colors">
                 Activities & Attractions
               </Link>
-              <Link href="/tours" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+              <Link href="/tours" onClick={onClose} className="font-serif text-[26px] text-[#ffffff] hover:text-[#eaeaea] transition-colors">
                 Tour packages
               </Link>
             </div>
@@ -67,13 +67,13 @@ export default function Sidebar({ isOpen, onClose }) {
           <div className="space-y-5">
             <h4 className="text-[11px] font-bold text-gray-500 tracking-[0.15em] uppercase">Read</h4>
             <div className="flex flex-col space-y-5">
-              <Link href="/blog" onClick={onClose} className="font-serif italic text-[28px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+              <Link href="/blog" onClick={onClose} className="font-serif italic text-[28px] text-[#ffffff] hover:text-[#eaeaea] transition-colors">
                 Our Blog
               </Link>
-              <Link href="/blog" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors pl-4 border-l-2 border-gray-100">
+              <Link href="/blog" onClick={onClose} className="font-serif text-[26px] text-[#ffffff] hover:text-[#eaeaea] transition-colors pl-4 border-l-2 border-[#333333]">
                 Recommended Places
               </Link>
-              <Link href="/about" onClick={onClose} className="font-serif text-[26px] text-[#1a1a1a] hover:text-gray-600 transition-colors">
+              <Link href="/about" onClick={onClose} className="font-serif text-[26px] text-[#ffffff] hover:text-[#eaeaea] transition-colors">
                 About Us
               </Link>
             </div>
@@ -85,15 +85,15 @@ export default function Sidebar({ isOpen, onClose }) {
           <div className="space-y-2">
             <h4 className="text-[11px] font-bold text-gray-500 tracking-[0.15em] uppercase mb-2">Support</h4>
             <div className="flex flex-col">
-              <Link href="/contact" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#1a1a1a] hover:bg-gray-50 transition-colors border-b border-gray-100">
+              <Link href="/contact" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#ffffff] hover:bg-[#111111] transition-colors border-b border-[#333333]">
                 <span>Contact Us</span>
                 <ChevronRight size={18} className="text-gray-400" />
               </Link>
-              <Link href="/faq" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#1a1a1a] hover:bg-gray-50 transition-colors border-b border-gray-100">
+              <Link href="/faq" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#ffffff] hover:bg-[#111111] transition-colors border-b border-[#333333]">
                 <span>Help center</span>
                 <ChevronRight size={18} className="text-gray-400" />
               </Link>
-              <Link href="/terms" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#1a1a1a] hover:bg-gray-50 transition-colors border-b border-gray-100">
+              <Link href="/terms" onClick={onClose} className="flex items-center justify-between py-4 text-[16px] font-medium text-[#ffffff] hover:bg-[#111111] transition-colors border-b border-[#333333]">
                 <span>Terms & Conditions</span>
                 <ChevronRight size={18} className="text-gray-400" />
               </Link>
