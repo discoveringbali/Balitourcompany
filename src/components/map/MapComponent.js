@@ -418,7 +418,7 @@ export default function MapComponent() {
               <p className="text-[13px] font-bold text-gray-400 mt-1">{routeStats.distanceText} • {routeStats.durationText}</p>
               <div className="font-black mt-3 text-[16px] text-primary">{formatIDR(routeStats.distKm * car.pricePerKm)}</div>
               {selectedTransport === car.id && (
-                <a href={`https://wa.me/6285174119423`} target="_blank" className="block text-center mt-4 bg-black text-white py-3 rounded-xl text-[14px] font-bold hover:scale-105 transition-transform">Book on WhatsApp</a>
+                <a href={`https://wa.me/6285174119423`} target="_blank" className="block text-center mt-4 bg-[#d2ff00] text-[#1c1c1c] hover:bg-[#c4ed00] py-3 rounded-xl text-[14px] font-bold hover:scale-105 transition-all">Book on WhatsApp</a>
               )}
             </div>
           ))}

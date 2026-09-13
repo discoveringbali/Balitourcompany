@@ -196,7 +196,7 @@ export default function CampaignServiceShowcase({ campaign, serviceName }) {
               href={formattedUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-black text-white font-extrabold py-3.5 px-6 rounded-2xl hover:bg-neutral-800 active:scale-[0.99] transition-all shadow-md flex items-center justify-center gap-2 group/btn cursor-pointer no-underline text-center text-sm"
+              className="w-full bg-[#d2ff00] text-[#1c1c1c] font-extrabold py-3.5 px-6 rounded-2xl hover:bg-[#c4ed00] active:scale-[0.99] transition-all shadow-md flex items-center justify-center gap-2 group/btn cursor-pointer no-underline text-center text-sm"
             >
               <span>{isScooter ? "Book Scooter Online" : "Book Treatment Online"}</span>
               <ArrowUpRight size={16} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />

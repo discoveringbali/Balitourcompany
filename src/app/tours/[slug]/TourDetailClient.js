@@ -809,7 +809,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
                    setModalStartStep(2);
                    setIsBookingModalOpen(true);
                  }} 
-                 className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
+                 className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-[#d2ff00] hover:bg-[#c4ed00] text-[#1c1c1c]'}`}
                >
                  Check availability
                </button>
@@ -913,7 +913,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
               setModalStartStep(1);
               setIsBookingModalOpen(true);
             }} 
-            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-black hover:bg-neutral-800 text-white'}`}
+            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-[#d2ff00] hover:bg-[#c4ed00] text-[#1c1c1c]'}`}
           >
             {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
           </button>

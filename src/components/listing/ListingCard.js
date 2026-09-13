@@ -227,7 +227,7 @@ export default function ListingCard({ item, linkTo, compact }) {
               </span>
             </div>
           </div>
-          <button className={`font-extrabold text-white bg-black rounded-xl shrink-0 shadow-sm transition-transform active:scale-95 group-hover:scale-105 ${compact ? 'text-[11px] px-3 py-1.5 md:text-[13px] md:px-4 md:py-2' : 'text-[13px] px-4 py-2'}`}>
+          <button className={`font-extrabold text-[#1c1c1c] bg-[#d2ff00] hover:bg-[#c4ed00] rounded-xl shrink-0 shadow-sm transition-transform active:scale-95 group-hover:scale-105 ${compact ? 'text-[11px] px-3 py-1.5 md:text-[13px] md:px-4 md:py-2' : 'text-[13px] px-4 py-2'}`}>
             Book
           </button>
         </div>
