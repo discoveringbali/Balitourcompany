@@ -1331,45 +1331,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
 
 
-        {/* Why Book With Us (OTA Section) */}
-        <section className="px-6 mb-12 mt-4 max-w-7xl mx-auto">
-          <div className="text-center mb-8 md:mb-10">
-            <h2 className="text-[22px] md:text-[28px] font-black text-primary">Why Book With Balance Island?</h2>
-            <p className="text-[14px] md:text-[16px] text-gray-500 font-medium mt-2">Your trusted partner for authentic and seamless Bali experiences.</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-[28px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-green-50/80 flex items-center justify-center shrink-0">
-                <ShieldCheck size={28} className="text-green-600" strokeWidth={2.5} />
-              </div>
-              <div className="flex flex-col">
-                <h3 className="font-extrabold text-[16px] md:text-[18px] text-primary mb-1.5">Secure & Trusted</h3>
-                <p className="text-[13px] md:text-[14px] text-gray-500 font-medium leading-relaxed">Book with absolute confidence. We partner only with verified, high-quality local operators.</p>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-[28px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-blue-50/80 flex items-center justify-center shrink-0">
-                <Clock size={28} className="text-blue-600" strokeWidth={2.5} />
-              </div>
-              <div className="flex flex-col">
-                <h3 className="font-extrabold text-[16px] md:text-[18px] text-primary mb-1.5">Free Cancellation</h3>
-                <p className="text-[13px] md:text-[14px] text-gray-500 font-medium leading-relaxed">Plans change. Cancel up to 24 hours in advance for a full refund on most of our experiences.</p>
-              </div>
-            </div>
-
-            <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-[28px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all flex flex-col md:flex-row items-center md:items-start text-center md:text-left gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-orange-50/80 flex items-center justify-center shrink-0">
-                <Heart size={28} className="text-orange-500" strokeWidth={2.5} />
-              </div>
-              <div className="flex flex-col">
-                <h3 className="font-extrabold text-[16px] md:text-[18px] text-primary mb-1.5">24/7 Local Support</h3>
-                <p className="text-[13px] md:text-[14px] text-gray-500 font-medium leading-relaxed">We are based locally in Bali. Connect with us anytime via WhatsApp for immediate assistance.</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Footer */}
         <footer className="px-6 pb-6 pt-2">
