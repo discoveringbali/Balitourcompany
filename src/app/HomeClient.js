@@ -1304,6 +1304,10 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </section>
 
+            <section className="px-6 mb-8 mt-2 w-full max-w-[1200px] mx-auto">
+              <div data-gyg-widget="auto" data-gyg-partner-id="TW9SMIV" data-gyg-cmp="ubud"></div>
+            </section>
+
             {/* Filtered Experiences */}
             <section id="filtered-tours-section" className="mt-6 mb-12 relative">
               {appliedPromoFilter && (
