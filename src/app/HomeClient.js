@@ -1337,7 +1337,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </section>
 
             {/* GetYourGuide Widget Section */}
-            <section className="px-6 mb-12 w-full max-w-[1200px] mx-auto">
+            <section className="px-6 mb-12 w-full max-w-[1200px] mx-auto flex flex-col gap-8">
               <Script 
                 strategy="lazyOnload" 
                 src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" 
@@ -1353,6 +1353,15 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 data-gyg-partner-id="TW9SMIV"
               >
                 <span>Powered by <a target="_blank" rel="sponsored" href="https://www.getyourguide.com/munduk-l164885/">GetYourGuide</a></span>
+              </div>
+              
+              <div 
+                data-gyg-href="https://widget.getyourguide.com/default/city.frame" 
+                data-gyg-location-id="32246" 
+                data-gyg-locale-code="en-US" 
+                data-gyg-widget="city" 
+                data-gyg-partner-id="TW9SMIV"
+              >
               </div>
             </section>
 
