@@ -8,6 +8,7 @@ import ListingCard from "@/components/listing/ListingCard";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Script from "next/script";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateSlug } from "@/lib/utils";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
@@ -1332,6 +1333,26 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     No tours found for this category currently.
                   </div>
                 )}
+              </div>
+            </section>
+
+            {/* GetYourGuide Widget Section */}
+            <section className="px-6 mb-12 w-full max-w-[1200px] mx-auto">
+              <Script 
+                strategy="lazyOnload" 
+                src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" 
+                data-gyg-partner-id="TW9SMIV" 
+              />
+              <div 
+                data-gyg-href="https://widget.getyourguide.com/default/availability.frame" 
+                data-gyg-tour-id="1486502" 
+                data-gyg-locale-code="en-US" 
+                data-gyg-currency="USD" 
+                data-gyg-widget="availability" 
+                data-gyg-variant="vertical" 
+                data-gyg-partner-id="TW9SMIV"
+              >
+                <span>Powered by <a target="_blank" rel="sponsored" href="https://www.getyourguide.com/munduk-l164885/">GetYourGuide</a></span>
               </div>
             </section>
 
