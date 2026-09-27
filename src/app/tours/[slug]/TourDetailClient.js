@@ -554,7 +554,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
 
             {activeTab === "Reviews" && (
               <div className="animate-in fade-in duration-300">
-                <h3 className="font-bold text-[22px] md:text-[24px] text-[#ffffff] mb-6">Customer Reviews</h3>
+                <h3 className="font-bold text-[22px] md:text-[24px] text-primary mb-6">Customer Reviews</h3>
                 
                 {/* Review Form */}
                 <div className="bg-[#ffffff] p-6 rounded-2xl border border-[#eaeaea] mb-8 shadow-sm">
@@ -631,7 +631,7 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
 
                 {/* Display Live Reviews */}
                 <div className="space-y-4">
-                   <h4 className="font-bold text-[18px] text-[#ffffff] mb-4">All Reviews ({localReviews.length})</h4>
+                   <h4 className="font-bold text-[18px] text-primary mb-4">All Reviews ({localReviews.length})</h4>
                    {localReviews.length === 0 ? (
                      <p className="text-[#a1a1aa] text-sm font-medium italic">No reviews yet. Be the first to leave one!</p>
                    ) : (
@@ -956,4 +956,3 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
     </div>
   );
 }
-

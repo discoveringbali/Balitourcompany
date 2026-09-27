@@ -28,6 +28,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [isScrolled, setIsScrolled] = useState(false);
+  const isLightHeader = isScrolled || pathname !== "/";
 
 
   const [filterOpen, setFilterOpen] = useState(false);
@@ -87,8 +88,8 @@ export default function Navbar({ promoCode = "BALI2026" }) {
   return (
     <>
       <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
-      isScrolled 
-        ? "top-2 w-[95%] max-w-[95%] rounded-full bg-white/20 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] border border-white/20 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px] md:bg-white/70 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-[0_8px_30px_rgba(0,0,0,0.08)] md:border-white/50" 
+      isLightHeader
+        ? "top-2 w-[95%] max-w-[95%] rounded-full bg-white/90 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] border border-gray-200 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px] md:bg-white/90 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-[0_8px_30px_rgba(0,0,0,0.08)] md:border-gray-200"
         : "top-0 w-full bg-transparent pt-4 pb-4 md:w-[95%] md:max-w-[1400px] md:py-5"
     }`}>
       
@@ -169,30 +170,30 @@ export default function Navbar({ promoCode = "BALI2026" }) {
       <div className="hidden md:flex container mx-auto px-6 w-full items-center justify-between">
         
         {/* Logo */}
-        <Link href="/" className={`font-black tracking-[0.1em] flex-1 flex items-center text-xl md:text-[22px] transition-colors duration-500 ${isScrolled ? 'text-[#1c1c1c]' : 'text-white'}`}>
+        <Link href="/" className={`font-black tracking-[0.1em] flex-1 flex items-center text-xl md:text-[22px] transition-colors duration-500 ${isLightHeader ? 'text-[#1c1c1c]' : 'text-white'}`}>
           Balance Island
         </Link>
 
         {/* Center Compressed Search */}
         <div className="flex-1 justify-center flex relative z-[60]">
-          <div className={`flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full pl-2 pr-2 py-1.5 cursor-pointer transition-all duration-500 w-full max-w-[420px] relative hover:shadow-[0_8px_30px_rgb(0,0,0,0.1)] ${isScrolled ? 'bg-white border border-border' : 'border border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20'}`}>
+          <div className={`flex items-center shadow-[0_8px_30px_rgb(0,0,0,0.06)] rounded-full pl-2 pr-2 py-1.5 cursor-pointer transition-all duration-500 w-full max-w-[420px] relative hover:shadow-[0_8px_30px_rgb(0,0,0,0.1)] ${isLightHeader ? 'bg-white border border-border' : 'border border-white/30 bg-black/20 backdrop-blur-md hover:bg-white/20'}`}>
             <button 
               onClick={() => setFilterOpen(!filterOpen)} 
-              className={`flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full active:scale-95 transition-all outline-none ${isScrolled ? 'hover:bg-gray-50 text-primary' : 'hover:bg-white/20 text-white'}`}
+              className={`flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full active:scale-95 transition-all outline-none ${isLightHeader ? 'hover:bg-gray-50 text-primary' : 'hover:bg-white/20 text-white'}`}
             >
               <span className="font-extrabold text-[13px] tracking-tight">{activeService}</span>
-              <ChevronDown size={14} className={`transition-transform duration-300 ${filterOpen ? 'rotate-180' : ''} ${isScrolled ? 'text-text-secondary' : 'text-white'}`} />
+              <ChevronDown size={14} className={`transition-transform duration-300 ${filterOpen ? 'rotate-180' : ''} ${isLightHeader ? 'text-text-secondary' : 'text-white'}`} />
             </button>
-            <div className={`h-5 w-[1px] mx-1 shrink-0 transition-colors duration-500 ${isScrolled ? 'bg-border/80' : 'bg-white/30'}`}></div>
-            <Search size={16} className={`mx-2 transition-colors duration-500 ${isScrolled ? 'text-text-secondary' : 'text-white'}`} />
+            <div className={`h-5 w-[1px] mx-1 shrink-0 transition-colors duration-500 ${isLightHeader ? 'bg-border/80' : 'bg-white/30'}`}></div>
+            <Search size={16} className={`mx-2 transition-colors duration-500 ${isLightHeader ? 'text-text-secondary' : 'text-white'}`} />
             <input 
               type="text" 
               placeholder={`Search ${activeService.toLowerCase()}s...`}
               onChange={(e) => window.dispatchEvent(new CustomEvent('searchQueryChanged', { detail: e.target.value }))}
-              className={`flex-1 outline-none text-[13px] font-medium bg-transparent min-w-0 transition-colors duration-500 ${isScrolled ? 'text-primary placeholder:text-text-secondary' : 'text-white placeholder:text-white/80'}`} 
+              className={`flex-1 outline-none text-[13px] font-medium bg-transparent min-w-0 transition-colors duration-500 ${isLightHeader ? 'text-primary placeholder:text-text-secondary' : 'text-white placeholder:text-white/80'}`}
             />
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-2 shadow-sm transition-all hover:scale-105 shrink-0 ${isScrolled ? 'bg-black text-white' : 'bg-white text-black'}`}>
-              <Settings2 size={15} strokeWidth={2.5} className={isScrolled ? 'text-white' : 'text-black'} />
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center ml-2 shadow-sm transition-all hover:scale-105 shrink-0 ${isLightHeader ? 'bg-black text-white' : 'bg-white text-black'}`}>
+              <Settings2 size={15} strokeWidth={2.5} className={isLightHeader ? 'text-white' : 'text-black'} />
             </div>
             
             {/* Desktop Navbar Dropdown */}

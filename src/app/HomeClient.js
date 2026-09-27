@@ -176,7 +176,7 @@ function PopularTripCard({ trip, priority = false }) {
 
       {/* Content Area */}
       <div className="flex flex-col gap-1.5 px-1">
-        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-[#ffffff] line-clamp-2">
+        <h3 className="font-extrabold text-[15px] md:text-[16px] leading-snug text-primary line-clamp-2">
           {trip.title}
         </h3>
         
@@ -188,7 +188,7 @@ function PopularTripCard({ trip, priority = false }) {
         </div>
         
         <div className="mt-1">
-          <span className="font-black text-[15px] md:text-[16px] text-[#ffffff] tracking-tight">
+          <span className="font-black text-[15px] md:text-[16px] text-primary tracking-tight">
             IDR {displayPrice.toLocaleString('id-ID')}
           </span>
         </div>
@@ -672,7 +672,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     {isActive && (
                       <motion.div
                         layoutId="locationActiveIndicator"
-                        className="absolute inset-0 bg-[#ffffff] border border-[#eaeaea] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
+                        className="absolute inset-0 bg-[#1c1c1c] border border-[#1c1c1c] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}

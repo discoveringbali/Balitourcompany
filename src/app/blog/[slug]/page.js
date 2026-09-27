@@ -68,9 +68,9 @@ const formatContent = (htmlOrText) => {
 
     if (isBoldedLine) {
       if (index === 0 || html.indexOf('<h2') === -1) {
-        html += `<h2 class="text-2xl md:text-3xl font-black mt-10 mb-5 text-white leading-tight tracking-tight">${cleanLine}</h2>`;
+        html += `<h2 class="text-2xl md:text-3xl font-black mt-10 mb-5 text-primary leading-tight tracking-tight">${cleanLine}</h2>`;
       } else {
-        html += `<h3 class="text-xl md:text-2xl font-black mt-8 mb-4 text-white leading-snug tracking-tight">${cleanLine}</h3>`;
+        html += `<h3 class="text-xl md:text-2xl font-black mt-8 mb-4 text-primary leading-snug tracking-tight">${cleanLine}</h3>`;
       }
       expectList = false; // Reset implicit list detection
     } else {

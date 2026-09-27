@@ -102,13 +102,13 @@ export default function PersonalInfoPage() {
   if (!isLoaded) return null; // Prevent hydration mismatch
 
   return (
-    <div className="min-h-[100dvh] bg-[#000000] pb-10 font-sans font-medium text-white">
+    <div className="min-h-[100dvh] bg-background pb-10 font-sans font-medium text-text-primary">
       {/* Header */}
-      <div className="sticky top-0 z-50 bg-[#000000] border-b border-white/10 px-4 h-14 flex items-center justify-between">
-        <button type="button" onClick={() => router.back()} className="w-10 h-10 -ml-2 flex items-center justify-center hover:bg-white/10 transition-colors rounded-full">
-          <ChevronLeft size={24} className="text-white" strokeWidth={2.5} />
+      <div className="sticky top-0 z-50 bg-white border-b border-gray-200 px-4 h-14 flex items-center justify-between">
+        <button type="button" onClick={() => router.back()} className="w-10 h-10 -ml-2 flex items-center justify-center hover:bg-gray-100 transition-colors rounded-full">
+          <ChevronLeft size={24} className="text-primary" strokeWidth={2.5} />
         </button>
-        <span className="font-bold text-[17px] text-white">Personal Info</span>
+        <span className="font-bold text-[17px] text-primary">Personal Info</span>
         <div className="w-10 h-10"></div>
       </div>
 
@@ -118,11 +118,11 @@ export default function PersonalInfoPage() {
           {/* Profile Image Uploader */}
           <div className="flex flex-col items-center justify-center gap-2 py-8">
             <div className="relative group">
-              <div className="w-20 h-20 rounded-full overflow-hidden border border-white/20 bg-[#1c1c1c] flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center">
                 {formData.image ? (
                   <img src={formData.image} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
-                  <User size={36} className="text-white/30" strokeWidth={1.5} />
+                  <User size={36} className="text-gray-400" strokeWidth={1.5} />
                 )}
               </div>
               <label className="absolute bottom-0 right-0 w-7 h-7 bg-white rounded-full flex items-center justify-center cursor-pointer shadow-sm border border-black/10">
@@ -130,66 +130,66 @@ export default function PersonalInfoPage() {
                 <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
               </label>
             </div>
-            <span className="text-[12px] font-medium text-white/50">Edit photo</span>
+            <span className="text-[12px] font-medium text-text-secondary">Edit photo</span>
           </div>
 
-          <div className="bg-[#1c1c1c] rounded-2xl overflow-hidden border border-white/10 mx-4 sm:mx-0 shadow-sm">
-            <div className="flex items-center px-4 py-3.5 border-b border-white/10">
-              <label className="text-[15px] w-28 shrink-0 font-medium text-white">First Name</label>
+          <div className="bg-white rounded-2xl overflow-hidden border border-gray-200 mx-4 sm:mx-0 shadow-sm">
+            <div className="flex items-center px-4 py-3.5 border-b border-gray-100">
+              <label className="text-[15px] w-28 shrink-0 font-medium text-primary">First Name</label>
               <input 
                 type="text" 
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="flex-1 min-w-0 bg-transparent text-white text-[15px] focus:outline-none placeholder:text-white/30" 
+                className="flex-1 min-w-0 bg-transparent text-primary text-[15px] focus:outline-none placeholder:text-gray-400"
                 placeholder="John" 
               />
             </div>
-            <div className="flex items-center px-4 py-3.5 border-b border-white/10">
-              <label className="text-[15px] w-28 shrink-0 font-medium text-white">Last Name</label>
+            <div className="flex items-center px-4 py-3.5 border-b border-gray-100">
+              <label className="text-[15px] w-28 shrink-0 font-medium text-primary">Last Name</label>
               <input 
                 type="text" 
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
-                className="flex-1 min-w-0 bg-transparent text-white text-[15px] focus:outline-none placeholder:text-white/30" 
+                className="flex-1 min-w-0 bg-transparent text-primary text-[15px] focus:outline-none placeholder:text-gray-400"
                 placeholder="Doe" 
               />
             </div>
-            <div className="flex items-center px-4 py-3.5 border-b border-white/10">
-              <label className="text-[15px] w-28 shrink-0 font-medium text-white">Email</label>
+            <div className="flex items-center px-4 py-3.5 border-b border-gray-100">
+              <label className="text-[15px] w-28 shrink-0 font-medium text-primary">Email</label>
               <input 
                 type="email" 
                 defaultValue={session?.user?.email || ""}
                 disabled
-                className="flex-1 min-w-0 bg-transparent text-white/50 text-[15px] focus:outline-none" 
+                className="flex-1 min-w-0 bg-transparent text-text-secondary text-[15px] focus:outline-none"
               />
             </div>
-            <div className="flex items-center px-4 py-3.5 border-b border-white/10">
-              <label className="text-[15px] w-28 shrink-0 font-medium text-white">WhatsApp</label>
-              <span className="text-white/50 mr-1 text-[15px]">+</span>
+            <div className="flex items-center px-4 py-3.5 border-b border-gray-100">
+              <label className="text-[15px] w-28 shrink-0 font-medium text-primary">WhatsApp</label>
+              <span className="text-text-secondary mr-1 text-[15px]">+</span>
               <input 
                 type="tel" 
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="flex-1 min-w-0 bg-transparent text-white text-[15px] focus:outline-none placeholder:text-white/30" 
+                className="flex-1 min-w-0 bg-transparent text-primary text-[15px] focus:outline-none placeholder:text-gray-400"
                 placeholder="123 456 7890" 
               />
             </div>
             <div className="flex items-center px-4 py-3.5">
-              <label className="text-[15px] w-28 shrink-0 font-medium text-white">Nationality</label>
+              <label className="text-[15px] w-28 shrink-0 font-medium text-primary">Nationality</label>
               <input 
                 type="text" 
                 name="nationality"
                 value={formData.nationality}
                 onChange={handleChange}
-                className="flex-1 min-w-0 bg-transparent text-white text-[15px] focus:outline-none placeholder:text-white/30" 
+                className="flex-1 min-w-0 bg-transparent text-primary text-[15px] focus:outline-none placeholder:text-gray-400"
                 placeholder="e.g. Australian" 
               />
             </div>
           </div>
-          <p className="px-5 text-[11px] text-white/40 mt-3 text-center leading-relaxed">
+          <p className="px-5 text-[11px] text-text-secondary mt-3 text-center leading-relaxed">
             This information is securely auto-filled for faster checkouts and saved locally on your device for your privacy.
           </p>
 
@@ -197,7 +197,7 @@ export default function PersonalInfoPage() {
             <button 
               type="submit"
               disabled={isSaving}
-              className="w-full bg-[#ffffff] hover:bg-[#e0e0e0] text-[#000000] font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg"
+              className="w-full bg-primary hover:bg-neutral-800 text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all active:scale-95 shadow-lg"
             >
               <Save size={18} />
               {isSaving ? "Saving details..." : "Save Information"}

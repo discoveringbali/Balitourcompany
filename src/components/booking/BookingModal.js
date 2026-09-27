@@ -300,7 +300,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       <div className="relative w-full h-[100dvh] md:h-auto md:max-h-[90dvh] md:w-[500px] bg-white rounded-none md:rounded-[32px] flex flex-col shadow-2xl animate-in slide-in-from-bottom-10 md:zoom-in-95 duration-300">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10 shrink-0">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 shrink-0">
           {step === 2 && startStep === 1 ? (
             <button onClick={() => setStep(1)} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
               <ChevronLeft size={20} strokeWidth={2.5} className="pr-0.5" />
@@ -319,7 +319,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           
           {/* Service Summary snippet */}
           {serviceData && (
-            <div className="flex gap-4 items-center mb-8 bg-white/5 p-3 pl-4 rounded-2xl">
+            <div className="flex gap-4 items-center mb-8 bg-gray-50 p-3 pl-4 rounded-2xl">
               <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
                 <Calendar className="text-primary" size={24} />
               </div>
@@ -368,21 +368,21 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                     <div className="flex flex-col gap-2">
                       <div 
                          onClick={() => handlePackageSelect('Standard')}
-                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-black bg-black text-white/10' : 'border-white/10 bg-white/5 hover:border-gray-200'}`}
+                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-primary bg-primary' : 'border-gray-200 bg-white hover:border-gray-400'}`}
                       >
                          <div className="flex justify-between items-center mb-1">
-                            <span className="font-bold text-primary text-[14px]">Standard Journey</span>
-                            {localPackage === 'Standard' && <div className="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center shadow-sm"><Check size={12} strokeWidth={3} className="text-[#1c1c1c]" /></div>}
+                            <span className={`font-bold text-[14px] ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Standard Journey</span>
+                            {localPackage === 'Standard' && <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center shadow-sm"><Check size={12} strokeWidth={3} className="text-primary" /></div>}
                          </div>
-                         <p className="text-[12px] text-gray-500 font-medium leading-snug">Essential driver and guide service. Entrance fees are not included.</p>
+                         <p className={`text-[12px] font-medium leading-snug ${localPackage === 'Standard' ? 'text-white/75' : 'text-text-secondary'}`}>Essential driver and guide service. Entrance fees are not included.</p>
                       </div>
                       <div 
                          onClick={() => handlePackageSelect('All Inclusive')}
-                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-black bg-black text-white/10' : 'border-white/10 bg-white/5 hover:border-gray-200'}`}
+                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-primary bg-primary' : 'border-gray-200 bg-white hover:border-gray-400'}`}
                       >
                          <div className="flex justify-between items-center mb-1">
-                            <span className="font-bold text-primary text-[14px]">All-Inclusive Experience</span>
-                            <span className="text-[11px] font-extrabold text-[#1c1c1c] bg-black text-white px-2 py-0.5 rounded-md shadow-sm">
+                            <span className={`font-bold text-[14px] ${localPackage === 'All Inclusive' ? 'text-white' : 'text-primary'}`}>All-Inclusive Experience</span>
+                            <span className="text-[11px] font-extrabold text-white bg-black px-2 py-0.5 rounded-md shadow-sm">
                               {(() => {
                                 const getMultiplierPrice = (rawPrice) => {
                                   const p = Number(rawPrice);
@@ -400,7 +400,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                               })()}
                             </span>
                          </div>
-                         <p className="text-[12px] text-gray-500 font-medium leading-snug">Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
+                         <p className={`text-[12px] font-medium leading-snug ${localPackage === 'All Inclusive' ? 'text-white/75' : 'text-text-secondary'}`}>Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
                       </div>
                     </div>
                   </div>
