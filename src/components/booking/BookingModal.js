@@ -209,11 +209,6 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   const handleCheckout = async (e) => {
     e.preventDefault();
     
-    if (!agreedToTerms) {
-      setShowAgreementError(true);
-      return;
-    }
-    
     const baseTotal = getBaseTotal();
     const discountAmt = calculateDiscount(baseTotal, appliedDiscount, parseInt(formData.guests) || 1);
     const total = baseTotal - discountAmt;
@@ -224,7 +219,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     const sTitle = serviceData?.title?.toUpperCase() || "UNKNOWN";
     const divider = "━━━━━━━━━━━━━━━━━━━━━━";
     
-    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*WHATSAPP:* ${formData.phone}\n*DATE:* ${formData.date}`;
+    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*DATE:* ${formData.date}`;
     
     if (serviceData?.type === "tour") {
       messageDetails += `\n*GUESTS:* ${formData.guests} Pax\n*PICKUP:* ${formData.pickupLocation.name}`;
@@ -303,14 +298,14 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 shrink-0">
-          {(step === 2 || (step === 1 && (serviceData?.hasAllInclusive || serviceData?.allInclusiveSurcharge))) ? (
+          {(step === 2 || step === 3 || (step === 1 && (serviceData?.hasAllInclusive || serviceData?.allInclusiveSurcharge))) ? (
             <button type="button" onClick={() => setStep(step - 1)} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
               <ChevronLeft size={20} strokeWidth={2.5} className="pr-0.5" />
             </button>
           ) : (
             <div className="w-8 h-8" />
           )}
-          <h2 className="text-[18px] md:text-[20px] font-extrabold text-primary">{step === 0 ? 'Select Your Experience' : step === 1 ? 'Select Participants' : 'Booking Details'}</h2>
+          <h2 className="text-[18px] md:text-[20px] font-extrabold text-primary">{step === 0 ? 'Select Your Experience' : step === 1 ? 'Select Participants' : step === 2 ? 'Booking Details' : 'Review Details'}</h2>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
             <X size={18} strokeWidth={2.5} />
           </button>
@@ -334,11 +329,21 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                 >
                    {localPackage === 'All Inclusive' && serviceData.inclusiveTitle ? serviceData.inclusiveTitle : serviceData.baseTitle || serviceData.title}
                 </h3>
+                {localPackage === 'All Inclusive' && step > 0 && (
+                  <span className="inline-block mt-1 text-[10px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded border border-green-200">
+                    ALL-INCLUSIVE SELECTED
+                  </span>
+                )}
               </div>
             </div>
           )}
 
-          <form onSubmit={step === 0 ? (e) => { e.preventDefault(); setStep(1); } : step === 1 ? (e) => { e.preventDefault(); setStep(2); } : handleCheckout} id="bookingForm" className="flex flex-col gap-5">
+          <form onSubmit={
+            step === 0 ? (e) => { e.preventDefault(); setStep(1); } : 
+            step === 1 ? (e) => { e.preventDefault(); setStep(2); } : 
+            step === 2 ? (e) => { e.preventDefault(); setStep(3); } : 
+            handleCheckout
+          } id="bookingForm" className="flex flex-col gap-5">
             
             {/* STEP 0: EXPERIENCE SELECTION */}
             {step === 0 && (
@@ -681,7 +686,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                 )}
              </>
            )}
-           {step === 2 && (
+           {step === 3 && (
              <div className="flex justify-between items-center mb-6 px-1 py-4 border-y border-gray-100">
                <span className="text-[14px] font-bold text-gray-500">Total Price</span>
                <div className="flex flex-col items-end">
@@ -701,9 +706,9 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                 isPerPersonDisplay ? 
                 (serviceData ? `Continue • ${formatPrice(calcFinalTotal)}` : 'Continue to Details') : 
                 'Continue to Details'
-             ) : 'Confirm Request'} <ArrowRight size={18} strokeWidth={2.5} />
+             ) : step === 2 ? 'Review Booking' : 'Confirm via WhatsApp'} <ArrowRight size={18} strokeWidth={2.5} />
            </button>
-           {step === 2 && (
+           {step === 3 && (
              <p className="text-center text-[12px] font-medium text-gray-400 mt-4 px-4 leading-snug">
                You will be redirected to WhatsApp to confirm details securely. No payment is required right now.
              </p>
