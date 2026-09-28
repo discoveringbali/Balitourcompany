@@ -341,78 +341,117 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
             {/* STEP 0: EXPERIENCE SELECTION */}
             {step === 0 && (
               <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-4">
-                  {/* Standard Journey */}
-                  <div 
-                     onClick={() => handlePackageSelect('Standard')}
-                     className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-white hover:border-gray-400'}`}
-                  >
-                     <div className="flex justify-between items-center mb-1">
-                        <span className={`font-black text-[18px] ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Standard Journey</span>
-                        {localPackage === 'Standard' && <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-sm"><Check size={16} strokeWidth={3} className="text-primary" /></div>}
-                     </div>
-                     <p className={`text-[13px] font-medium leading-relaxed mb-5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-500'}`}>Essential driver and guide service. Entrance fees are not included.</p>
-                     
-                     <div className="flex flex-col gap-3">
-                       <div className="flex items-start gap-3">
-                         <div className={`p-1 rounded-full ${localPackage === 'Standard' ? 'bg-white/20' : 'bg-gray-100'}`}><Check size={14} className={localPackage === 'Standard' ? 'text-white' : 'text-green-600'} strokeWidth={3} /></div>
-                         <span className={`text-[14px] font-bold pt-0.5 ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Private vehicle & driver</span>
-                       </div>
-                       <div className="flex items-start gap-3">
-                         <div className={`p-1 rounded-full ${localPackage === 'Standard' ? 'bg-black/20' : 'bg-gray-100'}`}><X size={14} className={localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'} strokeWidth={3} /></div>
-                         <span className={`text-[14px] font-bold pt-0.5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'}`}>All entrance fees & activity tickets</span>
-                       </div>
-                       <div className="flex items-start gap-3">
-                         <div className={`p-1 rounded-full ${localPackage === 'Standard' ? 'bg-black/20' : 'bg-gray-100'}`}><X size={14} className={localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'} strokeWidth={3} /></div>
-                         <span className={`text-[14px] font-bold pt-0.5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'}`}>Meals</span>
-                       </div>
-                     </div>
-                  </div>
+                {(() => {
+                  const parseList = (text, fallback) => {
+                    if (!text) return fallback;
+                    // Try parsing as JSON array if it's stored that way, otherwise split by newline
+                    try {
+                      if (text.trim().startsWith('[')) {
+                        const parsed = JSON.parse(text);
+                        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+                      }
+                    } catch (e) {}
+                    return text.split(/\n/).map(s => s.trim().replace(/^- /g, '')).filter(s => s.length > 0);
+                  };
+                  
+                  const stdIncluded = parseList(serviceData?.included, ['Private air-conditioned vehicle & driver', 'Professional English-speaking guide', 'Hotel pickup & drop-off']);
+                  const stdExcluded = parseList(serviceData?.excluded, ['All entrance fees & activity tickets', 'Meals & beverages', 'Personal expenses', 'Souvenirs', 'Alcoholic drinks', 'Optional activities', 'Tips and gratuities', 'Professional photos']);
+                  const allIncIncluded = parseList(serviceData?.inclusiveIncluded, ['Private air-conditioned vehicle & driver', 'Professional English-speaking guide', 'All entrance fees & activity tickets', 'Meals (if applicable)']);
+                  const commonExcluded = ['Personal expenses', 'Souvenirs', 'Alcoholic drinks', 'Optional activities', 'Tips and gratuities', 'Professional photos'];
+                  
+                  return (
+                    <div className="flex flex-col gap-4">
+                      {/* Standard Journey */}
+                      <div 
+                         onClick={() => handlePackageSelect('Standard')}
+                         className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-white hover:border-gray-400'}`}
+                      >
+                         <div className="flex justify-between items-start mb-2">
+                            <span className={`font-black text-[18px] ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Standard Journey</span>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center shadow-sm shrink-0 mt-0.5 ${localPackage === 'Standard' ? 'bg-white' : 'bg-gray-100 border border-gray-300'}`}>
+                              {localPackage === 'Standard' && <Check size={14} strokeWidth={3} className="text-primary" />}
+                            </div>
+                         </div>
+                         <p className={`text-[13px] font-medium leading-relaxed mb-5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-500'}`}>Essential driver and guide service. Entrance fees are not included.</p>
+                         
+                         <div className="flex flex-col gap-2.5">
+                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'Standard' ? 'text-white/70' : 'text-gray-400'}`}>Included</span>
+                           {stdIncluded.map((item, idx) => (
+                             <div key={`inc-${idx}`} className="flex items-start gap-3">
+                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'Standard' ? 'bg-white/20' : 'bg-green-100'}`}><Check size={12} className={localPackage === 'Standard' ? 'text-white' : 'text-green-600'} strokeWidth={3} /></div>
+                               <span className={`text-[13px] font-medium pt-0.5 ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>{item}</span>
+                             </div>
+                           ))}
+                           
+                           <div className={`h-px w-full my-1.5 ${localPackage === 'Standard' ? 'bg-white/20' : 'bg-gray-100'}`} />
+                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'Standard' ? 'text-white/70' : 'text-gray-400'}`}>Not Included</span>
+                           
+                           {stdExcluded.map((item, idx) => (
+                             <div key={`exc-${idx}`} className="flex items-start gap-3">
+                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'Standard' ? 'bg-black/20' : 'bg-red-50'}`}><X size={12} className={localPackage === 'Standard' ? 'text-white/80' : 'text-red-400'} strokeWidth={3} /></div>
+                               <span className={`text-[13px] font-medium pt-0.5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-500'}`}>{item}</span>
+                             </div>
+                           ))}
+                         </div>
+                      </div>
 
-                  {/* All Inclusive Experience */}
-                  <div 
-                     onClick={() => handlePackageSelect('All Inclusive')}
-                     className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-[#1c1c1c] hover:border-black shadow-md'}`}
-                  >
-                     <div className="flex justify-between items-center mb-1">
-                        <span className={`font-black text-[18px] text-white`}>All-Inclusive Experience</span>
-                        <span className="text-[13px] font-extrabold text-black bg-[#d2ff00] px-3 py-1 rounded-lg shadow-sm">
-                          {(() => {
-                            const getMultiplierPrice = (rawPrice) => {
-                              const p = Number(rawPrice);
-                              if (!p) return 0;
-                              return Math.floor(p > 1000 ? p : p * 1000);
-                            };
-                            let price = getMultiplierPrice(serviceData.allInclusiveSurcharge);
-                            if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                              let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-                              price = getMultiplierPrice(sortedTiers[0].price);
-                            }
-                            return `Rp ${price.toLocaleString('id-ID')}`;
-                          })()}
-                        </span>
-                     </div>
-                     <p className={`text-[13px] font-medium leading-relaxed mb-5 text-white/80`}>Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
-                     
-                     <div className="flex flex-col gap-3">
-                       <div className="flex items-start gap-3">
-                         <div className={`p-1 rounded-full ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={14} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
-                         <span className={`text-[14px] font-bold pt-0.5 text-white`}>Private vehicle & driver</span>
-                       </div>
-                       <div className="flex items-start gap-3">
-                         <div className={`p-1 rounded-full ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={14} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
-                         <span className={`text-[14px] font-bold pt-0.5 text-white`}>All entrance fees & activity tickets</span>
-                       </div>
-                       <div className="flex items-start gap-3">
-                         <div className={`p-1 rounded-full ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={14} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
-                         <span className={`text-[14px] font-bold pt-0.5 text-white`}>Meals (if applicable)</span>
-                       </div>
-                     </div>
-                  </div>
-                </div>
+                      {/* All Inclusive Experience */}
+                      <div 
+                         onClick={() => handlePackageSelect('All Inclusive')}
+                         className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-[#1c1c1c] hover:border-black shadow-md'}`}
+                      >
+                         <div className="flex justify-between items-start mb-2">
+                            <span className={`font-black text-[18px] text-white pr-2`}>All-Inclusive Experience</span>
+                            <div className="flex flex-col items-end gap-2 shrink-0">
+                              <div className={`w-6 h-6 rounded-full flex items-center justify-center shadow-sm ${localPackage === 'All Inclusive' ? 'bg-white' : 'bg-white/10 border border-white/20'}`}>
+                                {localPackage === 'All Inclusive' && <Check size={14} strokeWidth={3} className="text-primary" />}
+                              </div>
+                              <span className="text-[13px] font-extrabold text-black bg-[#d2ff00] px-2 py-1 rounded-lg shadow-sm whitespace-nowrap">
+                                {(() => {
+                                  const getMultiplierPrice = (rawPrice) => {
+                                    const p = Number(rawPrice);
+                                    if (!p) return 0;
+                                    return Math.floor(p > 1000 ? p : p * 1000);
+                                  };
+                                  let price = getMultiplierPrice(serviceData.allInclusiveSurcharge);
+                                  if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
+                                    let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
+                                    price = getMultiplierPrice(sortedTiers[0].price);
+                                  }
+                                  return `+ Rp ${price.toLocaleString('id-ID')}`;
+                                })()}
+                              </span>
+                            </div>
+                         </div>
+                         <p className={`text-[13px] font-medium leading-relaxed mb-5 text-white/80`}>Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
+                         
+                         <div className="flex flex-col gap-2.5">
+                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'All Inclusive' ? 'text-white/70' : 'text-gray-400'}`}>Included</span>
+                           
+                           {allIncIncluded.map((item, idx) => (
+                             <div key={`ainc-${idx}`} className="flex items-start gap-3">
+                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={12} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
+                               <span className={`text-[13px] font-medium pt-0.5 text-white`}>{item}</span>
+                             </div>
+                           ))}
+                           
+                           <div className="h-px w-full my-1.5 bg-white/10" />
+                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'All Inclusive' ? 'text-white/70' : 'text-gray-400'}`}>Not Included</span>
+                           
+                           {commonExcluded.map((item, idx) => (
+                             <div key={`aexc-${idx}`} className="flex items-start gap-3">
+                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'All Inclusive' ? 'bg-black/20' : 'bg-white/5'}`}><X size={12} className={localPackage === 'All Inclusive' ? 'text-white/80' : 'text-white/40'} strokeWidth={3} /></div>
+                               <span className={`text-[13px] font-medium pt-0.5 ${localPackage === 'All Inclusive' ? 'text-white/80' : 'text-white/60'}`}>{item}</span>
+                             </div>
+                           ))}
+                         </div>
+                      </div>
+                    </div>
+                  );
+                })()}
                 
                 <div className="mt-4 pb-4">
-                  <button type="button" onClick={() => setStep(1)} className="w-full bg-[#1c1c1c] text-white rounded-full py-4 text-[16px] font-bold shadow-md hover:bg-black transition-colors active:scale-95 flex items-center justify-center gap-2">
+                  <button type="button" onClick={() => setStep(1)} className="w-full bg-[#1c1c1c] text-white rounded-xl py-4 text-[16px] font-bold shadow-md hover:bg-black transition-colors active:scale-95 flex items-center justify-center gap-2">
                     Continue <ArrowRight size={18} strokeWidth={2.5} />
                   </button>
                 </div>
@@ -584,8 +623,9 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         </div>
 
         {/* Footer / Actions */}
-        <div className="p-6 border-t border-white/5 shrink-0 bg-transparent rounded-b-[32px] mt-auto">
-           {serviceData && (
+        {step > 0 && (
+          <div className="p-6 border-t border-white/5 shrink-0 bg-transparent rounded-b-[32px] mt-auto">
+             {serviceData && (
              <>
                {step === 1 && (
                  <div className="mb-6 px-1">
@@ -656,7 +696,8 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                You will be redirected to WhatsApp to confirm details securely. No payment is required right now.
              </p>
            )}
-        </div>
+          </div>
+        )}
 
       </div>
     </div>
