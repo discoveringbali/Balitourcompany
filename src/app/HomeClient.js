@@ -1071,7 +1071,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm flex items-center justify-center"
                 aria-label="View our tours on Viator"
               >
-                <span className="font-extrabold text-[#118d60] text-[32px] leading-none tracking-tighter" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}>viator</span>
+                <img 
+                  src="https://wp.logos-download.com/wp-content/uploads/2024/10/Viator_Logo.svg" 
+                  alt="Viator Logo" 
+                  className="h-6 sm:h-8 w-auto object-contain"
+                />
               </a>
 
               {/* Google Business */}
@@ -1310,7 +1314,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 </h2>
                 <Link
                   href={activeService === "Tour" ? "/tours" : "/map?service=Activities"}
-                  className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors"
+                  className="text-[12px] font-extrabold text-white cursor-pointer transition-colors px-4 py-2 rounded-full bg-black hover:bg-black/80"
                 >
                   See more
                 </Link>
