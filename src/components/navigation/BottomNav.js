@@ -32,49 +32,67 @@ export default function BottomNav() {
   // Hide BottomNav on tour detail pages to prevent overlapping with booking bar
   if (pathname.startsWith("/tours/")) return null;
 
+  const mainNavItems = navItems.filter(item => item.id !== "map");
+  const mapItem = navItems.find(item => item.id === "map");
+
   return (
     <div 
       className="md:hidden fixed left-0 right-0 z-50 flex justify-center px-4"
       style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="bg-white rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] p-2 flex items-center justify-between w-full max-w-[340px] border border-gray-100">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = activeTab === item.id;
-          
-          return (
-            <Link 
-              key={item.id} 
-              href={item.path}
-              onClick={() => setActiveTab(item.id)}
-              className="relative flex items-center justify-center flex-1 h-12"
-            >
-              {isActive && (
-                <motion.div
-                  layoutId="bottomNavIndicator"
-                  className="absolute inset-0 bg-black rounded-full shadow-md"
-                  transition={{ type: "spring", stiffness: 450, damping: 30 }}
-                />
-              )}
-              <div className="relative z-10 flex items-center justify-center gap-1.5 px-3">
-                <Icon 
-                  size={isActive ? 18 : 22} 
-                  strokeWidth={isActive ? 2.5 : 2} 
-                  className={`transition-colors duration-300 ${isActive ? "text-white" : "text-gray-400 hover:text-black"}`} 
-                />
+      <div className="flex justify-between items-center w-full max-w-[350px] gap-3 sm:gap-5">
+        
+        {/* Main Pill */}
+        <div className="bg-white rounded-[32px] shadow-[0_8px_32px_rgba(0,0,0,0.1)] p-2 flex items-center justify-between flex-1 border border-gray-100 relative">
+          {mainNavItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
+            
+            return (
+              <Link 
+                key={item.id} 
+                href={item.path}
+                onClick={() => setActiveTab(item.id)}
+                className="relative flex items-center justify-center flex-1 h-12"
+              >
                 {isActive && (
-                  <motion.span 
-                    initial={{ opacity: 0, width: 0 }}
-                    animate={{ opacity: 1, width: "auto" }}
-                    className="text-[12px] font-extrabold text-white tracking-wide capitalize"
-                  >
-                    {item.id}
-                  </motion.span>
+                  <motion.div
+                    layoutId="bottomNavIndicator"
+                    className="absolute inset-0 bg-black rounded-full shadow-md"
+                    transition={{ type: "spring", stiffness: 450, damping: 30 }}
+                  />
                 )}
-              </div>
-            </Link>
-          );
-        })}
+                <div className="relative z-10 flex items-center justify-center gap-1.5 px-3">
+                  <Icon 
+                    size={isActive ? 18 : 22} 
+                    strokeWidth={isActive ? 2.5 : 2} 
+                    className={`transition-colors duration-300 ${isActive ? "text-white" : "text-gray-400 hover:text-black"}`} 
+                  />
+                  {isActive && (
+                    <motion.span 
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: "auto" }}
+                      className="text-[12px] font-extrabold text-white tracking-wide capitalize"
+                    >
+                      {item.id}
+                    </motion.span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Separate Map Button */}
+        <Link 
+          href={mapItem.path} 
+          onClick={() => setActiveTab(mapItem.id)}
+          className={`rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.1)] w-14 h-14 shrink-0 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 border border-gray-100 ${
+            activeTab === "map" ? "bg-black" : "bg-white"
+          }`}
+        >
+          <mapItem.icon size={24} strokeWidth={activeTab === "map" ? 2.5 : 2} className={activeTab === "map" ? "text-white" : "text-black"} />
+        </Link>
       </div>
     </div>
   );

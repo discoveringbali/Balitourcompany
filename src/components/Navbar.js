@@ -87,7 +87,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
   return (
     <>
-      <header className={`fixed z-50 left-0 right-0 top-0 w-full transition-colors duration-300 ${
+      <header className={`absolute z-50 left-0 right-0 top-0 w-full transition-colors duration-300 ${
       isLightHeader
         ? "bg-white/90 backdrop-blur-md shadow-[0_2px_15px_rgba(0,0,0,0.05)] border-b border-gray-100 py-3 md:py-4"
         : "bg-transparent py-4 md:py-5"
