@@ -10,7 +10,7 @@ export default function ShareButton({ title, text, url, className }) {
     // Determine the URL to share
     const shareUrl = url || window.location.href;
     const shareTitle = title || document.title;
-    
+
     const shareData = {
       title: shareTitle,
       text: text || `Check out ${shareTitle} on Balance Island!`,
