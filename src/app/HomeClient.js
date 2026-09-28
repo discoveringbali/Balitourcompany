@@ -1029,22 +1029,40 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             ))}
           </div>
 
-          {/* Trust Badge - Get Your Guide */}
-          <div className="flex flex-col items-center justify-center mt-10 mb-2 px-4 text-center">
-            <h4 className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em] mb-4">Official Verified Partner</h4>
-            <a 
-              href="https://www.getyourguide.com/balance-island-tour-s252854/?date_from=2026-09-29&date_to=2026-09-29" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm"
-              aria-label="View our tours on Get Your Guide"
-            >
-              <img 
-                src="https://cdn.getyourguide.com/tf/assets/static/logos/gyg-logo.svg" 
-                alt="Get Your Guide Logo" 
-                className="h-8 sm:h-9 w-auto object-contain"
-              />
-            </a>
+          {/* Trust Badges - Get Your Guide & TripAdvisor */}
+          <div className="flex flex-col items-center justify-center mt-12 mb-4 px-4 text-center">
+            <h4 className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em] mb-6">Official Verified Partner</h4>
+            <div className="flex items-center justify-center gap-6 sm:gap-10">
+              {/* Get Your Guide */}
+              <a 
+                href="https://www.getyourguide.com/balance-island-tour-s252854/?date_from=2026-09-29&date_to=2026-09-29" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm"
+                aria-label="View our tours on Get Your Guide"
+              >
+                <img 
+                  src="https://cdn.getyourguide.com/tf/assets/static/logos/gyg-logo.svg" 
+                  alt="Get Your Guide Logo" 
+                  className="h-12 sm:h-14 w-auto object-contain"
+                />
+              </a>
+              
+              {/* TripAdvisor */}
+              <a 
+                href="https://www.tripadvisor.com/Attraction_Review-g297701-d34659294-Reviews-Balance_Island_Tour-Ubud_Gianyar_Regency_Bali.html" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm"
+                aria-label="View our reviews on TripAdvisor"
+              >
+                <img 
+                  src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" 
+                  alt="TripAdvisor Logo" 
+                  className="h-10 sm:h-12 w-auto object-contain"
+                />
+              </a>
+            </div>
           </div>
         </section>
         )}
