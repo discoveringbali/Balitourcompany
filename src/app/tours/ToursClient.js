@@ -209,10 +209,16 @@ export default function ToursClient({ initialTours }) {
             )}
             
             {filteredTours.length > 0 && (
-              <div className="mt-12 flex justify-center">
-                <button className="rounded-full bg-surface text-text-primary px-8 py-3 border border-border hover:bg-surface-hover font-semibold transition-colors shadow-sm">
-                  Load More Experiences
-                </button>
+              <div className="mt-12 flex flex-col items-center gap-4 text-center">
+                <p className="text-gray-500 font-medium text-[15px]">Can't find the tour you're looking for?</p>
+                <a 
+                  href="https://wa.me/6285174119423?text=Hello%20Balance%20Island,%20I%20would%20like%20to%20inquire%20about%20a%20custom%20tour%20that%20isn't%20listed%20on%20the%20website"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="rounded-full bg-[#1c1c1c] text-white px-8 py-3 font-bold hover:bg-black/80 transition-colors shadow-md border border-[#1c1c1c] active:scale-95"
+                >
+                  Contact Us for Custom Tours
+                </a>
               </div>
             )}
           </div>
