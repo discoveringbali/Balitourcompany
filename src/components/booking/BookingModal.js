@@ -220,7 +220,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     const sTitle = serviceData?.title?.toUpperCase() || "UNKNOWN";
     const divider = "━━━━━━━━━━━━━━━━━━━━━━";
     
-    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n${divider}\n*NAME:* ${formData.name}\n*DATE:* ${formData.date}`;
+    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n*PACKAGE:* ${localPackage}\n${divider}\n*NAME:* ${formData.name}\n*DATE:* ${formData.date}`;
     
     if (serviceData?.type === "tour") {
       messageDetails += `\n*GUESTS:* ${formData.guests} Pax\n*PICKUP:* ${formData.pickupLocation.name}`;
@@ -673,11 +673,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                        </div>
                      )}
                      
-                     <div className="mt-3 bg-black/5 p-4 rounded-2xl flex items-start gap-3 border border-gray-100">
-                       <div className="bg-white p-1.5 rounded-full shadow-sm shrink-0 mt-0.5">
-                         <Info size={16} className="text-black" strokeWidth={2.5} />
+                     <div className="mt-3 bg-[#111111] p-4 rounded-2xl flex items-start gap-3 border border-black/10 shadow-md">
+                       <div className="bg-white/10 p-1.5 rounded-full shrink-0 mt-0.5">
+                         <Info size={16} className="text-white" strokeWidth={2.5} />
                        </div>
-                       <span className="text-[13px] font-bold text-gray-600 leading-snug">
+                       <span className="text-[13px] font-bold text-white leading-snug">
                          Exact pickup time will be confirmed securely with you via WhatsApp.
                        </span>
                      </div>
