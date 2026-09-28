@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Compass, User, Heart } from "lucide-react";
+import { Home, Compass, Heart, Map } from "lucide-react";
 
 export default function MobileBottomNav() {
   const pathname = usePathname();
@@ -11,29 +11,28 @@ export default function MobileBottomNav() {
   const navItems = [
     { id: "home", icon: Home, path: "/" },
     { id: "explore", icon: Compass, path: "/tours" },
-    { id: "user", icon: User, path: "/profile" },
-    { id: "saved", icon: Heart, path: "/saved" },
+    { id: "saved", icon: Heart, path: "/favorites" },
+    { id: "map", icon: Map, path: "/map" },
   ];
 
   return (
     <div 
       className="fixed left-0 right-0 z-50 flex justify-center px-4 md:hidden"
-      style={{ bottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+      style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
     >
-      <div className="bg-white/95 backdrop-blur-md rounded-full shadow-pill px-6 py-3 flex items-center justify-between w-full max-w-sm border border-black/5">
+      <div className="bg-[#24292e] rounded-[32px] shadow-2xl px-2.5 py-2.5 flex items-center justify-between w-full max-w-[340px] border border-white/5">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const isActive = pathname === item.path;
+          const isActive = pathname === item.path || (item.path !== "/" && pathname.startsWith(item.path));
           
           return (
-            <Link key={item.id} href={item.path} className="relative flex flex-col items-center justify-center">
+            <Link key={item.id} href={item.path} className="relative flex items-center justify-center">
               <div 
-                className={`flex flex-col items-center justify-center transition-all duration-200 mt-1 ${
-                  isActive ? "text-accent" : "text-text-secondary hover:text-primary"
+                className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ${
+                  isActive ? "bg-white text-black shadow-sm" : "text-gray-400 hover:text-white"
                 }`}
               >
-                <Icon size={26} strokeWidth={isActive ? 2.5 : 1.5} className={isActive ? "fill-black" : "fill-transparent"} />
-                <span className={`text-[10px] mt-1 font-medium ${isActive ? "text-primary" : "text-text-secondary"}`}>{item.id}</span>
+                <Icon size={24} strokeWidth={isActive ? 2.5 : 2} className={isActive ? "" : ""} />
               </div>
             </Link>
           );
