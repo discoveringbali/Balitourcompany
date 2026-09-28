@@ -190,11 +190,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
        return basePrice * (parseInt(formData.duration) || 1);
     } else if (["tour", "spa", "transport", "activities"].includes(serviceData?.type?.toLowerCase())) {
        if (localPackage === 'All Inclusive') {
-          if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-             return basePrice;
-          } else {
-             return basePrice * pax;
-          }
+          return basePrice; // All inclusive is a flat group fee
        } else if (serviceData?.pricingType === "Per Group") {
           if (serviceData.groupPricingMode === "flat") {
               return basePrice;
@@ -292,9 +288,9 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
   const calcTotalDiscount = appliedDiscount ? calculateDiscount(calcBaseTotal, appliedDiscount, paxCount) : 0;
   const calcFinalTotal = calcBaseTotal - calcTotalDiscount;
 
-  const isPerPersonDisplay = serviceData?.pricingType === "Per Group" && serviceData?.groupPricingMode !== "flat";
-  const displayBasePrice = isPerPersonDisplay ? getPerPersonPrice() : calcBaseTotal;
-  const displayDiscount = isPerPersonDisplay ? (calcTotalDiscount / paxCount) : calcTotalDiscount;
+  const isPerPersonDisplay = true;
+  const displayBasePrice = calcBaseTotal / paxCount;
+  const displayDiscount = calcTotalDiscount / paxCount;
   const finalDisplayPrice = displayBasePrice - displayDiscount;
 
   return (
@@ -415,7 +411,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                             </div>
                          </div>
                          <div className="mb-4">
-                            <span className="inline-block text-[13px] font-extrabold text-black bg-[#d2ff00] px-3 py-1.5 rounded-lg shadow-sm">
+                            <span className="inline-block text-[13px] font-extrabold text-primary bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
                               {(() => {
                                 const getMultiplierPrice = (rawPrice) => {
                                   const p = Number(rawPrice);
@@ -436,7 +432,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                                 if (Array.isArray(tiers) && tiers.length > 0) {
                                   minPrice = Math.min(...tiers.map(t => getMultiplierPrice(t.price)));
                                 }
-                                return `+ Rp ${minPrice.toLocaleString('id-ID')}`;
+                                return formatIDR(minPrice);
                               })()}
                             </span>
                          </div>
@@ -446,7 +442,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                          <div className="flex flex-col gap-2.5">
                            <span className="text-[11px] font-bold uppercase tracking-wider mb-0.5 text-gray-400">Included</span>
                            
-                           <ul className="flex flex-col gap-1.5 pl-4 list-disc text-primary marker:text-[#d2ff00]">
+                           <ul className="flex flex-col gap-1.5 pl-4 list-disc text-primary marker:text-gray-300">
                              {allIncIncluded.map((item, idx) => (
                                <li key={`ainc-${idx}`} className="text-[13px] font-medium pl-1 leading-snug">{item}</li>
                              ))}
