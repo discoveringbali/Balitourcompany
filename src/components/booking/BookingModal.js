@@ -349,6 +349,8 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                 {(() => {
                   const parseList = (text, fallback) => {
                     if (!text) return fallback;
+                    if (Array.isArray(text)) return text.length > 0 ? text : fallback;
+                    if (typeof text !== 'string') return fallback;
                     // Try parsing as JSON array if it's stored that way, otherwise split by newline
                     try {
                       if (text.trim().startsWith('[')) {
@@ -411,7 +413,6 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                               </div>
                             </div>
                          </div>
-                         
                          <div className="mb-4">
                             <span className="inline-block text-[13px] font-extrabold text-black bg-[#d2ff00] px-3 py-1.5 rounded-lg shadow-sm">
                               {(() => {
@@ -421,8 +422,18 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                                   return Math.floor(p > 1000 ? p : p * 1000);
                                 };
                                 let minPrice = getMultiplierPrice(serviceData.allInclusiveSurcharge);
-                                if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                                  minPrice = Math.min(...serviceData.allInclusiveTiers.map(t => getMultiplierPrice(t.price)));
+                                
+                                let tiers = serviceData.allInclusiveTiers;
+                                if (typeof tiers === 'string') {
+                                  try {
+                                    tiers = JSON.parse(tiers);
+                                  } catch(e) {
+                                    tiers = [];
+                                  }
+                                }
+                                
+                                if (Array.isArray(tiers) && tiers.length > 0) {
+                                  minPrice = Math.min(...tiers.map(t => getMultiplierPrice(t.price)));
                                 }
                                 return `+ Rp ${minPrice.toLocaleString('id-ID')}`;
                               })()}

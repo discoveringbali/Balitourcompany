@@ -15,8 +15,24 @@ import { useCurrency } from "@/lib/currency";
 
 const BookingModal = dynamic(() => import("@/components/booking/BookingModal"), { ssr: false });
 
-export default function TourDetailClient({ tourData, slug, relatedTours }) {
+export default function TourDetailClient({ tourData: rawTourData, slug, relatedTours }) {
   const router = useRouter();
+
+  // Normalize stringified JSON arrays
+  const parseTierArray = (val) => {
+    if (typeof val === 'string') {
+      try { return JSON.parse(val); } catch (e) { return []; }
+    }
+    return Array.isArray(val) ? val : [];
+  };
+
+  const tourData = {
+    ...rawTourData,
+    tourTiers: parseTierArray(rawTourData?.tourTiers),
+    allInclusiveTiers: parseTierArray(rawTourData?.allInclusiveTiers),
+    groupTiers: parseTierArray(rawTourData?.groupTiers),
+  };
+
   const [activeTab, setActiveTab] = useState("About this activity");
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [desktopPax, setDesktopPax] = useState(tourData?.minPax || 1);
