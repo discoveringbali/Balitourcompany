@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { Home, Compass, CalendarCheck, Heart, Map } from "lucide-react";
+import { Home, Compass, Heart, Map } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 export default function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
-
 
   const [activeTab, setActiveTab] = useState("home");
 
@@ -24,7 +23,6 @@ export default function BottomNav() {
     if (pathname === "/") setActiveTab("home");
     else if (pathname === "/tours") setActiveTab("tours");
     else if (pathname.startsWith("/map")) setActiveTab("map");
-    else if (pathname.startsWith("/bookings")) setActiveTab("bookings");
     else if (pathname.startsWith("/favorites")) setActiveTab("favorites");
   }, [pathname]);
 
@@ -34,8 +32,11 @@ export default function BottomNav() {
   if (pathname.startsWith("/tours/")) return null;
 
   return (
-    <div className="md:hidden fixed bottom-6 left-0 right-0 z-50 flex justify-center px-6">
-      <div className="bg-[#1c1c1c]/60 backdrop-blur-2xl rounded-[32px] py-4 px-6 flex justify-between items-center w-full max-w-sm shadow-[0_8px_32px_rgba(0,0,0,0.25)] border border-white/10">
+    <div 
+      className="md:hidden fixed left-0 right-0 z-50 flex justify-center px-4"
+      style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+    >
+      <div className="bg-[#2a2e33] rounded-[32px] shadow-2xl px-2.5 py-2.5 flex justify-between items-center w-full max-w-[340px] border border-white/5">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
@@ -45,14 +46,14 @@ export default function BottomNav() {
               key={item.id} 
               href={item.path}
               onClick={() => setActiveTab(item.id)}
-              className="relative flex flex-col items-center justify-center w-10 h-10"
+              className={`relative flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ${
+                isActive ? "bg-white shadow-sm" : ""
+              }`}
             >
-              {isActive && (
-                <div className="absolute inset-0 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.25)]"></div>
-              )}
               <Icon 
-                size={22} 
-                className={`relative z-10 transition-colors duration-300 ${isActive ? "text-black stroke-[2.5px]" : "text-white/70 hover:text-white"}`} 
+                size={24} 
+                strokeWidth={isActive ? 2.5 : 2} 
+                className={`relative z-10 transition-colors duration-300 ${isActive ? "text-black" : "text-gray-400 hover:text-white"}`} 
               />
             </Link>
           );
