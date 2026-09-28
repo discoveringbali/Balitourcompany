@@ -89,7 +89,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
     <>
       <header className={`fixed z-50 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] left-1/2 -translate-x-1/2 ${
       isLightHeader
-        ? "top-2 w-[95%] max-w-[95%] rounded-full bg-white/90 backdrop-blur-xl shadow-[0_8px_30px_rgba(0,0,0,0.1)] border border-gray-200 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px] md:bg-white/90 md:backdrop-blur-2xl md:backdrop-saturate-150 md:shadow-[0_8px_30px_rgba(0,0,0,0.08)] md:border-gray-200"
+        ? "top-2 w-[95%] max-w-[95%] rounded-[32px] bg-black/40 backdrop-blur-2xl shadow-[0_8px_30px_rgba(0,0,0,0.3)] border border-white/10 py-2.5 md:top-4 md:w-[85%] md:max-w-[1000px] md:bg-black/40 md:backdrop-blur-3xl md:backdrop-saturate-200 md:shadow-[0_8px_30px_rgba(0,0,0,0.3)] md:border-white/10"
         : "top-0 w-full bg-transparent pt-4 pb-4 md:w-[95%] md:max-w-[1400px] md:py-5"
     }`}>
       

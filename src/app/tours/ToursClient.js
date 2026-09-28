@@ -116,12 +116,12 @@ export default function ToursClient({ initialTours }) {
                     {isActive && (
                       <motion.div
                         layoutId="toursCategoryIndicator"
-                        className="absolute inset-0 bg-[#ffffff] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
+                        className="absolute inset-0 bg-[#000000] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
                         transition={{ type: "spring", stiffness: 400, damping: 28 }}
                       />
                     )}
                     <div className="relative z-10 flex items-center justify-center">
-                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1c1c1c] font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
+                        <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-white font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
                           {cat}
                         </span>
                     </div>

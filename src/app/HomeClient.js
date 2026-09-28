@@ -1305,7 +1305,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             <section id="categories-section" ref={categoriesRef} className="px-6 mb-8 mt-2">
               <div className="flex justify-between items-end mb-4">
                 <h2 className="text-[20px] font-bold text-primary">Categories</h2>
-                <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-sm font-semibold text-text-secondary hover:text-text-primary cursor-pointer transition-colors">See more</Link>
+                <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-[12px] font-extrabold text-white cursor-pointer transition-colors px-4 py-2 rounded-full bg-black hover:bg-black/80">See more</Link>
               </div>
               <div className="flex justify-center w-full overflow-hidden">
                 <div className="bg-[#ffffff] shadow-[0_2px_15px_rgba(0,0,0,0.04)] border border-[#eaeaea] rounded-[32px] p-1.5 w-fit max-w-full mx-auto">
@@ -1322,13 +1322,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                           {isActive && (
                             <motion.div
                               layoutId="categoryActiveIndicator"
-                              className="absolute inset-0 bg-[#ffffff] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
+                              className="absolute inset-0 bg-[#000000] shadow-[0_2px_10px_rgba(0,0,0,0.08)] rounded-[24px]"
                               transition={{ type: "spring", stiffness: 400, damping: 28 }}
                             />
                           )}
                           <div className="relative z-10 flex items-center justify-center gap-2">
-                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#1c1c1c]' : 'text-[#717171]'}`} />}
-                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#1c1c1c] font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
+                            {Icon && <Icon size={16} className={`transition-colors duration-300 ${isActive ? 'text-[#ffffff]' : 'text-[#717171]'}`} />}
+                            <span className={`text-[13px] tracking-tight whitespace-nowrap transition-colors duration-300 ${isActive ? 'text-[#ffffff] font-extrabold' : 'text-[#717171] font-bold hover:text-[#1c1c1c]'}`}>
                               {c.id}
                             </span>
                           </div>
