@@ -44,8 +44,10 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     dropoffLocation: { name: "", url: "" },
   });
 
+  const initializedSession = useRef(false);
+
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !initializedSession.current) {
       setStep((serviceData?.type === "tour" || serviceData?.type === "activities") && (serviceData?.hasAllInclusive || serviceData?.allInclusiveSurcharge) ? 0 : startStep);
       setAgreedToTerms(false);
       setShowAgreementError(false);
@@ -73,6 +75,9 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         phone: prev.phone || savedPhone
       }));
       setLocalPackage(serviceData?.selectedPackage || "Standard");
+      initializedSession.current = true;
+    } else if (!isOpen) {
+      initializedSession.current = false;
     }
   }, [isOpen, initialPax, initialDate, startStep, serviceData]);
 
@@ -364,86 +369,85 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                       {/* Standard Journey */}
                       <div 
                          onClick={() => handlePackageSelect('Standard')}
-                         className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-white hover:border-gray-400'}`}
+                         className={`p-5 rounded-3xl border-2 cursor-pointer transition-all bg-white ${localPackage === 'Standard' ? 'border-black shadow-md' : 'border-gray-200 hover:border-gray-300 shadow-sm'}`}
                       >
                          <div className="flex justify-between items-start mb-2">
-                            <span className={`font-black text-[18px] ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Standard Journey</span>
-                            <div className={`w-6 h-6 rounded-full flex items-center justify-center shadow-sm shrink-0 mt-0.5 ${localPackage === 'Standard' ? 'bg-white' : 'bg-gray-100 border border-gray-300'}`}>
-                              {localPackage === 'Standard' && <Check size={14} strokeWidth={3} className="text-primary" />}
+                            <span className="font-black text-[18px] text-primary">Standard Journey</span>
+                            <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 border-2 transition-colors ${localPackage === 'Standard' ? 'border-black bg-black' : 'border-gray-300 bg-transparent'}`}>
+                              {localPackage === 'Standard' && <div className="w-2.5 h-2.5 rounded-full bg-white" />}
                             </div>
                          </div>
-                         <p className={`text-[13px] font-medium leading-relaxed mb-5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-500'}`}>Essential driver and guide service. Entrance fees are not included.</p>
+                         <p className="text-[13px] font-medium leading-relaxed mb-5 text-gray-500">Essential driver and guide service. Entrance fees are not included.</p>
                          
                          <div className="flex flex-col gap-2.5">
-                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'Standard' ? 'text-white/70' : 'text-gray-400'}`}>Included</span>
-                           {stdIncluded.map((item, idx) => (
-                             <div key={`inc-${idx}`} className="flex items-start gap-3">
-                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'Standard' ? 'bg-white/20' : 'bg-green-100'}`}><Check size={12} className={localPackage === 'Standard' ? 'text-white' : 'text-green-600'} strokeWidth={3} /></div>
-                               <span className={`text-[13px] font-medium pt-0.5 ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>{item}</span>
-                             </div>
-                           ))}
+                           <span className="text-[11px] font-bold uppercase tracking-wider mb-0.5 text-gray-400">Included</span>
+                           <ul className="flex flex-col gap-1.5 pl-4 list-disc text-primary marker:text-gray-300">
+                             {stdIncluded.map((item, idx) => (
+                               <li key={`inc-${idx}`} className="text-[13px] font-medium pl-1 leading-snug">{item}</li>
+                             ))}
+                           </ul>
                            
-                           <div className={`h-px w-full my-1.5 ${localPackage === 'Standard' ? 'bg-white/20' : 'bg-gray-100'}`} />
-                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'Standard' ? 'text-white/70' : 'text-gray-400'}`}>Not Included</span>
+                           <div className="h-px w-full my-1.5 bg-gray-100" />
+                           <span className="text-[11px] font-bold uppercase tracking-wider mb-0.5 text-gray-400">Not Included</span>
                            
-                           {stdExcluded.map((item, idx) => (
-                             <div key={`exc-${idx}`} className="flex items-start gap-3">
-                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'Standard' ? 'bg-black/20' : 'bg-red-50'}`}><X size={12} className={localPackage === 'Standard' ? 'text-white/80' : 'text-red-400'} strokeWidth={3} /></div>
-                               <span className={`text-[13px] font-medium pt-0.5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-500'}`}>{item}</span>
-                             </div>
-                           ))}
+                           <ul className="flex flex-col gap-1.5 pl-4 list-disc text-gray-500 marker:text-gray-200">
+                             {stdExcluded.map((item, idx) => (
+                               <li key={`exc-${idx}`} className="text-[13px] font-medium pl-1 leading-snug">{item}</li>
+                             ))}
+                           </ul>
                          </div>
                       </div>
 
                       {/* All Inclusive Experience */}
                       <div 
                          onClick={() => handlePackageSelect('All Inclusive')}
-                         className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-[#1c1c1c] hover:border-black shadow-md'}`}
+                         className={`p-5 rounded-3xl border-2 cursor-pointer transition-all bg-white ${localPackage === 'All Inclusive' ? 'border-black shadow-md' : 'border-gray-200 hover:border-gray-300 shadow-sm'}`}
                       >
                          <div className="flex justify-between items-start mb-2">
-                            <span className={`font-black text-[18px] text-white pr-2`}>All-Inclusive Experience</span>
+                            <span className="font-black text-[18px] text-primary pr-2">All-Inclusive Experience</span>
                             <div className="flex flex-col items-end gap-2 shrink-0">
-                              <div className={`w-6 h-6 rounded-full flex items-center justify-center shadow-sm ${localPackage === 'All Inclusive' ? 'bg-white' : 'bg-white/10 border border-white/20'}`}>
-                                {localPackage === 'All Inclusive' && <Check size={14} strokeWidth={3} className="text-primary" />}
+                              <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5 border-2 transition-colors ${localPackage === 'All Inclusive' ? 'border-black bg-black' : 'border-gray-300 bg-transparent'}`}>
+                                {localPackage === 'All Inclusive' && <div className="w-2.5 h-2.5 rounded-full bg-white" />}
                               </div>
-                              <span className="text-[13px] font-extrabold text-black bg-[#d2ff00] px-2 py-1 rounded-lg shadow-sm whitespace-nowrap">
-                                {(() => {
-                                  const getMultiplierPrice = (rawPrice) => {
-                                    const p = Number(rawPrice);
-                                    if (!p) return 0;
-                                    return Math.floor(p > 1000 ? p : p * 1000);
-                                  };
-                                  let price = getMultiplierPrice(serviceData.allInclusiveSurcharge);
-                                  if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                                    let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-                                    price = getMultiplierPrice(sortedTiers[0].price);
-                                  }
-                                  return `+ Rp ${price.toLocaleString('id-ID')}`;
-                                })()}
-                              </span>
                             </div>
                          </div>
-                         <p className={`text-[13px] font-medium leading-relaxed mb-5 text-white/80`}>Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
+                         
+                         <div className="mb-4">
+                            <span className="inline-block text-[13px] font-extrabold text-black bg-[#d2ff00] px-3 py-1.5 rounded-lg shadow-sm">
+                              {(() => {
+                                const getMultiplierPrice = (rawPrice) => {
+                                  const p = Number(rawPrice);
+                                  if (!p) return 0;
+                                  return Math.floor(p > 1000 ? p : p * 1000);
+                                };
+                                let minPrice = getMultiplierPrice(serviceData.allInclusiveSurcharge);
+                                if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
+                                  minPrice = Math.min(...serviceData.allInclusiveTiers.map(t => getMultiplierPrice(t.price)));
+                                }
+                                return `+ Rp ${minPrice.toLocaleString('id-ID')}`;
+                              })()}
+                            </span>
+                         </div>
+
+                         <p className="text-[13px] font-medium leading-relaxed mb-5 text-gray-500">Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
                          
                          <div className="flex flex-col gap-2.5">
-                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'All Inclusive' ? 'text-white/70' : 'text-gray-400'}`}>Included</span>
+                           <span className="text-[11px] font-bold uppercase tracking-wider mb-0.5 text-gray-400">Included</span>
                            
-                           {allIncIncluded.map((item, idx) => (
-                             <div key={`ainc-${idx}`} className="flex items-start gap-3">
-                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={12} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
-                               <span className={`text-[13px] font-medium pt-0.5 text-white`}>{item}</span>
-                             </div>
-                           ))}
+                           <ul className="flex flex-col gap-1.5 pl-4 list-disc text-primary marker:text-[#d2ff00]">
+                             {allIncIncluded.map((item, idx) => (
+                               <li key={`ainc-${idx}`} className="text-[13px] font-medium pl-1 leading-snug">{item}</li>
+                             ))}
+                           </ul>
                            
-                           <div className="h-px w-full my-1.5 bg-white/10" />
-                           <span className={`text-[11px] font-bold uppercase tracking-wider mb-0.5 ${localPackage === 'All Inclusive' ? 'text-white/70' : 'text-gray-400'}`}>Not Included</span>
+                           <div className="h-px w-full my-1.5 bg-gray-100" />
+                           <span className="text-[11px] font-bold uppercase tracking-wider mb-0.5 text-gray-400">Not Included</span>
                            
-                           {commonExcluded.map((item, idx) => (
-                             <div key={`aexc-${idx}`} className="flex items-start gap-3">
-                               <div className={`p-1 rounded-full shrink-0 ${localPackage === 'All Inclusive' ? 'bg-black/20' : 'bg-white/5'}`}><X size={12} className={localPackage === 'All Inclusive' ? 'text-white/80' : 'text-white/40'} strokeWidth={3} /></div>
-                               <span className={`text-[13px] font-medium pt-0.5 ${localPackage === 'All Inclusive' ? 'text-white/80' : 'text-white/60'}`}>{item}</span>
-                             </div>
-                           ))}
+                           <ul className="flex flex-col gap-1.5 pl-4 list-disc text-gray-500 marker:text-gray-200">
+                             {commonExcluded.map((item, idx) => (
+                               <li key={`aexc-${idx}`} className="text-[13px] font-medium pl-1 leading-snug">{item}</li>
+                             ))}
+                           </ul>
                          </div>
                       </div>
                     </div>
