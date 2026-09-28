@@ -1040,9 +1040,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               aria-label="View our tours on Get Your Guide"
             >
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/4/4b/GetYourGuide_Logo.svg" 
+                src="https://cdn.getyourguide.com/tf/assets/static/logos/gyg-logo.svg" 
                 alt="Get Your Guide Logo" 
-                className="h-7 sm:h-8 w-auto object-contain"
+                className="h-8 sm:h-9 w-auto object-contain"
               />
             </a>
           </div>
