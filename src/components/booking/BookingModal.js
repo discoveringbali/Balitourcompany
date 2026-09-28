@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { X, Calendar, MapPin, Users, Phone, User, Clock, ArrowRight, ChevronLeft, Minus, Plus, Check, Info } from "lucide-react";
+import { X, Calendar, MapPin, Users, Phone, User, Clock, ArrowRight, ChevronLeft, Minus, Plus, Check, Info, MessageSquare } from "lucide-react";
 import WeeklyCalendar from "./WeeklyCalendar";
 import LocationAutocomplete from "./LocationAutocomplete";
 import { supabase } from "@/lib/supabase";
@@ -42,6 +42,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     duration: "1",
     pickupLocation: { name: "", url: "" },
     dropoffLocation: { name: "", url: "" },
+    notes: "",
   });
 
   const initializedSession = useRef(false);
@@ -232,6 +233,10 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
       messageDetails += `\n*DROPOFF:* ${formData.dropoffLocation.name}`;
     }
 
+    if (formData.notes) {
+      messageDetails += `\n*NOTES:* ${formData.notes}`;
+    }
+
     messageDetails += `\n${divider}`;
     if (appliedDiscount) {
       messageDetails += `\n*ORIGINAL PRICE:* ${formatIDR(baseTotal)}`;
@@ -260,6 +265,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
           duration: formData.duration,
           pickup_location: formData.pickupLocation.name,
           dropoff_location: formData.dropoffLocation.name,
+          notes: formData.notes,
           customer_email: session?.user?.email || null,
           image: serviceData?.image || null
         }
@@ -603,6 +609,80 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                 )}
 
 
+                {/* Notes to driver / guide */}
+                <div className="flex flex-col gap-2 relative mt-1">
+                   <label className="text-[13px] font-bold text-primary ml-1">Note to the driver or guide (Optional)</label>
+                   <div className="relative flex items-start">
+                     <MessageSquare className="absolute left-4 top-4 text-gray-400" size={18} />
+                     <textarea 
+                       name="notes" 
+                       value={formData.notes || ""} 
+                       onChange={handleInputChange} 
+                       placeholder="e.g. Please bring a baby seat, I am celebrating an anniversary..." 
+                       className="w-full bg-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400 min-h-[100px] resize-none border border-transparent hover:border-gray-100" 
+                     />
+                   </div>
+                </div>
+
+              </div>
+            )}
+
+            {/* STEP 3: REVIEW DETAILS */}
+            {step === 3 && (
+              <div className="animate-in fade-in slide-in-from-right-4 duration-300 flex flex-col gap-4 pb-4">
+                <div className="bg-white border-2 border-gray-100 rounded-3xl p-6 flex flex-col gap-4 shadow-sm relative overflow-hidden">
+                   
+                   {/* Background accent */}
+                   <div className="absolute -top-10 -right-10 w-32 h-32 bg-gray-50 rounded-full blur-3xl opacity-50 pointer-events-none" />
+
+                   <div className="flex flex-col gap-1 pb-4 border-b border-gray-100 relative z-10">
+                     <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Customer</span>
+                     <span className="text-[15px] font-black text-primary">{formData.name}</span>
+                   </div>
+                   
+                   {(serviceData?.type === "tour" || serviceData?.type === "spa" || serviceData?.type === "transport") && (
+                     <div className="flex flex-col gap-1 pb-4 border-b border-gray-100 relative z-10">
+                       <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Hotel / Villa</span>
+                       <span className="text-[15px] font-bold text-primary">{formData.pickupLocation.name || '-'}</span>
+                     </div>
+                   )}
+                   
+                   <div className="flex justify-between items-center pb-4 border-b border-gray-100 relative z-10">
+                     <div className="flex flex-col gap-1">
+                       <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Date</span>
+                       <span className="text-[15px] font-bold text-primary">{formData.date}</span>
+                     </div>
+                     {(serviceData?.type === "tour" || serviceData?.type === "activities") && (
+                       <div className="flex flex-col gap-1 items-end">
+                         <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Participants</span>
+                         <span className="text-[15px] font-bold text-primary">{formData.guests} Pax</span>
+                       </div>
+                     )}
+                   </div>
+
+                   <div className="flex flex-col gap-2 pt-1 relative z-10">
+                     <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Trip Summary</span>
+                     <span className="text-[15px] font-black text-primary leading-snug">
+                       {serviceData.title} <span className="text-gray-500 font-bold ml-1">({localPackage})</span>
+                     </span>
+                     
+                     {formData.notes && (
+                       <div className="mt-2 bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                         <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Notes</span>
+                         <span className="text-[13px] text-gray-600 font-medium leading-relaxed">{formData.notes}</span>
+                       </div>
+                     )}
+                     
+                     <div className="mt-3 bg-black/5 p-4 rounded-2xl flex items-start gap-3 border border-gray-100">
+                       <div className="bg-white p-1.5 rounded-full shadow-sm shrink-0 mt-0.5">
+                         <Info size={16} className="text-black" strokeWidth={2.5} />
+                       </div>
+                       <span className="text-[13px] font-bold text-gray-600 leading-snug">
+                         Exact pickup time will be confirmed securely with you via WhatsApp.
+                       </span>
+                     </div>
+                   </div>
+                </div>
               </div>
             )}
 
