@@ -15,7 +15,7 @@ export default function BottomNav() {
     { id: "home", icon: Home, path: "/" },
     { id: "explore", icon: Search, path: "/tours" },
     { id: "favorites", icon: Heart, path: "/favorites" },
-    { id: "map", icon: AlignJustify, path: "/map" },
+    { id: "map", icon: Map, path: "/map" },
   ];
 
   // Map path to active tab on mount
@@ -42,7 +42,7 @@ export default function BottomNav() {
       <div className="flex justify-between items-center w-full max-w-[350px] gap-3 sm:gap-5">
         
         {/* Main Pill */}
-        <div className="bg-[#121212] rounded-[32px] shadow-2xl p-2 flex items-center justify-between flex-1 border border-white/10">
+        <div className="bg-black/45 backdrop-blur-2xl rounded-[32px] shadow-[0_8px_32px_rgba(0,0,0,0.3)] p-2 flex items-center justify-between flex-1 border border-white/10">
           {mainNavItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -53,13 +53,13 @@ export default function BottomNav() {
                 href={item.path}
                 onClick={() => setActiveTab(item.id)}
                 className={`relative flex items-center justify-center transition-all duration-300 ${
-                  isActive ? "bg-[#333333] rounded-[24px] px-4 py-2.5 gap-2 shadow-sm" : "w-11 h-11 px-2"
+                  isActive ? "bg-white/20 backdrop-blur-lg rounded-[24px] px-4 py-2.5 gap-2 shadow-sm border border-white/5" : "w-11 h-11 px-2"
                 }`}
               >
                 <Icon 
                   size={isActive ? 18 : 22} 
                   strokeWidth={isActive ? 2.5 : 1.5} 
-                  className={`relative z-10 transition-colors duration-300 ${isActive ? "text-white fill-white" : "text-gray-400 hover:text-white"}`} 
+                  className={`relative z-10 transition-colors duration-300 ${isActive ? "text-white fill-white" : "text-white/70 hover:text-white"}`} 
                 />
                 {isActive && (
                   <span className="text-[13px] font-bold text-white tracking-wide capitalize">
@@ -75,8 +75,8 @@ export default function BottomNav() {
         <Link 
           href={mapItem.path} 
           onClick={() => setActiveTab(mapItem.id)}
-          className={`rounded-full shadow-2xl w-14 h-14 shrink-0 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 ${
-            activeTab === "map" ? "bg-[#f5a545] border-[3px] border-[#333]" : "bg-[#ffb766]"
+          className={`rounded-full shadow-[0_8px_32px_rgba(255,183,102,0.4)] w-14 h-14 shrink-0 flex items-center justify-center transition-transform hover:scale-105 active:scale-95 border border-white/20 backdrop-blur-2xl ${
+            activeTab === "map" ? "bg-[#f5a545]/90 border-[3px] border-white/30" : "bg-[#ffb766]/85"
           }`}
         >
           <IconWrapper Icon={mapItem.icon} />
