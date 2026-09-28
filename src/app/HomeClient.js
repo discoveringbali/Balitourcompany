@@ -1028,6 +1028,24 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               />
             ))}
           </div>
+
+          {/* Trust Badge - Get Your Guide */}
+          <div className="flex flex-col items-center justify-center mt-10 mb-2 px-4 text-center">
+            <h4 className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em] mb-4">Official Verified Partner</h4>
+            <a 
+              href="https://www.getyourguide.com/balance-island-tour-s252854/?date_from=2026-09-29&date_to=2026-09-29" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm"
+              aria-label="View our tours on Get Your Guide"
+            >
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/commons/4/4b/GetYourGuide_Logo.svg" 
+                alt="Get Your Guide Logo" 
+                className="h-7 sm:h-8 w-auto object-contain"
+              />
+            </a>
+          </div>
         </section>
         )}
         </div> {/* End Mobile Top White Section */}
