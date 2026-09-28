@@ -220,7 +220,11 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     const sTitle = serviceData?.title?.toUpperCase() || "UNKNOWN";
     const divider = "━━━━━━━━━━━━━━━━━━━━━━";
     
-    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}\n*PACKAGE:* ${localPackage}\n${divider}\n*NAME:* ${formData.name}\n*DATE:* ${formData.date}`;
+    let messageDetails = `*BALANCE ISLAND BOOKING*\n${divider}\n*SERVICE:* ${sType}\n*TITLE:* ${sTitle}`;
+    if (localPackage?.toLowerCase() === 'all inclusive') {
+      messageDetails += `\n*PACKAGE:* ${localPackage.toUpperCase()}`;
+    }
+    messageDetails += `\n${divider}\n*NAME:* ${formData.name}\n*DATE:* ${formData.date}`;
     
     if (serviceData?.type === "tour") {
       messageDetails += `\n*GUESTS:* ${formData.guests} Pax\n*PICKUP:* ${formData.pickupLocation.name}`;
