@@ -1032,19 +1032,19 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
           {/* Trust Badges - Get Your Guide & TripAdvisor */}
           <div className="flex flex-col items-center justify-center mt-12 mb-4 px-4 text-center">
             <h4 className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em] mb-6">Official Verified Partner</h4>
-            <div className="flex items-center justify-center gap-6 sm:gap-10">
+            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 max-w-3xl mx-auto">
               {/* Get Your Guide */}
               <a 
                 href="https://www.getyourguide.com/balance-island-tour-s252854/?date_from=2026-09-29&date_to=2026-09-29" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm"
+                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm flex items-center justify-center"
                 aria-label="View our tours on Get Your Guide"
               >
                 <img 
                   src="https://cdn.getyourguide.com/tf/assets/static/logos/gyg-logo.svg" 
                   alt="Get Your Guide Logo" 
-                  className="h-12 sm:h-14 w-auto object-contain"
+                  className="h-10 sm:h-12 w-auto object-contain"
                 />
               </a>
               
@@ -1053,14 +1053,41 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 href="https://www.tripadvisor.com/Attraction_Review-g297701-d34659294-Reviews-Balance_Island_Tour-Ubud_Gianyar_Regency_Bali.html" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm"
+                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm flex items-center justify-center"
                 aria-label="View our reviews on TripAdvisor"
               >
                 <img 
                   src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg" 
                   alt="TripAdvisor Logo" 
-                  className="h-10 sm:h-12 w-auto object-contain"
+                  className="h-8 sm:h-10 w-auto object-contain"
                 />
+              </a>
+
+              {/* Viator */}
+              <a 
+                href="https://www.viator.com/tours/Ubud/Ubud-Culture-and-Nature-Rice-Terrace-Water-Temple-and-Waterfalls/d5467-5693830P2" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm flex items-center justify-center"
+                aria-label="View our tours on Viator"
+              >
+                <span className="font-extrabold text-[#118d60] text-[32px] leading-none tracking-tighter" style={{ fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif' }}>viator</span>
+              </a>
+
+              {/* Google Business */}
+              <a 
+                href="https://share.google/sDMPZqgDbfzUIU0Ti" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:scale-105 active:scale-95 transition-transform drop-shadow-sm flex items-center justify-center gap-2"
+                aria-label="View our Google Business Listing"
+              >
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" 
+                  alt="Google Logo" 
+                  className="h-8 sm:h-9 w-auto object-contain"
+                />
+                <span className="font-semibold text-gray-700 text-lg leading-none" style={{ fontFamily: 'Product Sans, Helvetica, Arial, sans-serif' }}>Reviews</span>
               </a>
             </div>
           </div>
