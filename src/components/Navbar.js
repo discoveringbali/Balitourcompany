@@ -142,10 +142,8 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                       <span className="text-[10px] text-gray-500 mt-1 font-medium">Use at checkout</span>
                     </div>
                   )) : (
-                    <div className="bg-black text-white border border-dashed border-gray-700 rounded-xl p-3 flex flex-col items-center text-center shrink-0">
-                      <span className="text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-1">Current Code</span>
-                      <span className="text-[18px] font-black tracking-widest text-white">{promoCode || "BALI2026"}</span>
-                      <span className="text-[10px] text-gray-500 mt-1 font-medium">Use at checkout</span>
+                    <div className="bg-white border border-gray-100 rounded-xl p-4 flex flex-col items-center text-center shrink-0">
+                      <span className="text-[13px] font-bold text-gray-500">No promos available right now.</span>
                     </div>
                   )}
                 </div>
@@ -290,34 +288,8 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                       </div>
                     </div>
                   )) : (
-                    <div className="bg-black text-white rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0 shadow-sm">
-                      <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full border-r border-gray-200 shadow-[inset_2px_0_4px_rgba(0,0,0,0.02)]"></div>
-                      <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full border-l border-gray-200 shadow-[inset_-2px_0_4px_rgba(0,0,0,0.02)]"></div>
-                      
-                      <div className="flex flex-col px-2">
-                        <span className="text-[14px] font-extrabold text-white">Special Promo</span>
-                        <span className="text-[11px] font-bold text-gray-400 mt-0.5">Valid for all upcoming tours</span>
-                      </div>
-                      
-                      <div className="border-t border-dashed border-gray-700 my-3"></div>
-                      
-                      <div className="flex items-center justify-between px-2">
-                        <div className="flex flex-col">
-                          <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
-                          <span className="text-[18px] font-black tracking-widest text-white">{promoCode || "BALI2026"}</span>
-                        </div>
-                        <button 
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
-                            router.push(`/tours?promo=${promoCode || "BALI2026"}`);
-                            setPromoDropdownOpen(false);
-                          }}
-                          className="bg-white text-black px-5 py-2.5 rounded-xl text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-200"
-                        >
-                          APPLY CODE
-                        </button>
-                      </div>
+                    <div className="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center justify-center relative shrink-0 shadow-sm">
+                      <span className="text-[14px] font-bold text-gray-500">No promos available right now.</span>
                     </div>
                   )}
                 </div>
@@ -386,34 +358,8 @@ export default function Navbar({ promoCode = "BALI2026" }) {
                 </div>
               </div>
             )) : (
-              <div className="bg-black text-white rounded-2xl p-4 flex flex-col relative overflow-hidden shrink-0">
-                <div className="absolute -left-3 top-[35%] w-6 h-6 bg-white rounded-full shadow-[inset_-3px_0_6px_rgba(0,0,0,0.05)]"></div>
-                <div className="absolute -right-3 top-[35%] w-6 h-6 bg-white rounded-full shadow-[inset_3px_0_6px_rgba(0,0,0,0.05)]"></div>
-                
-                <div className="flex flex-col px-2">
-                  <span className="text-[14px] font-extrabold text-white uppercase tracking-wide">SPECIAL PROMO</span>
-                  <span className="text-[11px] font-bold text-gray-400 mt-0.5">Valid for all upcoming tours</span>
-                </div>
-                
-                <div className="border-t border-dashed border-gray-700 my-3"></div>
-                
-                <div className="flex items-center justify-between px-2">
-                  <div className="flex flex-col">
-                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">Code</span>
-                    <span className="text-[16px] font-black tracking-widest text-white">{promoCode || "BALI2026"}</span>
-                  </div>
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      localStorage.setItem('savedPromoCode', promoCode || "BALI2026");
-                      router.push(`/tours?promo=${promoCode || "BALI2026"}`);
-                      setPromoDropdownOpen(false);
-                    }}
-                    className="bg-white text-black px-3 py-1.5 rounded-lg text-[11px] font-bold active:scale-95 transition-all shadow-md hover:bg-gray-200 shrink-0"
-                  >
-                    APPLY CODE
-                  </button>
-                </div>
+              <div className="bg-white border border-gray-100 rounded-2xl p-6 flex flex-col items-center justify-center relative shrink-0 shadow-sm">
+                <span className="text-[14px] font-bold text-gray-500">No promos available right now.</span>
               </div>
             )}
           </div>
