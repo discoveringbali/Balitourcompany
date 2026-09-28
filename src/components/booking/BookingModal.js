@@ -578,14 +578,6 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                    </div>
                 </div>
 
-                <div className="flex flex-col gap-2 relative">
-                   <label className="text-[13px] font-bold text-primary ml-1">WhatsApp Number</label>
-                   <div className="relative flex items-center">
-                     <Phone className="absolute left-4 text-gray-400" size={18} />
-                     <input required type="tel" name="phone" value={formData.phone} onChange={handleInputChange} placeholder="+62 812 3456 7890" className="w-full bg-white/5 rounded-2xl py-3.5 pl-12 pr-4 text-[15px] font-medium text-primary outline-none focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-gray-400" />
-                   </div>
-                </div>
-
                 {/* Location (Pickup, Villa, Delivery) */}
                 <div className="flex flex-col gap-2 relative mt-1">
                    <label className="text-[13px] font-bold text-primary ml-1">Hotel / Villa</label>
@@ -610,29 +602,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                    </div>
                 )}
 
-                <div className="mt-2 flex flex-col gap-2 bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                  <label className="flex items-start gap-3 cursor-pointer group">
-                    <div className="relative flex items-center justify-center shrink-0 mt-0.5">
-                      <input 
-                        type="checkbox" 
-                        className="peer appearance-none w-5 h-5 border-2 border-gray-300 rounded bg-white checked:bg-black checked:border-black transition-colors"
-                        checked={agreedToTerms}
-                        onChange={(e) => {
-                          setAgreedToTerms(e.target.checked);
-                          if (e.target.checked) setShowAgreementError(false);
-                        }}
-                      />
-                      <Check size={14} className="absolute text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" strokeWidth={3} />
-                    </div>
-                    <span className="text-[13px] text-gray-600 leading-snug font-medium">
-                      I confirm that my booking details are correct and agree to the Balance Island <a href="/terms" target="_blank" className="text-primary font-bold hover:underline">Terms & Conditions</a> and <a href="/cancellation-policy" target="_blank" className="text-primary font-bold hover:underline">Cancellation & Refund Policy</a>.
-                    </span>
-                  </label>
-                  {showAgreementError && (
-                    <span className="text-[12px] font-bold text-red-500 animate-in fade-in slide-in-from-top-1 ml-8">Please agree to the booking policies before continuing.</span>
-                  )}
-                  <span className="text-[11px] text-gray-400 mt-1 ml-8">Please review your booking details before confirming your booking.</span>
-                </div>
+
               </div>
             )}
 
