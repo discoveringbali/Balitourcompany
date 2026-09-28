@@ -203,7 +203,7 @@ export default function CampaignServiceShowcase({ campaign, serviceName }) {
             </a>
 
             <p className="text-center text-[11px] font-semibold text-gray-400 mt-3">
-              Opens verified partner in a new tab: <span className="font-bold text-gray-600 underline">{displayDomain}</span> ↗
+              Available on <span className="font-bold text-gray-600 underline">{displayDomain}</span> ↗
             </p>
           </div>
         </div>

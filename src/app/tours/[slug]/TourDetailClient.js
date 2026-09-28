@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ChevronLeft, Share, Heart, Star, Calendar, Clock, Plane, Building, Utensils, User, Bus, ArrowRight, MoreVertical, CheckCircle2, Languages, Car, Minus, Plus, Info } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -46,6 +46,33 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
   const [isSaving, setIsSaving] = useState(false);
   const { formatPrice } = useCurrency();
 
+  const memoizedServiceData = useMemo(() => {
+    if (!tourData) return null;
+    return {
+      type: tourData.service?.toLowerCase() || 'tour', 
+      id: tourData.id, 
+      title: tourData.title,
+      baseTitle: tourData.title,
+      inclusiveTitle: tourData.inclusiveTitle,
+      price: tourData.price, 
+      pricingType: tourData.pricingType,
+      groupPricingMode: tourData.groupPricingMode,
+      groupPrice: tourData.groupPrice,
+      groupTiers: tourData.groupTiers,
+      minGroupPax: tourData.minGroupPax || 1,
+      maxGroupPax: tourData.maxGroupPax || 15,
+      tourTiers: tourData.tourTiers,
+      selectedPackage: (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? selectedPackage : null,
+      allInclusiveSurcharge: tourData.allInclusiveSurcharge,
+      hasAllInclusive: tourData.hasAllInclusive,
+      allInclusiveTiers: tourData.allInclusiveTiers,
+      minPax: tourData.minGroupPax || tourData.minPax || 1,
+      image: tourData.images && tourData.images.length > 0 ? tourData.images[0] : null,
+      included: tourData.included,
+      excluded: tourData.excluded,
+      inclusiveIncluded: tourData.inclusiveIncluded
+    };
+  }, [tourData, selectedPackage]);
   // Reviews State
   const [reviewName, setReviewName] = useState("");
   const [reviewRating, setReviewRating] = useState(5);
@@ -301,6 +328,8 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
        </div>
      );
   }
+
+
 
   return (
     <div className="-mt-20 md:-mt-24 w-full bg-background min-h-[100dvh] relative pb-[120px] md:pb-0">
@@ -936,34 +965,10 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
         </div>
       </div>
       </div>
-
       <BookingModal 
         isOpen={isBookingModalOpen} 
         onClose={() => setIsBookingModalOpen(false)}
-        serviceData={{ 
-            type: tourData.service?.toLowerCase() || 'tour', 
-            id: tourData.id, 
-            title: tourData.title, // Base title, modal handles inclusive title
-            baseTitle: tourData.title,
-            inclusiveTitle: tourData.inclusiveTitle,
-            price: tourData.price, 
-            pricingType: tourData.pricingType, // Original pricing type, modal overrides for inclusive
-            groupPricingMode: tourData.groupPricingMode,
-            groupPrice: tourData.groupPrice,
-            groupTiers: tourData.groupTiers,
-            minGroupPax: tourData.minGroupPax || 1,
-            maxGroupPax: tourData.maxGroupPax || 15,
-            tourTiers: tourData.tourTiers,
-            selectedPackage: (tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? selectedPackage : null,
-            allInclusiveSurcharge: tourData.allInclusiveSurcharge,
-            hasAllInclusive: tourData.hasAllInclusive,
-            allInclusiveTiers: tourData.allInclusiveTiers,
-            minPax: tourData.minGroupPax || tourData.minPax || 1,
-            image: tourData.images[0],
-            included: tourData.included,
-            excluded: tourData.excluded,
-            inclusiveIncluded: tourData.inclusiveIncluded
-         }} 
+        serviceData={memoizedServiceData} 
         initialPax={desktopPax}
         initialDate={desktopDate}
         startStep={modalStartStep}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { X, Calendar, MapPin, Users, Phone, User, Clock, ArrowRight, ChevronLeft, Minus, Plus, Check, Info } from "lucide-react";
 import WeeklyCalendar from "./WeeklyCalendar";
 import LocationAutocomplete from "./LocationAutocomplete";
@@ -79,7 +79,8 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
     } else if (!isOpen) {
       initializedSession.current = false;
     }
-  }, [isOpen, initialPax, initialDate, startStep, serviceData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const handlePackageSelect = (pkg) => {
     setLocalPackage(pkg);

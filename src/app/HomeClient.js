@@ -1074,7 +1074,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <img 
                   src="https://wp.logos-download.com/wp-content/uploads/2024/10/Viator_Logo.svg" 
                   alt="Viator Logo" 
-                  className="h-12 sm:h-16 w-auto object-contain"
+                  className="h-16 sm:h-20 w-auto object-contain"
                 />
               </a>
 
