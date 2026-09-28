@@ -1031,7 +1031,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
           {/* Trust Badges - Get Your Guide & TripAdvisor */}
           <div className="flex flex-col items-center justify-center mt-12 mb-4 px-4 text-center">
-            <h4 className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em] mb-6">Official Verified Partner</h4>
+            <h4 className="text-[11px] font-extrabold text-gray-400 uppercase tracking-[0.2em] mb-6">Find Us On</h4>
             <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 max-w-3xl mx-auto">
               {/* Get Your Guide */}
               <a 
@@ -1074,7 +1074,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <img 
                   src="https://wp.logos-download.com/wp-content/uploads/2024/10/Viator_Logo.svg" 
                   alt="Viator Logo" 
-                  className="h-6 sm:h-8 w-auto object-contain"
+                  className="h-10 sm:h-12 w-auto object-contain"
                 />
               </a>
 
