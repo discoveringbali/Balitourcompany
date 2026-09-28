@@ -70,9 +70,6 @@ export default function Sidebar({ isOpen, onClose }) {
               <Link href="/blog" onClick={onClose} className="font-serif italic text-[28px] text-[#1c1c1c] hover:text-[#555555] transition-colors">
                 Our Blog
               </Link>
-              <Link href="/blog" onClick={onClose} className="font-serif text-[26px] text-[#1c1c1c] hover:text-[#555555] transition-colors pl-4 border-l-2 border-gray-300">
-                Recommended Places
-              </Link>
               <Link href="/about" onClick={onClose} className="font-serif text-[26px] text-[#1c1c1c] hover:text-[#555555] transition-colors">
                 About Us
               </Link>
