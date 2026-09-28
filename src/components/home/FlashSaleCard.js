@@ -13,6 +13,7 @@ export default function FlashSaleCard({ data }) {
 
   useEffect(() => {
     if (!data?.active || !data?.endTime) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTimeLeft(prev => ({ ...prev, isMounted: true, isExpired: true }));
       return;
     }

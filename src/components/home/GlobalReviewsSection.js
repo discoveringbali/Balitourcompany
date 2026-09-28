@@ -188,7 +188,7 @@ export default function GlobalReviewsSection({ tours = [] }) {
                 <span className="text-xs font-bold text-gray-400">{formatDate(review.date)}</span>
               </div>
               <p className="text-[14px] text-text-secondary leading-relaxed flex-1 italic">
-                "{review.comment}"
+                &quot;{review.comment}&quot;
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
                 <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center font-bold text-gray-500 uppercase">
@@ -320,7 +320,7 @@ export default function GlobalReviewsSection({ tours = [] }) {
                     <span className="text-xs font-semibold text-gray-400 bg-gray-50 px-2 py-1 rounded-md">{formatDate(review.date)}</span>
                   </div>
                   <p className="text-[15px] text-text-secondary leading-relaxed mb-6 flex-1">
-                    "{review.comment}"
+                    &quot;{review.comment}&quot;
                   </p>
                   <div className="flex items-center gap-3 pt-4 border-t border-gray-50 mt-auto">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-100 to-gray-200 flex items-center justify-center font-bold text-gray-600 text-[14px] uppercase shadow-inner">

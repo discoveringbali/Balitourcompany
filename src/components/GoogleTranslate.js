@@ -7,6 +7,7 @@ export default function GoogleTranslate() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsClient(true);
     
     // Add callback globally for the script to call

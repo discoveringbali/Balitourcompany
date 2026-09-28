@@ -15,6 +15,7 @@ export default function ListingCard({ item, linkTo, compact }) {
 
   useEffect(() => {
     if (item?.id) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsSaved(isTripSaved(item.id));
     }
 

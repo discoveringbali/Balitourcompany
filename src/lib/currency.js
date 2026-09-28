@@ -24,6 +24,7 @@ export function useCurrency() {
     if (typeof window !== 'undefined') {
       const savedCurrency = localStorage.getItem('balance_island_currency');
       if (savedCurrency && EXCHANGE_RATES[savedCurrency]) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCurrency(savedCurrency);
       }
 

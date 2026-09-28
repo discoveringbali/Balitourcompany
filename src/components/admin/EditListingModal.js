@@ -908,7 +908,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
 
                       <div className="pt-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1 block">What's Covered in All-Inclusive</label>
+                          <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1 block">What&apos;s Covered in All-Inclusive</label>
                           <textarea 
                             rows={2} 
                             value={inclusiveIncluded} 
@@ -918,7 +918,7 @@ export default function EditListingModal({ item, activeTab, onClose, onSave }) {
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1 block">What's Excluded in All-Inclusive</label>
+                          <label className="text-[10px] font-black uppercase tracking-wider text-gray-500 mb-1 block">What&apos;s Excluded in All-Inclusive</label>
                           <textarea 
                             rows={2} 
                             value={inclusiveExcluded} 

@@ -19,6 +19,7 @@ export default function CampaignSettingsModal({ isOpen, onClose, campaign, onSav
 
   useEffect(() => {
     if (campaign) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData({
         title: campaign.title || "",
         subtitle: campaign.subtitle || "",

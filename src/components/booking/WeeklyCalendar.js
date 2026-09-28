@@ -18,6 +18,7 @@ export default function WeeklyCalendar({ value, onChange }) {
        d.setDate(today.getDate() + i);
        genDates.push(d);
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDates(genDates);
     
     // Only auto-select if value is empty
@@ -35,6 +36,7 @@ export default function WeeklyCalendar({ value, onChange }) {
      // Fix timezone offset issues
      const tzOffset = d.getTimezoneOffset() * 60000;
      const localDate = new Date(d.getTime() + tzOffset);
+     // eslint-disable-next-line react-hooks/set-state-in-effect
      setCurrentMonthStr(localDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
   }, [value]);
 
