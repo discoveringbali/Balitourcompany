@@ -943,7 +943,10 @@ export default function TourDetailClient({ tourData, slug, relatedTours }) {
             hasAllInclusive: tourData.hasAllInclusive,
             allInclusiveTiers: tourData.allInclusiveTiers,
             minPax: tourData.minGroupPax || tourData.minPax || 1,
-            image: tourData.images[0]
+            image: tourData.images[0],
+            included: tourData.included,
+            excluded: tourData.excluded,
+            inclusiveIncluded: tourData.inclusiveIncluded
          }} 
         initialPax={desktopPax}
         initialDate={desktopDate}

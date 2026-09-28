@@ -46,7 +46,7 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
 
   useEffect(() => {
     if (isOpen) {
-      setStep(startStep);
+      setStep((serviceData?.type === "tour" || serviceData?.type === "activities") && (serviceData?.hasAllInclusive || serviceData?.allInclusiveSurcharge) ? 0 : startStep);
       setAgreedToTerms(false);
       setShowAgreementError(false);
       const minP = serviceData?.minPax || 1;
@@ -301,14 +301,14 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
         
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100 shrink-0">
-          {step === 2 && startStep === 1 ? (
-            <button onClick={() => setStep(1)} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
+          {(step === 2 || (step === 1 && (serviceData?.hasAllInclusive || serviceData?.allInclusiveSurcharge))) ? (
+            <button type="button" onClick={() => setStep(step - 1)} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
               <ChevronLeft size={20} strokeWidth={2.5} className="pr-0.5" />
             </button>
           ) : (
             <div className="w-8 h-8" />
           )}
-          <h2 className="text-[18px] md:text-[20px] font-extrabold text-primary">{step === 1 ? 'Select Participants' : 'Booking Details'}</h2>
+          <h2 className="text-[18px] md:text-[20px] font-extrabold text-primary">{step === 0 ? 'Select Your Experience' : step === 1 ? 'Select Participants' : 'Booking Details'}</h2>
           <button onClick={onClose} className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 transition-colors text-primary active:scale-95">
             <X size={18} strokeWidth={2.5} />
           </button>
@@ -336,8 +336,89 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
             </div>
           )}
 
-          <form onSubmit={step === 1 ? (e) => { e.preventDefault(); setStep(2); } : handleCheckout} id="bookingForm" className="flex flex-col gap-5">
+          <form onSubmit={step === 0 ? (e) => { e.preventDefault(); setStep(1); } : step === 1 ? (e) => { e.preventDefault(); setStep(2); } : handleCheckout} id="bookingForm" className="flex flex-col gap-5">
             
+            {/* STEP 0: EXPERIENCE SELECTION */}
+            {step === 0 && (
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-4">
+                  {/* Standard Journey */}
+                  <div 
+                     onClick={() => handlePackageSelect('Standard')}
+                     className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-white hover:border-gray-400'}`}
+                  >
+                     <div className="flex justify-between items-center mb-1">
+                        <span className={`font-black text-[18px] ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Standard Journey</span>
+                        {localPackage === 'Standard' && <div className="w-7 h-7 rounded-full bg-white flex items-center justify-center shadow-sm"><Check size={16} strokeWidth={3} className="text-primary" /></div>}
+                     </div>
+                     <p className={`text-[13px] font-medium leading-relaxed mb-5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-500'}`}>Essential driver and guide service. Entrance fees are not included.</p>
+                     
+                     <div className="flex flex-col gap-3">
+                       <div className="flex items-start gap-3">
+                         <div className={`p-1 rounded-full ${localPackage === 'Standard' ? 'bg-white/20' : 'bg-gray-100'}`}><Check size={14} className={localPackage === 'Standard' ? 'text-white' : 'text-green-600'} strokeWidth={3} /></div>
+                         <span className={`text-[14px] font-bold pt-0.5 ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Private vehicle & driver</span>
+                       </div>
+                       <div className="flex items-start gap-3">
+                         <div className={`p-1 rounded-full ${localPackage === 'Standard' ? 'bg-black/20' : 'bg-gray-100'}`}><X size={14} className={localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'} strokeWidth={3} /></div>
+                         <span className={`text-[14px] font-bold pt-0.5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'}`}>All entrance fees & activity tickets</span>
+                       </div>
+                       <div className="flex items-start gap-3">
+                         <div className={`p-1 rounded-full ${localPackage === 'Standard' ? 'bg-black/20' : 'bg-gray-100'}`}><X size={14} className={localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'} strokeWidth={3} /></div>
+                         <span className={`text-[14px] font-bold pt-0.5 ${localPackage === 'Standard' ? 'text-white/80' : 'text-gray-400'}`}>Meals</span>
+                       </div>
+                     </div>
+                  </div>
+
+                  {/* All Inclusive Experience */}
+                  <div 
+                     onClick={() => handlePackageSelect('All Inclusive')}
+                     className={`p-5 rounded-3xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-primary bg-primary shadow-lg scale-[1.02]' : 'border-gray-200 bg-[#1c1c1c] hover:border-black shadow-md'}`}
+                  >
+                     <div className="flex justify-between items-center mb-1">
+                        <span className={`font-black text-[18px] text-white`}>All-Inclusive Experience</span>
+                        <span className="text-[13px] font-extrabold text-black bg-[#d2ff00] px-3 py-1 rounded-lg shadow-sm">
+                          {(() => {
+                            const getMultiplierPrice = (rawPrice) => {
+                              const p = Number(rawPrice);
+                              if (!p) return 0;
+                              return Math.floor(p > 1000 ? p : p * 1000);
+                            };
+                            let price = getMultiplierPrice(serviceData.allInclusiveSurcharge);
+                            if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
+                              let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
+                              price = getMultiplierPrice(sortedTiers[0].price);
+                            }
+                            return `Rp ${price.toLocaleString('id-ID')}`;
+                          })()}
+                        </span>
+                     </div>
+                     <p className={`text-[13px] font-medium leading-relaxed mb-5 text-white/80`}>Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
+                     
+                     <div className="flex flex-col gap-3">
+                       <div className="flex items-start gap-3">
+                         <div className={`p-1 rounded-full ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={14} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
+                         <span className={`text-[14px] font-bold pt-0.5 text-white`}>Private vehicle & driver</span>
+                       </div>
+                       <div className="flex items-start gap-3">
+                         <div className={`p-1 rounded-full ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={14} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
+                         <span className={`text-[14px] font-bold pt-0.5 text-white`}>All entrance fees & activity tickets</span>
+                       </div>
+                       <div className="flex items-start gap-3">
+                         <div className={`p-1 rounded-full ${localPackage === 'All Inclusive' ? 'bg-white/20' : 'bg-white/10'}`}><Check size={14} className={localPackage === 'All Inclusive' ? 'text-white' : 'text-[#d2ff00]'} strokeWidth={3} /></div>
+                         <span className={`text-[14px] font-bold pt-0.5 text-white`}>Meals (if applicable)</span>
+                       </div>
+                     </div>
+                  </div>
+                </div>
+                
+                <div className="mt-4 pb-4">
+                  <button type="button" onClick={() => setStep(1)} className="w-full bg-[#1c1c1c] text-white rounded-full py-4 text-[16px] font-bold shadow-md hover:bg-black transition-colors active:scale-95 flex items-center justify-center gap-2">
+                    Continue <ArrowRight size={18} strokeWidth={2.5} />
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* STEP 1: PARTICIPANTS & OPTIONS */}
             {step === 1 && (
               <>
@@ -361,50 +442,6 @@ export default function BookingModal({ isOpen, onClose, serviceData, initialPax 
                   )}
                 </div>
 
-                {/* Package Selector (Tour/Activities) */}
-                {(serviceData?.type === "tour" || serviceData?.type === "activities") && (serviceData?.hasAllInclusive || serviceData?.allInclusiveSurcharge) && (
-                  <div className="flex flex-col gap-3 mt-1">
-                    <span className="font-bold text-primary text-[14px] ml-1">Select your experience</span>
-                    <div className="flex flex-col gap-2">
-                      <div 
-                         onClick={() => handlePackageSelect('Standard')}
-                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'Standard' ? 'border-primary bg-primary' : 'border-gray-200 bg-white hover:border-gray-400'}`}
-                      >
-                         <div className="flex justify-between items-center mb-1">
-                            <span className={`font-bold text-[14px] ${localPackage === 'Standard' ? 'text-white' : 'text-primary'}`}>Standard Journey</span>
-                            {localPackage === 'Standard' && <div className="w-5 h-5 rounded-full bg-white flex items-center justify-center shadow-sm"><Check size={12} strokeWidth={3} className="text-primary" /></div>}
-                         </div>
-                         <p className={`text-[12px] font-medium leading-snug ${localPackage === 'Standard' ? 'text-white/75' : 'text-text-secondary'}`}>Essential driver and guide service. Entrance fees are not included.</p>
-                      </div>
-                      <div 
-                         onClick={() => handlePackageSelect('All Inclusive')}
-                         className={`p-3.5 rounded-2xl border-2 cursor-pointer transition-all ${localPackage === 'All Inclusive' ? 'border-primary bg-primary' : 'border-gray-200 bg-white hover:border-gray-400'}`}
-                      >
-                         <div className="flex justify-between items-center mb-1">
-                            <span className={`font-bold text-[14px] ${localPackage === 'All Inclusive' ? 'text-white' : 'text-primary'}`}>All-Inclusive Experience</span>
-                            <span className="text-[11px] font-extrabold text-white bg-black px-2 py-0.5 rounded-md shadow-sm">
-                              {(() => {
-                                const getMultiplierPrice = (rawPrice) => {
-                                  const p = Number(rawPrice);
-                                  if (!p) return 0;
-                                  return Math.floor(p > 1000 ? p : p * 1000);
-                                };
-                                let pax = parseInt(formData.guests) || 1;
-                                let price = getMultiplierPrice(serviceData.allInclusiveSurcharge);
-                                if (serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) {
-                                  let sortedTiers = [...serviceData.allInclusiveTiers].sort((a, b) => Number(b.pax) - Number(a.pax));
-                                  let applicableTier = sortedTiers.find(t => pax >= Number(t.pax));
-                                  if (applicableTier) price = getMultiplierPrice(applicableTier.price);
-                                }
-                                return `Rp ${price.toLocaleString('id-ID')}${(serviceData.allInclusiveTiers && serviceData.allInclusiveTiers.length > 0) ? '' : '/pax'}`;
-                              })()}
-                            </span>
-                         </div>
-                         <p className={`text-[12px] font-medium leading-snug ${localPackage === 'All Inclusive' ? 'text-white/75' : 'text-text-secondary'}`}>Everything taken care of. Includes all required tickets and fees for a seamless day.</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {/* Guests / Pax */}
                 {(["tour", "spa", "transport"].includes(serviceData?.type)) && (
