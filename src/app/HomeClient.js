@@ -561,6 +561,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     location: t.location, // Explicitly pass location
     badge: t.campaignLabel !== undefined ? t.campaignLabel : "Featured Deal",
     image: t.image || "",
+    images: t.images || [],
     targetId: t.id,
     originalTitle: t.title,
     campaignVideo: t.campaignVideo,
@@ -850,7 +851,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {displayCampaigns.map((camp, idx) => (
               <div 
                 key={camp.id} 
-                className={`relative w-full shrink-0 snap-center aspect-[16/10] sm:aspect-[4/3] rounded-[24px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
+                className={`relative w-full shrink-0 snap-center aspect-[4/5] sm:aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
                 onClick={(e) => {
                   if (camp.isExternalCampaign && camp.externalUrl) {
                     if (e.target.closest('a') || e.target.closest('button')) return;
@@ -875,12 +876,15 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 ) : null}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1c1c1c] via-[#1c1c1c]/40 to-transparent z-0 pointer-events-none" />
 
-                {/* Badge top left */}
-                <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 pointer-events-none">
+                {/* Top left badge */}
+                <div className="absolute top-5 left-5 z-20 flex flex-col pointer-events-none">
                   {!camp.isHeroSlide && (
-                    <span className="inline-block px-3 py-1.5 w-max bg-[#d2ff00] text-[#1c1c1c] text-[10px] sm:text-[11px] font-black uppercase tracking-wider shadow-sm rounded-[8px]">
-                      {camp.badge || "OFFICIAL PARTNER"}
-                    </span>
+                    <div className="flex items-center gap-1.5 bg-[#1f1f1f]/90 backdrop-blur-md text-[#b4ff4c] px-3.5 py-1.5 rounded-full shadow-lg">
+                      <div className="w-2 h-2 rounded-full bg-[#b4ff4c]"></div>
+                      <span className="text-[11px] font-bold tracking-wide">
+                        {camp.badge || "On Going"}
+                      </span>
+                    </div>
                   )}
                 </div>
 
@@ -954,61 +958,75 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
 
-                {/* Top Right Click Button with Curve Cutout Effect */}
+                {/* Top Right Arrow Button */}
                 {!camp.isHeroSlide && (
-                  <div className="absolute -top-[1px] -right-[1px] z-20 pointer-events-auto">
-                    <div className="bg-[#ffffff] rounded-bl-[24px] pl-3 pb-3 pr-[1px] pt-[1px] relative flex items-center gap-2">
-                      {/* Left Curve SVG */}
-                      <svg className="absolute top-[1px] -left-[23.5px] w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
-                        <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
-                      </svg>
-                      {/* Bottom Curve SVG */}
-                      <svg className="absolute -bottom-[23.5px] right-[1px] w-[24px] h-[24px] fill-[#ffffff]" viewBox="0 0 24 24">
-                        <path d="M24 0H0C13.2548 0 24 10.7452 24 24V0Z" />
-                      </svg>
-
-                      {/* Heart Button */}
-                      <button className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm" aria-label="Save campaign">
-                        <Heart size={19} strokeWidth={2.5} className="text-[#000000]" />
-                      </button>
-
-                      {camp.isExternalCampaign ? (
-                        <a
-                          href={camp.externalUrl || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
-                          aria-label="Open partner website"
-                        >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
-                        </a>
-                      ) : (
-                        <Link
-                          href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
-                          className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#ffffff] text-[#000000] flex items-center justify-center active:scale-90 hover:scale-105 transition-all pointer-events-auto shadow-sm"
-                          aria-label="View tour details"
-                        >
-                          <ArrowUpRight size={19} strokeWidth={2.5} className="text-[#000000]" />
-                        </Link>
-                      )}
-                    </div>
+                  <div className="absolute top-4 right-4 z-20 pointer-events-auto">
+                    {camp.isExternalCampaign ? (
+                      <a
+                        href={camp.externalUrl || "#"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-12 h-12 rounded-full bg-[#b4ff4c] text-[#1c1c1c] flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all"
+                        aria-label="Open partner website"
+                      >
+                        <ArrowUpRight size={22} strokeWidth={2.5} />
+                      </a>
+                    ) : (
+                      <Link
+                        href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"}
+                        className="w-12 h-12 rounded-full bg-[#b4ff4c] text-[#1c1c1c] flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all"
+                        aria-label="View tour details"
+                      >
+                        <ArrowUpRight size={22} strokeWidth={2.5} />
+                      </Link>
+                    )}
                   </div>
                 )}
 
-                {/* Text at the bottom */}
+                {/* Bottom Content Area */}
                 {!camp.isHeroSlide && (
-                  <div className="absolute inset-x-0 bottom-0 z-10 p-4 sm:p-5 flex items-end justify-between gap-3 pointer-events-none">
-                    <div className="flex-1 min-w-0 pr-2">
-                      {camp.title ? (
-                        <h3 className={`${camp.title.length > 25 ? 'text-[16px] sm:text-[18px]' : 'text-[20px] sm:text-[22px]'} font-serif italic text-white leading-tight mb-1 drop-shadow-xl tracking-wide`}>
+                  <div className="absolute inset-x-0 bottom-0 z-10 p-5 flex flex-col justify-end pointer-events-none">
+                    <div className="mb-4">
+                      {camp.title && (
+                        <h3 className="text-[32px] sm:text-[36px] font-bold text-white leading-[1.1] drop-shadow-xl tracking-tight max-w-[85%]">
                           {camp.title}
                         </h3>
-                      ) : null}
-                      {(camp.subtitle || camp.description) && (
-                        <p className="text-white/80 text-[12px] sm:text-[13px] font-medium leading-relaxed line-clamp-2 pr-4 sm:pr-8">
-                          {camp.subtitle || camp.description}
+                      )}
+                      {(camp.location || camp.subtitle) && (
+                        <p className="text-white/90 text-[16px] font-medium mt-1.5 drop-shadow-md">
+                          {camp.location || camp.subtitle}
                         </p>
                       )}
+                    </div>
+
+                    <div className="flex items-end justify-between w-full mt-2">
+                      {/* Thumbnails */}
+                      <div className="flex items-center gap-2">
+                        {camp.images && camp.images.length > 1 ? (
+                          <>
+                            {camp.images.slice(1, 4).map((img, i) => (
+                              <div key={i} className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
+                                <Image src={img} alt="thumbnail" fill className="object-cover" />
+                              </div>
+                            ))}
+                            {camp.images.length > 4 && (
+                              <div className="w-[52px] h-[52px] rounded-[14px] bg-black/30 backdrop-blur-md flex items-center justify-center border-2 border-transparent shadow-md">
+                                <span className="text-white text-[14px] font-medium">+{camp.images.length - 4}</span>
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <div className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
+                             <Image src={camp.image} alt="thumbnail" fill className="object-cover" />
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Route Icon */}
+                      <div className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90">
+                        <Map size={24} strokeWidth={2} className="mb-1" />
+                        <span className="text-[11px] font-medium tracking-wide">Explore</span>
+                      </div>
                     </div>
                   </div>
                 )}

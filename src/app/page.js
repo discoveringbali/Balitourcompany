@@ -14,17 +14,23 @@ export default async function Page() {
   
   const initialListings = (listingsData || []).map(d => {
     let parsedImage = d.image;
+    let allImages = [];
     if (Array.isArray(d.image)) {
+      allImages = d.image;
       parsedImage = d.image[0] || "";
     } else if (typeof d.image === 'string') {
       try {
         const parsed = JSON.parse(d.image);
-        if (Array.isArray(parsed)) parsedImage = parsed[0] || "";
+        if (Array.isArray(parsed)) {
+          allImages = parsed;
+          parsedImage = parsed[0] || "";
+        }
       } catch (e) {}
     }
     return {
       ...d,
       image: parsedImage,
+      images: allImages,
       service: d.originalService || d.type
     };
   });
