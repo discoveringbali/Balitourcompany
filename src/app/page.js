@@ -30,7 +30,7 @@ export default async function Page() {
     return {
       ...d,
       image: parsedImage,
-      images: allImages,
+      images: (allImages.length > 0 ? allImages : (d.gallery_images && d.gallery_images.length > 0 ? [parsedImage, ...d.gallery_images] : [parsedImage])),
       service: d.originalService || d.type
     };
   });
