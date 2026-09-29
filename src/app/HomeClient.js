@@ -1481,9 +1481,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   // Use real image from the tour as requested
                   const imageUrl = matchingTour?.image || matchingTour?.images?.[0] || matchingBlog?.image || "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=600&q=80";
                   
-                  // SEO boosting link: prefer blog, fallback to tour
-                  const linkHref = matchingBlog ? `/blog/${matchingBlog.slug}` : matchingTour ? `/tours/${generateSlug(matchingTour.title)}` : `/tours`;
-                  const ctaText = matchingBlog ? `Read Local Guide` : `Explore ${loc}`;
+                  // SEO boosting link: direct to the new destination blog/SEO page
+                  const linkHref = `/destinations/${generateSlug(loc)}`;
+                  const ctaText = `Read Local Guide`;
 
                   return (
                     <Link href={linkHref} key={loc} className="group block relative w-full aspect-[4/5] sm:aspect-square rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
@@ -1514,7 +1514,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       const locationTours = allListings.filter(t => t.location?.toLowerCase().includes(loc.toLowerCase())).slice(0, 5);
                       return (
                         <div key={loc} className="flex flex-col gap-3">
-                          <Link href={`/tours?search=${loc}`} className="text-[15px] font-bold text-primary hover:text-black hover:underline underline-offset-2 transition-colors">
+                          <Link href={`/destinations/${generateSlug(loc)}`} className="text-[15px] font-bold text-primary hover:text-black hover:underline underline-offset-2 transition-colors">
                             Things to do in {loc}
                           </Link>
                           <div className="flex flex-col gap-2">
