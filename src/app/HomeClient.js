@@ -842,7 +842,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         {displayCampaigns.length > 0 && (
         <section className="md:hidden pt-3 pb-4 relative z-10">
           <div
-            className="flex overflow-x-auto no-scrollbar gap-4 px-5 snap-x snap-mandatory"
+            className="flex overflow-x-auto no-scrollbar gap-4 px-5 scroll-px-5 snap-x snap-mandatory"
             onScroll={(e) => {
               const index = Math.round(e.target.scrollLeft / e.target.clientWidth);
               if (index !== currentCampIdx) setCurrentCampIdx(index);
@@ -1339,7 +1339,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
 
               {/* Horizontal Scroll Area */}
-              <div className="flex overflow-x-auto no-scrollbar gap-5 px-6 pb-6 snap-x snap-mandatory hide-scroll">
+              <div className="flex overflow-x-auto no-scrollbar gap-5 px-6 scroll-px-6 pb-6 snap-x snap-mandatory hide-scroll">
                 {displayPopularTrips.length > 0 ? displayPopularTrips.map((trip, idx) => (
                   <PopularTripCard key={trip.id} trip={trip} priority={idx < 4} />
                 )) : (
@@ -1407,7 +1407,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 </div>
               )}
-              <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-5 px-6 pb-8 md:grid md:grid-cols-3 md:px-6 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="flex flex-nowrap overflow-x-auto snap-x snap-mandatory gap-5 px-6 scroll-px-6 pb-8 md:grid md:grid-cols-3 md:px-6 no-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {filteredTours.length > 0 ? (
                   filteredTours.map(tour => (
                     <div key={tour.id} className="flex-none w-[85vw] sm:w-[300px] snap-center md:w-auto md:snap-align-none animate-in fade-in zoom-in duration-300">
