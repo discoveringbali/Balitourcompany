@@ -100,6 +100,29 @@ const campaigns = [
 
 const popularTrips = [];
 
+const Thumbnails = ({ camp }) => (
+  <>
+    {camp.images && camp.images.length > 1 ? (
+      <>
+        {camp.images.slice(1, 4).map((img, i) => (
+          <div key={i} className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
+            <Image src={img} alt="thumbnail" fill sizes="52px" className="object-cover" />
+          </div>
+        ))}
+        {camp.images.length > 4 && (
+          <div className="w-[52px] h-[52px] rounded-[14px] bg-black/30 backdrop-blur-md flex items-center justify-center border-2 border-transparent shadow-md">
+            <span className="text-white text-[14px] font-medium">+{camp.images.length - 4}</span>
+          </div>
+        )}
+      </>
+    ) : (
+      <div className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
+        <Image src={camp.image} alt="thumbnail" fill sizes="52px" className="object-cover" />
+      </div>
+    )}
+  </>
+);
+
 function PopularTripCard({ trip, priority = false }) {
   const [isSaved, setIsSaved] = useState(false);
 
@@ -994,44 +1017,38 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     <div className="mb-4">
                       {camp.title && (
                         <h3 className="text-[32px] sm:text-[36px] font-bold text-white leading-[1.1] drop-shadow-xl tracking-tight max-w-[85%]">
-                          {camp.title}
+                          {camp.title.includes(',') ? camp.title.split(',')[0] : camp.title}
                         </h3>
                       )}
-                      {(camp.location || camp.subtitle) && (
-                        <p className="text-white/90 text-[16px] font-medium mt-1.5 drop-shadow-md">
-                          {camp.location || camp.subtitle}
-                        </p>
-                      )}
+                      <p className="text-white/90 text-[16px] font-medium mt-1.5 drop-shadow-md">
+                        {camp.location || camp.subtitle || (camp.title && camp.title.includes(',') ? camp.title.split(',').slice(1).join(',').trim() : 'Bali, Indonesia')}
+                      </p>
                     </div>
 
-                    <div className="flex items-end justify-between w-full mt-2">
+                    <div className="flex items-end justify-between w-full mt-2 pointer-events-auto">
                       {/* Thumbnails */}
-                      <div className="flex items-center gap-2">
-                        {camp.images && camp.images.length > 1 ? (
-                          <>
-                            {camp.images.slice(1, 4).map((img, i) => (
-                              <div key={i} className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
-                                <Image src={img} alt="thumbnail" fill className="object-cover" />
-                              </div>
-                            ))}
-                            {camp.images.length > 4 && (
-                              <div className="w-[52px] h-[52px] rounded-[14px] bg-black/30 backdrop-blur-md flex items-center justify-center border-2 border-transparent shadow-md">
-                                <span className="text-white text-[14px] font-medium">+{camp.images.length - 4}</span>
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <div className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
-                             <Image src={camp.image} alt="thumbnail" fill className="object-cover" />
-                          </div>
-                        )}
-                      </div>
+                      {camp.isExternalCampaign ? (
+                        <a href={camp.externalUrl || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                          <Thumbnails camp={camp} />
+                        </a>
+                      ) : (
+                        <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform">
+                          <Thumbnails camp={camp} />
+                        </Link>
+                      )}
 
                       {/* Route Icon */}
-                      <div className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90">
-                        <Map size={24} strokeWidth={2} className="mb-1" />
-                        <span className="text-[11px] font-medium tracking-wide">Explore</span>
-                      </div>
+                      {camp.isExternalCampaign ? (
+                        <a href={camp.externalUrl || "#"} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90 cursor-pointer active:scale-95 transition-transform">
+                          <Map size={24} strokeWidth={2} className="mb-1" />
+                          <span className="text-[11px] font-medium tracking-wide">Explore</span>
+                        </a>
+                      ) : (
+                        <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90 cursor-pointer active:scale-95 transition-transform">
+                          <Map size={24} strokeWidth={2} className="mb-1" />
+                          <span className="text-[11px] font-medium tracking-wide">Explore</span>
+                        </Link>
+                      )}
                     </div>
                   </div>
                 )}
