@@ -1730,6 +1730,24 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     <p className="text-gray-500 text-[14px] leading-relaxed max-w-sm font-medium">
                       Bali activities and attraction tickets with clear prices and local support. Tour packages available too.
                     </p>
+                    
+                    <div className="mt-8">
+                      <h4 className="font-bold text-gray-900 text-[13px] mb-3 uppercase tracking-wider">Secure Payments</h4>
+                      <div className="flex gap-2 items-center">
+                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-12 h-8">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" className="h-3 object-contain" />
+                        </div>
+                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-12 h-8">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/MasterCard_Logo.svg" alt="Mastercard" className="h-5 object-contain" />
+                        </div>
+                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-12 h-8">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="American Express" className="h-6 object-contain" />
+                        </div>
+                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-12 h-8">
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/PayPal_Logo_Icon_2014.svg" alt="PayPal" className="h-4 object-contain" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Links Columns */}
