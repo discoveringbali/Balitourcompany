@@ -1715,7 +1715,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </motion.section>
 
             {/* Footer Section */}
-            <footer className="bg-gray-50 pt-16 pb-[110px] md:pb-16 px-6 border-t border-gray-200 mt-10">
+            <footer className="bg-white pt-16 pb-[110px] md:pb-16 px-6 border-t border-gray-200 mt-10">
               <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-16">
                   
@@ -1723,7 +1723,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="lg:w-1/3">
                     <Link href="/" className="inline-block mb-4">
                       <h2 className="text-[26px] font-black text-[#1c1c1c] tracking-tight flex items-center gap-2">
-                        <Image src="/favicon.ico" alt="Balance Island" width={24} height={24} className="rounded-md object-contain shadow-sm" />
+                        <Image src="/favicon.PNG" alt="Balance Island" width={24} height={24} className="rounded-md object-contain shadow-sm" />
                         Balance Island
                       </h2>
                     </Link>
