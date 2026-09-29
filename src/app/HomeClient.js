@@ -1030,7 +1030,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="absolute inset-x-0 bottom-0 z-10 p-5 flex flex-col justify-end pointer-events-none">
                     <div className="mb-4">
                       {titleText && (
-                        <h3 className="text-[40px] sm:text-[46px] font-serif italic text-white leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] tracking-tight max-w-[85%]">
+                        <h3 className="text-[40px] sm:text-[46px] font-sans font-black tracking-tighter text-white leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] max-w-[85%]">
                           {titleText}
                         </h3>
                       )}
@@ -1273,7 +1273,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="absolute bottom-[18%] xl:bottom-[20%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[85%] md:max-w-[65%] lg:max-w-[50%] flex flex-col gap-4">
                     {camp.title ? (
                       <h1 
-                        className="text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] font-serif italic text-white leading-[1.1] tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]"
+                        className="text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] font-sans font-black tracking-tighter text-white leading-[1.1] drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] uppercase"
                         style={{ textWrap: 'balance' }}
                       >
                         {camp.title}
@@ -1464,30 +1464,41 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {/* SEO & Location Keywords Section */}
             <section className="px-6 mb-12 mt-12 max-w-7xl mx-auto">
               <div className="mb-6">
-                <h2 className="text-[24px] md:text-[28px] font-black text-primary leading-tight">Explore Top Destinations in Bali</h2>
+                <h2 className="text-[24px] md:text-[28px] font-black text-primary leading-tight">AI Recommended Destinations</h2>
                 <p className="text-text-secondary font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
-                  Discover the beauty of Bali with our curated experiences in the most sought-after locations. From the cultural heart of <span className="font-bold text-primary">Ubud</span> and the stunning cliffs of <span className="font-bold text-primary">Uluwatu</span>, to the vibrant beaches of <span className="font-bold text-primary">Seminyak</span> and <span className="font-bold text-primary">Canggu</span>. Don't miss the pristine landscapes of <span className="font-bold text-primary">Nusa Penida</span>. Find your perfect Bali adventure today!
+                  Based on current travel trends and our curated database, here are the most recommended locations in Bali right now. Dive into deep insights, local guides, and exclusive tours tailored just for you.
                 </p>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {["Ubud", "Seminyak", "Canggu", "Nusa Penida", "Uluwatu"].map((loc) => {
-                  const matchingTour = allListings.find(t => t.location?.toLowerCase().includes(loc.toLowerCase()) || t.title?.toLowerCase().includes(loc.toLowerCase()));
-                  const imageUrl = matchingTour?.image || matchingTour?.images?.[0] || "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=600&q=80";
-                  const linkHref = matchingTour ? `/tours/${generateSlug(matchingTour.title)}` : `/tours`;
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {Array.from(new Set(allListings.map(t => t.location?.split(',')[0].trim()).filter(Boolean)))
+                  .filter(loc => loc.toLowerCase() !== 'bali' && loc.toLowerCase() !== 'indonesia')
+                  .slice(0, 4)
+                  .map((loc) => {
+                  const matchingTour = allListings.find(t => t.location?.toLowerCase().includes(loc.toLowerCase()));
+                  const matchingBlog = recommendedPlaces.find(b => b.title.toLowerCase().includes(loc.toLowerCase()) || b.category?.toLowerCase().includes(loc.toLowerCase()));
+                  
+                  const imageUrl = matchingBlog?.image || matchingTour?.image || matchingTour?.images?.[0] || "https://images.unsplash.com/photo-1537956965359-7573183d1f57?auto=format&fit=crop&w=600&q=80";
+                  
+                  // SEO boosting link: prefer blog, fallback to tour
+                  const linkHref = matchingBlog ? `/blog/${matchingBlog.slug}` : matchingTour ? `/tours/${generateSlug(matchingTour.title)}` : `/tours`;
+                  const ctaText = matchingBlog ? `Read Local Guide` : `Explore ${loc}`;
 
                   return (
                     <Link href={linkHref} key={loc} className="group block relative w-full aspect-[4/5] sm:aspect-square rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
                       <Image 
                         src={imageUrl} 
-                        alt={`Tourism in ${loc}, Bali`}
+                        alt={`Tourism in ${loc}, Bali - Recommended`}
                         fill 
-                        sizes="(max-width: 768px) 50vw, 20vw" 
+                        sizes="(max-width: 768px) 50vw, 25vw" 
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-0 pointer-events-none" />
+                      <div className="absolute top-4 left-4 z-10">
+                         <span className="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20">AI Pick</span>
+                      </div>
                       <div className="absolute bottom-4 left-4 z-10 pointer-events-none pr-4">
                         <span className="text-white font-black text-[18px] drop-shadow-md leading-tight block">{loc}</span>
-                        <p className="text-white/90 text-[12px] font-medium mt-1">Explore {loc}</p>
+                        <p className="text-white/90 text-[12px] font-medium mt-1">{ctaText}</p>
                       </div>
                     </Link>
                   )
@@ -1495,16 +1506,22 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
               
               <div className="mt-8 text-[11px] text-gray-400 font-medium leading-relaxed bg-gray-50 p-4 rounded-2xl">
-                <strong className="text-gray-500 block mb-1">Popular Searches:</strong>
+                <strong className="text-gray-500 block mb-1">Trending Geolocation Keywords:</strong>
                 <div className="flex flex-wrap gap-2 gap-y-1">
-                  <Link href="/tours" className="hover:text-primary transition-colors">Bali Tours</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Ubud Monkey Forest</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Seminyak Beach Clubs</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Nusa Penida Snorkeling</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Uluwatu Temple Sunset</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Canggu Surfing</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Bali Day Trips</Link> • 
-                  <Link href="/tours" className="hover:text-primary transition-colors">Best Bali Itinerary</Link>
+                  {Array.from(new Set(allListings.map(t => t.location?.split(',')[0].trim()).filter(Boolean)))
+                    .filter(loc => loc.toLowerCase() !== 'bali' && loc.toLowerCase() !== 'indonesia')
+                    .slice(0, 8)
+                    .map(loc => (
+                    <span key={loc}>
+                      <Link href={`/tours?search=${loc}`} className="hover:text-primary transition-colors">Things to do in {loc}</Link> <span className="mx-1">•</span>
+                    </span>
+                  ))}
+                  {recommendedPlaces.map(b => (
+                    <span key={b.id}>
+                      <Link href={`/blog/${b.slug}`} className="hover:text-primary transition-colors">{b.title}</Link> <span className="mx-1">•</span>
+                    </span>
+                  ))}
+                  <span>Bali Travel Guide</span>
                 </div>
               </div>
             </section>
