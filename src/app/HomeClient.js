@@ -100,28 +100,33 @@ const campaigns = [
 
 const popularTrips = [];
 
-const Thumbnails = ({ camp }) => (
-  <>
-    {camp.images && camp.images.length > 1 ? (
-      <>
-        {camp.images.slice(1, 4).map((img, i) => (
-          <div key={i} className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
-            <Image src={img} alt="thumbnail" fill sizes="52px" className="object-cover" />
+const Thumbnails = ({ images, fallbackImage }) => {
+  const displayImages = images && images.length > 1 ? images : (fallbackImage ? [fallbackImage] : []);
+  return (
+    <>
+      {displayImages.length > 1 ? (
+        <>
+          {displayImages.slice(1, 4).map((img, i) => (
+            <div key={i} className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md shrink-0">
+              <Image src={img} alt="thumbnail" fill sizes="52px" className="object-cover" />
+            </div>
+          ))}
+          {displayImages.length > 4 && (
+            <div className="w-[52px] h-[52px] rounded-[14px] bg-black/30 backdrop-blur-md flex items-center justify-center border-2 border-transparent shadow-md shrink-0">
+              <span className="text-white text-[14px] font-medium">+{displayImages.length - 4}</span>
+            </div>
+          )}
+        </>
+      ) : (
+        displayImages.length > 0 && (
+          <div className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md shrink-0">
+            <Image src={displayImages[0]} alt="thumbnail" fill sizes="52px" className="object-cover" />
           </div>
-        ))}
-        {camp.images.length > 4 && (
-          <div className="w-[52px] h-[52px] rounded-[14px] bg-black/30 backdrop-blur-md flex items-center justify-center border-2 border-transparent shadow-md">
-            <span className="text-white text-[14px] font-medium">+{camp.images.length - 4}</span>
-          </div>
-        )}
-      </>
-    ) : (
-      <div className="w-[52px] h-[52px] rounded-[14px] border-2 border-white/20 overflow-hidden relative bg-black/20 shadow-md">
-        <Image src={camp.image} alt="thumbnail" fill sizes="52px" className="object-cover" />
-      </div>
-    )}
-  </>
-);
+        )
+      )}
+    </>
+  );
+};
 
 function PopularTripCard({ trip, priority = false }) {
   const [isSaved, setIsSaved] = useState(false);
@@ -876,7 +881,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               if (index !== currentCampIdx) setCurrentCampIdx(index);
             }}
           >
-            {displayCampaigns.map((camp, idx) => (
+            {displayCampaigns.map((camp, idx) => {
+              const linkedTour = allListings.find(t => t.id === camp.targetId || t.title === (camp.originalTitle || camp.title));
+              const campImages = linkedTour?.images?.length > 1 ? linkedTour.images : camp.images;
+              const titleText = camp.title.includes(',') ? camp.title.split(',')[0] : camp.title;
+              const subtitleText = camp.location || camp.subtitle || linkedTour?.location || (camp.title && camp.title.includes(',') ? camp.title.split(',').slice(1).join(',').trim() : 'Bali, Indonesia');
+
+              return (
               <div 
                 key={camp.id} 
                 className={`relative w-full shrink-0 snap-center aspect-[4/5] sm:aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
@@ -1015,36 +1026,38 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 {!camp.isHeroSlide && (
                   <div className="absolute inset-x-0 bottom-0 z-10 p-5 flex flex-col justify-end pointer-events-none">
                     <div className="mb-4">
-                      {camp.title && (
-                        <h3 className="text-[32px] sm:text-[36px] font-bold text-white leading-[1.1] drop-shadow-xl tracking-tight max-w-[85%]">
-                          {camp.title.includes(',') ? camp.title.split(',')[0] : camp.title}
+                      {titleText && (
+                        <h3 className="text-[40px] sm:text-[46px] font-black text-white leading-none drop-shadow-xl tracking-tight max-w-[85%]">
+                          {titleText}
                         </h3>
                       )}
-                      <p className="text-white/90 text-[16px] font-medium mt-1.5 drop-shadow-md">
-                        {camp.location || camp.subtitle || (camp.title && camp.title.includes(',') ? camp.title.split(',').slice(1).join(',').trim() : 'Bali, Indonesia')}
-                      </p>
+                      {subtitleText && (
+                        <p className="text-white/90 text-[18px] font-bold mt-2 drop-shadow-md">
+                          {subtitleText}
+                        </p>
+                      )}
                     </div>
 
                     <div className="flex items-end justify-between w-full mt-2 pointer-events-auto">
                       {/* Thumbnails */}
                       {camp.isExternalCampaign ? (
-                        <a href={camp.externalUrl || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform">
-                          <Thumbnails camp={camp} />
+                        <a href={camp.externalUrl || "#"} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform overflow-hidden">
+                          <Thumbnails images={campImages} fallbackImage={camp.image} />
                         </a>
                       ) : (
-                        <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform">
-                          <Thumbnails camp={camp} />
+                        <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="flex items-center gap-2 cursor-pointer active:scale-95 transition-transform overflow-hidden">
+                          <Thumbnails images={campImages} fallbackImage={camp.image} />
                         </Link>
                       )}
 
                       {/* Route Icon */}
                       {camp.isExternalCampaign ? (
-                        <a href={camp.externalUrl || "#"} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90 cursor-pointer active:scale-95 transition-transform">
+                        <a href={camp.externalUrl || "#"} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90 cursor-pointer active:scale-95 transition-transform ml-4 shrink-0">
                           <Map size={24} strokeWidth={2} className="mb-1" />
                           <span className="text-[11px] font-medium tracking-wide">Explore</span>
                         </a>
                       ) : (
-                        <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90 cursor-pointer active:scale-95 transition-transform">
+                        <Link href={camp.targetId ? `/tours/${generateSlug(camp.originalTitle || camp.title)}` : "#"} className="flex flex-col items-center justify-center text-white/90 mr-2 opacity-90 cursor-pointer active:scale-95 transition-transform ml-4 shrink-0">
                           <Map size={24} strokeWidth={2} className="mb-1" />
                           <span className="text-[11px] font-medium tracking-wide">Explore</span>
                         </Link>
@@ -1053,7 +1066,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
               </div>
-            ))}
+            )})}
           </div>
 
           {/* Dot Indicators */}
