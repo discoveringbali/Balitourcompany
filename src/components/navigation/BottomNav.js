@@ -131,7 +131,6 @@ export default function BottomNav() {
           <mapItem.icon size={24} strokeWidth={activeTab === "map" ? 2.5 : 2} className={activeTab === "map" ? "text-white" : "text-black"} />
         </Link>
       </div>
-      </div>
         </motion.div>
       )}
     </AnimatePresence>
