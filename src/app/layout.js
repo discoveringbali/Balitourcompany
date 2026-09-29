@@ -95,7 +95,7 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.className} ${playfair.variable} min-h-screen flex flex-col bg-background selection:bg-accent selection:text-primary pb-24 md:pb-0`}>
+      <body className={`${inter.className} ${playfair.variable} min-h-screen flex flex-col bg-background selection:bg-accent selection:text-primary pb-0`}>
         <Script src="https://www.googletagmanager.com/gtag/js?id=AW-18408986681" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

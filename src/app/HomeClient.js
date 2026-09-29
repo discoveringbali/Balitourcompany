@@ -1715,7 +1715,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </motion.section>
 
             {/* Footer Section */}
-            <footer className="bg-white pt-16 pb-[110px] md:pb-16 px-6 border-t border-gray-200 mt-10">
+            <footer className="bg-white pt-16 pb-12 px-6 border-t border-gray-200 mt-10">
               <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-16">
                   
