@@ -226,7 +226,7 @@ export default async function BlogDetail({ params }) {
         {/* Meta Summary Bottom */}
         <div className="max-w-4xl mx-auto px-6 md:px-12 mt-12 pt-8 border-t border-border">
           <h4 className="font-bold text-primary mb-2">Description</h4>
-          <p className="text-sm font-medium text-text-secondary italic">"{post.meta_description || 'No description available.'}"</p>
+          <p className="text-sm font-medium text-text-secondary italic">&quot;{post.meta_description || 'No description available.'}&quot;</p>
         </div>
 
       </main>

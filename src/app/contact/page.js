@@ -9,7 +9,7 @@ export default function Contact() {
   return (
     <div className="w-full pt-32 pb-20 container mx-auto px-4 lg:max-w-7xl min-h-[60vh] flex flex-col items-center justify-center text-center font-sans">
       <h1 className="text-4xl md:text-5xl font-black mb-4 text-primary tracking-tight">Contact Us</h1>
-      <p className="text-gray-500 font-medium max-w-lg mx-auto mb-10">Have questions about our tours or need assistance with your booking? We're here to help.</p>
+      <p className="text-gray-500 font-medium max-w-lg mx-auto mb-10">Have questions about our tours or need assistance with your booking? We&apos;re here to help.</p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
         <a 
