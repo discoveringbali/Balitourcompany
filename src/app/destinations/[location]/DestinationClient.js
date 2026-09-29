@@ -220,12 +220,14 @@ export default function DestinationClient({ locationSlug, allListings }) {
                   Want to explore {displayLocation} at your own pace? Hire one of our private drivers and craft your perfect day.
                 </p>
               </div>
-              <Link 
-                href="/map?service=Transport" 
+              <a 
+                href={`https://wa.me/6285174119423?text=${encodeURIComponent(`Hello Balance Island, I would like to hire a private driver to explore ${displayLocation}.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full py-3.5 bg-black text-white text-[15px] font-bold rounded-full text-center hover:bg-black/80 transition-colors active:scale-95 flex items-center justify-center gap-2"
               >
                  Hire a Private Driver
-              </Link>
+              </a>
 
               <hr className="border-gray-100" />
               

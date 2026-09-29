@@ -1505,6 +1505,17 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </section>
 
+            {/* Footer */}
+            <footer className="w-full bg-white border-t border-gray-100 py-12 px-6 mt-12 text-center pb-32">
+              <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-4">
+                <div className="text-[12px] font-bold tracking-widest text-gray-400 uppercase">
+                  A brand of PT BALANCE ISLAND INDONESIA
+                </div>
+                <p className="text-[13px] text-gray-500 font-medium">
+                  © {new Date().getFullYear()} Balance Island. All rights reserved.
+                </p>
+              </div>
+            </footer>
       </div>
     </div>
   );
