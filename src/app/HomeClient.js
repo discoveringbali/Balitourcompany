@@ -1464,7 +1464,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {/* SEO & Location Keywords Section */}
             <section className="px-6 mb-12 mt-12 max-w-7xl mx-auto">
               <div className="mb-6">
-                <h2 className="text-[24px] md:text-[28px] font-black text-primary leading-tight">Top Destinations in Bali</h2>
+                <h2 className="text-[32px] md:text-[40px] text-gray-900 leading-tight" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Top Destinations in Bali</h2>
                 <p className="text-text-secondary font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
                   Discover the beauty of Bali with our curated experiences in the most sought-after locations. From the cultural heart of Ubud to the stunning cliffs of Uluwatu. Dive into deep insights, local guides, and exclusive tours tailored just for you.
                 </p>

@@ -10,6 +10,47 @@ import ListingCard from "@/components/listing/ListingCard";
 export default function DestinationClient({ locationSlug, allListings }) {
   const displayLocation = locationSlug.charAt(0).toUpperCase() + locationSlug.slice(1).replace(/-/g, ' ');
   
+  const popularPlaces = {
+    ubud: [
+      { name: "Sacred Monkey Forest Sanctuary", desc: "A nature reserve and Hindu temple complex.", query: "Sacred+Monkey+Forest+Sanctuary+Ubud" },
+      { name: "Tegalalang Rice Terrace", desc: "Stunning terraced rice paddies.", query: "Tegalalang+Rice+Terrace+Ubud" },
+      { name: "Campuhan Ridge Walk", desc: "A scenic paved trekking path.", query: "Campuhan+Ridge+Walk+Ubud" },
+      { name: "Ubud Palace", desc: "Historical palace of the Ubud royal family.", query: "Ubud+Palace" }
+    ],
+    uluwatu: [
+      { name: "Uluwatu Temple", desc: "A stunning sea temple on a cliff edge.", query: "Uluwatu+Temple" },
+      { name: "Suluban Beach", desc: "A unique beach hidden within a cave.", query: "Suluban+Beach" },
+      { name: "Padang Padang Beach", desc: "A famous surfing spot and beautiful cove.", query: "Padang+Padang+Beach" },
+      { name: "Garuda Wisnu Kencana (GWK)", desc: "A massive cultural park and monument.", query: "Garuda+Wisnu+Kencana+Cultural+Park" }
+    ],
+    "nusa penida": [
+      { name: "Kelingking Beach", desc: "The famous T-Rex shaped cliff and pristine beach.", query: "Kelingking+Beach+Nusa+Penida" },
+      { name: "Broken Beach", desc: "A picturesque coastal formation with a natural bridge.", query: "Broken+Beach+Nusa+Penida" },
+      { name: "Angel's Billabong", desc: "A stunning natural infinity pool.", query: "Angel's+Billabong+Nusa+Penida" },
+      { name: "Crystal Bay", desc: "A beautiful palm-fringed bay perfect for snorkeling.", query: "Crystal+Bay+Nusa+Penida" }
+    ],
+    kintamani: [
+      { name: "Mount Batur", desc: "An active volcano famous for sunrise treks.", query: "Mount+Batur+Kintamani" },
+      { name: "Lake Batur", desc: "A beautiful crater lake at the foot of Mount Batur.", query: "Lake+Batur+Kintamani" },
+      { name: "Pura Ulun Danu Batur", desc: "One of the most important water temples in Bali.", query: "Pura+Ulun+Danu+Batur" },
+      { name: "Kintamani Coffee Shops", desc: "Cafes offering spectacular volcano views.", query: "Kintamani+Coffee" }
+    ],
+    karangasem: [
+      { name: "Lempuyang Temple", desc: "The iconic 'Gateway to Heaven' overlooking Mount Agung.", query: "Lempuyang+Temple+Karangasem" },
+      { name: "Tirta Gangga", desc: "A beautiful former royal water palace.", query: "Tirta+Gangga+Karangasem" },
+      { name: "Amed Beach", desc: "A tranquil coastal area famous for diving and snorkeling.", query: "Amed+Beach+Karangasem" },
+      { name: "Taman Ujung", desc: "A grand water palace built by the King of Karangasem.", query: "Taman+Ujung+Karangasem" }
+    ],
+    bedugul: [
+      { name: "Ulun Danu Beratan Temple", desc: "The iconic floating temple on Lake Beratan.", query: "Ulun+Danu+Beratan+Temple" },
+      { name: "Bali Botanic Garden", desc: "Indonesia's largest botanical garden.", query: "Bali+Botanic+Garden+Bedugul" },
+      { name: "Handara Gate", desc: "A popular, scenic traditional Hindu gate.", query: "Handara+Gate+Bali" },
+      { name: "Jatiluwih Rice Terraces", desc: "A UNESCO World Heritage site featuring vast rice paddies.", query: "Jatiluwih+Rice+Terraces" }
+    ]
+  };
+
+  const places = popularPlaces[locationSlug.toLowerCase().replace(/-/g, ' ')] || [];
+  
   // Find tours matching this location
   const locationTours = allListings.filter(t => t.location?.toLowerCase().includes(displayLocation.toLowerCase()) || t.title?.toLowerCase().includes(displayLocation.toLowerCase()));
   
@@ -86,6 +127,36 @@ export default function DestinationClient({ locationSlug, allListings }) {
                 </p>
               </div>
             </section>
+
+            {/* Top Places Section */}
+            {places.length > 0 && (
+              <section className="pt-8 border-t border-gray-200">
+                <h2 className="text-[32px] md:text-[40px] text-gray-900 mb-6 leading-tight" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>
+                  Places to Visit in {displayLocation}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {places.map((place, index) => (
+                    <a 
+                      key={index}
+                      href={`https://www.google.com/maps/search/?api=1&query=${place.query}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col gap-1"
+                    >
+                      <h4 className="text-[16px] font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                        {place.name}
+                      </h4>
+                      <p className="text-[13px] text-gray-500 leading-relaxed">
+                        {place.desc}
+                      </p>
+                      <span className="text-[12px] font-bold text-blue-600 mt-2 flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
+                        View on Maps <ArrowLeft size={12} className="rotate-135 transform scale-x-[-1] ml-1" />
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* Tours Section */}
             <section id="tours" className="pt-8 border-t border-gray-200">
