@@ -893,7 +893,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               return (
               <div 
                 key={camp.id} 
-                className={`relative w-full shrink-0 snap-center aspect-[4/3] md:aspect-[16/9] rounded-[32px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
+                className={`relative w-full shrink-0 snap-center aspect-[4/5] sm:aspect-[5/6] md:aspect-[16/9] rounded-[32px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
                 onClick={(e) => {
                   if (camp.isExternalCampaign && camp.externalUrl) {
                     if (e.target.closest('a') || e.target.closest('button')) return;
@@ -1470,9 +1470,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 </p>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {Array.from(new Set(allListings.map(t => t.location?.split(',')[0].trim()).filter(Boolean)))
-                  .filter(loc => loc.toLowerCase() !== 'bali' && loc.toLowerCase() !== 'indonesia')
-                  .slice(0, 4)
+                {Array.from(new Set([...["Ubud", "Uluwatu", "Nusa Penida", "Kintamani", "Karangasem", "Bedugul"], ...allListings.map(t => t.location?.split(',')[0].trim()).filter(Boolean)]))
+                  .filter(loc => loc.toLowerCase() !== 'bali' && loc.toLowerCase() !== 'indonesia' && loc.toLowerCase() !== 'seminyak' && loc.toLowerCase() !== 'canggu')
+                  .slice(0, 8)
                   .map((loc) => {
                   const toursInLoc = allListings.filter(t => t.location?.toLowerCase().includes(loc.toLowerCase()));
                   const matchingTour = toursInLoc[0];
@@ -1502,46 +1502,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                     </Link>
                   )
                 })}
-              </div>
-              
-              <div className="mt-10 bg-white border border-gray-100 shadow-sm rounded-3xl p-6 md:p-8">
-                <h3 className="text-[18px] md:text-[20px] font-black text-primary mb-6">Trending Geolocation Keywords & Recommended Tours</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {Array.from(new Set(allListings.map(t => t.location?.split(',')[0].trim()).filter(Boolean)))
-                    .filter(loc => loc.toLowerCase() !== 'bali' && loc.toLowerCase() !== 'indonesia')
-                    .slice(0, 4)
-                    .map(loc => {
-                      const locationTours = allListings.filter(t => t.location?.toLowerCase().includes(loc.toLowerCase())).slice(0, 5);
-                      return (
-                        <div key={loc} className="flex flex-col gap-3">
-                          <Link href={`/destinations/${generateSlug(loc)}`} className="text-[15px] font-bold text-primary hover:text-black hover:underline underline-offset-2 transition-colors">
-                            Things to do in {loc}
-                          </Link>
-                          <div className="flex flex-col gap-2">
-                            {locationTours.map(tour => (
-                              <Link 
-                                key={tour.id} 
-                                href={`/tours/${generateSlug(tour.title)}`} 
-                                className="text-[13px] text-gray-500 hover:text-black font-medium leading-snug line-clamp-2 transition-colors"
-                              >
-                                {tour.title}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      );
-                  })}
-                </div>
-                {recommendedPlaces.length > 0 && (
-                  <div className="mt-8 pt-6 border-t border-gray-100 flex flex-wrap gap-4">
-                    <span className="text-[13px] font-bold text-primary">Travel Guides:</span>
-                    {recommendedPlaces.map(b => (
-                      <Link key={b.id} href={`/blog/${b.slug}`} className="text-[13px] text-gray-500 hover:text-black font-medium transition-colors">
-                        {b.title}
-                      </Link>
-                    ))}
-                  </div>
-                )}
               </div>
             </section>
 
