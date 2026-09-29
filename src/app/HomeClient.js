@@ -1457,6 +1457,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
         {/* Popular Trips */}
             <motion.section 
+              id="popular-tours"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -1493,7 +1494,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5 }}
-              id="categories-section" 
+              id="categories" 
               ref={categoriesRef} 
               className="px-6 mb-8 mt-2"
             >
@@ -1576,6 +1577,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
             {/* SEO & Location Keywords Section */}
             <motion.section 
+              id="destinations"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -1626,6 +1628,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
             {/* Why Choose Us Section */}
             <motion.section 
+              id="why-us"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -1712,7 +1715,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </motion.section>
 
             {/* Footer Section */}
-            <footer className="bg-gray-50 pt-16 pb-32 px-6 border-t border-gray-200 mt-10">
+            <footer className="bg-gray-50 pt-16 pb-[110px] md:pb-16 px-6 border-t border-gray-200 mt-10">
               <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-16">
                   
@@ -1720,7 +1723,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="lg:w-1/3">
                     <Link href="/" className="inline-block mb-4">
                       <h2 className="text-[26px] font-black text-[#1c1c1c] tracking-tight flex items-center gap-2">
-                        <Sparkles size={24} className="text-black" />
+                        <Image src="/favicon.ico" alt="Balance Island" width={24} height={24} className="rounded-md object-contain shadow-sm" />
                         Balance Island
                       </h2>
                     </Link>

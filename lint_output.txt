@@ -1,0 +1,127 @@
+
+> bali-tour-company@0.1.0 lint
+> eslint
+
+(node:1991) ESLintIgnoreWarning: The ".eslintignore" file is no longer supported. Switch to using the "ignores" property in "eslint.config.js": https://eslint.org/docs/latest/use/configure/migration-guide#ignoring-files
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/HomeClient.js
+   108:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  106 |   useEffect(() => {
+  107 |     if (trip?.id) {
+> 108 |       setIsSaved(isTripSaved(trip.id));
+      |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  109 |     }
+  110 |     const handleUpdate = (e) => {
+  111 |       if (trip?.id && e.detail?.id === trip.id) {                  react-hooks/set-state-in-effect
+   112:9   warning  Unused eslint-disable directive (no problems were reported)
+   301:9   warning  The 'allListings' logical expression could make the dependencies of useEffect Hook (at line 445) change on every render. To fix this, wrap the initialization of 'allListings' in its own useMemo() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  react-hooks/exhaustive-deps
+   302:9   warning  The 'recommendedPlaces' logical expression could make the dependencies of useEffect Hook (at line 445) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'recommendedPlaces' in its own useMemo() Hook                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/exhaustive-deps
+   322:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  320 |   useEffect(() => {
+  321 |     if (!isPlaying) {
+> 322 |       setShowHeroLabel(true);
+      |       ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  323 |       return;
+  324 |     }
+  325 |                                                                                          react-hooks/set-state-in-effect
+   450:7   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  448 |   useEffect(() => {
+  449 |     if (isDesktop) {
+> 450 |       setShowVideo(true);
+      |       ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  451 |     } else {
+  452 |       const timer = setTimeout(() => setShowVideo(true), 2500);
+  453 |       return () => clearTimeout(timer);  react-hooks/set-state-in-effect
+  1063:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+  1078:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+  1093:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+  1108:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/admin/customers/page.js
+  26:7  warning  Unused eslint-disable directive (no problems were reported)
+  31:6  warning  React Hook useEffect has a missing dependency: 'initialCustomers'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/admin/layout.js
+  291:18  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/admin/listings/page.js
+  495:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  585:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/admin/page.js
+  850:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  877:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/admin/partners/page.js
+  31:7  warning  Unused eslint-disable directive (no problems were reported)
+  36:6  warning  React Hook useEffect has a missing dependency: 'initialPartners'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/admin/places/page.js
+   25:6   warning  React Hook useEffect has a missing dependency: 'formData.content'. Either include it or remove the dependency array                                                                                                                                                                      react-hooks/exhaustive-deps
+  287:22  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  343:30  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  358:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  358:33  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/bookings/page.js
+  176:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/profile/page.js
+  43:13  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/profile/personal-info/page.js
+  124:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/app/tours/[slug]/TourDetailClient.js
+   29:9   warning  The 'tourData' object makes the dependencies of useMemo Hook (at line 75) change on every render. To fix this, wrap the initialization of 'tourData' in its own useMemo() Hook                                                                                                           react-hooks/exhaustive-deps
+  689:36  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/admin/CampaignSettingsModal.js
+  185:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  249:23  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  336:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/admin/EditCompanyModal.js
+  121:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/admin/EditListingModal.js
+  1206:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  1239:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/booking/WeeklyCalendar.js
+  31:6  warning  React Hook useEffect has missing dependencies: 'onChange' and 'value'. Either include them or remove the dependency array. If 'onChange' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/campaign/CampaignServiceShowcase.js
+  129:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/listing/WishlistCard.js
+  43:7  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/putuedosantika/BALI TOUR COMPANY/src/components/map/MapComponent.js
+  433:17  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+✖ 39 problems (3 errors, 36 warnings)
+  0 errors and 3 warnings potentially fixable with the `--fix` option.
+
