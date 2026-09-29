@@ -1030,7 +1030,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="absolute inset-x-0 bottom-0 z-10 p-5 flex flex-col justify-end pointer-events-none">
                     <div className="mb-4">
                       {titleText && (
-                        <h3 className="text-[40px] sm:text-[46px] font-sans font-black tracking-tighter text-white leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] max-w-[85%]">
+                        <h3 className="text-[40px] sm:text-[46px] uppercase text-white leading-none drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] max-w-[85%]" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>
                           {titleText}
                         </h3>
                       )}
@@ -1273,8 +1273,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="absolute bottom-[18%] xl:bottom-[20%] left-[6%] xl:left-[8%] z-20 pointer-events-none w-[85%] md:max-w-[65%] lg:max-w-[50%] flex flex-col gap-4">
                     {camp.title ? (
                       <h1 
-                        className="text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] font-sans font-black tracking-tighter text-white leading-[1.1] drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] uppercase"
-                        style={{ textWrap: 'balance' }}
+                        className="text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] text-white leading-[1.1] drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] uppercase"
+                        style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)", textWrap: 'balance' }}
                       >
                         {camp.title}
                       </h1>
