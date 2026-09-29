@@ -1505,8 +1505,58 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </section>
 
+            {/* Why Choose Us Section */}
+            <section className="px-6 mb-16 max-w-7xl mx-auto">
+              <div className="bg-white rounded-3xl p-8 md:p-12 border border-gray-100 shadow-sm flex flex-col lg:flex-row gap-12 items-center">
+                <div className="lg:w-1/3 text-center lg:text-left">
+                  <h2 className="text-[28px] md:text-[36px] font-black text-primary leading-tight mb-4">Why Choose Balance Island?</h2>
+                  <p className="text-gray-500 text-[15px] leading-relaxed">
+                    We make exploring Bali completely effortless. Enjoy peace of mind with curated top-rated experiences, secure bookings, and transparent pricing.
+                  </p>
+                </div>
+                <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+                  <div className="flex gap-4 items-start">
+                    <div className="w-12 h-12 shrink-0 rounded-full bg-green-50 flex items-center justify-center text-green-600">
+                      <ShieldCheck size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">Secure & Trusted</h4>
+                      <p className="text-[13px] text-gray-500 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-12 h-12 shrink-0 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                      <Star size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">Curated Experiences</h4>
+                      <p className="text-[13px] text-gray-500 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-12 h-12 shrink-0 rounded-full bg-orange-50 flex items-center justify-center text-orange-600">
+                      <MapPin size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">Local Expertise</h4>
+                      <p className="text-[13px] text-gray-500 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4 items-start">
+                    <div className="w-12 h-12 shrink-0 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+                      <Clock size={24} />
+                    </div>
+                    <div>
+                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">24/7 Support</h4>
+                      <p className="text-[13px] text-gray-500 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {/* Footer */}
-            <footer className="w-full bg-white border-t border-gray-100 py-12 px-6 mt-12 text-center pb-32">
+            <footer className="w-full bg-white border-t border-gray-100 py-12 px-6 text-center pb-32">
               <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-4">
                 <div className="text-[12px] font-bold tracking-widest text-gray-400 uppercase">
                   A brand of PT BALANCE ISLAND INDONESIA
