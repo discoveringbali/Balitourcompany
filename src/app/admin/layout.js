@@ -301,7 +301,7 @@ export default function AdminLayout({ children }) {
                     <ol className="text-sm font-bold text-gray-600 space-y-1.5 ml-2 border-l-2 border-[#eaeaea] pl-3">
                       <li>1. Open this page in Safari</li>
                       <li>2. Tap the Share icon <span className="inline-block bg-gray-100 px-1 rounded text-xs leading-none py-0.5">↗</span> at the bottom</li>
-                      <li>3. Scroll down and tap <span className="text-[#1c1c1c]">"Add to Home Screen"</span></li>
+                      <li>3. Scroll down and tap <span className="text-[#1c1c1c]">&quot;Add to Home Screen&quot;</span></li>
                     </ol>
                   </div>
                   <div>
@@ -309,7 +309,7 @@ export default function AdminLayout({ children }) {
                     <ol className="text-sm font-bold text-gray-600 space-y-1.5 ml-2 border-l-2 border-[#eaeaea] pl-3">
                       <li>1. Open this page in Chrome</li>
                       <li>2. Tap the 3-dot menu <span className="inline-block bg-gray-100 px-1 rounded text-xs leading-none py-0.5">⋮</span> at the top</li>
-                      <li>3. Tap <span className="text-[#1c1c1c]">"Install app"</span> or <span className="text-[#1c1c1c]">"Add to Home Screen"</span></li>
+                      <li>3. Tap <span className="text-[#1c1c1c]">&quot;Install app&quot;</span> or <span className="text-[#1c1c1c]">&quot;Add to Home Screen&quot;</span></li>
                     </ol>
                   </div>
                </div>

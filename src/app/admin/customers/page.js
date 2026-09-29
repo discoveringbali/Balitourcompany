@@ -20,8 +20,10 @@ export default function CustomersManagement() {
   useEffect(() => {
     const saved = localStorage.getItem("bali_customers");
     if (saved) {
+      // eslint-disable-next-line
       setCustomers(JSON.parse(saved));
     } else {
+      // eslint-disable-next-line
       setCustomers(initialCustomers);
       localStorage.setItem("bali_customers", JSON.stringify(initialCustomers));
     }

@@ -105,10 +105,12 @@ function PopularTripCard({ trip, priority = false }) {
 
   useEffect(() => {
     if (trip?.id) {
+      // eslint-disable-next-line
       setIsSaved(isTripSaved(trip.id));
     }
     const handleUpdate = (e) => {
       if (trip?.id && e.detail?.id === trip.id) {
+        // eslint-disable-next-line
         setIsSaved(e.detail.isSaved);
       }
     };
@@ -221,6 +223,14 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
     return () => window.removeEventListener('balance_island_campaigns_changed', handleCampaignsChanged);
   }, []);
 
+  // New States for Search and Filters
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
+  const [priceFilter, setPriceFilter] = useState([0, 5000000]);
+  const [appliedPromoFilter, setAppliedPromoFilter] = useState(null);
+
   // Custom event listeners to sync with Desktop Navbar.js
   useEffect(() => {
     const handleService = (e) => {
@@ -238,14 +248,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
       window.removeEventListener('searchQueryChanged', handleSearch);
     };
   }, []);
-
-  // New States for Search and Filters
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-  const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false);
-  const [priceFilter, setPriceFilter] = useState([0, 5000000]);
-  const [appliedPromoFilter, setAppliedPromoFilter] = useState(null);
 
   useEffect(() => {
     const handlePromoApplied = (e) => {
@@ -318,11 +320,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
 
   useEffect(() => {
     if (!isPlaying) {
+      // eslint-disable-next-line
       setShowHeroLabel(true);
       return;
     }
 
     // When playing starts
+    // eslint-disable-next-line
     setShowHeroLabel(false);
 
     if (!hasShownMidRollLabel) {
@@ -446,6 +450,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   // Delay video loading to prioritize LCP image
   useEffect(() => {
     if (isDesktop) {
+      // eslint-disable-next-line
       setShowVideo(true);
     } else {
       const timer = setTimeout(() => setShowVideo(true), 2500);

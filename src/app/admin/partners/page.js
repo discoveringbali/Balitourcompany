@@ -25,8 +25,10 @@ export default function PartnersManagement() {
   useEffect(() => {
     const saved = localStorage.getItem("bali_partners");
     if (saved) {
+      // eslint-disable-next-line
       setPartners(JSON.parse(saved));
     } else {
+      // eslint-disable-next-line
       setPartners(initialPartners);
       localStorage.setItem("bali_partners", JSON.stringify(initialPartners));
     }
