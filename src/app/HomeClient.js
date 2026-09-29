@@ -683,7 +683,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   };
 
   return (
-    <div className="w-full bg-white min-h-[100dvh] font-sans pb-32 relative -mt-20 md:-mt-24">
+    <div className="w-full bg-white min-h-[100dvh] font-sans pb-0 relative -mt-20 md:-mt-24">
       
       <div className="relative z-10 w-full md:pt-[100px] pb-4">
         {/* Mobile Top Section */}
@@ -1583,17 +1583,51 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </motion.section>
 
-            {/* Footer */}
-            <footer className="w-full bg-transparent border-t border-white/10 py-12 px-6 text-center pb-32">
-              <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-4">
-                <div className="text-[12px] font-bold tracking-widest text-gray-400 uppercase">
-                  A brand of PT BALANCE ISLAND INDONESIA
-                </div>
-                <p className="text-[13px] text-gray-500 font-medium">
-                  © {new Date().getFullYear()} Balance Island. All rights reserved.
+            {/* SEO FAQ Section */}
+            <motion.section 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="px-6 pb-32 max-w-4xl mx-auto pt-16 border-t border-white/10"
+            >
+              <div className="text-center mb-12">
+                <h2 className="text-[28px] md:text-[36px] font-black text-white leading-tight mb-4">Bali Travel FAQ & Guide</h2>
+                <p className="text-gray-400 text-[14px] md:text-[15px] leading-relaxed">
+                  Everything you need to know about booking the best tours, private drivers, and curated travel experiences in Bali, Indonesia.
                 </p>
               </div>
-            </footer>
+
+              <div className="flex flex-col gap-6">
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <h3 className="text-[17px] font-bold text-white mb-3">What are the top things to do in Bali?</h3>
+                  <p className="text-[14px] text-gray-400 leading-relaxed">
+                    The top things to do in Bali include visiting the Sacred Monkey Forest in Ubud, watching the sunset at Uluwatu Temple, swimming with Manta Rays in Nusa Penida, climbing Mount Batur in Kintamani for sunrise, and exploring the Tegalalang Rice Terraces. Balance Island provides private tours and experienced local drivers for all these top-rated Bali attractions.
+                  </p>
+                </div>
+                
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <h3 className="text-[17px] font-bold text-white mb-3">How do I hire a private driver in Bali?</h3>
+                  <p className="text-[14px] text-gray-400 leading-relaxed">
+                    Hiring a private driver in Bali is the best way to explore the island safely and comfortably. With Balance Island, you can easily book a verified, English-speaking local driver for half-day or full-day trips. Our drivers know the best hidden gems in Ubud, Canggu, Seminyak, and Uluwatu, ensuring you have a seamless custom itinerary.
+                  </p>
+                </div>
+
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <h3 className="text-[17px] font-bold text-white mb-3">Is Nusa Penida worth visiting?</h3>
+                  <p className="text-[14px] text-gray-400 leading-relaxed">
+                    Absolutely! Nusa Penida is famous for Kelingking Beach (the T-Rex cliff), Broken Beach, and Angel's Billabong. We highly recommend booking a guided Nusa Penida Island Hopper tour with us, as the roads can be challenging. Our all-inclusive packages include fast boat tickets, a private car, and snorkeling.
+                  </p>
+                </div>
+                
+                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
+                  <h3 className="text-[17px] font-bold text-white mb-3">Are the tour bookings secure?</h3>
+                  <p className="text-[14px] text-gray-400 leading-relaxed">
+                    Yes. Balance Island is an official brand of PT BALANCE ISLAND INDONESIA. We partner only with 5-star rated, verified local operators. All bookings are secure, and we offer 24/7 customer support via WhatsApp to assist with your Bali travel plans.
+                  </p>
+                </div>
+              </div>
+            </motion.section>
             </div>
       </div>
     </div>
