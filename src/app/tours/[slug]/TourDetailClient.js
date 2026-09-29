@@ -12,7 +12,6 @@ import { supabase } from "@/lib/supabase";
 import { generateSlug } from "@/lib/utils";
 import { isTripSaved, toggleSaveTrip } from "@/lib/favorites";
 import { useCurrency } from "@/lib/currency";
-import BokunButton from "@/components/BokunButton";
 
 const BookingModal = dynamic(() => import("@/components/booking/BookingModal"), { ssr: false });
 
@@ -850,21 +849,15 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
                  <span className="font-extrabold text-primary text-[24px]">{formatPrice(getTotalPrice())}</span>
                </div>
 
-               {tourData?.title?.toLowerCase().includes('vw tour') ? (
-                 <div className="w-full flex justify-center mb-6">
-                   <BokunButton />
-                 </div>
-               ) : (
-                 <button 
-                   onClick={() => {
-                     setModalStartStep(2);
-                     setIsBookingModalOpen(true);
-                   }} 
-                   className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-[#d2ff00] hover:bg-[#c4ed00] text-[#1c1c1c]'}`}
-                 >
-                   Check availability
-                 </button>
-               )}
+               <button 
+                 onClick={() => {
+                   setModalStartStep(2);
+                   setIsBookingModalOpen(true);
+                 }} 
+                 className={`w-full py-4 rounded-[20px] flex items-center justify-center gap-2 font-bold transition-all active:-translate-y-1 text-[17px] mb-6 shadow-sm ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-[#d2ff00] hover:bg-[#c4ed00] text-[#1c1c1c]'}`}
+               >
+                 Check availability
+               </button>
 
                <div className="flex flex-col gap-4 border-t border-border pt-6">
                  <div className="flex gap-3 text-[15px] text-text-secondary font-medium">
@@ -960,19 +953,15 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
                </span>
             </div>
           </div>
-          {tourData?.title?.toLowerCase().includes('vw tour') ? (
-            <BokunButton />
-          ) : (
-            <button 
-              onClick={() => {
-                setModalStartStep(1);
-                setIsBookingModalOpen(true);
-              }} 
-              className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-[#d2ff00] hover:bg-[#c4ed00] text-[#1c1c1c]'}`}
-            >
-              {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
-            </button>
-          )}
+          <button 
+            onClick={() => {
+              setModalStartStep(1);
+              setIsBookingModalOpen(true);
+            }} 
+            className={`px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-bold transition-transform active:scale-95 shrink-0 whitespace-nowrap ${tourData.service === "Spa" ? 'bg-[#939393] hover:bg-[#7e7e7e] text-white' : 'bg-[#d2ff00] hover:bg-[#c4ed00] text-[#1c1c1c]'}`}
+          >
+            {(tourData.hasAllInclusive || tourData.allInclusiveSurcharge) ? 'Select Options' : 'Book Now'} <ArrowRight size={16} strokeWidth={3} className="-mr-1" />
+          </button>
         </div>
       </div>
       </div>
