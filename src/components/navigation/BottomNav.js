@@ -21,15 +21,13 @@ export default function BottomNav() {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
-          // Check if at the very bottom (seeing footer)
-          const isAtBottom = (window.innerHeight + currentScrollY) >= document.body.offsetHeight - 50;
+          // Check if at the bottom (seeing footer). Trigger a bit early (e.g. 150px)
+          const isAtBottom = (window.innerHeight + currentScrollY) >= document.body.offsetHeight - 150;
 
           if (isAtBottom) {
-            setIsVisible(false);
-          } else if (currentScrollY < lastScrollY) {
-            setIsVisible(true); // scrolling up
-          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-            setIsVisible(false); // scrolling down
+            setIsVisible(false); // Hide ONLY when at the footer
+          } else {
+            setIsVisible(true); // Always show otherwise
           }
 
           lastScrollY = currentScrollY;
