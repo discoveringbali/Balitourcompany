@@ -4,13 +4,44 @@ import React, { useState } from "react";
 import { Home, Search, Heart, Map } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
 
   const [activeTab, setActiveTab] = useState("home");
+  const [isVisible, setIsVisible] = useState(true);
+
+  React.useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          // Check if at the very bottom (seeing footer)
+          const isAtBottom = (window.innerHeight + currentScrollY) >= document.body.offsetHeight - 50;
+
+          if (isAtBottom) {
+            setIsVisible(false);
+          } else if (currentScrollY < lastScrollY) {
+            setIsVisible(true); // scrolling up
+          } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            setIsVisible(false); // scrolling down
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navItems = [
     { id: "home", icon: Home, path: "/" },
@@ -36,11 +67,17 @@ export default function BottomNav() {
   const mapItem = navItems.find(item => item.id === "map");
 
   return (
-    <div 
-      className="md:hidden fixed left-0 right-0 z-50 flex justify-center px-4"
-      style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
-    >
-      <div className="flex justify-between items-center w-full max-w-[350px] gap-3 sm:gap-5">
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div 
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="md:hidden fixed left-0 right-0 z-50 flex justify-center px-4"
+          style={{ bottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="flex justify-between items-center w-full max-w-[350px] gap-3 sm:gap-5">
         
         {/* Main Pill */}
         <div className="bg-white rounded-[32px] shadow-[0_8px_32px_rgba(0,0,0,0.1)] p-2 flex items-center justify-between flex-1 border border-gray-100 relative">
@@ -94,6 +131,9 @@ export default function BottomNav() {
           <mapItem.icon size={24} strokeWidth={activeTab === "map" ? 2.5 : 2} className={activeTab === "map" ? "text-white" : "text-black"} />
         </Link>
       </div>
-    </div>
+      </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

@@ -1723,7 +1723,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   <div className="lg:w-1/3">
                     <Link href="/" className="inline-block mb-4">
                       <h2 className="text-[26px] font-black text-[#1c1c1c] tracking-tight flex items-center gap-2">
-                        <Image src="/favicon.PNG" alt="Balance Island" width={24} height={24} className="rounded-md object-contain shadow-sm" />
+                        <Sparkles size={24} className="text-black" />
                         Balance Island
                       </h2>
                     </Link>
