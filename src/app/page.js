@@ -2,7 +2,7 @@ import HomeClient from './HomeClient';
 import { getHomepageListings, getPublishedBlogs, getHomepageSettings } from '@/lib/cache';
 
 // Cache this page for 1 hour (3600 seconds) on the CDN
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function Page() {
 
