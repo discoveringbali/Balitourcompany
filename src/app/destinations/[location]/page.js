@@ -6,7 +6,8 @@ export const revalidate = 3600;
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }) {
-  const loc = params.location;
+  const resolvedParams = await params;
+  const loc = resolvedParams.location || '';
   const capitalized = loc.charAt(0).toUpperCase() + loc.slice(1).replace(/-/g, ' ');
   return {
     title: `Things to do in ${capitalized} | Best Tours & Travel Guide`,
@@ -15,7 +16,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function DestinationPage({ params }) {
-  const loc = params.location.replace(/-/g, ' ');
+  const resolvedParams = await params;
+  const loc = (resolvedParams.location || '').replace(/-/g, ' ');
   
   // Fetch listings to get tours matching this location
   const listingsData = await getHomepageListings();
