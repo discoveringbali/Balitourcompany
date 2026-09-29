@@ -893,7 +893,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               return (
               <div 
                 key={camp.id} 
-                className={`relative w-full shrink-0 snap-center aspect-[4/5] sm:aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
+                className={`relative w-full shrink-0 snap-center aspect-[4/3] md:aspect-[16/9] rounded-[32px] overflow-hidden shadow-sm bg-black select-none ${camp.isExternalCampaign && camp.externalUrl ? 'cursor-pointer' : ''}`}
                 onClick={(e) => {
                   if (camp.isExternalCampaign && camp.externalUrl) {
                     if (e.target.closest('a') || e.target.closest('button')) return;
