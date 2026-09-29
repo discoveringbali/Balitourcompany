@@ -128,6 +128,56 @@ const Thumbnails = ({ images, fallbackImage }) => {
   );
 };
 
+const FAQItem = ({ question, answer, isOpen, onClick }) => {
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300">
+      <button 
+        onClick={onClick}
+        className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+      >
+        <h3 className="text-[17px] font-bold text-gray-900 pr-4">{question}</h3>
+        <div className={`shrink-0 w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+          <ChevronDown size={20} className="text-gray-600" />
+        </div>
+      </button>
+      <div 
+        className={`transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}
+      >
+        <p className="px-6 pb-6 text-[14px] text-gray-500 leading-relaxed">
+          {answer}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const SEO_FAQS = [
+  {
+    question: "What are the top things to do in Bali?",
+    answer: "The top things to do in Bali include visiting the Sacred Monkey Forest in Ubud, watching the sunset at Uluwatu Temple, swimming with Manta Rays in Nusa Penida, climbing Mount Batur in Kintamani for sunrise, and exploring the Tegalalang Rice Terraces. Balance Island provides private tours and experienced local drivers for all these top-rated Bali attractions."
+  },
+  {
+    question: "How do I hire a private driver in Bali?",
+    answer: "Hiring a private driver in Bali is the best way to explore the island safely and comfortably. With Balance Island, you can easily book a verified, English-speaking local driver for half-day or full-day trips. Our drivers know the best hidden gems in Ubud, Canggu, Seminyak, and Uluwatu, ensuring you have a seamless custom itinerary."
+  },
+  {
+    question: "Is Nusa Penida worth visiting?",
+    answer: "Absolutely! Nusa Penida is famous for Kelingking Beach (the T-Rex cliff), Broken Beach, and Angel's Billabong. We highly recommend booking a guided Nusa Penida Island Hopper tour with us, as the roads can be challenging. Our all-inclusive packages include fast boat tickets, a private car, and snorkeling."
+  },
+  {
+    question: "Are the tour bookings secure?",
+    answer: "Yes. Balance Island is an official brand of PT BALANCE ISLAND INDONESIA. We partner only with 5-star rated, verified local operators. All bookings are secure, and we offer 24/7 customer support via WhatsApp to assist with your Bali travel plans."
+  },
+  {
+    question: "What is the best time to visit Bali?",
+    answer: "The best time to visit Bali is during the dry season, from April to October. This period offers sunny days and lower humidity, perfect for beach hopping in Uluwatu, hiking Mount Batur, or exploring the cultural hub of Ubud. However, Bali is a great year-round destination."
+  },
+  {
+    question: "Do you offer airport transfers in Bali?",
+    answer: "Yes! Balance Island offers reliable and hassle-free airport transfers from Ngurah Rai International Airport (DPS) to any destination in Bali, including Seminyak, Canggu, Ubud, and Uluwatu. Our professional drivers will track your flight and wait for you at arrivals."
+  }
+];
+
 function PopularTripCard({ trip, priority = false }) {
   const [isSaved, setIsSaved] = useState(false);
 
@@ -232,6 +282,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   const [activeCat, setActiveCat] = useState("All");
   const [activeService, setActiveService] = useState("Tour");
   const [currentCampIdx, setCurrentCampIdx] = useState(0);
+  const [openFaq, setOpenFaq] = useState(null);
+  const [showAllFaqs, setShowAllFaqs] = useState(false);
 
   // Use initialCampaigns from server or fallback to DEFAULT_CAMPAIGNS
   const [campaigns, setCampaigns] = useState(initialCampaigns || DEFAULT_CAMPAIGNS);
@@ -1482,9 +1534,6 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </motion.section>
 
-            {/* Bottom Dark Section */}
-            <div className="bg-black rounded-t-[40px] md:rounded-t-[60px] pt-12 md:pt-16 mt-8 w-full">
-            
             {/* SEO & Location Keywords Section */}
             <motion.section 
               initial={{ opacity: 0, y: 20 }}
@@ -1494,8 +1543,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               className="px-6 mb-12 mt-12 max-w-7xl mx-auto"
             >
               <div className="mb-6">
-                <h2 className="text-[24px] md:text-[28px] font-black text-white leading-tight">Top Destinations in Bali</h2>
-                <p className="text-gray-300 font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
+                <h2 className="text-[24px] md:text-[28px] font-black text-primary leading-tight">Top Destinations in Bali</h2>
+                <p className="text-text-secondary font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
                   Discover the beauty of Bali with our curated experiences in the most sought-after locations. From the cultural heart of Ubud to the stunning cliffs of Uluwatu. Dive into deep insights, local guides, and exclusive tours tailored just for you.
                 </p>
               </div>
@@ -1516,7 +1565,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   const ctaText = `Read Local Guide`;
 
                   return (
-                    <Link href={linkHref} key={loc} className="group block relative w-full aspect-[4/5] sm:aspect-square rounded-[24px] overflow-hidden shadow-sm border border-white/10">
+                    <Link href={linkHref} key={loc} className="group block relative w-full aspect-[4/5] sm:aspect-square rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
                       <Image 
                         src={imageUrl} 
                         alt={`Tourism in ${loc}, Bali`}
@@ -1541,42 +1590,42 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="px-6 mb-20 max-w-7xl mx-auto py-12 border-t border-white/10 mt-10"
+              className="px-6 mb-20 max-w-7xl mx-auto py-12 border-t border-gray-100 mt-10"
             >
               <div className="flex flex-col lg:flex-row gap-12 items-start">
                 <div className="lg:w-1/3 text-left">
-                  <h2 className="text-[32px] md:text-[40px] text-white leading-tight mb-4" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Balance Island?</h2>
-                  <p className="text-gray-300 text-[15px] leading-relaxed max-w-md">
+                  <h2 className="text-[32px] md:text-[40px] text-gray-900 leading-tight mb-4" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Balance Island?</h2>
+                  <p className="text-gray-500 text-[15px] leading-relaxed max-w-md">
                     We make exploring Bali completely effortless. Enjoy peace of mind with curated top-rated experiences, secure bookings, and transparent pricing.
                   </p>
                 </div>
                 <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 w-full pt-2">
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">01</div>
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">01</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-white mb-2">Secure & Trusted</h4>
-                      <p className="text-[14px] text-gray-300 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Secure & Trusted</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
                     </div>
                   </div>
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">02</div>
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">02</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-white mb-2">Curated Experiences</h4>
-                      <p className="text-[14px] text-gray-300 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Curated Experiences</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
                     </div>
                   </div>
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">03</div>
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">03</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-white mb-2">Local Expertise</h4>
-                      <p className="text-[14px] text-gray-300 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Local Expertise</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
                     </div>
                   </div>
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">04</div>
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">04</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-white mb-2">24/7 Support</h4>
-                      <p className="text-[14px] text-gray-300 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">24/7 Support</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
                     </div>
                   </div>
                 </div>
@@ -1589,46 +1638,38 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="px-6 pb-32 max-w-4xl mx-auto pt-16 border-t border-white/10"
+              className="px-6 pb-32 max-w-4xl mx-auto pt-16 border-t border-gray-100"
             >
-              <div className="text-center mb-12">
-                <h2 className="text-[28px] md:text-[36px] font-black text-white leading-tight mb-4">Bali Travel FAQ & Guide</h2>
-                <p className="text-gray-400 text-[14px] md:text-[15px] leading-relaxed">
+              <div className="text-center mb-10">
+                <h2 className="text-[28px] md:text-[36px] font-black text-gray-900 leading-tight mb-4">Bali Travel FAQ & Guide</h2>
+                <p className="text-gray-500 text-[14px] md:text-[15px] leading-relaxed">
                   Everything you need to know about booking the best tours, private drivers, and curated travel experiences in Bali, Indonesia.
                 </p>
               </div>
 
-              <div className="flex flex-col gap-6">
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
-                  <h3 className="text-[17px] font-bold text-white mb-3">What are the top things to do in Bali?</h3>
-                  <p className="text-[14px] text-gray-400 leading-relaxed">
-                    The top things to do in Bali include visiting the Sacred Monkey Forest in Ubud, watching the sunset at Uluwatu Temple, swimming with Manta Rays in Nusa Penida, climbing Mount Batur in Kintamani for sunrise, and exploring the Tegalalang Rice Terraces. Balance Island provides private tours and experienced local drivers for all these top-rated Bali attractions.
-                  </p>
-                </div>
-                
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
-                  <h3 className="text-[17px] font-bold text-white mb-3">How do I hire a private driver in Bali?</h3>
-                  <p className="text-[14px] text-gray-400 leading-relaxed">
-                    Hiring a private driver in Bali is the best way to explore the island safely and comfortably. With Balance Island, you can easily book a verified, English-speaking local driver for half-day or full-day trips. Our drivers know the best hidden gems in Ubud, Canggu, Seminyak, and Uluwatu, ensuring you have a seamless custom itinerary.
-                  </p>
-                </div>
-
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
-                  <h3 className="text-[17px] font-bold text-white mb-3">Is Nusa Penida worth visiting?</h3>
-                  <p className="text-[14px] text-gray-400 leading-relaxed">
-                    Absolutely! Nusa Penida is famous for Kelingking Beach (the T-Rex cliff), Broken Beach, and Angel's Billabong. We highly recommend booking a guided Nusa Penida Island Hopper tour with us, as the roads can be challenging. Our all-inclusive packages include fast boat tickets, a private car, and snorkeling.
-                  </p>
-                </div>
-                
-                <div className="bg-white/5 rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-colors">
-                  <h3 className="text-[17px] font-bold text-white mb-3">Are the tour bookings secure?</h3>
-                  <p className="text-[14px] text-gray-400 leading-relaxed">
-                    Yes. Balance Island is an official brand of PT BALANCE ISLAND INDONESIA. We partner only with 5-star rated, verified local operators. All bookings are secure, and we offer 24/7 customer support via WhatsApp to assist with your Bali travel plans.
-                  </p>
-                </div>
+              <div className="flex flex-col gap-4">
+                {SEO_FAQS.slice(0, showAllFaqs ? SEO_FAQS.length : 3).map((faq, idx) => (
+                  <FAQItem
+                    key={idx}
+                    question={faq.question}
+                    answer={faq.answer}
+                    isOpen={openFaq === idx}
+                    onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
+                  />
+                ))}
               </div>
+
+              {SEO_FAQS.length > 3 && (
+                <div className="mt-8 text-center">
+                  <button
+                    onClick={() => setShowAllFaqs(!showAllFaqs)}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-900 text-[14px] font-bold rounded-full hover:bg-gray-50 transition-colors shadow-sm"
+                  >
+                    {showAllFaqs ? "Show Less" : "Show More FAQs"}
+                  </button>
+                </div>
+              )}
             </motion.section>
-            </div>
       </div>
     </div>
   );
