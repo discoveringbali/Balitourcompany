@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -9,43 +9,58 @@ import ListingCard from "@/components/listing/ListingCard";
 
 export default function DestinationClient({ locationSlug, allListings }) {
   const displayLocation = locationSlug.charAt(0).toUpperCase() + locationSlug.slice(1).replace(/-/g, ' ');
+  const [showAllPlaces, setShowAllPlaces] = useState(false);
   
   const popularPlaces = {
     ubud: [
       { name: "Sacred Monkey Forest Sanctuary", desc: "A nature reserve and Hindu temple complex.", query: "Sacred+Monkey+Forest+Sanctuary+Ubud" },
       { name: "Tegalalang Rice Terrace", desc: "Stunning terraced rice paddies.", query: "Tegalalang+Rice+Terrace+Ubud" },
       { name: "Campuhan Ridge Walk", desc: "A scenic paved trekking path.", query: "Campuhan+Ridge+Walk+Ubud" },
-      { name: "Ubud Palace", desc: "Historical palace of the Ubud royal family.", query: "Ubud+Palace" }
+      { name: "Ubud Palace", desc: "Historical palace of the Ubud royal family.", query: "Ubud+Palace" },
+      { name: "Goa Gajah (Elephant Cave)", desc: "Ancient archaeological site.", query: "Goa+Gajah+Ubud" },
+      { name: "Ubud Art Market", desc: "Vibrant traditional market.", query: "Ubud+Art+Market" },
+      { name: "Saraswati Temple", desc: "Beautiful temple with a lotus pond.", query: "Saraswati+Temple+Ubud" }
     ],
     uluwatu: [
       { name: "Uluwatu Temple", desc: "A stunning sea temple on a cliff edge.", query: "Uluwatu+Temple" },
       { name: "Suluban Beach", desc: "A unique beach hidden within a cave.", query: "Suluban+Beach" },
       { name: "Padang Padang Beach", desc: "A famous surfing spot and beautiful cove.", query: "Padang+Padang+Beach" },
-      { name: "Garuda Wisnu Kencana (GWK)", desc: "A massive cultural park and monument.", query: "Garuda+Wisnu+Kencana+Cultural+Park" }
+      { name: "Garuda Wisnu Kencana (GWK)", desc: "A massive cultural park and monument.", query: "Garuda+Wisnu+Kencana+Cultural+Park" },
+      { name: "Savaya Bali", desc: "World-class luxury day club.", query: "Savaya+Bali" },
+      { name: "Nyang Nyang Beach", desc: "A pristine, secluded white sand beach.", query: "Nyang+Nyang+Beach" },
+      { name: "Bingin Beach", desc: "A bohemian surf beach.", query: "Bingin+Beach" }
     ],
     "nusa penida": [
       { name: "Kelingking Beach", desc: "The famous T-Rex shaped cliff and pristine beach.", query: "Kelingking+Beach+Nusa+Penida" },
       { name: "Broken Beach", desc: "A picturesque coastal formation with a natural bridge.", query: "Broken+Beach+Nusa+Penida" },
       { name: "Angel's Billabong", desc: "A stunning natural infinity pool.", query: "Angel's+Billabong+Nusa+Penida" },
-      { name: "Crystal Bay", desc: "A beautiful palm-fringed bay perfect for snorkeling.", query: "Crystal+Bay+Nusa+Penida" }
+      { name: "Crystal Bay", desc: "A beautiful palm-fringed bay perfect for snorkeling.", query: "Crystal+Bay+Nusa+Penida" },
+      { name: "Diamond Beach", desc: "Stunning beach with diamond-shaped rocks.", query: "Diamond+Beach+Nusa+Penida" },
+      { name: "Atuh Beach", desc: "A hidden cove with clear waters.", query: "Atuh+Beach+Nusa+Penida" }
     ],
     kintamani: [
       { name: "Mount Batur", desc: "An active volcano famous for sunrise treks.", query: "Mount+Batur+Kintamani" },
       { name: "Lake Batur", desc: "A beautiful crater lake at the foot of Mount Batur.", query: "Lake+Batur+Kintamani" },
       { name: "Pura Ulun Danu Batur", desc: "One of the most important water temples in Bali.", query: "Pura+Ulun+Danu+Batur" },
-      { name: "Kintamani Coffee Shops", desc: "Cafes offering spectacular volcano views.", query: "Kintamani+Coffee" }
+      { name: "Kintamani Coffee Shops", desc: "Cafes offering spectacular volcano views.", query: "Kintamani+Coffee" },
+      { name: "Toya Devasya Hot Springs", desc: "Relaxing natural hot springs.", query: "Toya+Devasya+Hot+Springs" },
+      { name: "Pinggan Village", desc: "Famous for its misty sunrise viewpoints.", query: "Pinggan+Village+Sunrise" }
     ],
     karangasem: [
       { name: "Lempuyang Temple", desc: "The iconic 'Gateway to Heaven' overlooking Mount Agung.", query: "Lempuyang+Temple+Karangasem" },
       { name: "Tirta Gangga", desc: "A beautiful former royal water palace.", query: "Tirta+Gangga+Karangasem" },
       { name: "Amed Beach", desc: "A tranquil coastal area famous for diving and snorkeling.", query: "Amed+Beach+Karangasem" },
-      { name: "Taman Ujung", desc: "A grand water palace built by the King of Karangasem.", query: "Taman+Ujung+Karangasem" }
+      { name: "Taman Ujung", desc: "A grand water palace built by the King of Karangasem.", query: "Taman+Ujung+Karangasem" },
+      { name: "Bias Tugel Beach", desc: "A beautiful hidden white sand beach.", query: "Bias+Tugel+Beach" },
+      { name: "Besakih Temple", desc: "The 'Mother Temple' of Bali.", query: "Besakih+Temple+Bali" }
     ],
     bedugul: [
       { name: "Ulun Danu Beratan Temple", desc: "The iconic floating temple on Lake Beratan.", query: "Ulun+Danu+Beratan+Temple" },
       { name: "Bali Botanic Garden", desc: "Indonesia's largest botanical garden.", query: "Bali+Botanic+Garden+Bedugul" },
       { name: "Handara Gate", desc: "A popular, scenic traditional Hindu gate.", query: "Handara+Gate+Bali" },
-      { name: "Jatiluwih Rice Terraces", desc: "A UNESCO World Heritage site featuring vast rice paddies.", query: "Jatiluwih+Rice+Terraces" }
+      { name: "Jatiluwih Rice Terraces", desc: "A UNESCO World Heritage site featuring vast rice paddies.", query: "Jatiluwih+Rice+Terraces" },
+      { name: "Buyan and Tamblingan Lakes", desc: "The serene twin lakes of Bedugul.", query: "Twin+Lakes+Bali" },
+      { name: "Nungnung Waterfall", desc: "A powerful and picturesque waterfall.", query: "Nungnung+Waterfall" }
     ]
   };
 
@@ -135,7 +150,7 @@ export default function DestinationClient({ locationSlug, allListings }) {
                   Places to Visit in {displayLocation}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {places.map((place, index) => (
+                  {(showAllPlaces ? places : places.slice(0, 4)).map((place, index) => (
                     <a 
                       key={index}
                       href={`https://www.google.com/maps/search/?api=1&query=${place.query}`}
@@ -155,6 +170,16 @@ export default function DestinationClient({ locationSlug, allListings }) {
                     </a>
                   ))}
                 </div>
+                {places.length > 4 && (
+                  <div className="mt-6 flex justify-center">
+                    <button 
+                      onClick={() => setShowAllPlaces(!showAllPlaces)}
+                      className="px-6 py-2 border-2 border-gray-900 text-gray-900 rounded-full font-bold hover:bg-gray-900 hover:text-white transition-colors"
+                    >
+                      {showAllPlaces ? "View Less" : "See More Places"}
+                    </button>
+                  </div>
+                )}
               </section>
             )}
 
