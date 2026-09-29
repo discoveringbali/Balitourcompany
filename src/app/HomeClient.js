@@ -884,9 +884,11 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             {displayCampaigns.map((camp, idx) => {
               const linkedTour = allListings.find(t => t.id === camp.targetId || t.title === (camp.originalTitle || camp.title));
               const campImages = linkedTour?.images?.length > 1 ? linkedTour.images : camp.images;
-              const rawTitle = camp.title || camp.originalTitle || linkedTour?.title || '';
-              const titleText = rawTitle.includes(',') ? rawTitle.split(',')[0] : rawTitle;
-              const subtitleText = camp.location || camp.subtitle || linkedTour?.location || (rawTitle.includes(',') ? rawTitle.split(',').slice(1).join(',').trim() : 'Bali, Indonesia');
+              let titleText = camp.title || (camp.location || linkedTour?.location || '').split(',')[0].trim();
+              let subtitleText = camp.isExternalCampaign ? (camp.subtitle || 'Bali, Indonesia') : 'Bali, Indonesia';
+              if (titleText.includes(',')) {
+                titleText = titleText.split(',')[0].trim();
+              }
 
               return (
               <div 
