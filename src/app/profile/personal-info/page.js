@@ -27,6 +27,7 @@ export default function PersonalInfoPage() {
     const savedData = localStorage.getItem("balance_island_profile");
     if (savedData) {
       try {
+        // eslint-disable-next-line
         setFormData(JSON.parse(savedData));
       } catch (e) {
         console.error("Failed to parse profile data");

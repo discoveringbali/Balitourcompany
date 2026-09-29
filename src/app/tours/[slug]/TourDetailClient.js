@@ -572,7 +572,7 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
                 <h3 className="font-bold text-[22px] md:text-[24px] text-primary mb-6">Important information</h3>
                 
                 <div className="mb-8">
-                   <h4 className="font-bold text-[16px] text-primary mb-3">What's Included</h4>
+                   <h4 className="font-bold text-[16px] text-primary mb-3">What&apos;s Included</h4>
                    <ul className="list-disc pl-5 text-sm text-text-secondary font-medium space-y-2">
                       {selectedPackage === "All Inclusive" && tourData.inclusiveIncluded 
                          ? tourData.inclusiveIncluded.split('\n').map((inc, i) => <li key={i}>{inc}</li>) 
@@ -582,14 +582,14 @@ export default function TourDetailClient({ tourData: rawTourData, slug, relatedT
 
                 {(selectedPackage === "All Inclusive" && tourData.inclusiveExcluded) ? (
                   <div className="mb-8">
-                     <h4 className="font-bold text-[16px] text-primary mb-3">What's Excluded</h4>
+                     <h4 className="font-bold text-[16px] text-primary mb-3">What&apos;s Excluded</h4>
                      <ul className="list-disc pl-5 text-sm text-text-secondary font-medium space-y-2">
                         {tourData.inclusiveExcluded.split('\n').map((exc, i) => <li key={i}>{exc}</li>)}
                      </ul>
                   </div>
                 ) : tourData.excluded ? (
                   <div className="mb-8">
-                     <h4 className="font-bold text-[16px] text-primary mb-3">What's Excluded</h4>
+                     <h4 className="font-bold text-[16px] text-primary mb-3">What&apos;s Excluded</h4>
                      <ul className="list-disc pl-5 text-sm text-text-secondary font-medium space-y-2">
                         {tourData.excluded.split('\n').map((exc, i) => <li key={i}>{exc}</li>)}
                      </ul>

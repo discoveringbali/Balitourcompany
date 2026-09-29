@@ -244,7 +244,7 @@ export default function TermsPage() {
             <ul className="list-disc pl-6 space-y-2">
               <li>Use the website for unlawful purposes</li>
               <li>Provide false or misleading information</li>
-              <li>Attempt to interfere with the website's operation or security</li>
+              <li>Attempt to interfere with the website&apos;s operation or security</li>
               <li>Copy or reproduce website content without permission</li>
               <li>Use the website to distribute harmful or malicious material</li>
               <li>Attempt to gain unauthorized access to our systems or accounts</li>
