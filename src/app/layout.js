@@ -1,4 +1,4 @@
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -9,6 +9,7 @@ import GoogleTranslate from "@/components/GoogleTranslate";
 import { getPromoCode } from "@/lib/cache";
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 const playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: '--font-playfair' });
+const cormorant = Cormorant_Garamond({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: '--font-cormorant' });
 
 export const viewport = {
   width: "device-width",
@@ -95,7 +96,7 @@ export default async function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${inter.className} ${playfair.variable} min-h-screen flex flex-col bg-background selection:bg-accent selection:text-primary pb-0`}>
+      <body className={`${inter.className} ${playfair.variable} ${cormorant.variable} min-h-screen flex flex-col bg-background selection:bg-accent selection:text-primary pb-0`}>
         <Script src="https://www.googletagmanager.com/gtag/js?id=AW-18408986681" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
