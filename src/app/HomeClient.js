@@ -175,6 +175,46 @@ const SEO_FAQS = [
   {
     question: "Do you offer airport transfers in Bali?",
     answer: "Yes! Balance Island offers reliable and hassle-free airport transfers from Ngurah Rai International Airport (DPS) to any destination in Bali, including Seminyak, Canggu, Ubud, and Uluwatu. Our professional drivers will track your flight and wait for you at arrivals."
+  },
+  {
+    question: "Where are the best waterfalls in Bali?",
+    answer: "The best waterfalls are located in Northern and Central Bali. Sekumpul Waterfall, Gitgit, and Banyumala Twin Waterfalls are famous in the north. Near Ubud, you can visit Tegenungan, Tibumana, and Kanto Lampo waterfalls. You can book our custom waterfall tours to explore them easily."
+  },
+  {
+    question: "Is Bali safe for tourists?",
+    answer: "Yes, Bali is generally very safe for tourists. Locals are friendly and hospitable. However, it's always recommended to take standard precautions, like being aware of your belongings in crowded areas (like Canggu or Seminyak) and ensuring you book verified tours through trusted platforms like Balance Island."
+  },
+  {
+    question: "Can I do a Mount Batur Sunrise Trek without a guide?",
+    answer: "It is strongly discouraged and often prohibited by local authorities to hike Mount Batur without a local guide. Booking a guided Mount Batur sunrise trek with Balance Island guarantees your safety, includes flashlights and breakfast, and supports the local community."
+  },
+  {
+    question: "What is the best area to stay in Bali?",
+    answer: "It depends on your travel style. Seminyak and Canggu are best for beach clubs, surfing, and nightlife. Ubud is the cultural heart, perfect for yoga, rice terraces, and waterfalls. Uluwatu is stunning for clifftop views and surfing, while Nusa Dua offers luxury family resorts."
+  },
+  {
+    question: "Do I need a Visa for Bali (Indonesia)?",
+    answer: "Most travelers can obtain a Visa on Arrival (VoA) at Ngurah Rai Airport, which is valid for 30 days and can be extended once. We recommend checking the official Indonesian Immigration website for the most up-to-date e-Visa application options."
+  },
+  {
+    question: "How do I get to the Gili Islands from Bali?",
+    answer: "You can reach the Gili Islands (Gili Trawangan, Gili Air, and Gili Meno) by taking a fast boat from Padang Bai, Sanur, or Serangan harbor. The trip takes about 1.5 to 2 hours. Balance Island can help arrange your fast boat tickets with hotel pickup."
+  },
+  {
+    question: "What currency is used in Bali?",
+    answer: "The official currency is the Indonesian Rupiah (IDR). While many places accept credit cards, it is highly recommended to carry some cash (IDR) for small purchases, local markets, and tipping. There are many reliable ATMs in tourist hubs like Canggu, Seminyak, and Ubud."
+  },
+  {
+    question: "Can I rent a scooter in Bali?",
+    answer: "Yes, renting a scooter is very popular. However, you must have an International Driving Permit (IDP) with a motorcycle endorsement. Traffic in areas like Canggu and Ubud can be intense, so if you're not an experienced rider, hiring a private driver via Balance Island is much safer and stress-free."
+  },
+  {
+    question: "What are the best snorkeling spots in Bali?",
+    answer: "The best snorkeling spots include Manta Point in Nusa Penida, the USAT Liberty Shipwreck in Tulamben, Blue Lagoon in Padang Bai, and Menjangan Island in the northwest. Our curated snorkeling tours provide all equipment and expert local guides."
+  },
+  {
+    question: "Are your tours family-friendly?",
+    answer: "Absolutely! We offer a wide range of family-friendly tours, including Bali Safari, Waterbom Bali, cultural temple visits, and easy nature walks in Ubud. Our private drivers can provide baby car seats upon request to ensure a safe journey for your family."
   }
 ];
 
@@ -1638,10 +1678,10 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="px-6 pb-32 max-w-4xl mx-auto pt-16 border-t border-gray-100"
+              className="px-6 pb-16 max-w-4xl mx-auto pt-16 border-t border-gray-100"
             >
               <div className="text-center mb-10">
-                <h2 className="text-[28px] md:text-[36px] font-black text-gray-900 leading-tight mb-4">Bali Travel FAQ & Guide</h2>
+                <h2 className="text-[28px] md:text-[36px] font-black text-gray-900 leading-tight mb-4">FAQ</h2>
                 <p className="text-gray-500 text-[14px] md:text-[15px] leading-relaxed">
                   Everything you need to know about booking the best tours, private drivers, and curated travel experiences in Bali, Indonesia.
                 </p>
@@ -1670,6 +1710,84 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 </div>
               )}
             </motion.section>
+
+            {/* Footer Section */}
+            <footer className="bg-gray-50 pt-16 pb-32 px-6 border-t border-gray-200 mt-10">
+              <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-16">
+                  
+                  {/* Brand & Description */}
+                  <div className="lg:w-1/3">
+                    <Link href="/" className="inline-block mb-4">
+                      <h2 className="text-[26px] font-black text-[#1c1c1c] tracking-tight flex items-center gap-2">
+                        <Sparkles size={24} className="text-black" />
+                        Balance Island
+                      </h2>
+                    </Link>
+                    <p className="text-gray-500 text-[14px] leading-relaxed max-w-sm font-medium">
+                      Bali activities and attraction tickets with clear prices and local support. Tour packages available too.
+                    </p>
+                  </div>
+
+                  {/* Links Columns */}
+                  <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
+                    {/* Explore */}
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Explore</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/activities" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Activities & Attractions</Link></li>
+                        <li><Link href="/tours" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Tour packages</Link></li>
+                        <li><Link href="/search" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Search experiences</Link></li>
+                        <li><Link href="/destinations" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Regions</Link></li>
+                        <li><Link href="/blog" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Travel stories</Link></li>
+                      </ul>
+                    </div>
+                    
+                    {/* Balance Island */}
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Balance Island</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/about" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">About</Link></li>
+                        <li><Link href="/how-it-works" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">How it works</Link></li>
+                        <li><Link href="/safety" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Safety & trust</Link></li>
+                        <li><Link href="/why-us" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Why Balance Island</Link></li>
+                      </ul>
+                    </div>
+
+                    {/* Help */}
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Help</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/help" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Help center</Link></li>
+                        <li><Link href="/contact" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Contact</Link></li>
+                        <li><Link href="/guarantee" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Anti-scam guarantee</Link></li>
+                        <li><Link href="/refund" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Refund policy</Link></li>
+                      </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Legal</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/terms" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Terms</Link></li>
+                        <li><Link href="/privacy" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Privacy</Link></li>
+                        <li><Link href="/currency" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Currency rates</Link></li>
+                        <li><Link href="/standards" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Operator standards</Link></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                  <div className="text-[12px] font-bold tracking-widest text-gray-400 uppercase">
+                    A brand of PT BALANCE ISLAND INDONESIA
+                  </div>
+                  <p className="text-[13px] text-gray-500 font-medium">
+                    © {new Date().getFullYear()} Balance Island. All rights reserved.
+                  </p>
+                </div>
+              </div>
+            </footer>
       </div>
     </div>
   );
