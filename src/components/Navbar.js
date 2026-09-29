@@ -83,7 +83,7 @@ export default function Navbar({ promoCode = "BALI2026" }) {
 
 
   if (pathname?.startsWith('/admin')) return null;
-  if (pathname?.startsWith('/tours') || pathname === '/map' || pathname?.startsWith('/blog') || pathname?.startsWith('/profile') || pathname?.startsWith('/favorites') || pathname?.startsWith('/bookings')) return null;
+  if (pathname?.startsWith('/tours') || pathname === '/map' || pathname?.startsWith('/blog') || pathname?.startsWith('/destinations') || pathname?.startsWith('/profile') || pathname?.startsWith('/favorites') || pathname?.startsWith('/bookings')) return null;
 
   return (
     <>

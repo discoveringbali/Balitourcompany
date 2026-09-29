@@ -26,7 +26,7 @@ export default function DestinationClient({ locationSlug, allListings }) {
         main { padding-top: 0 !important; }
       `}</style>
 
-      <div className="w-full bg-[#f9fafb] min-h-[100dvh] font-sans pb-32">
+      <div className="w-full bg-[#faf9f6] min-h-[100dvh] font-sans pb-32">
         {/* Hero Section */}
         <div className="relative w-full h-[50vh] md:h-[60vh] max-h-[600px] min-h-[400px]">
           <Image 
@@ -60,11 +60,11 @@ export default function DestinationClient({ locationSlug, allListings }) {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 pt-12 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="max-w-7xl mx-auto px-6 pt-16 pb-8 grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16">
           {/* Left Column: Blog Content */}
-          <div className="lg:col-span-7 xl:col-span-8 flex flex-col gap-8">
-            <section className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
-              <h2 className="text-[24px] font-black text-primary mb-4">
+          <div className="lg:col-span-7 xl:col-span-8 flex flex-col gap-12">
+            <section className="bg-transparent">
+              <h2 className="text-[32px] md:text-[40px] text-gray-900 mb-6 leading-tight" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>
                 Welcome to {displayLocation}
               </h2>
               <div className="prose prose-lg text-gray-600 leading-relaxed max-w-none">
@@ -74,29 +74,29 @@ export default function DestinationClient({ locationSlug, allListings }) {
                 <p className="mt-4">
                   In this guide, we've hand-picked the best experiences and top-rated tours available in {displayLocation}. Skip the hassle of planning and let our expert local drivers take you on a journey through lush rice terraces, ancient temples, pristine beaches, and breathtaking viewpoints. 
                 </p>
-                <h3 className="text-[20px] font-bold text-black mt-8 mb-3">Why visit {displayLocation}?</h3>
-                <ul className="space-y-2 mt-4 list-disc pl-5">
-                  <li>Stunning natural landscapes and Instagram-worthy photo spots.</li>
-                  <li>Rich cultural heritage with historic temples and traditional ceremonies.</li>
-                  <li>Incredible local cuisine and vibrant beach clubs or cafes.</li>
-                  <li>Seamless connectivity to other popular Bali destinations.</li>
+                <h3 className="text-[24px] md:text-[28px] text-gray-900 mt-10 mb-4" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Why visit {displayLocation}?</h3>
+                <ul className="space-y-3 mt-4 list-none pl-0">
+                  <li className="flex gap-3"><span className="text-primary mt-1">•</span> Stunning natural landscapes and Instagram-worthy photo spots.</li>
+                  <li className="flex gap-3"><span className="text-primary mt-1">•</span> Rich cultural heritage with historic temples and traditional ceremonies.</li>
+                  <li className="flex gap-3"><span className="text-primary mt-1">•</span> Incredible local cuisine and vibrant beach clubs or cafes.</li>
+                  <li className="flex gap-3"><span className="text-primary mt-1">•</span> Seamless connectivity to other popular Bali destinations.</li>
                 </ul>
-                <p className="mt-6 font-medium text-black">
+                <p className="mt-8 font-medium text-black">
                   Ready to explore? Browse our curated list of tours below and book your adventure directly!
                 </p>
               </div>
             </section>
 
             {/* Tours Section */}
-            <section id="tours" className="mt-4">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[24px] font-black text-primary">
+            <section id="tours" className="pt-8 border-t border-gray-200">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-[32px] md:text-[40px] text-gray-900 leading-tight" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>
                   Best Tours in {displayLocation}
                 </h2>
               </div>
               
               {locationTours.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8">
                   {locationTours.map(tour => (
                     <div key={tour.id} className="animate-in fade-in zoom-in duration-300">
                       <ListingCard item={tour} linkTo={`/tours/${generateSlug(tour.title)}`} />
