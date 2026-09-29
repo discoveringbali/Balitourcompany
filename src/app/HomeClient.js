@@ -1364,7 +1364,13 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
         )}
 
         {/* Popular Trips */}
-            <section className="pt-2 mb-8 relative">
+            <motion.section 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5 }}
+              className="pt-2 mb-8 relative"
+            >
               <div className="px-6 flex justify-between items-end mb-4">
                 <h2 className="text-[20px] font-bold text-primary flex items-center gap-2">
                   {getPopularTripsTitle()}
@@ -1387,10 +1393,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
               </div>
-            </section>
+            </motion.section>
 
             {/* Categories */}
-            <section id="categories-section" ref={categoriesRef} className="px-6 mb-8 mt-2">
+            <motion.section 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5 }}
+              id="categories-section" 
+              ref={categoriesRef} 
+              className="px-6 mb-8 mt-2"
+            >
               <div className="flex justify-between items-end mb-4">
                 <h2 className="text-[20px] font-bold text-primary">Categories</h2>
                 <Link href={activeService === "Tour" ? "/tours" : "/map?service=Activities"} className="text-[12px] font-extrabold text-white cursor-pointer transition-colors px-4 py-2 rounded-full bg-black hover:bg-black/80">See more</Link>
@@ -1426,11 +1440,18 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
 
             {/* Filtered Experiences */}
-            <section id="filtered-tours-section" className="mt-6 mb-12 relative">
+            <motion.section 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5 }}
+              id="filtered-tours-section" 
+              className="mt-6 mb-12 relative"
+            >
               {appliedPromoFilter && (
                 <div className="px-6 mb-4 flex justify-center">
                   <div className="inline-flex items-center gap-3 bg-black px-5 py-3 rounded-2xl shadow-lg border border-gray-800">
@@ -1459,10 +1480,16 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   </div>
                 )}
               </div>
-            </section>
+            </motion.section>
 
             {/* SEO & Location Keywords Section */}
-            <section className="px-6 mb-12 mt-12 max-w-7xl mx-auto">
+            <motion.section 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5 }}
+              className="px-6 mb-12 mt-12 max-w-7xl mx-auto"
+            >
               <div className="mb-6">
                 <h2 className="text-[24px] md:text-[28px] font-black text-primary leading-tight">Top Destinations in Bali</h2>
                 <p className="text-text-secondary font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
@@ -1503,57 +1530,55 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   )
                 })}
               </div>
-            </section>
+            </motion.section>
 
             {/* Why Choose Us Section */}
-            <section className="px-6 mb-16 max-w-7xl mx-auto">
-              <div className="bg-white rounded-3xl p-8 md:p-12 border border-gray-100 shadow-sm flex flex-col lg:flex-row gap-12 items-center">
-                <div className="lg:w-1/3 text-center lg:text-left">
-                  <h2 className="text-[28px] md:text-[36px] font-black text-primary leading-tight mb-4">Why Choose Balance Island?</h2>
-                  <p className="text-gray-500 text-[15px] leading-relaxed">
+            <motion.section 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6 }}
+              className="px-6 mb-20 max-w-7xl mx-auto py-12 border-t border-gray-100 mt-10"
+            >
+              <div className="flex flex-col lg:flex-row gap-12 items-start">
+                <div className="lg:w-1/3 text-left">
+                  <h2 className="text-[32px] md:text-[40px] text-gray-900 leading-tight mb-4" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Balance Island?</h2>
+                  <p className="text-gray-500 text-[15px] leading-relaxed max-w-md">
                     We make exploring Bali completely effortless. Enjoy peace of mind with curated top-rated experiences, secure bookings, and transparent pricing.
                   </p>
                 </div>
-                <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-                  <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 shrink-0 rounded-full bg-green-50 flex items-center justify-center text-green-600">
-                      <ShieldCheck size={24} />
-                    </div>
+                <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 w-full pt-2">
+                  <div className="flex gap-5 items-start">
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">01</div>
                     <div>
-                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">Secure & Trusted</h4>
-                      <p className="text-[13px] text-gray-500 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Secure & Trusted</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
                     </div>
                   </div>
-                  <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 shrink-0 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                      <Star size={24} />
-                    </div>
+                  <div className="flex gap-5 items-start">
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">02</div>
                     <div>
-                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">Curated Experiences</h4>
-                      <p className="text-[13px] text-gray-500 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Curated Experiences</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
                     </div>
                   </div>
-                  <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 shrink-0 rounded-full bg-orange-50 flex items-center justify-center text-orange-600">
-                      <MapPin size={24} />
-                    </div>
+                  <div className="flex gap-5 items-start">
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">03</div>
                     <div>
-                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">Local Expertise</h4>
-                      <p className="text-[13px] text-gray-500 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Local Expertise</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
                     </div>
                   </div>
-                  <div className="flex gap-4 items-start">
-                    <div className="w-12 h-12 shrink-0 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
-                      <Clock size={24} />
-                    </div>
+                  <div className="flex gap-5 items-start">
+                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">04</div>
                     <div>
-                      <h4 className="text-[16px] font-bold text-gray-900 mb-1">24/7 Support</h4>
-                      <p className="text-[13px] text-gray-500 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
+                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">24/7 Support</h4>
+                      <p className="text-[14px] text-gray-500 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
                     </div>
                   </div>
                 </div>
               </div>
-            </section>
+            </motion.section>
 
             {/* Footer */}
             <footer className="w-full bg-white border-t border-gray-100 py-12 px-6 text-center pb-32">
