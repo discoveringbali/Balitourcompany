@@ -1482,6 +1482,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               </div>
             </motion.section>
 
+            {/* Bottom Dark Section */}
+            <div className="bg-black rounded-t-[40px] md:rounded-t-[60px] pt-12 md:pt-16 mt-8 w-full">
+            
             {/* SEO & Location Keywords Section */}
             <motion.section 
               initial={{ opacity: 0, y: 20 }}
@@ -1491,8 +1494,8 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               className="px-6 mb-12 mt-12 max-w-7xl mx-auto"
             >
               <div className="mb-6">
-                <h2 className="text-[24px] md:text-[28px] font-black text-primary leading-tight">Top Destinations in Bali</h2>
-                <p className="text-text-secondary font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
+                <h2 className="text-[24px] md:text-[28px] font-black text-white leading-tight">Top Destinations in Bali</h2>
+                <p className="text-gray-300 font-medium mt-2 text-[14px] md:text-[15px] max-w-3xl">
                   Discover the beauty of Bali with our curated experiences in the most sought-after locations. From the cultural heart of Ubud to the stunning cliffs of Uluwatu. Dive into deep insights, local guides, and exclusive tours tailored just for you.
                 </p>
               </div>
@@ -1513,7 +1516,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                   const ctaText = `Read Local Guide`;
 
                   return (
-                    <Link href={linkHref} key={loc} className="group block relative w-full aspect-[4/5] sm:aspect-square rounded-[24px] overflow-hidden shadow-sm border border-gray-100">
+                    <Link href={linkHref} key={loc} className="group block relative w-full aspect-[4/5] sm:aspect-square rounded-[24px] overflow-hidden shadow-sm border border-white/10">
                       <Image 
                         src={imageUrl} 
                         alt={`Tourism in ${loc}, Bali`}
@@ -1538,42 +1541,42 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6 }}
-              className="px-6 mb-20 max-w-7xl mx-auto py-12 border-t border-gray-100 mt-10"
+              className="px-6 mb-20 max-w-7xl mx-auto py-12 border-t border-white/10 mt-10"
             >
               <div className="flex flex-col lg:flex-row gap-12 items-start">
                 <div className="lg:w-1/3 text-left">
-                  <h2 className="text-[32px] md:text-[40px] text-gray-900 leading-tight mb-4" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Balance Island?</h2>
-                  <p className="text-gray-500 text-[15px] leading-relaxed max-w-md">
+                  <h2 className="text-[32px] md:text-[40px] text-white leading-tight mb-4" style={{ fontFamily: "var(--font-playfair, 'Playfair Display', serif)" }}>Balance Island?</h2>
+                  <p className="text-gray-300 text-[15px] leading-relaxed max-w-md">
                     We make exploring Bali completely effortless. Enjoy peace of mind with curated top-rated experiences, secure bookings, and transparent pricing.
                   </p>
                 </div>
                 <div className="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-10 w-full pt-2">
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">01</div>
+                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">01</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Secure & Trusted</h4>
-                      <p className="text-[14px] text-gray-500 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
+                      <h4 className="text-[17px] font-bold text-white mb-2">Secure & Trusted</h4>
+                      <p className="text-[14px] text-gray-300 leading-relaxed">Guaranteed safe bookings and verified operators for zero hassle.</p>
                     </div>
                   </div>
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">02</div>
+                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">02</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Curated Experiences</h4>
-                      <p className="text-[14px] text-gray-500 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
+                      <h4 className="text-[17px] font-bold text-white mb-2">Curated Experiences</h4>
+                      <p className="text-[14px] text-gray-300 leading-relaxed">We handpick only the highest-rated, most unforgettable tours in Bali.</p>
                     </div>
                   </div>
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">03</div>
+                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">03</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">Local Expertise</h4>
-                      <p className="text-[14px] text-gray-500 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
+                      <h4 className="text-[17px] font-bold text-white mb-2">Local Expertise</h4>
+                      <p className="text-[14px] text-gray-300 leading-relaxed">Connect with English-speaking local guides who know the island inside out.</p>
                     </div>
                   </div>
                   <div className="flex gap-5 items-start">
-                    <div className="text-[20px] font-black text-black border-b-2 border-black pb-1 leading-none mt-1">04</div>
+                    <div className="text-[20px] font-black text-white border-b-2 border-white pb-1 leading-none mt-1">04</div>
                     <div>
-                      <h4 className="text-[17px] font-bold text-gray-900 mb-2">24/7 Support</h4>
-                      <p className="text-[14px] text-gray-500 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
+                      <h4 className="text-[17px] font-bold text-white mb-2">24/7 Support</h4>
+                      <p className="text-[14px] text-gray-300 leading-relaxed">Our dedicated support team is always here for you, anytime you need help.</p>
                     </div>
                   </div>
                 </div>
@@ -1581,7 +1584,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
             </motion.section>
 
             {/* Footer */}
-            <footer className="w-full bg-white border-t border-gray-100 py-12 px-6 text-center pb-32">
+            <footer className="w-full bg-transparent border-t border-white/10 py-12 px-6 text-center pb-32">
               <div className="max-w-7xl mx-auto flex flex-col items-center justify-center gap-4">
                 <div className="text-[12px] font-bold tracking-widest text-gray-400 uppercase">
                   A brand of PT BALANCE ISLAND INDONESIA
@@ -1591,6 +1594,7 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 </p>
               </div>
             </footer>
+            </div>
       </div>
     </div>
   );
