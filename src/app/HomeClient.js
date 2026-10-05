@@ -1720,74 +1720,85 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 mb-16">
                   
                   {/* Brand & Description */}
-                  <div className="lg:w-1/2">
-                    <h3 className="text-[16px] text-gray-800 font-medium mb-4 uppercase tracking-wide">
+                  <div className="lg:w-1/3">
+                    <h3 className="text-[16px] text-gray-800 font-medium mb-4 tracking-wide">
                       A brand of PT BALANCE ISLAND INDONESIA
                     </h3>
-                    <p className="text-gray-500 text-[16px] leading-relaxed max-w-lg mb-10">
+                    <p className="text-gray-500 text-[14px] leading-relaxed max-w-sm font-medium">
                       Bali's premier luxury mobile spa. Bringing 5-star professional massages and organic wellness treatments directly to your private villa or hotel.
                     </p>
                     
-                    <div>
-                      <div className="flex items-center gap-2 mb-4">
-                        <ShieldCheck className="w-6 h-6 text-green-600" />
-                        <h4 className="font-semibold text-gray-900 text-[16px]">Safe & Secure Payment</h4>
-                      </div>
-                      <div className="flex gap-3 items-center flex-wrap max-w-md">
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
-                          <span className="font-bold text-[#005EAC] text-xs">BCA</span>
-                        </div>
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
-                          <span className="font-bold text-[#003D79] text-xs">Mandiri</span>
-                        </div>
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
-                          <span className="font-bold text-[#F36F21] text-xs">BNI</span>
-                        </div>
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
-                          <span className="font-bold text-[#00529C] text-xs">BRI</span>
-                        </div>
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
+                    <div className="mt-8">
+                      <h4 className="font-bold text-gray-900 text-[13px] mb-3 uppercase tracking-wider">Secure Payments</h4>
+                      <div className="flex gap-4 items-center">
+                        <div className="w-12 flex items-center justify-center">
                           <svg viewBox="0 0 38 12" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto"><path fill="#1434CB" d="M14.28 11.45l2.25-11.1h3.58l-2.25 11.1h-3.58zm19.64-10.84c-1.12-.52-2.85-.92-4.9-.92-3.48 0-5.94 1.76-5.97 4.28-.02 1.87 1.78 2.91 3.12 3.53 1.38.64 1.84 1.05 1.84 1.63 0 .89-1.14 1.31-2.2 1.31-1.47 0-2.27-.22-3.48-.74l-.49-.22-.52 3.03c1.24.54 3.53.99 5.86 1.02 3.73 0 6.13-1.74 6.16-4.46.03-1.49-.89-2.61-2.99-3.56-1.22-.6-1.95-1-1.95-1.6 0-.55.66-1.12 2.1-1.12 1.15-.03 2.18.25 2.87.55l.34.14.52-2.88zM27.06 11.45l-3.32-8.59c-.31-.79-.88-1.09-1.57-1.13h-5.63l-.06.28c1.15.25 2.45.69 3.28 1.15l.55.33 3.03 8.35h3.72V11.45zM10.89 11.45L8.52.34C8.42-.08 8.08-.34 7.6-.34H.58L.48.1c1.07.24 2.27.65 3.01 1.07.38.22.49.46.6.9L7.33 11.45h3.56z"/></svg>
                         </div>
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
+                        <div className="w-12 flex items-center justify-center">
                           <svg viewBox="0 0 36 22" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto"><circle cx="11" cy="11" r="11" fill="#EA001B"/><circle cx="25" cy="11" r="11" fill="#F79E1B"/><path d="M18 20.21a11 11 0 000-18.42 11 11 0 000 18.42z" fill="#FF5F00"/></svg>
                         </div>
-                        <div className="bg-white border border-gray-200 rounded-md flex items-center justify-center w-14 h-9 px-2 shadow-sm">
+                        <div className="w-12 flex items-center justify-center">
                           <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg" alt="American Express" className="w-full h-auto object-contain" />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Links & Contact */}
-                  <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {/* Navigation Links */}
+                  {/* Links Columns */}
+                  <div className="lg:w-2/3 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
+                    {/* Explore */}
                     <div>
-                      <ul className="flex flex-col gap-5">
-                        <li><Link href="/explore" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">Explore</Link></li>
-                        <li><Link href="/services" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">Services</Link></li>
-                        <li><Link href="/about" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">About Us</Link></li>
-                        <li><Link href="/faq" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">FAQ</Link></li>
-                        <li><Link href="/terms" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">Terms & Conditions</Link></li>
-                        <li><Link href="/privacy" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">Privacy Policy</Link></li>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Explore</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/activities" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Activities & Attractions</Link></li>
+                        <li><Link href="/tours" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Tour packages</Link></li>
+                        <li><Link href="/search" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Search experiences</Link></li>
+                        <li><Link href="/destinations" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Regions</Link></li>
+                        <li><Link href="/blog" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Travel stories</Link></li>
                       </ul>
                     </div>
                     
-                    {/* Contact */}
+                    {/* Balance Island */}
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-[16px] mb-5">Contact</h4>
-                      <ul className="flex flex-col gap-5">
-                        <li><a href="mailto:hello@balanceisland.com" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">hello@balanceisland.com</a></li>
-                        <li><a href="https://wa.me/6282341659931" className="text-gray-600 hover:text-gray-900 text-[16px] transition-colors">+62 823 4165 9931 (WhatsApp only)</a></li>
-                        <li className="text-gray-600 text-[16px]">Jln. Raya Ubud, Gianyar</li>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Balance Island</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/about" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">About</Link></li>
+                        <li><Link href="/how-it-works" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">How it works</Link></li>
+                        <li><Link href="/safety" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Safety & trust</Link></li>
+                        <li><Link href="/why-us" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Why Balance Island</Link></li>
+                      </ul>
+                    </div>
+
+                    {/* Help */}
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Help</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/help" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Help center</Link></li>
+                        <li><Link href="/contact" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Contact</Link></li>
+                        <li><Link href="/guarantee" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Anti-scam guarantee</Link></li>
+                        <li><Link href="/refund" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Refund policy</Link></li>
+                      </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-[15px] mb-6">Legal</h4>
+                      <ul className="flex flex-col gap-4">
+                        <li><Link href="/terms" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Terms</Link></li>
+                        <li><Link href="/privacy" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Privacy</Link></li>
+                        <li><Link href="/currency" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Currency rates</Link></li>
+                        <li><Link href="/standards" className="text-gray-500 hover:text-gray-900 text-[14px] transition-colors">Operator standards</Link></li>
                       </ul>
                     </div>
                   </div>
                 </div>
                 
-                <div className="pt-8 border-t border-gray-200 flex justify-center items-center">
+                <div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                  <div className="text-[12px] font-bold tracking-widest text-gray-400 uppercase">
+                    A brand of PT BALANCE ISLAND INDONESIA
+                  </div>
                   <p className="text-[13px] text-gray-500 font-medium">
-                    © {new Date().getFullYear()} PT BALANCE ISLAND INDONESIA. All rights reserved.
+                    © {new Date().getFullYear()} Balance Island. All rights reserved.
                   </p>
                 </div>
               </div>
