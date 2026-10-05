@@ -696,29 +696,9 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
   }));
 
   // 1. Build Partner Campaign Cards (Scooter & Spa)
-  const scooterCard = serviceCampaigns?.scooter?.active !== false ? {
-    id: "campaign-scooter",
-    title: serviceCampaigns?.scooter?.title || DEFAULT_CAMPAIGNS.scooter.title,
-    subtitle: serviceCampaigns?.scooter?.subtitle || DEFAULT_CAMPAIGNS.scooter.subtitle,
-    badge: serviceCampaigns?.scooter?.badge || DEFAULT_CAMPAIGNS.scooter.badge,
-    image: serviceCampaigns?.scooter?.image || DEFAULT_CAMPAIGNS.scooter.image,
-    externalUrl: serviceCampaigns?.scooter?.externalUrl || DEFAULT_CAMPAIGNS.scooter.externalUrl,
-    isExternalCampaign: true,
-    location: "Island-wide Delivery"
-  } : null;
+  // Removed mock data campaign cards as requested
+  const partnerCards = [];
 
-  const spaCard = serviceCampaigns?.spa?.active !== false ? {
-    id: "campaign-spa",
-    title: serviceCampaigns?.spa?.title || DEFAULT_CAMPAIGNS.spa.title,
-    subtitle: serviceCampaigns?.spa?.subtitle || DEFAULT_CAMPAIGNS.spa.subtitle,
-    badge: serviceCampaigns?.spa?.badge || DEFAULT_CAMPAIGNS.spa.badge,
-    image: serviceCampaigns?.spa?.image || DEFAULT_CAMPAIGNS.spa.image,
-    externalUrl: serviceCampaigns?.spa?.externalUrl || DEFAULT_CAMPAIGNS.spa.externalUrl,
-    isExternalCampaign: true,
-    location: "Home Service Spa Bali"
-  } : null;
-
-  const partnerCards = [scooterCard, spaCard].filter(Boolean);
 
   const defaultTourCampaigns = [];
 
@@ -1725,14 +1705,14 @@ export default function HomeClient({ initialListings = [], initialSettings = nul
                       A brand of PT BALANCE ISLAND INDONESIA
                     </h3>
                     <p className="text-gray-500 text-[14px] leading-relaxed max-w-sm font-medium">
-                      Bali's premier luxury mobile spa. Bringing 5-star professional massages and organic wellness treatments directly to your private villa or hotel.
+                      Bali activities and attraction tickets with clear prices and local support. Tour packages available too.
                     </p>
                     
                     <div className="mt-8">
                       <h4 className="font-bold text-gray-900 text-[13px] mb-3 uppercase tracking-wider">Secure Payments</h4>
                       <div className="flex gap-4 items-center">
                         <div className="w-12 flex items-center justify-center">
-                          <svg viewBox="0 0 38 12" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto"><path fill="#1434CB" d="M14.28 11.45l2.25-11.1h3.58l-2.25 11.1h-3.58zm19.64-10.84c-1.12-.52-2.85-.92-4.9-.92-3.48 0-5.94 1.76-5.97 4.28-.02 1.87 1.78 2.91 3.12 3.53 1.38.64 1.84 1.05 1.84 1.63 0 .89-1.14 1.31-2.2 1.31-1.47 0-2.27-.22-3.48-.74l-.49-.22-.52 3.03c1.24.54 3.53.99 5.86 1.02 3.73 0 6.13-1.74 6.16-4.46.03-1.49-.89-2.61-2.99-3.56-1.22-.6-1.95-1-1.95-1.6 0-.55.66-1.12 2.1-1.12 1.15-.03 2.18.25 2.87.55l.34.14.52-2.88zM27.06 11.45l-3.32-8.59c-.31-.79-.88-1.09-1.57-1.13h-5.63l-.06.28c1.15.25 2.45.69 3.28 1.15l.55.33 3.03 8.35h3.72V11.45zM10.89 11.45L8.52.34C8.42-.08 8.08-.34 7.6-.34H.58L.48.1c1.07.24 2.27.65 3.01 1.07.38.22.49.46.6.9L7.33 11.45h3.56z"/></svg>
+                          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="w-full h-auto object-contain" />
                         </div>
                         <div className="w-12 flex items-center justify-center">
                           <svg viewBox="0 0 36 22" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto"><circle cx="11" cy="11" r="11" fill="#EA001B"/><circle cx="25" cy="11" r="11" fill="#F79E1B"/><path d="M18 20.21a11 11 0 000-18.42 11 11 0 000 18.42z" fill="#FF5F00"/></svg>
